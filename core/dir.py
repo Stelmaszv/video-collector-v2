@@ -1,45 +1,47 @@
 import re
 
+class abstratValid:
 
-class ifStarAndSeries:
+    def valid(self):
+        if re.search(self.validValue, self.dir):
+            return True
+        return False
+
+    def onValidPass(self):
+        pass
+
+    def faindElment(self):
+        if self.valid():
+            self.onValidPass()
+
+    def validate(self):
+        self.faindElment()
+
+class ifStarAndSeries(abstratValid):
+
     dir = '[feqfqef] qfqefjqepfjqepfj (fqefqef and qefqefqef)';
+    validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9\s+]+\s+\([a-zA-Z0-9\s]+\)";
 
-    def ifStarAndSeries(self):
-        if re.search("\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9\s+]+\s+\([a-zA-Z0-9\s]+\)", self.dir):
-            return True
-        return False
+    def onValidPass(self):
+        print('has a series and star')
 
-    def faindElment(self):
-        if self.ifStarAndSeries():
-            print('has a series and star')
 
-    def validate(self):
-        self.faindElment()
+class ifHasSeries(abstratValid):
 
-class ifHasSeries:
     dir = '[feqfqef] qfqefjqepfjqepfj';
-    def ifHasSeries(self):
-        if re.search("\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9]+", self.dir):
-            return True
-        return False
-    def faindElment(self):
-        if self.ifHasSeries():
-            print('has a series')
-    def validate(self):
-        self.faindElment()
+    validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9]+";
 
-class ifStar:
-    dir = 'test (dqdwqwd and qdqwd)'
-    def ifHasAStar(self):
-        if re.search("[a-zA-Z0-9]+\s+\([a-zA-Z0-9\s]+\)", self.dir):
-            return True
-        return False
-    def faindElment(self):
-        if self.ifHasAStar():
-            print('has a star')
+    def onValidPass(self):
+        print('has a series')
 
-    def validate(self):
-        self.faindElment()
+class ifStar(abstratValid):
+
+
+    dir = 'test (dqdwqwd and qdqwd)';
+    validValue = "[a-zA-Z0-9]+\s+\([a-zA-Z0-9\s]+\)";
+
+    def onValidPass(self):
+        print('has a series')
 
 class manageDir:
     dir = 'test (dqdwqwd qdqwd)'
