@@ -26,6 +26,7 @@ class ifStarAndSeries(abstratValid):
 
     def onValidPass(self):
         print('has a series and star')
+        return  True
 
 
 class ifHasSeries(abstratValid):
@@ -34,6 +35,7 @@ class ifHasSeries(abstratValid):
 
     def onValidPass(self):
         print('has a series')
+        return True
 
 class ifStar(abstratValid):
 
@@ -41,11 +43,12 @@ class ifStar(abstratValid):
 
     def onValidPass(self):
         print('has a star')
+        return True
 
 class manageDir:
 
     def __init__(self,dir):
-        self.ifStar=ifStar(dir)
+        self.ifStar= ifStar(dir)
         self.ifHasSeries = ifHasSeries(dir)
         self.ifStarAndSeries = ifStarAndSeries(dir)
 
