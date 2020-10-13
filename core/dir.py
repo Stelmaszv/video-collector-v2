@@ -15,26 +15,18 @@ class abstratValid:
 
     def faindElment(self):
         if self.valid():
-            self.onValidPass()
+            return self.onValidPass()
+        return  False
 
     def validate(self):
-        self.faindElment()
-
-class ifStarAndSeries(abstratValid):
-
-    validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9\s+]+\s+\([a-zA-Z0-9\s]+\)";
-
-    def onValidPass(self):
-        print('has a series and star')
-        return  True
-
+        return self.faindElment()
 
 class ifHasSeries(abstratValid):
 
     validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9]+";
 
     def onValidPass(self):
-        print('has a series')
+        print('Series - ' + str(self.dir))
         return True
 
 class ifStar(abstratValid):
@@ -42,21 +34,24 @@ class ifStar(abstratValid):
     validValue = "[a-zA-Z0-9]+\s+\([a-zA-Z0-9\s]+\)";
 
     def onValidPass(self):
-        print('has a star')
+        print('Star - ' + str(self.dir))
         return True
 
 class manageDir:
 
     def __init__(self,dir):
+        self.dir = dir
         self.ifStar= ifStar(dir)
         self.ifHasSeries = ifHasSeries(dir)
-        self.ifStarAndSeries = ifStarAndSeries(dir)
 
     def set(self):
         self.runValidate()
 
     def runValidate(self):
-        self.ifStar.validate()
-        self.ifHasSeries.validate()
-        self.ifStarAndSeries.validate()
+        starstan = self.ifStar.validate()
+        seriesstan = self.ifHasSeries.validate()
+
+        if starstan is False and seriesstan is False:
+            print('normal - '+str(self.dir))
+
 
