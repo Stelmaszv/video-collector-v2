@@ -2,6 +2,9 @@ import re
 
 class abstratValid:
 
+    def __init__(self,dir):
+        self.dir=dir
+
     def valid(self):
         if re.search(self.validValue, self.dir):
             return True
@@ -19,7 +22,6 @@ class abstratValid:
 
 class ifStarAndSeries(abstratValid):
 
-    dir = '[feqfqef] qfqefjqepfjqepfj (fqefqef and qefqefqef)';
     validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9\s+]+\s+\([a-zA-Z0-9\s]+\)";
 
     def onValidPass(self):
@@ -28,7 +30,6 @@ class ifStarAndSeries(abstratValid):
 
 class ifHasSeries(abstratValid):
 
-    dir = '[feqfqef] qfqefjqepfjqepfj';
     validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9]+";
 
     def onValidPass(self):
@@ -36,21 +37,21 @@ class ifHasSeries(abstratValid):
 
 class ifStar(abstratValid):
 
-
-    dir = 'test (dqdwqwd and qdqwd)';
     validValue = "[a-zA-Z0-9]+\s+\([a-zA-Z0-9\s]+\)";
 
     def onValidPass(self):
-        print('has a series')
+        print('has a star')
 
 class manageDir:
-    dir = 'test (dqdwqwd qdqwd)'
-    def __init__(self):
-        self.ifStar=ifStar()
-        self.ifHasSeries = ifHasSeries()
-        self.ifStarAndSeries = ifStarAndSeries()
+
+    def __init__(self,dir):
+        self.ifStar=ifStar(dir)
+        self.ifHasSeries = ifHasSeries(dir)
+        self.ifStarAndSeries = ifStarAndSeries(dir)
+
     def set(self):
         self.runValidate()
+
     def runValidate(self):
         self.ifStar.validate()
         self.ifHasSeries.validate()
