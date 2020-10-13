@@ -23,16 +23,34 @@ class abstratValid:
     def validate(self):
         return self.faindElment()
 
+class faindSeries:
 
+    str = ''
+
+    def __init__(self,dir):
+        self.dir=dir
+        self.start = self.dir.find("[")
+        self.end = self.dir.find("]")
+        self.returnSeriesInString()
+
+    def returnSeriesInString(self):
+        for i in range(self.start+1,self.end):
+            self.str=self.str+self.dir[i]
 
 class ifHasSeries(abstratValid):
 
     validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9]+";
 
+    def __init__(self,dir):
+        super(ifHasSeries, self).__init__(dir)
+        self.faindSeriesObj = faindSeries(dir)
+
     def onValidPass(self):
-        pass
+        self.faindSereis()
         return True
 
+    def faindSereis(self):
+        print(self.faindSeriesObj.str)
 
 class faindStar:
 
