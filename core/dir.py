@@ -1,6 +1,8 @@
 import re
 
+
 class abstratValid:
+
 
     def __init__(self,dir):
         self.dir=dir
@@ -21,21 +23,49 @@ class abstratValid:
     def validate(self):
         return self.faindElment()
 
+
+
 class ifHasSeries(abstratValid):
 
     validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9]+";
 
     def onValidPass(self):
-        print('Series - ' + str(self.dir))
+        pass
         return True
+
+
+class faindStar:
+
+    str = ''
+    starArray=[]
+
+    def __init__(self,dir):
+        self.dir=dir
+        self.start = self.dir.find("(")
+        self.end = self.dir.find(")")
+        self.createStarList()
+
+    def returnStarsInString(self):
+        for i in range(self.start+1,self.end):
+            self.str=self.str+self.dir[i]
+    def createStarList(self):
+        self.returnStarsInString()
+        self.starArray = self.str.split('and')
+        return self.str
 
 class ifStar(abstratValid):
 
     validValue = "[a-zA-Z0-9]+\s+\([a-zA-Z0-9\s]+\)";
 
+    def __init__(self,dir):
+        super(ifStar, self).__init__(dir)
+        self.faindStarObj = faindStar(dir)
+
     def onValidPass(self):
-        print('Star - ' + str(self.dir))
+        self.faindStar()
         return True
+    def faindStar(self):
+        print(self.faindStarObj.starArray)
 
 class manageDir:
 
@@ -52,6 +82,6 @@ class manageDir:
         seriesstan = self.ifHasSeries.validate()
 
         if starstan is False and seriesstan is False:
-            print('normal - '+str(self.dir))
+            pass
 
 

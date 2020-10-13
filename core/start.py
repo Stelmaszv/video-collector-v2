@@ -1,6 +1,6 @@
 from core.dir import manageDir
 class start:
-    fiels  = ['test grgeg (qefqefqef qgqrgr)','[fqefqef] test grgeg' , 'test grgeg', 'test grgeg (fwefwfwef)', 'fqefqeff' , '[fqefqe] feqfeqf (fewfwef wgwrgwrg)']
+    fiels  = ['test grgeg (qefqefqef qgqrgr)','[fqefqef] test grgeg' , 'test grgeg', 'test grgeg (fwefwfwef and dqwdqf)', 'fqefqeff' , '[fqefqe] feqfeqf (fewfwef wgwrgwrg)']
 
     def run(self):
         self.manageDirByLoop();
