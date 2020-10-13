@@ -1,8 +1,6 @@
 import re
 
-
 class abstratValid:
-
 
     def __init__(self,dir):
         self.dir=dir
@@ -66,6 +64,7 @@ class faindStar:
     def returnStarsInString(self):
         for i in range(self.start+1,self.end):
             self.str=self.str+self.dir[i]
+
     def createStarList(self):
         self.returnStarsInString()
         self.starArray = self.str.split('and')
@@ -82,6 +81,7 @@ class ifStar(abstratValid):
     def onValidPass(self):
         self.faindStar()
         return True
+
     def faindStar(self):
         print(self.faindStarObj.starArray)
 
