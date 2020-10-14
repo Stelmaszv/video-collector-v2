@@ -34,6 +34,7 @@ class abstractModel:
 
     def dropTable(self):
         self.cur.execute('DROP TABLE IF EXISTS '+self.table+';')
+        self.migration.shema()
         self.con.commit()
 
     @classmethod
