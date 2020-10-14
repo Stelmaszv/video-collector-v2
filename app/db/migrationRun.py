@@ -1,8 +1,11 @@
-from app.db.migrations import movies
+from app.db.migrations import movies,stars,starsinmovies,series
 from core.db.migration import migrationRun
 
 migrations=[
-    movies()
+    movies(),
+    stars(),
+    starsinmovies(),
+    series()
 ]
 
 MR=migrationRun(migrations);
