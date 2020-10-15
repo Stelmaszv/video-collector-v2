@@ -1,14 +1,13 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
+import os
+from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker,relationship
 
-import sqlite3
+if os.path.exists('test.db'):
+    os.remove('test.db')
+# tworzymy instancję klasy Engine do obsługi bazy
 
-# utworzenie połączenia z bazą przechowywaną na dysku
-# lub w pamięci (':memory:')
-con = sqlite3.connect('test.db')
 
-# dostęp do kolumn przez indeksy i przez nazwy
-con.row_factory = sqlite3.Row
-
-# utworzenie obiektu kursora
-cur = con.cursor()
+# klasa bazowa
+Base = declarative_base()
+engine = create_engine('sqlite:///test.db')  # ':memory:'

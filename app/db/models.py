@@ -1,10 +1,23 @@
-from core.db.model import abstractModel
-from app.db.migrations import movies as moviesMigration
+from core.db.config import Base,engine
+from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
+from sqlalchemy.orm import sessionmaker,relationship
 
-class movies(abstractModel):
-    migration=moviesMigration()
+class movies(Base):
+    __tablename__ ='movies'
+    id= Column('id',Integer,primary_key=True)
+    name = Column('name',String)
 
-movies().insert([['fqef',0],['fqef',0],['fqef',0],['fqef',0],['fqef',0],['fqef',0],['fqef',0]])
-for item in movies().all():
-    print(item['name'])
-movies().dropTable()
+class series(Base):
+    __tablename__ ='series'
+    id= Column('id',Integer,primary_key=True)
+    name = Column('name',String)
+
+class stars(Base):
+    __tablename__ ='stars'
+    id= Column('id',Integer,primary_key=True)
+    name = Column('name',String)
+
+
+
+Base.metadata.create_all(bind=engine)
+session = sessionmaker(bind=engine)
