@@ -1,6 +1,6 @@
 from core.db.config import Base,engine
-from sqlalchemy import Column, ForeignKey, Integer, String, create_engine
-from sqlalchemy.orm import sessionmaker,relationship
+from sqlalchemy import Column,Integer, String
+from sqlalchemy.orm import sessionmaker
 
 class movies(Base):
     __tablename__ ='movies'
@@ -20,4 +20,9 @@ class stars(Base):
 
 
 Base.metadata.create_all(bind=engine)
-session = sessionmaker(bind=engine)
+Session = sessionmaker(bind=engine)
+session = Session()
+objects = [movies(name="u1"), movies(name="u2"), movies(name="u3")]
+session.add_all(objects)
+session.commit()
+print(session.query(movies).all())

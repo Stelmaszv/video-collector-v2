@@ -8,11 +8,18 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from app.db.models import movies
+from app.db.models import session
 
 class menu(object):
-    results=[]
+    results=['fwefewf','fqe']
+
+    def addResults(self):
+        objects = [movies(name="u1"), movies(name="u2"), movies(name="u3")]
+        session.commit()
 
     def setupUi(self, MainWindow):
+        self.addResults()
         self.mianSetings()
         self.formLayout()
         self.searchArea()
@@ -43,10 +50,10 @@ class menu(object):
 
     def searchResult(self):
         row=0
-        for item in self.results:
+        for item in session.query(movies).all():
              el = QtWidgets.QPushButton(self.serchAreaMain)
-             el.setObjectName(str(row)+''+item)
-             el.setText(item)
+             el.setObjectName(item.name)
+             el.setText(item.name)
              self.resultArea.setWidget(row, QtWidgets.QFormLayout.FieldRole, el)
              row=row+1
 
