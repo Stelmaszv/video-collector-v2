@@ -22,7 +22,4 @@ class stars(Base):
 Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)
 session = Session()
-objects = [movies(name="u1"), movies(name="u2"), movies(name="u3")]
-session.add_all(objects)
-session.commit()
-print(session.query(movies).all())
+

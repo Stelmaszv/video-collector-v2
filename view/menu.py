@@ -10,7 +10,8 @@
 from PyQt5 import QtCore, QtWidgets,QtGui
 from core.search import setFactory
 from core.PyQt5Helpel import Layout
-
+from app.db.seeder import runSeeader
+runSeeader()
 
 class menu(QtWidgets.QWidget):
     results=['fwefewf','fqe']
