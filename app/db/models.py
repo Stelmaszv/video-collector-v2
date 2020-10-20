@@ -1,21 +1,39 @@
 from core.db.config import Base,engine
-from sqlalchemy import Column,Integer, String
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy import Column,Integer, String,Table,ForeignKey
+from sqlalchemy.orm import sessionmaker,relationship
 
-class movies(Base):
-    __tablename__ ='movies'
-    id= Column('id',Integer,primary_key=True)
-    name = Column('name',String)
+association_table = Table('association', Base.metadata,
+    Column('stars_id', Integer, ForeignKey('stars.id')),
+    Column('movies_id', Integer, ForeignKey('movies.id'))
+)
 
-class series(Base):
+class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
 
-class stars(Base):
+class Stars(Base):
     __tablename__ ='stars'
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
+    movies = relationship(
+        "Movies",
+        secondary=association_table,
+        back_populates="stars"
+    )
+
+class Movies(Base):
+    __tablename__ ='movies'
+    id= Column('id',Integer,primary_key=True)
+    name = Column('name',String)
+    stars = relationship(
+        "Stars",
+        secondary=association_table,
+        back_populates="movies"
+    )
+
+
+
 
 
 

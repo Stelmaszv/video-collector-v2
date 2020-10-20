@@ -1,13 +1,14 @@
-from app.db.models import movies,series,stars
+from app.db.models import Movies,Series,Stars
 from app.db.models import session
 
 def runSeeader():
-    objects = [movies(name="Film o Fudzim"), movies(name="Motsu w aksji"), movies(name="KOtek in City")]
+    objects = [Stars(name="Fudzi"), Stars(name="Motsu")]
     session.add_all(objects)
     session.commit()
-    objects = [stars(name="Fudzi"), stars(name="Motsu")]
+    objects = [Series(name="Koty in the city")]
     session.add_all(objects)
     session.commit()
-    objects = [series(name="Koty in the city")]
+    objects = [Movies(name="Film o Fudzim"), Movies(name="Motsu w aksji"), Movies(name="KOtek in City")]
     session.add_all(objects)
     session.commit()
+

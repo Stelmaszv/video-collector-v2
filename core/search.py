@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from app.db.models import movies,series,stars
+from app.db.models import Movies,Series,Stars
 from app.db.models import session
 
 class AbstractFactory(ABC):
@@ -48,7 +48,7 @@ class setFactory:
         return classObj(self.obj).getQuery()
 
 class getMovies(AbstractFactory):
-    model=movies
+    model=Movies
 
     def getQuery(self) ->  session:
         return self.returnAll()
@@ -58,7 +58,7 @@ class getMovies(AbstractFactory):
 
 
 class getSeries(AbstractFactory):
-    model=series
+    model=Series
 
     def getQuery(self) -> session:
         return self.returnAll()
@@ -67,7 +67,7 @@ class getSeries(AbstractFactory):
         pass
 
 class getStar(AbstractFactory):
-    model=stars
+    model=Stars
 
     def getQuery(self) -> session:
         return self.returnAll()
