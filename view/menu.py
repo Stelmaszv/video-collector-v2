@@ -15,7 +15,8 @@ runSeeader()
 
 class menu(QtWidgets.QWidget):
     results=['fwefewf','fqe']
-    searchIn='series'
+    searchIn='movies'
+    searchFaze=None
 
     def setupUi(self, MainWindow):
         self.Layout=Layout()
@@ -29,7 +30,6 @@ class menu(QtWidgets.QWidget):
 
     def ManuBar(self):
         MainWindow.setCentralWidget(self.centralwidget)
-
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 403, 21))
         self.menubar.setObjectName("menubar")
@@ -52,14 +52,12 @@ class menu(QtWidgets.QWidget):
     def searchResult(self):
         row=0
         self.Layout.clear(self.resultArea)
-        for item in setFactory(self.searchIn).getFactory():
+        for item in setFactory(self.searchIn,self).getFactory():
              el = QtWidgets.QPushButton(self.serchAreaMain)
              el.setObjectName(item.name)
              el.setText(item.name)
              self.resultArea.setWidget(row, QtWidgets.QFormLayout.FieldRole, el)
              row=row+1
-
-
 
     def mianSetings(self):
         MainWindow.setObjectName("MainWindow")
@@ -76,6 +74,7 @@ class menu(QtWidgets.QWidget):
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.pushButton)
 
     def getDataFrom(self):
+        self.searchFaze=self.serchLineEdit.text() or None
         self.searchIn=self.serchInComboBox.currentText()
         self.searchResult()
 
