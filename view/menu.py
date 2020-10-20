@@ -15,6 +15,7 @@ from core.search import setFactory
 
 class menu(object):
     results=['fwefewf','fqe']
+    searchIn='movies'
 
     def addResults(self):
         objects = [movies(name="u1"), movies(name="u2"), movies(name="u3")]
@@ -52,7 +53,7 @@ class menu(object):
 
     def searchResult(self):
         row=0
-        for item in setFactory('movies').getFactory():
+        for item in setFactory(self.searchIn).getFactory():
              el = QtWidgets.QPushButton(self.serchAreaMain)
              el.setObjectName(item.name)
              el.setText(item.name)
@@ -70,7 +71,12 @@ class menu(object):
     def menuSerch(self):
         self.pushButton = QtWidgets.QPushButton(self.serchAreaMain)
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.getDataFrom)
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.pushButton)
+
+    def getDataFrom(self):
+        self.searchIn=self.serchInComboBox.currentText()
+        self.searchResult()
 
     def searchArea(self):
         self.serchAreaMain.setObjectName("serchAreaMain")
@@ -87,7 +93,7 @@ class menu(object):
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.serchInLabel)
         self.serchInComboBox = QtWidgets.QComboBox(self.serchAreaMain)
         self.serchInComboBox.setObjectName("serchInComboBox")
-        self.serchInComboBox.addItem("")
+        self.serchInComboBox.addItem("Movies")
         self.serchInComboBox.addItem("")
         self.serchInComboBox.addItem("")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.serchInComboBox)
@@ -106,13 +112,12 @@ class menu(object):
         self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.radioButton_3)
         self.formLayout.setLayout(2, QtWidgets.QFormLayout.FieldRole, self.formLayout_2)
 
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("Main Window", "Main Window"))
         self.serchLabel.setText(_translate("MainWindow", "Search"))
         self.serchInLabel.setText(_translate("MainWindow", "Search In"))
-        self.serchInComboBox.setItemText(0, _translate("MainWindow", "Movies"))
+        self.serchInComboBox.setItemText(0, _translate("MainWindow", "movies"))
         self.serchInComboBox.setItemText(1, _translate("MainWindow", "Series"))
         self.serchInComboBox.setItemText(2, _translate("MainWindow", "Stars"))
         self.radioButton.setText(_translate("MainWindow", "Only Stars"))

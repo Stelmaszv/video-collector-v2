@@ -17,15 +17,11 @@ class setFactory:
         self.className=className
 
     def getFactory(self):
-        return self.switch()
-
-    def switch(self):
         switcher = {
-            'movies':getMovies
+            'movies': getMovies
         }
-        classObj=switcher.get(self.className, "Invalid month");
+        classObj = switcher.get(self.className, "Invalid month");
         return classObj().getQuery()
-
 
 class getMovies(AbstractFactory):
     model=movies
