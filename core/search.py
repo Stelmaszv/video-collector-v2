@@ -13,13 +13,16 @@ class AbstractFactory(ABC):
         pass
 
     @abstractmethod
-    def OnsearchFaze(self) -> session:
+    def deepSearch(self) -> session:
         pass
+
 
     def returnAll(self) -> session:
         return self.ifIssearchFaze()
 
     def ifIssearchFaze(self) -> session:
+        if self.obj.deepSearch:
+            return self.deepSearch()
         if self.obj.searchFaze is None:
             return session.query(self.model).all()
         else:
@@ -40,33 +43,36 @@ class setFactory:
             'series' : getSeries,
             'stars'  : getStar
         }
+
         classObj = switcher.get(self.className, "Invalid data");
         return classObj(self.obj).getQuery()
 
 class getMovies(AbstractFactory):
     model=movies
 
-    def getQuery(self) -> AbstractFactory:
+    def getQuery(self) ->  session:
         return self.returnAll()
 
-    def OnsearchFaze(self) -> session:
-        pass
+    def deepSearch(self) -> session:
+        return session.query(self.model).all()
 
 
 class getSeries(AbstractFactory):
     model=series
 
-    def getQuery(self) -> AbstractFactory:
+    def getQuery(self) -> session:
         return self.returnAll()
 
-    def OnsearchFaze(self) -> session:
+    def deepSearch(self) -> session:
         pass
 
 class getStar(AbstractFactory):
     model=stars
 
-    def getQuery(self) -> AbstractFactory:
+    def getQuery(self) -> session:
         return self.returnAll()
 
-    def OnsearchFaze(self) -> session:
+    def deepSearch(self) -> session:
         pass
+
+

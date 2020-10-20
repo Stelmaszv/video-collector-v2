@@ -14,9 +14,10 @@ from app.db.seeder import runSeeader
 runSeeader()
 
 class menu(QtWidgets.QWidget):
-    results=['fwefewf','fqe']
-    searchIn='movies'
+    searchIn='stars'
     searchFaze=None
+    deepSearch=False
+
 
     def setupUi(self, MainWindow):
         self.Layout=Layout()
@@ -75,7 +76,8 @@ class menu(QtWidgets.QWidget):
 
     def getDataFrom(self):
         self.searchFaze=self.serchLineEdit.text() or None
-        self.searchIn=self.serchInComboBox.currentText()
+        self.searchIn=self.serchInComboBox.currentText() or None
+        self.deepSearch=self.deepSerchCheckBox.isChecked()
         self.searchResult()
 
     def searchArea(self):
@@ -99,18 +101,13 @@ class menu(QtWidgets.QWidget):
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.serchInComboBox)
 
     def serchRadioBox(self):
-        self.formLayout_2 = QtWidgets.QFormLayout()
-        self.formLayout_2.setObjectName("formLayout_2")
-        self.radioButton = QtWidgets.QRadioButton(self.serchAreaMain)
-        self.radioButton.setObjectName("radioButton")
-        self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.radioButton)
-        self.radioButton_2 = QtWidgets.QRadioButton(self.serchAreaMain)
-        self.radioButton_2.setObjectName("radioButton_2")
-        self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.radioButton_2)
-        self.radioButton_3 = QtWidgets.QRadioButton(self.serchAreaMain)
-        self.radioButton_3.setObjectName("radioButton_3")
-        self.formLayout_2.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.radioButton_3)
-        self.formLayout.setLayout(2, QtWidgets.QFormLayout.FieldRole, self.formLayout_2)
+        self.deepSerchCheckBox = QtWidgets.QCheckBox(self.serchAreaMain)
+        self.checkBox = QtWidgets.QFormLayout()
+        self.checkBox.setObjectName("checkBox")
+        self.deepSerchCheckBox.setObjectName("deepSerchCheckBox")
+        self.deepSerchCheckBox.setText("Deep Search")
+        self.checkBox.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.deepSerchCheckBox)
+        self.formLayout.setLayout(2, QtWidgets.QFormLayout.FieldRole, self.checkBox)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -120,9 +117,6 @@ class menu(QtWidgets.QWidget):
         self.serchInComboBox.setItemText(0, _translate("MainWindow", "movies"))
         self.serchInComboBox.setItemText(1, _translate("MainWindow", "series"))
         self.serchInComboBox.setItemText(2, _translate("MainWindow", "stars"))
-        self.radioButton.setText(_translate("MainWindow", "Only Stars"))
-        self.radioButton_2.setText(_translate("MainWindow", "Only Movies"))
-        self.radioButton_3.setText(_translate("MainWindow", "Only Series"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
 
 if __name__ == "__main__":
