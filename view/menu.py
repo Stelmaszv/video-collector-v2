@@ -7,22 +7,17 @@
 # WARNING! All changes made in this file will be lost!
 
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-from app.db.models import movies
-from app.db.models import session
+from PyQt5 import QtCore, QtWidgets,QtGui
 from core.search import setFactory
+from core.PyQt5Helpel import Layout
 
 
-class menu(object):
+class menu(QtWidgets.QWidget):
     results=['fwefewf','fqe']
-    searchIn='movies'
-
-    def addResults(self):
-        objects = [movies(name="u1"), movies(name="u2"), movies(name="u3")]
-        session.commit()
+    searchIn='series'
 
     def setupUi(self, MainWindow):
-        self.addResults()
+        self.Layout=Layout()
         self.mianSetings()
         self.formLayout()
         self.searchArea()
@@ -33,6 +28,7 @@ class menu(object):
 
     def ManuBar(self):
         MainWindow.setCentralWidget(self.centralwidget)
+
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 403, 21))
         self.menubar.setObjectName("menubar")
@@ -40,6 +36,7 @@ class menu(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
+        self.listWidget = QtWidgets.QListWidget(self)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -53,12 +50,15 @@ class menu(object):
 
     def searchResult(self):
         row=0
+        self.Layout.clear(self.resultArea)
         for item in setFactory(self.searchIn).getFactory():
              el = QtWidgets.QPushButton(self.serchAreaMain)
              el.setObjectName(item.name)
              el.setText(item.name)
              self.resultArea.setWidget(row, QtWidgets.QFormLayout.FieldRole, el)
              row=row+1
+
+
 
     def mianSetings(self):
         MainWindow.setObjectName("MainWindow")
@@ -93,7 +93,7 @@ class menu(object):
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.serchInLabel)
         self.serchInComboBox = QtWidgets.QComboBox(self.serchAreaMain)
         self.serchInComboBox.setObjectName("serchInComboBox")
-        self.serchInComboBox.addItem("Movies")
+        self.serchInComboBox.addItem("")
         self.serchInComboBox.addItem("")
         self.serchInComboBox.addItem("")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.serchInComboBox)
@@ -118,8 +118,8 @@ class menu(object):
         self.serchLabel.setText(_translate("MainWindow", "Search"))
         self.serchInLabel.setText(_translate("MainWindow", "Search In"))
         self.serchInComboBox.setItemText(0, _translate("MainWindow", "movies"))
-        self.serchInComboBox.setItemText(1, _translate("MainWindow", "Series"))
-        self.serchInComboBox.setItemText(2, _translate("MainWindow", "Stars"))
+        self.serchInComboBox.setItemText(1, _translate("MainWindow", "series"))
+        self.serchInComboBox.setItemText(2, _translate("MainWindow", "stars"))
         self.radioButton.setText(_translate("MainWindow", "Only Stars"))
         self.radioButton_2.setText(_translate("MainWindow", "Only Movies"))
         self.radioButton_3.setText(_translate("MainWindow", "Only Series"))
