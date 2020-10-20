@@ -10,6 +10,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from app.db.models import movies
 from app.db.models import session
+from core.search import setFactory
+
 
 class menu(object):
     results=['fwefewf','fqe']
@@ -50,7 +52,7 @@ class menu(object):
 
     def searchResult(self):
         row=0
-        for item in session.query(movies).all():
+        for item in setFactory('movies').getFactory():
              el = QtWidgets.QPushButton(self.serchAreaMain)
              el.setObjectName(item.name)
              el.setText(item.name)

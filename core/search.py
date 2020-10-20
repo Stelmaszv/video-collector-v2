@@ -9,7 +9,23 @@ class AbstractFactory(ABC):
         pass
 
     def returnAll(self) -> session.query(movies).all():
-        session.query(self.model).all()
+        return session.query(self.model).all()
+
+class setFactory:
+
+    def __init__(self,className):
+        self.className=className
+
+    def getFactory(self):
+        return self.switch()
+
+    def switch(self):
+        switcher = {
+            'movies':getMovies
+        }
+        classObj=switcher.get(self.className, "Invalid month");
+        return classObj().getQuery()
+
 
 class getMovies(AbstractFactory):
     model=movies
