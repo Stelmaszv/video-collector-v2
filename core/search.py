@@ -26,7 +26,7 @@ class AbstractFactory(ABC):
             return self.searchFazeNormal()
 
     def searchFazeNormal(self):
-        return session.query(self.model).filter(self.model.name == self.obj.searchFaze)
+        return session.query(self.model).filter(self.model.name.like(str(self.obj.searchFaze)+'%'))
 
 class setFactory:
 
