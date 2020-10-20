@@ -10,3 +10,9 @@ class AbstractFactory(ABC):
 
     def returnAll(self) -> session.query(movies).all():
         session.query(self.model).all()
+
+class getMovies(AbstractFactory):
+    model=movies
+
+    def getQuery(self) -> AbstractFactory:
+        return self.returnAll()
