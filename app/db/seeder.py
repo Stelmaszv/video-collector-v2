@@ -11,4 +11,7 @@ def runSeeader():
     objects = [Movies(name="Film o Fudzim"), Movies(name="Motsu w aksji"), Movies(name="KOtek in City")]
     session.add_all(objects)
     session.commit()
+    query=session.query(Movies).get(1)
+    star=session.query(Stars).get(1)
+    query.stars.append(star)
 
