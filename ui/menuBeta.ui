@@ -74,10 +74,31 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="1">
+     <item row="5" column="1">
       <widget class="QPushButton" name="pushButton">
        <property name="text">
         <string>Search</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="1" column="0">
+        <widget class="QLabel" name="addTaggLabel">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="addTaggLineEdit"/>
+       </item>
+      </layout>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="addTaggButton">
+       <property name="text">
+        <string>add Tag</string>
        </property>
       </widget>
      </item>
@@ -93,7 +114,7 @@
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_3">
-     <item row="0" column="1">
+     <item row="1" column="1">
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
         <string>item Result</string>

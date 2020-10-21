@@ -17,6 +17,7 @@ class menu(QtWidgets.QWidget):
     searchIn='movies'
     searchFaze='Fudzi'
     deepSearch=True
+    tags=[]
 
     def setupUi(self, MainWindow):
         self.Layout=Layout()
@@ -25,6 +26,7 @@ class menu(QtWidgets.QWidget):
         self.searchArea()
         self.serchRadioBox()
         self.menuSerch()
+        self.addTag()
         self.ManuBar()
         self.searchResult()
 
@@ -48,6 +50,25 @@ class menu(QtWidgets.QWidget):
         self.resultArea = QtWidgets.QFormLayout(self.formLayoutWidget_2)
         self.resultArea.setContentsMargins(0, 0, 0, 0)
         self.resultArea.setObjectName("resultArea")
+
+    def addTag(self):
+        self.formLayout_2 = QtWidgets.QFormLayout()
+        self.formLayout_2.setObjectName("formLayout_2")
+        self.addTaggLineEdit = QtWidgets.QLineEdit(self.serchAreaMain)
+        self.addTaggLineEdit.setObjectName("addTaggLineEdit")
+        self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.addTaggLineEdit)
+        self.formLayout.setLayout(4, QtWidgets.QFormLayout.FieldRole, self.formLayout_2)
+        self.addTaggButton = QtWidgets.QPushButton(self.serchAreaMain)
+        self.addTaggButton.clicked.connect(self.onAddTag)
+        self.addTaggButton.setObjectName("addTaggButton")
+        self.addTaggButton.setText( "Add tag")
+        self.formLayout.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.addTaggButton)
+        self.formLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
+
+    def onAddTag(self):
+        self.tags.append(self.addTaggLineEdit.text())
+        self.addTaggLineEdit.clear()
+        print(self.tags)
 
     def searchResult(self):
         row=0

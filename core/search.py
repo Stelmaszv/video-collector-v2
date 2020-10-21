@@ -64,15 +64,6 @@ class getMovies(AbstractFactory):
                     if self.obj.searchFaze == star.name:
                         starAr.append(item)
         return starAr
-        """":
-        starAr = []
-        for item in session.query(self.model).all():
-            for star in session.query(Movies).get(item.id).stars:
-                if star.name == self.self.obj.searchFaze:
-                    starAr.append(star)
-        return starAr
-        """
-
 
 class getSeries(AbstractFactory):
     model=Series
