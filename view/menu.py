@@ -14,10 +14,9 @@ from app.db.seeder import runSeeader
 runSeeader()
 
 class menu(QtWidgets.QWidget):
-    searchIn='stars'
-    searchFaze=None
-    deepSearch=False
-
+    searchIn='movies'
+    searchFaze='Fudzi'
+    deepSearch=True
 
     def setupUi(self, MainWindow):
         self.Layout=Layout()

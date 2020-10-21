@@ -21,7 +21,9 @@ class AbstractFactory(ABC):
         return self.ifIssearchFaze()
 
     def ifIssearchFaze(self) -> session:
-        if self.obj.deepSearch:
+        if self.obj.deepSearch and \
+                self.obj.searchFaze is not None \
+                and self.deepSearchMode is True :
             return self.deepSearch()
         if self.obj.searchFaze is None:
             return session.query(self.model).all()
@@ -49,16 +51,32 @@ class setFactory:
 
 class getMovies(AbstractFactory):
     model=Movies
+    deepSearchMode = True
 
     def getQuery(self) ->  session:
         return self.returnAll()
 
     def deepSearch(self) -> session:
-        return session.query(self.model).all()
+        starAr=[]
+        for item in session.query(self.model).all():
+            if len(session.query(self.model).get(item.id).stars) > 0:
+                for star in session.query(self.model).get(item.id).stars:
+                    if self.obj.searchFaze == star.name:
+                        starAr.append(item)
+        return starAr
+        """":
+        starAr = []
+        for item in session.query(self.model).all():
+            for star in session.query(Movies).get(item.id).stars:
+                if star.name == self.self.obj.searchFaze:
+                    starAr.append(star)
+        return starAr
+        """
 
 
 class getSeries(AbstractFactory):
     model=Series
+    deepSearchMode=False
 
     def getQuery(self) -> session:
         return self.returnAll()
@@ -68,11 +86,13 @@ class getSeries(AbstractFactory):
 
 class getStar(AbstractFactory):
     model=Stars
+    deepSearchMode=False
 
     def getQuery(self) -> session:
         return self.returnAll()
 
-    def deepSearch(self) -> session:
+    def deepSearch(self):
         pass
+
 
 

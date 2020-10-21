@@ -8,7 +8,7 @@ def runSeeader():
     objects = [Series(name="Koty in the city")]
     session.add_all(objects)
     session.commit()
-    objects = [Movies(name="Film o Fudzim"), Movies(name="Motsu w aksji"), Movies(name="KOtek in City")]
+    objects = [Movies(name="Fajny Film"), Movies(name="Motsu w aksji"), Movies(name="KOtek in City")]
     session.add_all(objects)
     session.commit()
     query=session.query(Movies).get(1)
