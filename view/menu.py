@@ -66,9 +66,13 @@ class menu(QtWidgets.QWidget):
         self.formLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
 
     def onAddTag(self):
-        self.tags.append(self.addTaggLineEdit.text())
-        self.addTaggLineEdit.clear()
-        print(self.tags)
+        self.showTags()
+
+    def showTags(self):
+        self.Layout.clear(self.serchAreaMain)
+        self.addTagg = QtWidgets.QLineEdit(self.serchAreaMain)
+        self.addTagg.setObjectName("addTaggLineEdit")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.addTagg)
 
     def searchResult(self):
         row=0

@@ -20,7 +20,7 @@
       <x>0</x>
       <y>0</y>
       <width>401</width>
-      <height>151</height>
+      <height>241</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -74,10 +74,10 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="1">
-      <widget class="QPushButton" name="pushButton">
+     <item row="4" column="0">
+      <widget class="QPushButton" name="addTaggButton">
        <property name="text">
-        <string>Search</string>
+        <string>add Tag</string>
        </property>
       </widget>
      </item>
@@ -95,29 +95,54 @@
        </item>
       </layout>
      </item>
-     <item row="4" column="0">
-      <widget class="QPushButton" name="addTaggButton">
+     <item row="5" column="1">
+      <widget class="QPushButton" name="pushButton">
        <property name="text">
-        <string>add Tag</string>
+        <string>Search</string>
        </property>
       </widget>
      </item>
+     <item row="6" column="1">
+      <layout class="QGridLayout" name="TagsGrid">
+       <item row="0" column="0">
+        <widget class="QLabel" name="tagItem">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="formLayoutWidget_2">
+   <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>150</y>
-      <width>381</width>
-      <height>841</height>
+      <x>0</x>
+      <y>240</y>
+      <width>401</width>
+      <height>31</height>
      </rect>
     </property>
-    <layout class="QFormLayout" name="formLayout_3">
-     <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_2">
+    <layout class="QGridLayout" name="Searchlist">
+     <item row="0" column="3">
+      <widget class="QPushButton" name="SearchOpen">
        <property name="text">
-        <string>item Result</string>
+        <string>Open</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QPushButton" name="searchInfo">
+       <property name="text">
+        <string>Info</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="searchName">
+       <property name="text">
+        <string>Fajny Film</string>
        </property>
       </widget>
      </item>
