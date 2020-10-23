@@ -1,19 +1,14 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'menuBeta.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.2
-#
-# WARNING! All changes made in this file will be lost!
-
-
+from PyQt5.QtWidgets import QMainWindow,QApplication
+import sys
 from PyQt5 import QtCore, QtWidgets,QtGui
 from core.search import setFactory
 from core.PyQt5Helpel import Layout
 from app.db.seeder import runSeeader
+from core.setWindow import setWindow
+from view.star.test import star
 runSeeader()
 
-class menu(QtWidgets.QWidget):
+class menu(QMainWindow):
     searchIn='movies'
     searchFaze='Fudzi'
     deepSearch=True
@@ -26,7 +21,6 @@ class menu(QtWidgets.QWidget):
         self.searchArea()
         self.serchRadioBox()
         self.menuSerch()
-        self.addTag()
         self.ManuBar()
         self.searchResult()
 
@@ -51,29 +45,6 @@ class menu(QtWidgets.QWidget):
         self.resultArea.setContentsMargins(0, 0, 0, 0)
         self.resultArea.setObjectName("resultArea")
 
-    def addTag(self):
-        self.formLayout_2 = QtWidgets.QFormLayout()
-        self.formLayout_2.setObjectName("formLayout_2")
-        self.addTaggLineEdit = QtWidgets.QLineEdit(self.serchAreaMain)
-        self.addTaggLineEdit.setObjectName("addTaggLineEdit")
-        self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.addTaggLineEdit)
-        self.formLayout.setLayout(4, QtWidgets.QFormLayout.FieldRole, self.formLayout_2)
-        self.addTaggButton = QtWidgets.QPushButton(self.serchAreaMain)
-        self.addTaggButton.clicked.connect(self.onAddTag)
-        self.addTaggButton.setObjectName("addTaggButton")
-        self.addTaggButton.setText( "Add tag")
-        self.formLayout.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.addTaggButton)
-        self.formLayoutWidget_2 = QtWidgets.QWidget(self.centralwidget)
-
-    def onAddTag(self):
-        self.showTags()
-
-    def showTags(self):
-        self.Layout.clear(self.serchAreaMain)
-        self.addTagg = QtWidgets.QLineEdit(self.serchAreaMain)
-        self.addTagg.setObjectName("addTaggLineEdit")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.addTagg)
-
     def searchResult(self):
         row=0
         self.Layout.clear(self.resultArea)
@@ -81,8 +52,23 @@ class menu(QtWidgets.QWidget):
              el = QtWidgets.QPushButton(self.serchAreaMain)
              el.setObjectName(item.name)
              el.setText(item.name)
+             el.clicked.connect(self.open)
              self.resultArea.setWidget(row, QtWidgets.QFormLayout.FieldRole, el)
              row=row+1
+
+    def open(self):
+        obj=setWindow(self.searchIn)
+        self.window = obj.returnObj()
+
+        if self.window.isVisible():
+            self.window.hide()
+
+        else:
+            self.window.show()
+
+
+
+
 
     def mianSetings(self):
         MainWindow.setObjectName("MainWindow")
@@ -143,11 +129,12 @@ class menu(QtWidgets.QWidget):
         self.serchInComboBox.setItemText(2, _translate("MainWindow", "stars"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = menu()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
+
+
+app = QApplication(sys.argv)
+MainWindow = QtWidgets.QMainWindow()
+ui = menu()
+ui.setupUi(MainWindow)
+MainWindow.show()
+app.exec_()
+
