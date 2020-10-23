@@ -57,6 +57,8 @@ class menu(QMainWindow):
              row=row+1
 
     def open(self):
+        self.getDataFrom()
+        print(self.searchIn)
         obj=setWindow(self.searchIn)
         self.window = obj.returnObj()
 
@@ -65,10 +67,6 @@ class menu(QMainWindow):
 
         else:
             self.window.show()
-
-
-
-
 
     def mianSetings(self):
         MainWindow.setObjectName("MainWindow")

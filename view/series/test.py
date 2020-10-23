@@ -8,8 +8,15 @@
 
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import  QWidget
+from PyQt5.QtWidgets import  QWidget,QVBoxLayout,QLabel
 class series(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("series")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -51,7 +58,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = star()
+    ui = series()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

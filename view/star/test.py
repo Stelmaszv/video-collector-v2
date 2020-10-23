@@ -8,8 +8,16 @@
 
 
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import  QWidget
+from PyQt5.QtWidgets import  QWidget,QVBoxLayout,QLabel
 class star(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("star")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
+
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")

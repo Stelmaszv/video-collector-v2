@@ -6,10 +6,21 @@
 #
 # WARNING! All changes made in this file will be lost!
 
-
+from random import randint
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import  QWidget
+from PyQt5.QtWidgets import  QWidget,QVBoxLayout,QLabel
 class movie(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout()
+        self.label = QLabel("movie")
+        layout.addWidget(self.label)
+        self.setLayout(layout)
+
+    def getData(self,id):
+        print('dqwdqwd')
+
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -42,7 +53,7 @@ class movie(QWidget):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("Star", "Star"))
+        self.label.setWindowTitle("movie")
         self.pushButton.setText(_translate("MainWindow", "PushButton"))
         self.pushButton_2.setText(_translate("MainWindow", "PushButton"))
 
@@ -51,7 +62,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = star()
+    ui = movie()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
