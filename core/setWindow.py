@@ -1,4 +1,4 @@
-from view.star.test import star
+from view.star.stars import stars
 from view.series.test import series
 from view.movie.test import movie
 
@@ -12,6 +12,6 @@ class setWindow():
         switcher = {
             'movies' : movie(),
             'series' : series(),
-            'stars'  : star()
+            'stars'  : stars()
         }
         return switcher.get(self.className, "Invalid data");

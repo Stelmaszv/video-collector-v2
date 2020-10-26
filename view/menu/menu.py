@@ -61,6 +61,7 @@ class menu(QMainWindow):
         print(self.searchIn)
         obj=setWindow(self.searchIn)
         self.window = obj.returnObj()
+        self.window.MainWindow=QtWidgets.QMainWindow()
 
         if self.window.isVisible():
             self.window.hide()
