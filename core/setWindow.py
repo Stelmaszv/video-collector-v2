@@ -8,7 +8,6 @@ class setWindow():
         self.className=className
 
     def returnObj(self):
-        print(self.className)
         switcher = {
             'movies' : movie(),
             'series' : series(),

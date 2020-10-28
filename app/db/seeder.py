@@ -2,7 +2,10 @@ from app.db.models import Movies,Series,Stars
 from app.db.models import session
 
 def runSeeader():
-    objects = [Stars(name="Fudzi"), Stars(name="Motsu")]
+    objects = [
+        Stars(name="Fudzi",avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+        Stars(name="Motsu",avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg")
+    ]
     session.add_all(objects)
     session.commit()
     objects = [Series(name="Koty in the city")]

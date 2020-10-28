@@ -58,7 +58,6 @@ class menu(QMainWindow):
 
     def open(self):
         self.getDataFrom()
-        print(self.searchIn)
         obj=setWindow(self.searchIn)
         self.window = obj.returnObj()
         self.window.MainWindow=QtWidgets.QMainWindow()

@@ -16,6 +16,7 @@ class Stars(Base):
     __tablename__ ='stars'
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
+    avatar = Column('avatar',String)
     movies = relationship(
         "Movies",
         secondary=association_table,

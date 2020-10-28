@@ -1,21 +1,19 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'starsUi.ui'
-#
-# Created by: PyQt5 UI code generator 5.13.2
-#
-# WARNING! All changes made in this file will be lost!
-
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5 import QtGui
+from app.db.models import Stars
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import  QWidget,QVBoxLayout,QLabel
+from PyQt5.QtWidgets import  QWidget
+from app.db.models import session
 
 class stars(QWidget):
+    id    = 1
+    model = Stars
 
     def __init__(self):
         super().__init__()
+        self.getOne()
+
+    def getOne(self):
+        self.data=session.query(self.model).get(self.id)
 
     def show(self):
         self.setupUi()
@@ -30,7 +28,7 @@ class stars(QWidget):
         self.label = QtWidgets.QLabel(self.obj)
         self.label.setGeometry(QtCore.QRect(100, 80, 341, 331))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg"))
+        self.label.setPixmap(QtGui.QPixmap(self.data.avatar))
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
 
@@ -38,6 +36,8 @@ class stars(QWidget):
         self.Title = QtWidgets.QLabel(self.obj)
         self.Title.setGeometry(QtCore.QRect(530, 60, 391, 91))
         self.Title.setObjectName("Title")
+        self.Title.setToolTip("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-style:italic;\">"+self.data.name+"</span></p></body></html>")
+        self.Title.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; text-decoration: underline;\">"+self.data.name+"</span></p></body></html>")
 
     def galery(self):
 
@@ -979,8 +979,6 @@ class stars(QWidget):
     def retranslateUi(self, StarList):
         _translate = QtCore.QCoreApplication.translate
         StarList.setWindowTitle(_translate("StarList", "Form"))
-        self.Title.setToolTip(_translate("StarList", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-style:italic;\">Sliczny Kotek</span></p></body></html>"))
-        self.Title.setText(_translate("StarList", "<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; text-decoration: underline;\">Śliczny Koktek</span></p></body></html>"))
         self.label_225.setText(_translate("StarList", "TextLabel"))
         self.label_8.setText(_translate("StarList", "TextLabel"))
         self.label_11.setText(_translate("StarList", "TextLabel"))
