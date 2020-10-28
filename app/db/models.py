@@ -20,7 +20,6 @@ class Series(Base):
     def __str__(self):
         return  self.name
 
-
 class Photos(Base):
     __tablename__ ='photos'
     id= Column('id',Integer,primary_key=True)

@@ -6,6 +6,7 @@ from app.db.models import session
 
 class stars(QWidget):
     model = Stars
+    id = 1
 
     def __init__(self,):
         super().__init__()
@@ -39,7 +40,31 @@ class stars(QWidget):
         self.Title.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; text-decoration: underline;\">"+self.data.name+"</span></p></body></html>")
 
     def galery(self):
+        photos=self.data.photos
+        self.gridLayoutWidget_2 = QtWidgets.QWidget(self.obj)
+        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(1040, 50, 581, 361))
+        self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
 
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
+        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        row=0
+        col=0
+        for photo in photos:
+            label = QtWidgets.QLabel(self.gridLayoutWidget_2)
+            label.setMaximumSize(QtCore.QSize(100, 100))
+            label.setText("")
+            label.setPixmap(QtGui.QPixmap(photo.src))
+            label.setScaledContents(True)
+            label.setObjectName("label_9")
+            self.gridLayout_5.addWidget(label, col, row, 1, 1)
+            row=row+1
+            if row > 3:
+                row=0
+                col=col+1
+
+
+        """"
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.obj)
         self.gridLayoutWidget_2.setGeometry(QtCore.QRect(1040, 50, 581, 361))
         self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
@@ -88,7 +113,7 @@ class stars(QWidget):
         self.label_23.setScaledContents(True)
         self.label_23.setObjectName("label_23")
         self.gridLayout_5.addWidget(self.label_23, 1, 2, 1, 1)
-
+        """
     def setupUi(self):
         self.createObj()
         """

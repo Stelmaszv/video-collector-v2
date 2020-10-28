@@ -9,9 +9,9 @@ from view.star.test import star
 runSeeader()
 
 class menu(QMainWindow):
-    searchIn='movies'
-    searchFaze='Fudzi'
-    deepSearch=True
+    searchIn='stars'
+    searchFaze=''
+    deepSearch=False
     tags=[]
 
     def setupUi(self, MainWindow):
@@ -57,7 +57,6 @@ class menu(QMainWindow):
              row=row+1
 
     def open(self,item):
-        print(item.id)
         self.getDataFrom()
         obj=setWindow(self.searchIn)
         self.window = obj.returnObj()
@@ -123,9 +122,11 @@ class menu(QMainWindow):
         MainWindow.setWindowTitle(_translate("Main Window", "Main Window"))
         self.serchLabel.setText(_translate("MainWindow", "Search"))
         self.serchInLabel.setText(_translate("MainWindow", "Search In"))
-        self.serchInComboBox.setItemText(0, _translate("MainWindow", "movies"))
+
+
         self.serchInComboBox.setItemText(1, _translate("MainWindow", "series"))
-        self.serchInComboBox.setItemText(2, _translate("MainWindow", "stars"))
+        self.serchInComboBox.setItemText(0, _translate("MainWindow", "stars"))
+        self.serchInComboBox.setItemText(2, _translate("MainWindow", "movies"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
 
 
