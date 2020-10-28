@@ -13,4 +13,4 @@ class setWindow():
             'series' : series(),
             'stars'  : stars()
         }
-        return switcher.get(self.className, "Invalid data");
+        return  switcher.get(self.className, "Invalid data");

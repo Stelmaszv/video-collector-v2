@@ -5,17 +5,16 @@ from PyQt5.QtWidgets import  QWidget
 from app.db.models import session
 
 class stars(QWidget):
-    id    = 1
     model = Stars
 
-    def __init__(self):
+    def __init__(self,):
         super().__init__()
-        self.getOne()
 
     def getOne(self):
         self.data=session.query(self.model).get(self.id)
 
     def show(self):
+        self.getOne()
         self.setupUi()
         self.obj.show()
 

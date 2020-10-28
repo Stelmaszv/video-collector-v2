@@ -52,19 +52,20 @@ class menu(QMainWindow):
              el = QtWidgets.QPushButton(self.serchAreaMain)
              el.setObjectName(item.name)
              el.setText(item.name)
-             el.clicked.connect(self.open)
+             el.clicked.connect(lambda: self.open(item))
              self.resultArea.setWidget(row, QtWidgets.QFormLayout.FieldRole, el)
              row=row+1
 
-    def open(self):
+    def open(self,item):
+        print(item.id)
         self.getDataFrom()
         obj=setWindow(self.searchIn)
         self.window = obj.returnObj()
         self.window.MainWindow=QtWidgets.QMainWindow()
+        self.window.id=item.id
 
         if self.window.isVisible():
             self.window.hide()
-
         else:
             self.window.show()
 

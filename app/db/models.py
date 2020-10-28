@@ -7,10 +7,33 @@ association_table = Table('association', Base.metadata,
     Column('movies_id', Integer, ForeignKey('movies.id'))
 )
 
+photos_star = Table('photos_star', Base.metadata,
+    Column('stars_id', Integer, ForeignKey('stars.id')),
+    Column('photos_id', Integer, ForeignKey('photos.id'))
+)
+
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
+
+    def __str__(self):
+        return  self.name
+
+
+class Photos(Base):
+    __tablename__ ='photos'
+    id= Column('id',Integer,primary_key=True)
+    src = Column('src',String)
+    stars_id = Column(Integer, ForeignKey('stars.id'))
+    stars = relationship(
+        "Stars",
+        secondary=photos_star,
+        back_populates="photos"
+    )
+
+    def __str__(self):
+        return  self.src
 
 class Stars(Base):
     __tablename__ ='stars'
@@ -23,6 +46,15 @@ class Stars(Base):
         back_populates="stars"
     )
 
+    photos = relationship(
+        "Photos",
+        secondary=photos_star,
+        back_populates="stars"
+    )
+
+    def __str__(self):
+        return  self.name
+
 class Movies(Base):
     __tablename__ ='movies'
     id= Column('id',Integer,primary_key=True)
@@ -33,10 +65,8 @@ class Movies(Base):
         back_populates="movies"
     )
 
-
-
-
-
+    def __str__(self):
+        return  self.name
 
 Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)
