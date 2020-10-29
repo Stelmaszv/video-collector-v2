@@ -114,6 +114,162 @@ class stars(QWidget):
         self.label_23.setObjectName("label_23")
         self.gridLayout_5.addWidget(self.label_23, 1, 2, 1, 1)
         """
+
+    def info(self):
+        self.label_225 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_225.setObjectName("label_225")
+        self.gridLayout_8.addWidget(self.label_225, 4, 0, 1, 2)
+        self.label_8 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_8.setObjectName("label_8")
+        self.label_8.setText("TextLabel")
+        self.gridLayout_8.addWidget(self.label_8, 0, 0, 1, 1)
+        self.label_11 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_11.setObjectName("label_11")
+        self.label_11.setText("TextLabel")
+        self.gridLayout_8.addWidget(self.label_11, 1, 0, 1, 1)
+        self.label_10 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_10.setObjectName("label_10")
+        self.label_10.setText("TextLabel")
+        self.gridLayout_8.addWidget(self.label_10, 0, 1, 1, 1)
+        self.label_13 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_13.setObjectName("label_13")
+        self.label_13.setText("TextLabel")
+        self.gridLayout_8.addWidget(self.label_13, 1, 1, 1, 1)
+        self.label_25 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_25.setObjectName("label_25")
+        self.label_25.setText("TextLabel")
+        self.gridLayout_8.addWidget(self.label_25, 2, 0, 1, 1)
+        self.label_224 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_224.setObjectName("label_224")
+        self.label_224.setText("TextLabel")
+        self.gridLayout_8.addWidget(self.label_224, 2, 1, 1, 1)
+        self.label_224 = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.label_224.setObjectName("label_224")
+        self.label_224.setText("TextLabel")
+        self.gridLayout_8.addWidget(self.label_224, 4, 0, 1, 2)
+        self.commandLinkButton = QtWidgets.QCommandLinkButton(self.gridLayoutWidget)
+        self.commandLinkButton.setObjectName("commandLinkButton")
+        self.commandLinkButton.setText("dqwd")
+        self.gridLayout_8.addWidget(self.commandLinkButton, 5, 0, 1, 2)
+
+    def paginationForSeries(self):
+        self.tabWidget = QtWidgets.QTabWidget(self.obj)
+        self.tabWidget.setGeometry(QtCore.QRect(80, 430, 1571, 581))
+        self.tabWidget.setObjectName("tabWidget")
+        self.tabWidgetPage1 = QtWidgets.QWidget()
+        self.tabWidgetPage1.setObjectName("tabWidgetPage1")
+        self.gridLayoutWidget_15 = QtWidgets.QWidget(self.tabWidgetPage1)
+
+    def series(self):
+
+        #grid
+        self.gridLayoutWidget = QtWidgets.QWidget(self.obj)
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(560, 180, 391, 161))
+
+        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
+        self.gridLayout_8 = QtWidgets.QGridLayout(self.gridLayoutWidget)
+        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+
+    def seriesResult(self):
+        self.tabWidgetPage1 = QtWidgets.QWidget()
+        self.tabWidgetPage1.setObjectName("tabWidgetPage1")
+        self.gridLayoutWidget_15 = QtWidgets.QWidget(self.tabWidgetPage1)
+        self.gridLayoutWidget_15.setGeometry(QtCore.QRect(10, 20, 370, 251))
+        self.gridLayoutWidget_15.setObjectName("gridLayoutWidget_15")
+        self.sereisItem1 = QtWidgets.QGridLayout(self.gridLayoutWidget_15)
+        self.sereisItem1.setContentsMargins(0, 0, 0, 0)
+        self.sereisItem1.setObjectName("sereisItem1")
+
+        self.label_214 = QtWidgets.QLabel(self.gridLayoutWidget_15)
+        self.label_214.setObjectName("seriesTitle")
+        self.label_214.setText("<html><head/><body><p align=\"center\">Series List</p></body></html>")
+        self.sereisItem1.addWidget(self.label_214, 0, 0, 1, 4)
+        self.pushButton_376 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+
+        self.pushButton_376.setObjectName("pushButton_376")
+        self.pushButton_376.setText("Info ")
+        self.sereisItem1.addWidget(self.pushButton_376, 1, 3, 1, 1)
+
+        self.label_215 = QtWidgets.QLabel(self.gridLayoutWidget_15)
+        self.label_215.setObjectName("label_215")
+        self.sereisItem1.addWidget(self.label_215, 3, 1, 1, 1)
+
+        self.buttonInfo_35 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.buttonInfo_35.setObjectName("buttonInfo_35")
+        self.buttonInfo_35.setText("play")
+        self.sereisItem1.addWidget(self.buttonInfo_35, 1, 2, 1, 1)
+
+        self.seriesPhoto_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
+        self.seriesPhoto_35.setMaximumSize(QtCore.QSize(100, 100))
+        self.seriesPhoto_35.setText("")
+        self.seriesPhoto_35.setPixmap(QtGui.QPixmap("C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg"))
+        self.seriesPhoto_35.setScaledContents(True)
+        self.seriesPhoto_35.setObjectName("seriesPhoto_35")
+        self.sereisItem1.addWidget(self.seriesPhoto_35, 1, 0, 5, 1)
+
+        self.item_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
+        self.item_35.setObjectName("item_35")
+        self.item_35.setText("qefe ")
+        self.sereisItem1.addWidget(self.item_35, 1, 1, 1, 1)
+
+        self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(self.gridLayoutWidget_15)
+        self.commandLinkButton_35.setObjectName("commandLinkButton_35")
+        self.commandLinkButton_35.setText( "show more")
+        self.sereisItem1.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
+        self.tabWidget.addTab(self.tabWidgetPage1, "")
+
+
+        """"
+        self.pushButton_368 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_368.setObjectName("pushButton_368")
+        self.seriesList_35.addWidget(self.pushButton_368, 5, 2, 1, 1)
+        self.pushButton_368 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_368.setObjectName("pushButton_368")
+        self.seriesList_35.addWidget(self.pushButton_368, 5, 2, 1, 1)
+        self.pushButton_369 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_369.setObjectName("pushButton_369")
+        self.seriesList_35.addWidget(self.pushButton_369, 2, 2, 1, 1)
+        self.pushButton_370 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_370.setObjectName("pushButton_370")
+        self.seriesList_35.addWidget(self.pushButton_370, 3, 2, 1, 1)
+        self.pushButton_371 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_371.setObjectName("pushButton_371")
+        self.seriesList_35.addWidget(self.pushButton_371, 4, 2, 1, 1)
+        self.pushButton_372 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_372.setObjectName("pushButton_372")
+        self.seriesList_35.addWidget(self.pushButton_372, 2, 3, 1, 1)
+        self.pushButton_373 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_373.setObjectName("pushButton_373")
+        self.seriesList_35.addWidget(self.pushButton_373, 4, 3, 1, 1)
+        self.pushButton_374 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_374.setObjectName("pushButton_374")
+        self.seriesList_35.addWidget(self.pushButton_374, 3, 3, 1, 1)
+        self.pushButton_375 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_375.setObjectName("pushButton_375")
+        self.seriesList_35.addWidget(self.pushButton_375, 5, 3, 1, 1)
+        self.pushButton_376 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.pushButton_376.setObjectName("pushButton_376")
+        self.seriesList_35.addWidget(self.pushButton_376, 1, 3, 1, 1)
+        self.label_215 = QtWidgets.QLabel(self.gridLayoutWidget_15)
+        self.label_215.setObjectName("label_215")
+        self.seriesList_35.addWidget(self.label_215, 3, 1, 1, 1)
+        self.buttonInfo_35 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+        self.buttonInfo_35.setObjectName("buttonInfo_35")
+        self.seriesList_35.addWidget(self.buttonInfo_35, 1, 2, 1, 1)
+        self.seriesPhoto_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
+        self.seriesPhoto_35.setMaximumSize(QtCore.QSize(100, 100))
+        self.seriesPhoto_35.setText("")
+        self.seriesPhoto_35.setPixmap(
+            QtGui.QPixmap("C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg"))
+        self.seriesPhoto_35.setScaledContents(True)
+        self.seriesPhoto_35.setObjectName("seriesPhoto_35")
+        self.seriesList_35.addWidget(self.seriesPhoto_35, 1, 0, 5, 1)
+        self.item_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
+        self.item_35.setObjectName("item_35")
+        self.seriesList_35.addWidget(self.item_35, 1, 1, 1, 1)
+        """
+
     def setupUi(self):
         self.createObj()
         """
@@ -187,12 +343,18 @@ class stars(QWidget):
         self.label_23.setObjectName("label_23")
         self.gridLayout_5.addWidget(self.label_23, 1, 2, 1, 1)
         """
+        self.series()
+        """
         self.gridLayoutWidget = QtWidgets.QWidget(self.obj)
         self.gridLayoutWidget.setGeometry(QtCore.QRect(560, 180, 391, 161))
+        
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout_8 = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_8.setObjectName("gridLayout_8")
+        """
+        self.info()
+        """
         self.label_225 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_225.setObjectName("label_225")
         self.gridLayout_8.addWidget(self.label_225, 4, 0, 1, 2)
@@ -217,20 +379,22 @@ class stars(QWidget):
         self.commandLinkButton = QtWidgets.QCommandLinkButton(self.gridLayoutWidget)
         self.commandLinkButton.setObjectName("commandLinkButton")
         self.gridLayout_8.addWidget(self.commandLinkButton, 5, 0, 1, 2)
+        """
+        self.paginationForSeries()
+
+        """
         self.tabWidget = QtWidgets.QTabWidget(self.obj)
         self.tabWidget.setGeometry(QtCore.QRect(80, 430, 1571, 581))
         self.tabWidget.setObjectName("tabWidget")
         self.tabWidgetPage1 = QtWidgets.QWidget()
         self.tabWidgetPage1.setObjectName("tabWidgetPage1")
         self.gridLayoutWidget_15 = QtWidgets.QWidget(self.tabWidgetPage1)
-        self.gridLayoutWidget_15.setGeometry(QtCore.QRect(10, 20, 370, 251))
-        self.gridLayoutWidget_15.setObjectName("gridLayoutWidget_15")
-        self.seriesList_35 = QtWidgets.QGridLayout(self.gridLayoutWidget_15)
-        self.seriesList_35.setContentsMargins(0, 0, 0, 0)
-        self.seriesList_35.setObjectName("seriesList_35")
-        self.label_214 = QtWidgets.QLabel(self.gridLayoutWidget_15)
-        self.label_214.setObjectName("label_214")
-        self.seriesList_35.addWidget(self.label_214, 0, 0, 1, 4)
+        """
+
+        self.seriesResult()
+
+
+        """
         self.pushButton_368 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
         self.pushButton_368.setObjectName("pushButton_368")
         self.seriesList_35.addWidget(self.pushButton_368, 5, 2, 1, 1)
@@ -274,6 +438,11 @@ class stars(QWidget):
         self.item_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
         self.item_35.setObjectName("item_35")
         self.seriesList_35.addWidget(self.item_35, 1, 1, 1, 1)
+        """
+        
+        self.tabWidget.addTab(self.tabWidgetPage1, "")
+
+        """
         self.label_216 = QtWidgets.QLabel(self.gridLayoutWidget_15)
         self.label_216.setObjectName("label_216")
         self.seriesList_35.addWidget(self.label_216, 2, 1, 1, 1)
@@ -994,8 +1163,8 @@ class stars(QWidget):
         self.commandLinkButton_46.setObjectName("commandLinkButton_46")
         self.seriesList_46.addWidget(self.commandLinkButton_46, 6, 0, 1, 4)
         self.tabWidget.addTab(self.tabWidgetPage2, "")
-
         self.retranslateUi(self.obj)
+        """
         self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(self.obj)
 

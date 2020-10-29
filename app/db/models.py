@@ -12,10 +12,22 @@ photos_star = Table('photos_star', Base.metadata,
     Column('photos_id', Integer, ForeignKey('photos.id'))
 )
 
+stars_series = Table('stars_series', Base.metadata,
+    Column('stars_id', Integer, ForeignKey('stars.id')),
+    Column('series_id', Integer, ForeignKey('series.id'))
+)
+
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
+    avatar = Column('avatar', String)
+
+    stars = relationship(
+        "Stars",
+        secondary=stars_series,
+        back_populates="series"
+    )
 
     def __str__(self):
         return  self.name
@@ -39,6 +51,13 @@ class Stars(Base):
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
     avatar = Column('avatar',String)
+
+    series = relationship(
+        "Series",
+        secondary=stars_series,
+        back_populates="stars"
+    )
+
     movies = relationship(
         "Movies",
         secondary=association_table,

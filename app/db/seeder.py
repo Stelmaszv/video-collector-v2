@@ -5,8 +5,8 @@ def runSeeader():
     objects = [
         Photos(src="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
         Photos(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
-        Photos(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
-        Photos(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
+        Photos(src="C:/Users/DeadlyComputer/Desktop/photo/unnamed.jpg"),
+        Photos(src="C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg"),
         Photos(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
         Photos(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg")
 
@@ -15,12 +15,14 @@ def runSeeader():
     session.commit()
     objects = [
         Stars(name="Fudzi",avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
-        Stars(name="Motsu",avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg")
+        Stars(name="Topcia",avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg")
     ]
     session.add_all(objects)
     session.commit()
     objects = [
-        Series(name="Koty in the city")
+        Series(name="Koty in the city"),
+        Series(name="Koty in the city2"),
+        Series(name="Koty in the city3")
     ]
     session.add_all(objects)
     session.commit()
@@ -48,6 +50,14 @@ def runSeeader():
     star.photos.append(photo4)
     star.photos.append(photo5)
     star.photos.append(photo6)
+
+    serie = session.query(Series).get(1)
+    serie2 = session.query(Series).get(2)
+    serie3 = session.query(Series).get(2)
+    star.series.append(serie)
+    star.series.append(serie2)
+    star.series.append(serie3)
+
 
 
 
