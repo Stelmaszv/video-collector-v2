@@ -12,6 +12,17 @@ class stars(QWidget):
             'name':"test",
             'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
             'movies': [
+                "fajny dqdfq qgqegqreg qgqrgqr qg ",
+                "fajny2",
+                "fajny3",
+                "fajny5",
+                'fajny6'
+            ]
+        },
+        {
+            'name': "test",
+            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
+            'movies': [
                 "fajny",
                 "fajny2",
                 "fajny3",
@@ -74,7 +85,6 @@ class stars(QWidget):
             if row > 3:
                 row=0
                 col=col+1
-
 
         """"
         self.gridLayoutWidget_2 = QtWidgets.QWidget(self.obj)
@@ -170,7 +180,7 @@ class stars(QWidget):
         self.tabWidget.setObjectName("tabWidget")
         self.tabWidgetPage1 = QtWidgets.QWidget()
         self.tabWidgetPage1.setObjectName("tabWidgetPage1")
-        self.gridLayoutWidget_15 = QtWidgets.QWidget(self.tabWidgetPage1)
+        self.grid = QtWidgets.QWidget(self.tabWidgetPage1)
 
     def series(self):
 
@@ -186,23 +196,24 @@ class stars(QWidget):
     def seriesResult(self):
         self.tabWidgetPage1 = QtWidgets.QWidget()
         self.tabWidgetPage1.setObjectName("tabWidgetPage1")
-        self.gridLayoutWidget_15 = QtWidgets.QWidget(self.tabWidgetPage1)
-        self.gridLayoutWidget_15.setGeometry(QtCore.QRect(5, 5, 370, 251))
-        self.gridLayoutWidget_15.setObjectName("gridLayoutWidget_15")
-        left=0
+        left=5
 
         for item in self.seriesList:
-            seriesItem = QtWidgets.QGridLayout(self.gridLayoutWidget_15)
+
+            grid = QtWidgets.QWidget(self.tabWidgetPage1)
+            grid.setGeometry(QtCore.QRect(left, 0,750, 600))
+            grid.setObjectName("gridLayoutWidget_15")
+            seriesItem = QtWidgets.QGridLayout(grid)
             seriesItem.setContentsMargins(0, 0, 0, 0)
             seriesItem.setGeometry(QtCore.QRect(0, 0, 0, 0))
             seriesItem.setObjectName("seriesItem")
-            title = QtWidgets.QLabel(self.gridLayoutWidget_15)
+            title = QtWidgets.QLabel(grid)
             title.setObjectName("seriesTitle")
             title.setText("<html><head/><body><p align=\"center\";><span style=\" font-size:18pt; font-weight:600; \">"+item['name']+"</span></p></body></html>")
             seriesItem.addWidget(title, 0, 0, 1, 0)
 
-            self.seriesPhoto_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
-            self.seriesPhoto_35.setMaximumSize(QtCore.QSize(200, 200))
+            self.seriesPhoto_35 = QtWidgets.QLabel(grid)
+            self.seriesPhoto_35.setMaximumSize(QtCore.QSize(200, 250))
             self.seriesPhoto_35.setText("")
             self.seriesPhoto_35.setPixmap(QtGui.QPixmap(item['avatar']))
             self.seriesPhoto_35.setScaledContents(True)
@@ -211,35 +222,33 @@ class stars(QWidget):
 
             row=1
             for el in item['movies']:
-                name = QtWidgets.QLabel(self.gridLayoutWidget_15)
+                name = QtWidgets.QLabel(grid)
                 name.setObjectName("item_35")
                 name.setText(el)
                 seriesItem.addWidget(name, row, 1, 1, 1)
 
-                info = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+                info = QtWidgets.QPushButton(grid)
                 info.setObjectName("InfoButton")
                 info.setText("Info")
                 seriesItem.addWidget(info, row, 3, 1, 1)
 
-                play = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+                play = QtWidgets.QPushButton(grid)
                 play.setObjectName("playButton")
                 play.setText("play")
                 seriesItem.addWidget(play, row, 2, 1, 1)
 
                 row=row+1
 
-            left=left+100
+            left=left+800
 
             if len(item['movies']) > 4:
-                self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(self.gridLayoutWidget_15)
+                self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(grid)
                 self.commandLinkButton_35.setObjectName("commandLinkButton_35")
                 self.commandLinkButton_35.setText("show more")
                 seriesItem.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
 
 
         self.tabWidget.addTab(self.tabWidgetPage1, "")
-
-
 
         """
 
@@ -290,7 +299,6 @@ class stars(QWidget):
         self.seriesItem.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
         self.tabWidget.addTab(self.tabWidgetPage1, "")
         """
-
         """"
         self.pushButton_368 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
         self.pushButton_368.setObjectName("pushButton_368")
