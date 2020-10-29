@@ -7,7 +7,19 @@ from app.db.models import session
 class stars(QWidget):
     model = Stars
     id = 1
-
+    seriesList = [
+        {
+            'name':"test",
+            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
+            'movies': [
+                "fajny",
+                "fajny2",
+                "fajny3",
+                "fajny5",
+                'fajny6'
+            ]
+        }
+    ]
     def __init__(self,):
         super().__init__()
 
@@ -175,30 +187,89 @@ class stars(QWidget):
         self.tabWidgetPage1 = QtWidgets.QWidget()
         self.tabWidgetPage1.setObjectName("tabWidgetPage1")
         self.gridLayoutWidget_15 = QtWidgets.QWidget(self.tabWidgetPage1)
+        self.gridLayoutWidget_15.setGeometry(QtCore.QRect(5, 5, 370, 251))
+        self.gridLayoutWidget_15.setObjectName("gridLayoutWidget_15")
+        left=0
+
+        for item in self.seriesList:
+            seriesItem = QtWidgets.QGridLayout(self.gridLayoutWidget_15)
+            seriesItem.setContentsMargins(0, 0, 0, 0)
+            seriesItem.setGeometry(QtCore.QRect(0, 0, 0, 0))
+            seriesItem.setObjectName("seriesItem")
+            title = QtWidgets.QLabel(self.gridLayoutWidget_15)
+            title.setObjectName("seriesTitle")
+            title.setText("<html><head/><body><p align=\"center\";><span style=\" font-size:18pt; font-weight:600; \">"+item['name']+"</span></p></body></html>")
+            seriesItem.addWidget(title, 0, 0, 1, 0)
+
+            self.seriesPhoto_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
+            self.seriesPhoto_35.setMaximumSize(QtCore.QSize(200, 200))
+            self.seriesPhoto_35.setText("")
+            self.seriesPhoto_35.setPixmap(QtGui.QPixmap(item['avatar']))
+            self.seriesPhoto_35.setScaledContents(True)
+            self.seriesPhoto_35.setObjectName("seriesPhoto_35")
+            seriesItem.addWidget(self.seriesPhoto_35, 1, 0, 5, 1)
+
+            row=1
+            for el in item['movies']:
+                name = QtWidgets.QLabel(self.gridLayoutWidget_15)
+                name.setObjectName("item_35")
+                name.setText(el)
+                seriesItem.addWidget(name, row, 1, 1, 1)
+
+                info = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+                info.setObjectName("InfoButton")
+                info.setText("Info")
+                seriesItem.addWidget(info, row, 3, 1, 1)
+
+                play = QtWidgets.QPushButton(self.gridLayoutWidget_15)
+                play.setObjectName("playButton")
+                play.setText("play")
+                seriesItem.addWidget(play, row, 2, 1, 1)
+
+                row=row+1
+
+            left=left+100
+
+            if len(item['movies']) > 4:
+                self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(self.gridLayoutWidget_15)
+                self.commandLinkButton_35.setObjectName("commandLinkButton_35")
+                self.commandLinkButton_35.setText("show more")
+                seriesItem.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
+
+
+        self.tabWidget.addTab(self.tabWidgetPage1, "")
+
+
+
+        """
+
+        self.tabWidgetPage1 = QtWidgets.QWidget()
+        self.tabWidgetPage1.setObjectName("tabWidgetPage1")
+        self.gridLayoutWidget_15 = QtWidgets.QWidget(self.tabWidgetPage1)
         self.gridLayoutWidget_15.setGeometry(QtCore.QRect(10, 20, 370, 251))
         self.gridLayoutWidget_15.setObjectName("gridLayoutWidget_15")
-        self.sereisItem1 = QtWidgets.QGridLayout(self.gridLayoutWidget_15)
-        self.sereisItem1.setContentsMargins(0, 0, 0, 0)
-        self.sereisItem1.setObjectName("sereisItem1")
+        self.seriesItem = QtWidgets.QGridLayout(self.gridLayoutWidget_15)
+        self.seriesItem.setContentsMargins(0, 0, 0, 0)
+        self.seriesItem.setObjectName("seriesItem")
 
         self.label_214 = QtWidgets.QLabel(self.gridLayoutWidget_15)
         self.label_214.setObjectName("seriesTitle")
         self.label_214.setText("<html><head/><body><p align=\"center\">Series List</p></body></html>")
-        self.sereisItem1.addWidget(self.label_214, 0, 0, 1, 4)
+        self.seriesItem.addWidget(self.label_214, 0, 0, 1, 4)
         self.pushButton_376 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
 
         self.pushButton_376.setObjectName("pushButton_376")
         self.pushButton_376.setText("Info ")
-        self.sereisItem1.addWidget(self.pushButton_376, 1, 3, 1, 1)
+        self.seriesItem.addWidget(self.pushButton_376, 1, 3, 1, 1)
 
         self.label_215 = QtWidgets.QLabel(self.gridLayoutWidget_15)
         self.label_215.setObjectName("label_215")
-        self.sereisItem1.addWidget(self.label_215, 3, 1, 1, 1)
+        self.seriesItem.addWidget(self.label_215, 3, 1, 1, 1)
 
         self.buttonInfo_35 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
         self.buttonInfo_35.setObjectName("buttonInfo_35")
         self.buttonInfo_35.setText("play")
-        self.sereisItem1.addWidget(self.buttonInfo_35, 1, 2, 1, 1)
+        self.seriesItem.addWidget(self.buttonInfo_35, 1, 2, 1, 1)
 
         self.seriesPhoto_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
         self.seriesPhoto_35.setMaximumSize(QtCore.QSize(100, 100))
@@ -206,19 +277,19 @@ class stars(QWidget):
         self.seriesPhoto_35.setPixmap(QtGui.QPixmap("C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg"))
         self.seriesPhoto_35.setScaledContents(True)
         self.seriesPhoto_35.setObjectName("seriesPhoto_35")
-        self.sereisItem1.addWidget(self.seriesPhoto_35, 1, 0, 5, 1)
+        self.seriesItem.addWidget(self.seriesPhoto_35, 1, 0, 5, 1)
 
         self.item_35 = QtWidgets.QLabel(self.gridLayoutWidget_15)
         self.item_35.setObjectName("item_35")
         self.item_35.setText("qefe ")
-        self.sereisItem1.addWidget(self.item_35, 1, 1, 1, 1)
+        self.seriesItem.addWidget(self.item_35, 1, 1, 1, 1)
 
         self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(self.gridLayoutWidget_15)
         self.commandLinkButton_35.setObjectName("commandLinkButton_35")
         self.commandLinkButton_35.setText( "show more")
-        self.sereisItem1.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
+        self.seriesItem.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
         self.tabWidget.addTab(self.tabWidgetPage1, "")
-
+        """
 
         """"
         self.pushButton_368 = QtWidgets.QPushButton(self.gridLayoutWidget_15)
