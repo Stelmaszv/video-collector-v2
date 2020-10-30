@@ -8,6 +8,7 @@ class stars(QWidget):
     model = Stars
     id = 1
     seriesList = [
+        #page1
         {
             'name':"1",
             'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
@@ -87,6 +88,40 @@ class stars(QWidget):
         },
         {
             'name': "8",
+            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
+            'movies': [
+                "fajny  ",
+                "fajny2",
+                "fajny3",
+                "fajny5",
+                'fajny6'
+            ]
+        },
+        #page2
+        {
+            'name': "9",
+            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
+            'movies': [
+                "fajny  ",
+                "fajny2",
+                "fajny3",
+                "fajny5",
+                'fajny6'
+            ]
+        },
+        {
+            'name': "10",
+            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
+            'movies': [
+                "fajny  ",
+                "fajny2",
+                "fajny3",
+                "fajny5",
+                'fajny6'
+            ]
+        },
+        {
+            'name': "11",
             'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
             'movies': [
                 "fajny  ",
@@ -193,9 +228,9 @@ class stars(QWidget):
         self.tabWidget = QtWidgets.QTabWidget(self.obj)
         self.tabWidget.setGeometry(QtCore.QRect(80, 430, 1571, 581))
         self.tabWidget.setObjectName("tabWidget")
-        self.tabWidgetPage1 = QtWidgets.QWidget()
-        self.tabWidgetPage1.setObjectName("tabWidgetPage1")
-        self.grid = QtWidgets.QWidget(self.tabWidgetPage1)
+        self.starPage = QtWidgets.QWidget()
+        self.starPage.setObjectName("tabWidgetPage1")
+        self.grid = QtWidgets.QWidget(self.starPage)
 
     def series(self):
 
@@ -208,14 +243,16 @@ class stars(QWidget):
         self.gridLayout_8.setObjectName("gridLayout_8")
 
     def seriesResult(self):
-        self.tabWidgetPage1 = QtWidgets.QWidget()
-        self.tabWidgetPage1.setObjectName("tabWidgetPage1")
         left=5
         top=0
         seriesElment=1
+        self.starPage = QtWidgets.QWidget()
+        self.starPage.setObjectName("tabWidgetPage1")
+        self.addPage=self.starPage
+        self.tabWidget.addTab(self.addPage, "")
         for item in self.seriesList:
 
-            grid = QtWidgets.QWidget(self.tabWidgetPage1)
+            grid = QtWidgets.QWidget(self.addPage)
             grid.setGeometry(QtCore.QRect(left,top, 390, 300))
             grid.setObjectName("gridLayoutWidget_15")
             seriesItem = QtWidgets.QGridLayout(grid)
@@ -266,13 +303,22 @@ class stars(QWidget):
                 seriesItem.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
             left = left + 390
 
-            if seriesElment==4:
+            if seriesElment % 4 == 0:
                 top=250
                 left=5
 
+            if seriesElment % 8==0:
+                top=0
+                left = 5
+                self.newPage = QtWidgets.QWidget()
+                self.newPage.setObjectName("tabWidgetPage1")
+                self.addPage = self.newPage
+                self.tabWidget.addTab(self.addPage, "")
+
             seriesElment = seriesElment + 1
 
-        self.tabWidget.addTab(self.tabWidgetPage1, "")
+
+
 
     def setupUi(self):
         self.createObj()
@@ -283,7 +329,6 @@ class stars(QWidget):
         self.info()
         self.paginationForSeries()
         self.seriesResult()
-        self.tabWidget.addTab(self.tabWidgetPage1, "")
         self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(self.obj)
 
