@@ -250,7 +250,10 @@ class stars(QWidget):
         self.starPage.setObjectName("tabWidgetPage1")
         self.addPage=self.starPage
         self.tabWidget.addTab(self.addPage, "")
-        for item in self.seriesList:
+
+        series = self.data.series
+
+        for item in series:
 
             grid = QtWidgets.QWidget(self.addPage)
             grid.setGeometry(QtCore.QRect(left,top, 390, 300))
@@ -260,24 +263,25 @@ class stars(QWidget):
             seriesItem.setObjectName("seriesItem")
             title = QtWidgets.QLabel(grid)
             title.setObjectName("seriesTitle")
-            title.setText("<html><head/><body><p align=\"center\";><span style=\" font-size:18pt; font-weight:600; \">"+item['name']+"</span></p></body></html>")
+            title.setText("<html><head/><body><p align=\"center\";><span style=\" font-size:18pt; font-weight:600; \">"+item.name+"</span></p></body></html>")
             seriesItem.addWidget(title, 0, 0, 1, 0)
 
             self.seriesPhoto_35 = QtWidgets.QLabel(grid)
-            self.seriesPhoto_35.setMaximumSize(QtCore.QSize(100, 150))
+            self.seriesPhoto_35.setMaximumSize(QtCore.QSize(100, 100))
             self.seriesPhoto_35.setText("")
-            self.seriesPhoto_35.setPixmap(QtGui.QPixmap(item['avatar']))
+            self.seriesPhoto_35.setPixmap(QtGui.QPixmap(item.avatar))
             self.seriesPhoto_35.setScaledContents(True)
             self.seriesPhoto_35.setObjectName("seriesPhoto_35")
             seriesItem.addWidget(self.seriesPhoto_35, 1, 0, 5, 1)
 
             row=1
-            for el in item['movies']:
+
+            for el in item.movies:
                 name = QtWidgets.QLabel(grid)
                 name.setMinimumSize(QtCore.QSize(30, 0))
                 name.setMaximumSize(QtCore.QSize(10000000, 16777215))
                 name.setObjectName("nameLabel")
-                name.setText(el)
+                name.setText(el.name)
                 seriesItem.addWidget(name, row, 1, 1, 1)
 
                 info = QtWidgets.QPushButton(grid)
@@ -296,12 +300,13 @@ class stars(QWidget):
 
                 row=row+1
 
-            if len(item['movies']) > 4:
+            if len(item.movies) > 4:
                 self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(grid)
                 self.commandLinkButton_35.setObjectName("commandLinkButton_35")
                 self.commandLinkButton_35.setText("show more")
                 seriesItem.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
             left = left + 390
+
 
             if seriesElment % 4 == 0:
                 top=250
@@ -318,8 +323,6 @@ class stars(QWidget):
             seriesElment = seriesElment + 1
 
 
-
-
     def setupUi(self):
         self.createObj()
         self.avatar()
@@ -331,7 +334,6 @@ class stars(QWidget):
         self.seriesResult()
         self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(self.obj)
-
 
     def retranslateUi(self, StarList):
         _translate = QtCore.QCoreApplication.translate

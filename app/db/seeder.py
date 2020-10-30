@@ -9,7 +9,6 @@ def runSeeader():
         Photos(src="C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg"),
         Photos(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
         Photos(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg")
-
     ]
     session.add_all(objects)
     session.commit()
@@ -20,14 +19,14 @@ def runSeeader():
     session.add_all(objects)
     session.commit()
     objects = [
-        Series(name="Koty in the city"),
-        Series(name="Koty in the city2"),
-        Series(name="Koty in the city3")
+        Series(name="Koty in the city",avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+        Series(name="Koty in the city2",avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+        Series(name="Koty in the city3",avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg")
     ]
     session.add_all(objects)
     session.commit()
     objects = [
-        Movies(name="1"),
+        Movies(name="fajna Topcia"),
         Movies(name="2"),
         Movies(name="3"),
         Movies(name="4"),
@@ -43,13 +42,18 @@ def runSeeader():
     session.add_all(objects)
     session.commit()
 
+    addSeries()
+    addPhotos()
     addStarToMovie()
 
     query=session.query(Movies).get(1)
     star=session.query(Stars).get(2)
     query.stars.append(star)
+    session.add_all(objects)
 
 
+def addPhotos():
+    star = session.query(Stars).get(2)
     photo = session.query(Photos).get(1)
     photo2 = session.query(Photos).get(2)
     photo3 = session.query(Photos).get(3)
@@ -63,65 +67,54 @@ def runSeeader():
     star.photos.append(photo5)
     star.photos.append(photo6)
 
+def addSeries():
+
+    star = session.query(Stars).get(2)
     serie = session.query(Series).get(1)
-    serie2 = session.query(Series).get(2)
-    serie3 = session.query(Series).get(2)
     star.series.append(serie)
-    star.series.append(serie2)
-    star.series.append(serie3)
+
+    serie = session.query(Series).get(2)
+    star.series.append(serie)
 
 def addStarToMovie():
+    star = session.query(Stars).get(2)
     serie = session.query(Series).get(1)
-    serie2 = session.query(Series).get(2)
-    serie3 = session.query(Series).get(2)
-    star=session.query(Stars).get(2)
-    movie=session.query(Movies).get(1)
+    movie = session.query(Movies).get(1)
     serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
     movie.stars.append(star)
-    movie=session.query(Movies).get(2)
+    movie = session.query(Movies).get(2)
     serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
+    movie = session.query(Movies).get(3)
+    serie.movies.append(movie)
     movie.stars.append(star)
-    movie=session.query(Movies).get(3)
+    movie = session.query(Movies).get(4)
     serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
-    movie.stars.append(star)
-    movie=session.query(Movies).get(4)
+    movie = session.query(Movies).get(6)
     serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
-    movie.stars.append(star)
-    movie=session.query(Movies).get(5)
-    serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
-    movie.stars.append(star)
-    movie=session.query(Movies).get(6)
-    serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
-    movie.stars.append(star)
-    movie=session.query(Movies).get(7)
-    serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
-    movie.stars.append(star)
-    movie=session.query(Movies).get(8)
-    serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
-    movie.stars.append(star)
-    movie=session.query(Movies).get(9)
-    serie.movies.append(movie)
-    serie2.movies.append(movie)
-    serie2.movies.append(movie)
     movie.stars.append(star)
 
-runSeeader()
+    serie = session.query(Series).get(2)
+    movie = session.query(Movies).get(1)
+    movie.stars.append(star)
+    serie.movies.append(movie)
+    movie = session.query(Movies).get(2)
+    serie.movies.append(movie)
+    movie.stars.append(star)
+    movie = session.query(Movies).get(3)
+    serie.movies.append(movie)
+    movie.stars.append(star)
+    movie = session.query(Movies).get(4)
+    serie.movies.append(movie)
+    movie.stars.append(star)
+    movie = session.query(Movies).get(6)
+    serie.movies.append(movie)
+    movie.stars.append(star)
+
+
+
+
+
+
 
 
 

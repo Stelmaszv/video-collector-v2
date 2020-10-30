@@ -1,11 +1,10 @@
 from PyQt5.QtWidgets import QMainWindow,QApplication
 import sys
-from PyQt5 import QtCore, QtWidgets,QtGui
+from PyQt5 import QtCore, QtWidgets
 from core.search import setFactory
 from core.PyQt5Helpel import Layout
 from app.db.seeder import runSeeader
 from core.setWindow import setWindow
-from view.star.test import star
 runSeeader()
 
 class menu(QMainWindow):
