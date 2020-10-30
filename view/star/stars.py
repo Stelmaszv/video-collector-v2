@@ -12,18 +12,7 @@ class stars(QWidget):
             'name':"test",
             'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
             'movies': [
-                "fajny dqdfq qgqegqreg qgqrgqr qg ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "test",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny",
+                "fajny  ",
                 "fajny2",
                 "fajny3",
                 "fajny5",
@@ -197,15 +186,14 @@ class stars(QWidget):
         self.tabWidgetPage1 = QtWidgets.QWidget()
         self.tabWidgetPage1.setObjectName("tabWidgetPage1")
         left=5
-
+        top=0
         for item in self.seriesList:
 
             grid = QtWidgets.QWidget(self.tabWidgetPage1)
-            grid.setGeometry(QtCore.QRect(left, 0,750, 600))
+            grid.setGeometry(QtCore.QRect(left,top, 450, 300))
             grid.setObjectName("gridLayoutWidget_15")
             seriesItem = QtWidgets.QGridLayout(grid)
             seriesItem.setContentsMargins(0, 0, 0, 0)
-            seriesItem.setGeometry(QtCore.QRect(0, 0, 0, 0))
             seriesItem.setObjectName("seriesItem")
             title = QtWidgets.QLabel(grid)
             title.setObjectName("seriesTitle")
@@ -213,7 +201,7 @@ class stars(QWidget):
             seriesItem.addWidget(title, 0, 0, 1, 0)
 
             self.seriesPhoto_35 = QtWidgets.QLabel(grid)
-            self.seriesPhoto_35.setMaximumSize(QtCore.QSize(200, 250))
+            self.seriesPhoto_35.setMaximumSize(QtCore.QSize(100, 150))
             self.seriesPhoto_35.setText("")
             self.seriesPhoto_35.setPixmap(QtGui.QPixmap(item['avatar']))
             self.seriesPhoto_35.setScaledContents(True)
@@ -223,23 +211,29 @@ class stars(QWidget):
             row=1
             for el in item['movies']:
                 name = QtWidgets.QLabel(grid)
-                name.setObjectName("item_35")
+                name.setMinimumSize(QtCore.QSize(30, 0))
+                name.setMaximumSize(QtCore.QSize(10000000, 16777215))
+                name.setObjectName("nameLabel")
                 name.setText(el)
                 seriesItem.addWidget(name, row, 1, 1, 1)
 
                 info = QtWidgets.QPushButton(grid)
+                info.setMinimumSize(QtCore.QSize(30, 0))
+                info.setMaximumSize(QtCore.QSize(10, 16777215))
                 info.setObjectName("InfoButton")
                 info.setText("Info")
                 seriesItem.addWidget(info, row, 3, 1, 1)
 
                 play = QtWidgets.QPushButton(grid)
+                play.setMinimumSize(QtCore.QSize(30, 0))
+                play.setMaximumSize(QtCore.QSize(10, 16777215))
                 play.setObjectName("playButton")
                 play.setText("play")
                 seriesItem.addWidget(play, row, 2, 1, 1)
 
                 row=row+1
 
-            left=left+800
+            left=left+350
 
             if len(item['movies']) > 4:
                 self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(grid)
