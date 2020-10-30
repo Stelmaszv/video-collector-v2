@@ -27,12 +27,24 @@ def runSeeader():
     session.add_all(objects)
     session.commit()
     objects = [
-        Movies(name="Fajny Film"),
-        Movies(name="Motsu w aksji"),
-        Movies(name="KOtek in City")
+        Movies(name="1"),
+        Movies(name="2"),
+        Movies(name="3"),
+        Movies(name="4"),
+        Movies(name="5"),
+        Movies(name="6"),
+        Movies(name="7"),
+        Movies(name="8"),
+        Movies(name="9"),
+        Movies(name="8"),
+        Movies(name="9"),
+        Movies(name="10")
     ]
     session.add_all(objects)
     session.commit()
+
+    addStarToMovie()
+
     query=session.query(Movies).get(1)
     star=session.query(Stars).get(2)
     query.stars.append(star)
@@ -57,6 +69,59 @@ def runSeeader():
     star.series.append(serie)
     star.series.append(serie2)
     star.series.append(serie3)
+
+def addStarToMovie():
+    serie = session.query(Series).get(1)
+    serie2 = session.query(Series).get(2)
+    serie3 = session.query(Series).get(2)
+    star=session.query(Stars).get(2)
+    movie=session.query(Movies).get(1)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+    movie=session.query(Movies).get(2)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+    movie=session.query(Movies).get(3)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+    movie=session.query(Movies).get(4)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+    movie=session.query(Movies).get(5)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+    movie=session.query(Movies).get(6)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+    movie=session.query(Movies).get(7)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+    movie=session.query(Movies).get(8)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+    movie=session.query(Movies).get(9)
+    serie.movies.append(movie)
+    serie2.movies.append(movie)
+    serie2.movies.append(movie)
+    movie.stars.append(star)
+
+runSeeader()
 
 
 

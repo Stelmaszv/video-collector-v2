@@ -17,6 +17,11 @@ stars_series = Table('stars_series', Base.metadata,
     Column('series_id', Integer, ForeignKey('series.id'))
 )
 
+movies_Series = Table('movies_Series', Base.metadata,
+    Column('movies_id', Integer, ForeignKey('movies.id')),
+    Column('series_id', Integer, ForeignKey('series.id'))
+)
+
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
@@ -26,6 +31,12 @@ class Series(Base):
     stars = relationship(
         "Stars",
         secondary=stars_series,
+        back_populates="series"
+    )
+
+    movies = relationship(
+        "Movies",
+        secondary=movies_Series,
         back_populates="series"
     )
 
@@ -80,6 +91,12 @@ class Movies(Base):
     stars = relationship(
         "Stars",
         secondary=association_table,
+        back_populates="movies"
+    )
+
+    series = relationship(
+        "Series",
+        secondary=movies_Series,
         back_populates="movies"
     )
 
