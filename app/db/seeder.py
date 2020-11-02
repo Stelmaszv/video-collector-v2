@@ -1,6 +1,6 @@
 from app.db.models import Movies,Series,Stars,Photos
 from app.db.models import session
-
+"""
 def runSeeader():
     objects = [
         Photos(src="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
@@ -109,6 +109,7 @@ def addStarToMovie():
     movie = session.query(Movies).get(6)
     serie.movies.append(movie)
     movie.stars.append(star)
+"""
 
 
 
