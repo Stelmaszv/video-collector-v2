@@ -7,8 +7,6 @@ from core.setWindow import setWindow
 from app.db.seaders import initSeader
 initSeader().initNow()
 
-
-
 class menu(QMainWindow):
     searchIn='stars'
     searchFaze=''
