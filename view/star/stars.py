@@ -3,6 +3,7 @@ from app.db.models import Stars
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import  QWidget
 from app.db.models import session
+from core.strings import stringManipupations
 
 class stars(QWidget):
     model = Stars
@@ -252,7 +253,6 @@ class stars(QWidget):
         self.tabWidget.addTab(self.addPage, "")
 
         series = self.data.series
-
         for item in series:
 
             grid = QtWidgets.QWidget(self.addPage)
@@ -264,7 +264,8 @@ class stars(QWidget):
             seriesItem.setObjectName("seriesItem")
             title = QtWidgets.QLabel(grid)
             title.setObjectName("seriesTitle")
-            title.setText("<html><head/><body><span style=\" font-size:12pt; font-weight:600; \">"+item.name+"</span></body></html>")
+
+            title.setText("<html><head/><body><span style=\" font-size:12pt; font-weight:600; \">"+stringManipupations.short(item.name,35)+"</span></body></html>")
             seriesItem.addWidget(title, 0, 0, 1, 2)
 
             if len(item.movies) > 4:
