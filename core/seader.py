@@ -15,6 +15,13 @@ class abstractSeader(ABC):
         for x in range(items):
             self.objects.append(model(name=x))
 
+    def getItem(self,id):
+        self.item=session.query(self.model).get(id)
+
+    def addRelations(self,object,related,ids):
+        for item in session.query(related).all():
+            if item.id in ids:
+                object.append(item)
 
 class initSeader:
 
