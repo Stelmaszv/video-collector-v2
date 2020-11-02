@@ -23,11 +23,4 @@ class abstractSeader(ABC):
             if item.id in ids:
                 object.append(item)
 
-class initSeader:
 
-    def __init__(self,seaders):
-        self.seaders=seaders
-
-    def initNow(self):
-        for item in self.seaders:
-            item.run()

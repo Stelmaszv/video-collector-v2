@@ -3,9 +3,11 @@ import sys
 from PyQt5 import QtCore, QtWidgets
 from core.search import setFactory
 from core.PyQt5Helpel import Layout
-from app.db.seeder import runSeeader
 from core.setWindow import setWindow
-runSeeader()
+from app.db.seaders import initSeader
+initSeader().initNow()
+
+
 
 class menu(QMainWindow):
     searchIn='stars'
