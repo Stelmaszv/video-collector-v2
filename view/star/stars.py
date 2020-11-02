@@ -244,7 +244,7 @@ class stars(QWidget):
 
     def seriesResult(self):
         left=5
-        top=0
+        top=50
         seriesElment=1
         self.starPage = QtWidgets.QWidget()
         self.starPage.setObjectName("tabWidgetPage1")
@@ -256,15 +256,23 @@ class stars(QWidget):
         for item in series:
 
             grid = QtWidgets.QWidget(self.addPage)
-            grid.setGeometry(QtCore.QRect(left,top, 390, 300))
+            grid.setGeometry(QtCore.QRect(left,top, 0,0))
+            grid.setMinimumSize(QtCore.QSize(390, 200))
+            grid.setMaximumSize(QtCore.QSize(380, 200))
             grid.setObjectName("gridLayoutWidget_15")
             seriesItem = QtWidgets.QGridLayout(grid)
-            seriesItem.setContentsMargins(2, 2, 2, 2)
             seriesItem.setObjectName("seriesItem")
             title = QtWidgets.QLabel(grid)
             title.setObjectName("seriesTitle")
-            title.setText("<html><head/><body><p align=\"center\";><span style=\" font-size:18pt; font-weight:600; \">"+item.name+"</span></p></body></html>")
-            seriesItem.addWidget(title, 0, 0, 1, 0)
+            title.setText("<html><head/><body><span style=\" font-size:12pt; font-weight:600; \">"+item.name+"</span></body></html>")
+            seriesItem.addWidget(title, 0, 0, 1, 2)
+
+            if len(item.movies) > 4:
+                more = QtWidgets.QPushButton(grid)
+                more.setMinimumSize(QtCore.QSize(30, 0))
+                more.setObjectName("InfoButton")
+                more.setText("more")
+                seriesItem.addWidget(more, 0, 2, 1, 2)
 
             self.seriesPhoto_35 = QtWidgets.QLabel(grid)
             self.seriesPhoto_35.setMaximumSize(QtCore.QSize(100, 100))
@@ -276,9 +284,9 @@ class stars(QWidget):
 
             row=1
 
+
             for el in item.movies:
                 name = QtWidgets.QLabel(grid)
-                name.setMinimumSize(QtCore.QSize(30, 0))
                 name.setMaximumSize(QtCore.QSize(10000000, 16777215))
                 name.setObjectName("nameLabel")
                 name.setText(el.name)
@@ -300,20 +308,14 @@ class stars(QWidget):
 
                 row=row+1
 
-            if len(item.movies) > 4:
-                self.commandLinkButton_35 = QtWidgets.QCommandLinkButton(grid)
-                self.commandLinkButton_35.setObjectName("commandLinkButton_35")
-                self.commandLinkButton_35.setText("show more")
-                seriesItem.addWidget(self.commandLinkButton_35, 6, 0, 1, 4)
             left = left + 390
 
-
             if seriesElment % 4 == 0:
-                top=250
+                top=280
                 left=5
 
             if seriesElment % 8==0:
-                top=0
+                top=50
                 left = 5
                 self.newPage = QtWidgets.QWidget()
                 self.newPage.setObjectName("tabWidgetPage1")

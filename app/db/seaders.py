@@ -60,10 +60,10 @@ class series(abstractSeader):
 
     def addSeries(self):
         self.objects = [
-            Series(name="Koty in the city", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+            Series(name="Koty in the city Koty in the city Koty in the city", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
             Series(name="Koty in the city2", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
             Series(name="Koty in the city3", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
-            Series(name="4", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+            Series(name="Koty in the city4", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
             Series(name="5", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
             Series(name="6", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
             Series(name="7", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
@@ -80,19 +80,17 @@ class series(abstractSeader):
         self.getItem(3)
         self.addRelations(self.item.movies, Movies, [11, 12, 13, 14, 15])
         self.getItem(4)
-        self.addRelations(self.item.movies, Movies, [16])
+        self.addRelations(self.item.movies, Movies, [11, 12, 13, 14, 15])
         self.getItem(5)
-        self.addRelations(self.item.movies, Movies, [16])
+        self.addRelations(self.item.movies, Movies, [11, 12, 13, 14, 15])
         self.getItem(6)
-        self.addRelations(self.item.movies, Movies, [16])
+        self.addRelations(self.item.movies, Movies, [11, 12, 13, 14, 15])
         self.getItem(7)
-        self.addRelations(self.item.movies, Movies, [16])
+        self.addRelations(self.item.movies, Movies, [11, 12, 13, 14, 15])
         self.getItem(8)
-        self.addRelations(self.item.movies, Movies, [16])
+        self.addRelations(self.item.movies, Movies, [11, 12, 13, 14, 15])
         self.getItem(9)
-        self.addRelations(self.item.movies, Movies, [16])
-
-
+        self.addRelations(self.item.movies, Movies, [11, 12, 13, 14, 15])
 
 class initSeader:
 
