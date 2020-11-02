@@ -5,6 +5,7 @@ from core.search import setFactory
 from core.PyQt5Helpel import Layout
 from core.setWindow import setWindow
 from app.db.seaders import initSeader
+
 initSeader().initNow()
 
 class menu(QMainWindow):
@@ -14,6 +15,7 @@ class menu(QMainWindow):
     tags=[]
 
     def setupUi(self, MainWindow):
+        self.MainWindow=MainWindow
         self.Layout=Layout()
         self.mianSetings()
         self.formLayout()
@@ -46,26 +48,34 @@ class menu(QMainWindow):
 
     def searchResult(self):
         row=0
+        self.buttongroup = QtWidgets.QButtonGroup()
         self.Layout.clear(self.resultArea)
         for item in setFactory(self.searchIn,self).getFactory():
-             el = QtWidgets.QPushButton(self.serchAreaMain)
+             el = QtWidgets.QPushButton()
              el.setObjectName(item.name)
              el.setText(item.name)
-             el.clicked.connect(lambda: self.open(item))
-             self.resultArea.setWidget(row, QtWidgets.QFormLayout.FieldRole, el)
+             el.data=item
+             self.buttongroup.addButton(el)
+             self.resultArea.addWidget(el)
+             self.buttongroup.buttonClicked[int].connect(self.on_button_clicked)
              row=row+1
+        self.update()
+
+    def on_button_clicked(self, id):
+        for button in self.buttongroup.buttons():
+            if button is self.buttongroup.button(id):
+                self.open(self.buttongroup.button(id).data)
 
     def open(self,item):
+        print(item)
         self.getDataFrom()
         obj=setWindow(self.searchIn)
         self.window = obj.returnObj()
         self.window.MainWindow=QtWidgets.QMainWindow()
-        self.window.id=item.id
-
         if self.window.isVisible():
             self.window.hide()
         else:
-            self.window.show()
+            self.window.show(item.id)
 
     def mianSetings(self):
         MainWindow.setObjectName("MainWindow")
@@ -127,6 +137,7 @@ class menu(QMainWindow):
         self.serchInComboBox.setItemText(0, _translate("MainWindow", "stars"))
         self.serchInComboBox.setItemText(2, _translate("MainWindow", "movies"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
+
 
 
 

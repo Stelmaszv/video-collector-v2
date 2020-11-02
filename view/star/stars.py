@@ -6,8 +6,8 @@ from app.db.models import session
 from core.strings import stringManipupations
 
 class stars(QWidget):
+
     model = Stars
-    id = 1
     seriesList = [
         #page1
         {
@@ -133,13 +133,16 @@ class stars(QWidget):
             ]
         }
     ]
+    id=None
+
     def __init__(self,):
         super().__init__()
 
     def getOne(self):
         self.data=session.query(self.model).get(self.id)
 
-    def show(self):
+    def show(self,id):
+        self.id=id
         self.getOne()
         self.setupUi()
         self.obj.show()
@@ -161,8 +164,15 @@ class stars(QWidget):
         self.Title = QtWidgets.QLabel(self.obj)
         self.Title.setGeometry(QtCore.QRect(530, 60, 391, 91))
         self.Title.setObjectName("Title")
-        self.Title.setToolTip("<html><head/><body><p align=\"center\"><span style=\" font-size:16pt; font-style:italic;\">"+self.data.name+"</span></p></body></html>")
-        self.Title.setText("<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600; text-decoration: underline;\">"+self.data.name+"</span></p></body></html>")
+
+        self.Title.setToolTip("<html><head/><body>"
+                              "<p align=\"center\"><span style=\" font-size:16pt; font-style:italic;\">"
+                              ""+self.data.name+"</span></p></body></html>")
+
+        self.Title.setText("<html><head/><body>"
+                           "<p align=\"center\"><span style=\" font-size:18pt; "
+                           "font-weight:600; text-decoration: underline;\">"
+                           ""+self.data.name+"</span></p></body></html>")
 
     def galery(self):
         photos=self.data.photos
@@ -326,6 +336,9 @@ class stars(QWidget):
                 self.tabWidget.addTab(self.addPage, "")
 
             seriesElment = seriesElment + 1
+
+    def open(self,item):
+        print(item.name)
 
 
     def setupUi(self):
