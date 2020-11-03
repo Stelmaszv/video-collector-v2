@@ -4,10 +4,13 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import  QWidget
 from app.db.models import session
 from core.strings import stringManipupations
+from core.creator import seriesCreator
 
 class stars(QWidget):
 
     model = Stars
+    seriesList=[]
+    """
     seriesList = [
         #page1
         {
@@ -133,6 +136,7 @@ class stars(QWidget):
             ]
         }
     ]
+    """
     id=None
 
     def __init__(self,):
@@ -253,7 +257,11 @@ class stars(QWidget):
         self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
         self.gridLayout_8.setObjectName("gridLayout_8")
 
+    def setSeries(self):
+        self.seriesList= seriesCreator(self.data).returnObj()
+
     def seriesResult(self):
+        self.setSeries()
         left=5
         top=50
         seriesElment=1
@@ -299,27 +307,28 @@ class stars(QWidget):
 
 
             for el in item.movies:
-                name = QtWidgets.QLabel(grid)
-                name.setMaximumSize(QtCore.QSize(10000000, 16777215))
-                name.setObjectName("nameLabel")
-                name.setText(el.name)
-                seriesItem.addWidget(name, row, 1, 1, 1)
+                if row < 6:
+                    name = QtWidgets.QLabel(grid)
+                    name.setMaximumSize(QtCore.QSize(10000000, 16777215))
+                    name.setObjectName("nameLabel")
+                    name.setText(el.name)
+                    seriesItem.addWidget(name, row, 1, 1, 1)
 
-                info = QtWidgets.QPushButton(grid)
-                info.setMinimumSize(QtCore.QSize(30, 0))
-                info.setMaximumSize(QtCore.QSize(10, 16777215))
-                info.setObjectName("InfoButton")
-                info.setText("Info")
-                seriesItem.addWidget(info, row, 3, 1, 1)
+                    info = QtWidgets.QPushButton(grid)
+                    info.setMinimumSize(QtCore.QSize(30, 0))
+                    info.setMaximumSize(QtCore.QSize(10, 16777215))
+                    info.setObjectName("InfoButton")
+                    info.setText("Info")
+                    seriesItem.addWidget(info, row, 3, 1, 1)
 
-                play = QtWidgets.QPushButton(grid)
-                play.setMinimumSize(QtCore.QSize(30, 0))
-                play.setMaximumSize(QtCore.QSize(10, 16777215))
-                play.setObjectName("playButton")
-                play.setText("play")
-                seriesItem.addWidget(play, row, 2, 1, 1)
+                    play = QtWidgets.QPushButton(grid)
+                    play.setMinimumSize(QtCore.QSize(30, 0))
+                    play.setMaximumSize(QtCore.QSize(10, 16777215))
+                    play.setObjectName("playButton")
+                    play.setText("play")
+                    seriesItem.addWidget(play, row, 2, 1, 1)
 
-                row=row+1
+                    row=row+1
 
             left = left + 390
 
@@ -336,10 +345,6 @@ class stars(QWidget):
                 self.tabWidget.addTab(self.addPage, "")
 
             seriesElment = seriesElment + 1
-
-    def open(self,item):
-        print(item.name)
-
 
     def setupUi(self):
         self.createObj()
