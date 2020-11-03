@@ -67,7 +67,6 @@ class menu(QMainWindow):
                 self.open(self.buttongroup.button(id).data)
 
     def open(self,item):
-        print(item)
         self.getDataFrom()
         obj=setWindow(self.searchIn)
         self.window = obj.returnObj()
