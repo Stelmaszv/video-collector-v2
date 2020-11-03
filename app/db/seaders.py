@@ -16,10 +16,7 @@ class movies(abstractSeader):
             self.model(name="none2"),
             self.model(name="none3"),
             self.model(name="none4"),
-            self.model(name="none4"),
             self.model(name="none5"),
-            self.model(name="none6"),
-            self.model(name="none"),
         ]
         self.generateObjects(self.model, 100)
         self.addItems()
@@ -35,9 +32,9 @@ class stars(abstractSeader):
 
     def addRelationsList(self):
         self.getItem(1)
-        self.addRelations(self.item.photos, Photos,  [1,2,3,4,5,6,7,8])
-        self.addRelations(self.item.movies, Movies,  [1, 2, 3, 4, 5,6,7])
-        self.addRelations(self.item.series, Series,  [1,2,3])
+        self.addRelations(self.item.movies, Movies, [1,2,3,4,5,6])
+        self.addRelations(self.item.photos, Photos, [1,2,3,4,5,6,7,8])
+        self.addRelations(self.item.series, Series, [1,2])
 
     def addStar(self):
         self.objects=[
@@ -49,36 +46,20 @@ class stars(abstractSeader):
 
     def addMovieRelations(self):
         self.getItem(1)
+        movie = self.series.query(Movies).get(7)
+        self.addRelations(movie.stars, Stars, [self.item.id])
+        movie = self.series.query(Movies).get(8)
+        self.addRelations(movie.stars, Stars, [self.item.id])
+        movie = self.series.query(Movies).get(9)
+        self.addRelations(movie.stars, Stars, [self.item.id])
+        movie = self.series.query(Movies).get(10)
+        self.addRelations(movie.stars, Stars, [self.item.id])
         movie = self.series.query(Movies).get(11)
         self.addRelations(movie.stars, Stars, [self.item.id])
         movie = self.series.query(Movies).get(12)
         self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(13)
+        movie = self.series.query(Movies).get(17)
         self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(14)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        print(movie)
-        movie = self.series.query(Movies).get(21)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(22)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(23)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(24)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(25)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(26)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(27)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(28)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(29)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(30)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-
 
 class photos(abstractSeader):
 
@@ -108,19 +89,18 @@ class series(abstractSeader):
 
     def addSeries(self):
         self.objects = [
-            self.model(name=stringManipupations.random(20), avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
-            self.model(name=stringManipupations.random(20), avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
-            self.model(name=stringManipupations.random(20), avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+            self.model(name="ser1", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+            self.model(name="ser1", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+            self.model(name="ser1", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
         ]
         self.addItems()
 
     def addMoviesToSeries(self):
-        self.getItem(1)
-        self.addRelations(self.item.movies, Movies, [1,3,5])
         self.getItem(2)
-        self.addRelations(self.item.movies, Movies, [10, 11, 12,13,14,15,16,17,18,19,20])
-        self.getItem(3)
-        self.addRelations(self.item.movies, Movies, [21, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30])
+        self.addRelations(self.item.movies, Movies, [7,8,9,10,11,12,13,14,15,16])
+        self.getItem(1)
+        self.addRelations(self.item.movies, Movies, [17])
+
 
 class initSeader:
 

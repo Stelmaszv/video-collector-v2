@@ -10,17 +10,20 @@ class seriesCreator:
     def setNone(self):
         movies=self.item.movies
         for movie in movies:
-            if len(movie.series) ==0:
-                self.noneList.append(movie)
+            if len(movie.series) == 0:
+                for star in movie.stars:
+                    if star.id == self.item.id:
+                        self.noneList.append(movie)
 
     def setSingles(self):
         series= self.item.series
         for serie in series:
-            if len(serie.movies) <6:
+            if len(serie.movies) < 6:
                 for movie in serie.movies:
                     self.singlesList.append(movie)
             else:
                 self.seriesList.append(serie)
+
 
     def addMoviesToSeries(self,moviesList) -> []:
         movies=[]
@@ -51,35 +54,46 @@ class seriesCreator:
 
         return stan
 
+    def addSinglesFromSeries(self,moviesList):
+        for movie in moviesList:
+            self.singlesList.append(movie)
+
     def addSeries(self):
         for item in self.seriesList:
-            if self.ifShowinSerie(item.movies):
-                if self.countItems(item.movies)>5:
-                    el = {
-                        'name': item.name,
-                        'avatar': item.avatar,
-                        'movies': self.addMoviesToSeries(item.movies)
-                    }
-                    self.createList.append(el)
-                else:
-                    self.singlesList.append(item)
+            if self.ifShowinSerie(item.movies) and self.countItems(item.movies)>5:
+
+                el = {
+                    'name': item.name,
+                    'avatar': item.avatar,
+                    'movies': self.addMoviesToSeries(item.movies)
+                }
+                self.createList.append(el)
+
+            else:
+
+                self.addSinglesFromSeries(item.movies)
 
 
     def create(self):
 
-        none = {
-            'name'   : 'none',
-            'avatar' : 'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
-            'movies' : self.noneList
-        }
-        self.createList.append(none)
+        if len(self.noneList):
+            none = {
+                'name'   : 'none',
+                'avatar' : 'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
+                'movies' : self.noneList
+            }
+            self.createList.append(none)
+
+        print(self.singlesList)
+        if len(self.singlesList):
+            singles = {
+                'name'   : 'singles',
+                'avatar' :'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
+                'movies': self.singlesList
+            }
+            self.createList.append(singles)
+
         self.addSeries()
-        singles = {
-            'name'   : 'singles',
-            'avatar' :'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
-            'movies': self.singlesList
-        }
-        self.createList.append(singles)
 
     def returnObj(self):
         self.setNone()

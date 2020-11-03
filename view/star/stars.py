@@ -289,6 +289,7 @@ class stars(QWidget):
                 more.setMinimumSize(QtCore.QSize(30, 0))
                 more.setObjectName("InfoButton")
                 more.setText("more")
+                more.clicked.connect(lambda :self.open(item))
                 seriesItem.addWidget(more, 0, 2, 1, 2)
 
             self.seriesPhoto_35 = QtWidgets.QLabel(grid)
@@ -341,84 +342,8 @@ class stars(QWidget):
 
             seriesElment = seriesElment + 1
 
-
-        """
-        series = self.data.series
-        for item in series:
-
-            grid = QtWidgets.QWidget(self.addPage)
-            grid.setGeometry(QtCore.QRect(left,top, 0,0))
-            grid.setMinimumSize(QtCore.QSize(390, 200))
-            grid.setMaximumSize(QtCore.QSize(380, 200))
-            grid.setObjectName("gridLayoutWidget_15")
-            seriesItem = QtWidgets.QGridLayout(grid)
-            seriesItem.setObjectName("seriesItem")
-            title = QtWidgets.QLabel(grid)
-            title.setObjectName("seriesTitle")
-
-            title.setText("<html><head/><body><span style=\" font-size:12pt; font-weight:600; \">" ""
-                +stringManipupations.short(item.name,35)+
-            "</span></body></html>")
-            seriesItem.addWidget(title, 0, 0, 1, 2)
-
-            if len(item.movies) > 4:
-                more = QtWidgets.QPushButton(grid)
-                more.setMinimumSize(QtCore.QSize(30, 0))
-                more.setObjectName("InfoButton")
-                more.setText("more")
-                seriesItem.addWidget(more, 0, 2, 1, 2)
-
-            self.seriesPhoto_35 = QtWidgets.QLabel(grid)
-            self.seriesPhoto_35.setMaximumSize(QtCore.QSize(100, 100))
-            self.seriesPhoto_35.setText("")
-            self.seriesPhoto_35.setPixmap(QtGui.QPixmap(item.avatar))
-            self.seriesPhoto_35.setScaledContents(True)
-            self.seriesPhoto_35.setObjectName("seriesPhoto_35")
-            seriesItem.addWidget(self.seriesPhoto_35, 1, 0, 5, 1)
-
-            row=1
-
-
-            for el in item.movies:
-                if row < 6:
-                    name = QtWidgets.QLabel(grid)
-                    name.setMaximumSize(QtCore.QSize(10000000, 16777215))
-                    name.setObjectName("nameLabel")
-                    name.setText(el.name)
-                    seriesItem.addWidget(name, row, 1, 1, 1)
-
-                    info = QtWidgets.QPushButton(grid)
-                    info.setMinimumSize(QtCore.QSize(30, 0))
-                    info.setMaximumSize(QtCore.QSize(10, 16777215))
-                    info.setObjectName("InfoButton")
-                    info.setText("Info")
-                    seriesItem.addWidget(info, row, 3, 1, 1)
-
-                    play = QtWidgets.QPushButton(grid)
-                    play.setMinimumSize(QtCore.QSize(30, 0))
-                    play.setMaximumSize(QtCore.QSize(10, 16777215))
-                    play.setObjectName("playButton")
-                    play.setText("play")
-                    seriesItem.addWidget(play, row, 2, 1, 1)
-
-                    row=row+1
-
-            left = left + 390
-
-            if seriesElment % 4 == 0:
-                top=280
-                left=5
-
-            if seriesElment % 8==0:
-                top=50
-                left = 5
-                self.newPage = QtWidgets.QWidget()
-                self.newPage.setObjectName("tabWidgetPage1")
-                self.addPage = self.newPage
-                self.tabWidget.addTab(self.addPage, "")
-
-            seriesElment = seriesElment + 1
-        """
+    def open(self,item):
+        print(item)
 
     def setupUi(self):
         self.createObj()
