@@ -6,16 +6,29 @@ from app.db.models import session
 from core.strings import stringManipupations
 from core.creator import seriesCreator
 
+class pagination:
+    def __init__(self,obj):
+        self.obj=obj
+
+    def tabs(self,data):
+        tab = QtWidgets.QTabWidget(self.obj)
+        tab.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        tab.setObjectName("tabWidget")
+        return tab
+
+
+
 class baseView:
 
     def __init__(self,data,obj):
         self.data=data
         self.obj=obj
+        self.pagination = pagination(obj)
 
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)
         self.title.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        self.title.setObjectName("Title")
+        self.title.setObjectName("title")
         self.title.setText(text)
 
     def avatar(self,data):
@@ -24,7 +37,7 @@ class baseView:
         self.avatar.setText("")
         self.avatar.setPixmap(QtGui.QPixmap(self.data.avatar))
         self.avatar.setScaledContents(True)
-        self.avatar.setObjectName("label")
+        self.avatar.setObjectName("avatar")
 
     def info(self,infoData,data,rows):
         self.infoWidget = QtWidgets.QWidget(self.obj)
@@ -79,6 +92,7 @@ class abstractView(QWidget):
     def __init__(self):
         super(abstractView, self).__init__()
 
+
     def getOne(self):
         self.data=session.query(self.model).get(self.id)
 
@@ -100,7 +114,6 @@ class abstractView(QWidget):
 
     def setBaseView(self,data,obj):
         self.baseView = baseView(data,obj)
-
 
 class stars(abstractView):
 
@@ -138,23 +151,21 @@ class stars(abstractView):
         self.baseView.info(infData,data,rows)
 
     def seriesResult(self):
+        data=[80, 430, 1571, 581]
+        self.tab=self.baseView.pagination.tabs(data)
 
-        self.tabWidget = QtWidgets.QTabWidget(self.obj)
-        self.tabWidget.setGeometry(QtCore.QRect(80, 430, 1571, 581))
-        self.tabWidget.setObjectName("tabWidget")
         self.starPage = QtWidgets.QWidget()
         self.starPage.setObjectName("tabWidgetPage1")
         self.grid = QtWidgets.QWidget(self.starPage)
 
-        self.seriesList= seriesCreator(self.data).returnObj()
+        self.addPage=self.starPage
+        self.tab.addTab(self.addPage, "")
+
+        self.seriesList = seriesCreator(self.data).returnObj()
+
         left=5
         top=50
         seriesElment=1
-        self.starPage = QtWidgets.QWidget()
-        self.starPage.setObjectName("tabWidgetPage1")
-        self.addPage=self.starPage
-        self.tabWidget.addTab(self.addPage, "")
-
 
         for item in self.seriesList:
             grid = QtWidgets.QWidget(self.addPage)
@@ -226,7 +237,7 @@ class stars(abstractView):
                 self.newPage = QtWidgets.QWidget()
                 self.newPage.setObjectName("tabWidgetPage1")
                 self.addPage = self.newPage
-                self.tabWidget.addTab(self.addPage, "")
+                self.tab.addTab(self.addPage, "")
 
             seriesElment = seriesElment + 1
 
@@ -239,7 +250,7 @@ class stars(abstractView):
         self.galery()
         self.info()
         self.seriesResult()
-        self.tabWidget.setCurrentIndex(1)
+        self.tab.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(self.obj)
 
 if __name__ == "__main__":
