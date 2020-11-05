@@ -1,5 +1,5 @@
 from view.star.stars import stars
-from view.series.test import series
+from view.series.series import series
 from view.movie.test import movie
 
 

@@ -74,7 +74,7 @@ class menu(QMainWindow):
         if self.window.isVisible():
             self.window.hide()
         else:
-            self.window.show(item.id)
+            self.window.show(item)
 
     def mianSetings(self):
         MainWindow.setObjectName("MainWindow")
@@ -130,12 +130,11 @@ class menu(QMainWindow):
         MainWindow.setWindowTitle(_translate("Main Window", "Main Window"))
         self.serchLabel.setText(_translate("MainWindow", "Search"))
         self.serchInLabel.setText(_translate("MainWindow", "Search In"))
-
-
         self.serchInComboBox.setItemText(1, _translate("MainWindow", "series"))
         self.serchInComboBox.setItemText(0, _translate("MainWindow", "stars"))
         self.serchInComboBox.setItemText(2, _translate("MainWindow", "movies"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
+
 
 
 

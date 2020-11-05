@@ -6,240 +6,139 @@ from app.db.models import session
 from core.strings import stringManipupations
 from core.creator import seriesCreator
 
-class stars(QWidget):
+class baseView:
 
-    model = Stars
-    seriesList=[]
-    """
-    seriesList = [
-        #page1
-        {
-            'name':"1",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "2",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "3",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "4",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "5",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "6",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "7",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "8",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        #page2
-        {
-            'name': "9",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "10",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        },
-        {
-            'name': "11",
-            'avatar': "C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg",
-            'movies': [
-                "fajny  ",
-                "fajny2",
-                "fajny3",
-                "fajny5",
-                'fajny6'
-            ]
-        }
-    ]
-    """
-    id=None
+    def __init__(self,data,obj):
+        self.data=data
+        self.obj=obj
 
-    def __init__(self,):
-        super().__init__()
+    def title(self,data,text):
+        self.title = QtWidgets.QLabel(self.obj)
+        self.title.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.title.setObjectName("Title")
+        self.title.setText(text)
+
+    def avatar(self,data):
+        self.avatar = QtWidgets.QLabel(self.obj)
+        self.avatar.setGeometry(QtCore.QRect(data[0],data[1],data[2],data[3]))
+        self.avatar.setText("")
+        self.avatar.setPixmap(QtGui.QPixmap(self.data.avatar))
+        self.avatar.setScaledContents(True)
+        self.avatar.setObjectName("label")
+
+    def info(self,infoData,data,rows):
+        self.infoWidget = QtWidgets.QWidget(self.obj)
+        self.infoWidget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.infoWidget.setObjectName("infoWidget")
+        self.infoGrid = QtWidgets.QGridLayout(self.infoWidget)
+        self.infoGrid.setContentsMargins(0, 0, 0, 0)
+        self.infoGrid.setObjectName("infoGrid")
+
+        row=0
+
+        for item in infoData:
+
+            col1 = QtWidgets.QLabel(self.infoWidget)
+            col1.setObjectName("col1")
+            col1.setText(item[rows[0]])
+            self.infoGrid.addWidget(col1, row, 0,2, 2)
+
+            col2 = QtWidgets.QLabel(self.infoWidget)
+            col2.setObjectName("col2")
+            col2.setText(item[rows[1]])
+            self.infoGrid.addWidget(col2, row, 1, 2, 2)
+
+            row=row+1
+
+    def galery(self,data,size,inRow):
+        photos = self.data.photos
+        self.galeryGrid = QtWidgets.QWidget(self.obj)
+        self.galeryGrid.setGeometry(QtCore.QRect(data[0],data[1],data[2],data[3]))
+        self.galeryGrid.setObjectName("galeryGrid")
+
+        self.galeryGrid2 = QtWidgets.QGridLayout(self.galeryGrid)
+        self.galeryGrid2.setContentsMargins(0, 0, 0, 0)
+        self.galeryGrid2.setObjectName("galeryGrid2")
+        row = 0
+        col = 0
+        for photo in photos:
+            item = QtWidgets.QLabel(self.galeryGrid)
+            item.setMaximumSize(QtCore.QSize(size[0], size[1]))
+            item.setText("")
+            item.setPixmap(QtGui.QPixmap(photo.src))
+            item.setScaledContents(True)
+            item.setObjectName("galeryItem")
+            self.galeryGrid2.addWidget(item, col, row, 1, 1)
+            row = row + 1
+            if row > inRow:
+                row = 0
+                col = col + 1
+
+class abstractView(QWidget):
+
+    def __init__(self):
+        super(abstractView, self).__init__()
 
     def getOne(self):
         self.data=session.query(self.model).get(self.id)
 
-    def show(self,id):
-        self.id=id
-        self.getOne()
-        self.setupUi()
-        self.obj.show()
+    def setupUi(self):
+        pass
 
     def createObj(self):
         self.obj = QtWidgets.QMainWindow()
         self.obj.setObjectName("StarList")
         self.obj.resize(1707, 1036)
 
-    def avatar(self):
-        self.label = QtWidgets.QLabel(self.obj)
-        self.label.setGeometry(QtCore.QRect(100, 80, 341, 331))
-        self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap(self.data.avatar))
-        self.label.setScaledContents(True)
-        self.label.setObjectName("label")
+    def show(self,data):
+        self.id = data.id
+        self.createObj()
+        self.setBaseView(data,self.obj)
+        self.getOne()
+        self.setupUi()
+        self.obj.show()
+
+    def setBaseView(self,data,obj):
+        self.baseView = baseView(data,obj)
+
+
+class stars(abstractView):
+
+    model = Stars
+    seriesList=[]
+
+    id=None
 
     def title(self):
-        self.Title = QtWidgets.QLabel(self.obj)
-        self.Title.setGeometry(QtCore.QRect(530, 60, 391, 91))
-        self.Title.setObjectName("Title")
-
-        self.Title.setToolTip("<html><head/><body>"
-                              "<p align=\"center\"><span style=\" font-size:16pt; font-style:italic;\">"
-                              ""+self.data.name+"</span></p></body></html>")
-
-        self.Title.setText("<html><head/><body>"
-                           "<p align=\"center\"><span style=\" font-size:18pt; "
-                           "font-weight:600; text-decoration: underline;\">"
-                           ""+self.data.name+"</span></p></body></html>")
+        data = [530, 60, 391, 91]
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\" font-size:18pt;font-weight:600; " \
+               "text-decoration: underline;\">" + self.data.name + \
+               "</span></p></body></html>"
+        self.baseView.title(data,text)
 
     def galery(self):
-        photos=self.data.photos
-        self.gridLayoutWidget_2 = QtWidgets.QWidget(self.obj)
-        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(1040, 50, 581, 361))
-        self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
-
-        self.gridLayout_5 = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
-        self.gridLayout_5.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_5.setObjectName("gridLayout_5")
-        row=0
-        col=0
-        for photo in photos:
-            label = QtWidgets.QLabel(self.gridLayoutWidget_2)
-            label.setMaximumSize(QtCore.QSize(100, 100))
-            label.setText("")
-            label.setPixmap(QtGui.QPixmap(photo.src))
-            label.setScaledContents(True)
-            label.setObjectName("label_9")
-            self.gridLayout_5.addWidget(label, col, row, 1, 1)
-            row=row+1
-            if row > 3:
-                row=0
-                col=col+1
+        data= [1040, 50, 581, 361]
+        size=[100,100]
+        self.baseView.galery(data,size,2)
 
     def info(self):
-        self.label_225 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_225.setObjectName("label_225")
-        self.gridLayout_8.addWidget(self.label_225, 4, 0, 1, 2)
-        self.label_8 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_8.setObjectName("label_8")
-        self.label_8.setText("TextLabel")
-        self.gridLayout_8.addWidget(self.label_8, 0, 0, 1, 1)
-        self.label_11 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_11.setObjectName("label_11")
-        self.label_11.setText("TextLabel")
-        self.gridLayout_8.addWidget(self.label_11, 1, 0, 1, 1)
-        self.label_10 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_10.setObjectName("label_10")
-        self.label_10.setText("TextLabel")
-        self.gridLayout_8.addWidget(self.label_10, 0, 1, 1, 1)
-        self.label_13 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_13.setObjectName("label_13")
-        self.label_13.setText("TextLabel")
-        self.gridLayout_8.addWidget(self.label_13, 1, 1, 1, 1)
-        self.label_25 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_25.setObjectName("label_25")
-        self.label_25.setText("TextLabel")
-        self.gridLayout_8.addWidget(self.label_25, 2, 0, 1, 1)
-        self.label_224 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_224.setObjectName("label_224")
-        self.label_224.setText("TextLabel")
-        self.gridLayout_8.addWidget(self.label_224, 2, 1, 1, 1)
-        self.label_224 = QtWidgets.QLabel(self.gridLayoutWidget)
-        self.label_224.setObjectName("label_224")
-        self.label_224.setText("TextLabel")
-        self.gridLayout_8.addWidget(self.label_224, 4, 0, 1, 2)
-        self.commandLinkButton = QtWidgets.QCommandLinkButton(self.gridLayoutWidget)
-        self.commandLinkButton.setObjectName("commandLinkButton")
-        self.commandLinkButton.setText("dqwd")
-        self.gridLayout_8.addWidget(self.commandLinkButton, 5, 0, 1, 2)
 
-    def paginationForSeries(self):
+        data   = [650, 180, 391, 161]
+
+        rows = ['itemNmae','itemName2']
+
+        infData=[
+            {"itemNmae" : "anser","itemName2" :"anser1"},
+            {"itemNmae" : "anser2","itemName2" :"anser2"},
+            {"itemNmae": "anser3","itemName2" :"anser2"}
+        ]
+
+        self.baseView.info(infData,data,rows)
+
+    def seriesResult(self):
+
         self.tabWidget = QtWidgets.QTabWidget(self.obj)
         self.tabWidget.setGeometry(QtCore.QRect(80, 430, 1571, 581))
         self.tabWidget.setObjectName("tabWidget")
@@ -247,17 +146,6 @@ class stars(QWidget):
         self.starPage.setObjectName("tabWidgetPage1")
         self.grid = QtWidgets.QWidget(self.starPage)
 
-    def series(self):
-
-        self.gridLayoutWidget = QtWidgets.QWidget(self.obj)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(560, 180, 391, 161))
-
-        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
-        self.gridLayout_8 = QtWidgets.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout_8.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_8.setObjectName("gridLayout_8")
-
-    def seriesResult(self):
         self.seriesList= seriesCreator(self.data).returnObj()
         left=5
         top=50
@@ -346,13 +234,10 @@ class stars(QWidget):
         print(item)
 
     def setupUi(self):
-        self.createObj()
-        self.avatar()
+        self.baseView.avatar([100, 80, 341, 331])
         self.title()
         self.galery()
-        self.series()
         self.info()
-        self.paginationForSeries()
         self.seriesResult()
         self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(self.obj)

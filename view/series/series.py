@@ -18,6 +18,7 @@ class series(QWidget):
         layout.addWidget(self.label)
         self.setLayout(layout)
 
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 480)
@@ -46,6 +47,17 @@ class series(QWidget):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def show(self,id):
+        print(id)
+        self.id=id
+        self.setupUi()
+        self.obj.show()
+
+    def createObj(self):
+        self.obj = QtWidgets.QMainWindow()
+        self.obj.setObjectName("StarList")
+        self.obj.resize(1707, 1036)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
