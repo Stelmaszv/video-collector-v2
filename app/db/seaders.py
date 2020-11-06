@@ -89,7 +89,7 @@ class series(abstractSeader):
 
     def addSeries(self):
         self.objects = [
-            self.model(name="ser1", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+            self.model(name="ser1 jdpqi jpqjf qipe jfpiqe ", avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
             self.model(name="ser1", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
             self.model(name="ser1", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
         ]
@@ -100,6 +100,7 @@ class series(abstractSeader):
         self.addRelations(self.item.movies, Movies, [7,8,9,10,11,12,13,14,15,16])
         self.getItem(1)
         self.addRelations(self.item.movies, Movies, [17])
+        self.addRelations(self.item.photos, Photos, [1, 2, 3, 4, 5, 6, 7, 8])
 
 
 class initSeader:

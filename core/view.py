@@ -4,7 +4,6 @@ from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
 
-
 class abstractPaginator(ABC):
 
     def __init__(self,obj):
@@ -221,6 +220,7 @@ class abstractView(QWidget):
         self.setBaseView(data,self.obj)
         self.getOne()
         self.setupUi()
+        QtCore.QMetaObject.connectSlotsByName(self.obj)
         self.obj.show()
 
     def setBaseView(self,data,obj):

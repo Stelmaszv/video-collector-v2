@@ -12,6 +12,11 @@ photos_star = Table('photos_star', Base.metadata,
     Column('photos_id', Integer, ForeignKey('photos.id'))
 )
 
+photos_series = Table('photos_series', Base.metadata,
+    Column('series_id', Integer, ForeignKey('series.id')),
+    Column('photos_id', Integer, ForeignKey('photos.id'))
+)
+
 stars_series = Table('stars_series', Base.metadata,
     Column('stars_id', Integer, ForeignKey('stars.id')),
     Column('series_id', Integer, ForeignKey('series.id'))
@@ -40,6 +45,12 @@ class Series(Base):
         back_populates="series"
     )
 
+    photos = relationship(
+        "Photos",
+        secondary=photos_series,
+        back_populates="series"
+    )
+
     def __str__(self):
         return  self.name
 
@@ -47,10 +58,15 @@ class Photos(Base):
     __tablename__ ='photos'
     id= Column('id',Integer,primary_key=True)
     src = Column('src',String)
-    stars_id = Column(Integer, ForeignKey('stars.id'))
     stars = relationship(
         "Stars",
         secondary=photos_star,
+        back_populates="photos"
+    )
+
+    series = relationship(
+        "Series",
+        secondary=photos_series,
         back_populates="photos"
     )
 

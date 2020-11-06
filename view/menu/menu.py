@@ -6,10 +6,11 @@ from core.PyQt5Helpel import Layout
 from core.setWindow import setWindow
 from app.db.seaders import initSeader
 
+
 initSeader().initNow()
 
 class menu(QMainWindow):
-    searchIn='stars'
+    searchIn='series'
     searchFaze=''
     deepSearch=False
     tags=[]
@@ -130,8 +131,8 @@ class menu(QMainWindow):
         MainWindow.setWindowTitle(_translate("Main Window", "Main Window"))
         self.serchLabel.setText(_translate("MainWindow", "Search"))
         self.serchInLabel.setText(_translate("MainWindow", "Search In"))
-        self.serchInComboBox.setItemText(1, _translate("MainWindow", "series"))
-        self.serchInComboBox.setItemText(0, _translate("MainWindow", "stars"))
+        self.serchInComboBox.setItemText(0, _translate("MainWindow", "series"))
+        self.serchInComboBox.setItemText(1, _translate("MainWindow", "stars"))
         self.serchInComboBox.setItemText(2, _translate("MainWindow", "movies"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
 

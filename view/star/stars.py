@@ -49,21 +49,11 @@ class stars(abstractView):
         self.seriesList = seriesCreator(self.data).returnObj()
         self.baseView.pagination.paginate('seriesPaginator',self)
 
-    def open(self,item):
-        print(item)
-
     def setupUi(self):
-        self.baseView.avatar([100, 80, 341, 331])
+        self.baseView.avatar([100, 80,400,400])
         self.title()
         self.galery()
         self.info()
         self.seriesResult()
         self.tab.setCurrentIndex(1)
-        QtCore.QMetaObject.connectSlotsByName(self.obj)
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    ui = stars()
-    ui.show()
-    sys.exit(app.exec_())
