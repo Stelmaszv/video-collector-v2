@@ -1,7 +1,5 @@
 from core.view import abstractView
 from app.db.models import Series
-from core.strings import stringManipupations
-from core.strings import stringManipupations
 class series(abstractView):
     model = Series
 
@@ -24,16 +22,13 @@ class series(abstractView):
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
                "<span style=\" font-size:18pt;font-weight:600; " \
-               "text-decoration: none;\">" + stringManipupations.short(self.data.name, 100) + \
+               "text-decoration: none;\">" + self.data.name + \
                "</span></p></body></html>"
         self.baseView.title(data,text)
 
     def galery(self):
         data= [100, 500, 250, 361]
-
         self.baseView.galery(data,[100,100],3)
-
-
 
     def setupUi(self):
         self.baseView.avatar([100, 100,250,250])
