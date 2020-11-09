@@ -26,12 +26,14 @@ class series(abstractView):
                "</span></p></body></html>"
         self.baseView.title(data,text)
 
+
+
     def galery(self):
         data= [100, 500, 250, 361]
         self.baseView.galery(data,[100,100],3)
 
     def listView(self):
-        self.baseView.listView([500, 120,250,250])
+        self.baseView.listView([100, 800,440,100])
 
     def setupUi(self):
         self.baseView.avatar([100, 100,250,250])

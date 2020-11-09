@@ -131,8 +131,9 @@ class pagination:
 
 class abstractList(ABC):
 
-    def __init__(self,obj):
+    def __init__(self,obj,data):
         self.obj=obj
+        self.data=data
 
     @abstractmethod
     def list(self):
@@ -142,12 +143,7 @@ class starList(abstractList):
 
     def list(self,data):
 
-        dataList=[
-            {
-                "test":"dqwd qd qp dqpod hqud hqwp dpqwo dpqwod hpqwdhqpwd "
-            }
-        ]
-
+        dataList=self.data.stars
         self.gridForList = QtWidgets.QWidget(self.obj)
         self.gridForList.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.gridForList.setObjectName("infoWidget")
@@ -159,8 +155,14 @@ class starList(abstractList):
         row=0
         for item in dataList:
             col1 = QtWidgets.QLabel(self.gridForList)
+            col1.setMinimumSize(QtCore.QSize(1400000, 0))
+            col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
             col1.setObjectName("col1")
-            col1.setText(item['test'])
+            if data[2]>400:
+                col1.setText(stringManipupations.short(item.name, 35))
+            else:
+                col1.setText(item.name)
+
             self.infoGrid.addWidget(col1, row, 0, 2, 2)
 
             info = QtWidgets.QPushButton(self.gridForList)
@@ -182,7 +184,7 @@ class baseView:
 
     def listView(self,data):
         switcher = {
-            'Series' : starList(self.obj)
+            'Series' : starList(self.obj,self.data)
         }
         classObj = switcher.get(self.model().returmNmae(), "Invalid data");
         classObj.list(data)
