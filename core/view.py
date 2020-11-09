@@ -129,12 +129,65 @@ class pagination:
         classObj = switcher.get(type, "Invalid data");
         return classObj.paginate()
 
+class abstractList(ABC):
+
+    def __init__(self,obj):
+        self.obj=obj
+
+    @abstractmethod
+    def list(self):
+        pass
+
+class starList(abstractList):
+
+    def list(self,data):
+
+        dataList=[
+            {
+                "test":"dqwd qd qp dqpod hqud hqwp dpqwo dpqwod hpqwdhqpwd "
+            }
+        ]
+
+        self.gridForList = QtWidgets.QWidget(self.obj)
+        self.gridForList.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.gridForList.setObjectName("infoWidget")
+
+        self.infoGrid = QtWidgets.QGridLayout(self.gridForList)
+        self.infoGrid.setContentsMargins(0, 0, 0, 0)
+        self.infoGrid.setObjectName("infoGrid")
+
+        row=0
+        for item in dataList:
+            col1 = QtWidgets.QLabel(self.gridForList)
+            col1.setObjectName("col1")
+            col1.setText(item['test'])
+            self.infoGrid.addWidget(col1, row, 0, 2, 2)
+
+            info = QtWidgets.QPushButton(self.gridForList)
+            info.setMinimumSize(QtCore.QSize(30, 0))
+            info.setMaximumSize(QtCore.QSize(10, 16777215))
+            info.setObjectName("InfoButton")
+            info.setText("Info")
+            self.infoGrid.addWidget(info,row, 1, 2, 2)
+
+            row=row+1
+
 class baseView:
 
     def __init__(self,data,obj):
         self.data=data
-        self.obj=obj
+        self.model=obj.model
+        self.obj=obj.obj
         self.pagination = pagination(obj)
+
+    def listView(self,data):
+        switcher = {
+            'Series' : starList(self.obj)
+        }
+        classObj = switcher.get(self.model().returmNmae(), "Invalid data");
+        classObj.list(data)
+
+
 
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)
@@ -217,7 +270,7 @@ class abstractView(QWidget):
     def show(self,data):
         self.id = data.id
         self.createObj()
-        self.setBaseView(data,self.obj)
+        self.setBaseView(data,self)
         self.getOne()
         self.setupUi()
         QtCore.QMetaObject.connectSlotsByName(self.obj)

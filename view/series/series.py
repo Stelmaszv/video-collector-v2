@@ -30,8 +30,12 @@ class series(abstractView):
         data= [100, 500, 250, 361]
         self.baseView.galery(data,[100,100],3)
 
+    def listView(self):
+        self.baseView.listView([500, 120,250,250])
+
     def setupUi(self):
         self.baseView.avatar([100, 100,250,250])
+        self.listView()
         self.title()
         self.info()
         self.galery()

@@ -51,6 +51,10 @@ class Series(Base):
         back_populates="series"
     )
 
+    def returmNmae(self):
+        return type(self).__name__
+
+
     def __str__(self):
         return  self.name
 
