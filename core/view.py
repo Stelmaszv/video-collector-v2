@@ -135,44 +135,49 @@ class abstractList(ABC):
         self.obj=obj
         self.data=data
 
+    def list(self,data,dataList):
+        self.gridForList(data)
+        self.gridinfo()
+        row = 0
+        for item in dataList:
+            self.abstratRow(item,row)
+            row=row+1
+
     @abstractmethod
-    def list(self):
+    def abstratRow(self):
         pass
 
-class starList(abstractList):
-
-    def list(self,data):
-
-        dataList=self.data.stars
+    def gridForList(self,data):
+        self.data=data
         self.gridForList = QtWidgets.QWidget(self.obj)
-        self.gridForList.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.gridForList.setGeometry(QtCore.QRect(self.data[0], self.data[1], self.data[2], self.data[3]))
         self.gridForList.setObjectName("infoWidget")
 
+    def gridinfo(self):
         self.infoGrid = QtWidgets.QGridLayout(self.gridForList)
         self.infoGrid.setContentsMargins(0, 0, 0, 0)
         self.infoGrid.setObjectName("infoGrid")
 
-        row=0
-        for item in dataList:
-            col1 = QtWidgets.QLabel(self.gridForList)
-            col1.setMinimumSize(QtCore.QSize(1400000, 0))
-            col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
-            col1.setObjectName("col1")
-            if data[2]>400:
-                col1.setText(stringManipupations.short(item.name, 35))
-            else:
-                col1.setText(item.name)
+class starList(abstractList):
+    def abstratRow(self,item,row):
+        col1 = QtWidgets.QLabel(self.gridForList)
+        col1.setMinimumSize(QtCore.QSize(1400000, 0))
+        col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
+        col1.setObjectName("col1")
 
-            self.infoGrid.addWidget(col1, row, 0, 2, 2)
+        if self.data[2]>400:
+            col1.setText(stringManipupations.short(item.name, 35))
+        else:
+            col1.setText(item.name)
 
-            info = QtWidgets.QPushButton(self.gridForList)
-            info.setMinimumSize(QtCore.QSize(30, 0))
-            info.setMaximumSize(QtCore.QSize(10, 16777215))
-            info.setObjectName("InfoButton")
-            info.setText("Info")
-            self.infoGrid.addWidget(info,row, 1, 2, 2)
+        self.infoGrid.addWidget(col1, row, 0, 2, 2)
 
-            row=row+1
+        info = QtWidgets.QPushButton(self.gridForList)
+        info.setMinimumSize(QtCore.QSize(30, 0))
+        info.setMaximumSize(QtCore.QSize(10, 16777215))
+        info.setObjectName("InfoButton")
+        info.setText("Info")
+        self.infoGrid.addWidget(info,row, 1, 2, 2)
 
 class baseView:
 
@@ -182,12 +187,12 @@ class baseView:
         self.obj=obj.obj
         self.pagination = pagination(obj)
 
-    def listView(self,data):
+    def listView(self,data,dataList):
         switcher = {
             'Series' : starList(self.obj,self.data)
         }
         classObj = switcher.get(self.model().returmNmae(), "Invalid data");
-        classObj.list(data)
+        classObj.list(data,dataList)
 
 
 

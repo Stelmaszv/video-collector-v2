@@ -33,7 +33,7 @@ class series(abstractView):
         self.baseView.galery(data,[100,100],3)
 
     def listView(self):
-        self.baseView.listView([100, 800,440,100])
+        self.baseView.listView([100, 800,440,100],self.data.stars)
 
     def setupUi(self):
         self.baseView.avatar([100, 100,250,250])
