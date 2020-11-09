@@ -7,7 +7,7 @@ class setWindow():
     def __init__(self,className):
         self.className=className
 
-    def returnObj(self):
+    def returnObj(self, menu):
         switcher = {
             'movies' : movie(),
             'series' : series(),

@@ -60,17 +60,17 @@ class menu(QMainWindow):
              self.resultArea.addWidget(el)
              self.buttongroup.buttonClicked[int].connect(self.on_button_clicked)
              row=row+1
-        self.update()
 
     def on_button_clicked(self, id):
         for button in self.buttongroup.buttons():
             if button is self.buttongroup.button(id):
                 self.open(self.buttongroup.button(id).data)
 
-    def open(self,item):
-        self.getDataFrom()
+    def open(self,item,setObject=None):
+        self.getDataFrom(setObject)
         obj=setWindow(self.searchIn)
-        self.window = obj.returnObj()
+        self.window = obj.returnObj(self)
+        self.window.menu = self
         self.window.MainWindow=QtWidgets.QMainWindow()
         if self.window.isVisible():
             self.window.hide()
@@ -91,9 +91,12 @@ class menu(QMainWindow):
         self.pushButton.clicked.connect(self.getDataFrom)
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.pushButton)
 
-    def getDataFrom(self):
+    def getDataFrom(self,setObject=None):
         self.searchFaze=self.serchLineEdit.text() or None
-        self.searchIn=self.serchInComboBox.currentText() or None
+        if setObject:
+            self.searchIn=setObject
+        else:
+            self.searchIn = self.serchInComboBox.currentText() or None
         self.deepSearch=self.deepSerchCheckBox.isChecked()
         self.searchResult()
 

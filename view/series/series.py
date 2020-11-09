@@ -1,5 +1,6 @@
 from core.view import abstractView
 from app.db.models import Series
+from PyQt5 import QtWidgets
 class series(abstractView):
     model = Series
 
@@ -33,7 +34,11 @@ class series(abstractView):
         self.baseView.galery(data,[100,100],3)
 
     def listView(self):
-        self.baseView.listView([100, 800,440,100],self.data.stars)
+        self.baseView.listView([1500, 800,440,100],self.data.stars)
+
+    def changelabeltext(self):
+        print('from view')
+
 
     def setupUi(self):
         self.baseView.avatar([100, 100,250,250])
