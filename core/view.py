@@ -229,8 +229,6 @@ class List:
             obj(item, row,self)
             row = row + 1
 
-
-
 class baseView:
 
     def __init__(self,data,obj):
@@ -241,11 +239,76 @@ class baseView:
         self.menu=obj.menu
         self.list=List(self.obj)
 
+    def buttom_genarator(self,list,fuction,id):
+        for button in list.buttons():
+            if button is list.button(id):
+                fuction(list.button(id).data)
+
     def generate_Loop(self, data, data_list, obj):
-        self.button_group = QtWidgets.QButtonGroup()
         self.list.generate_Loop(data, data_list, obj)
 
-    def get_series(self, data, data_list):
+    def get_movies(self,data, data_list):
+        self.button_group_movies_play = QtWidgets.QButtonGroup()
+        self.button_group_movies_info = QtWidgets.QButtonGroup()
+
+        def movie_play(item):
+            print('movie play ' + str(item))
+
+        def movie_info(item):
+            print('movie info '+str(item))
+
+        def on_movies_play(id):
+            self.buttom_genarator(self.button_group_movies_play, movie_play, id)
+
+        def on_movies_info(id):
+            self.buttom_genarator(self.button_group_movies_info, movie_info, id)
+
+        def abstrat_row(item, row, obj):
+            col1 = QtWidgets.QLabel()
+            col1.setMinimumSize(QtCore.QSize(1400000, 0))
+            col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
+            col1.setObjectName("col1")
+
+            if obj.object_data[2] > 400:
+                col1.setText(stringManipupations.short(item.name, 35))
+            else:
+                col1.setText(item.name)
+
+            obj.info_grid.addWidget(col1, row, 0)
+
+            el = QtWidgets.QPushButton()
+            el.setMinimumSize(QtCore.QSize(30, 0))
+            el.setMaximumSize(QtCore.QSize(10, 16777215))
+            el.setObjectName(item.name)
+            el.setText('info')
+            el.data = item
+
+            self.button_group_movies_info.addButton(el)
+            obj.info_grid.addWidget(el, row, 1)
+            self.button_group_movies_info.buttonClicked[int].connect(on_movies_info)
+
+            el = QtWidgets.QPushButton()
+            el.setMinimumSize(QtCore.QSize(30, 0))
+            el.setMaximumSize(QtCore.QSize(10, 16777215))
+            el.setObjectName(item.name)
+            el.setText('play')
+            el.data = item
+
+            self.button_group_movies_play.addButton(el)
+            obj.info_grid.addWidget(el, row, 2)
+            self.button_group_movies_play.buttonClicked[int].connect(on_movies_play)
+
+        self.generate_Loop(data, data_list, abstrat_row)
+
+    def get_stars(self, data, data_list):
+
+        self.button_group_for_star_info = QtWidgets.QButtonGroup()
+
+        def open_view(item):
+            print('star info '+str(item))
+
+        def on_button_clicked(id):
+            self.buttom_genarator(self.button_group_for_star_info, open_view, id)
 
         def abstrat_row(item, row, obj):
 
@@ -268,49 +331,20 @@ class baseView:
             el.setText('info')
             el.data = item
 
-            self.button_group.addButton(el)
+            self.button_group_for_star_info.addButton(el)
             obj.info_grid.addWidget(el, row, 1, 2, 2)
-            self.button_group.buttonClicked[int].connect(self.on_button_clicked)
+            self.button_group_for_star_info.buttonClicked[int].connect(on_button_clicked)
 
         self.generate_Loop(data, data_list, abstrat_row)
 
-    def listView(self,data,dataList):
+    def listView(self, data, data_list,obj_name):
 
         switcher = {
-            'Series' : self.get_series
+            'Stars'  : self.get_stars,
+            'Movies' : self.get_movies
         }
-        classObj = switcher.get(self.model().returmNmae(), "Invalid data");
-        classObj(data,dataList)
-
-
-        """
-        self.gridForList(data)
-        self.gridinfo()
-        switcher = {
-            'Series' : starList(self.obj,self.data,self)
-        }
-        classObj = switcher.get(self.model().returmNmae(), "Invalid data");
-        classObj.list(data,dataList)
-        """
-        """
-        self.gridForList(data)
-        self.gridinfo()
-        row = 0
-        self.buttongroup = QtWidgets.QButtonGroup()
-
-        for item in dataList:
-            self.abstratRow(item,row)
-            row=row+1
-        """
-
-    def on_button_clicked(self, id):
-        print(id)
-        for button in self.button_group.buttons():
-            if button is self.button_group.button(id):
-                self.open(self.button_group.button(id).data)
-
-    def open(self, item):
-        self.menu.open(item,'stars')
+        classObj = switcher.get(obj_name, "Invalid data");
+        classObj(data, data_list)
 
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)

@@ -10,13 +10,13 @@ class series(abstractView):
 
         rows = ['itemNmae','itemName2']
 
-        infData=[
+        inf_data=[
             {"itemNmae" : "anser","itemName2" :"anser1"},
             {"itemNmae" : "anser2","itemName2" :"anser2"},
             {"itemNmae": "anser3","itemName2" :"anser2"}
         ]
 
-        self.baseView.info(infData,data,rows)
+        self.baseView.info(inf_data,data,rows)
 
     def title(self):
         data = [0, 0, 2000 ,100]
@@ -31,15 +31,16 @@ class series(abstractView):
         data= [100, 500, 250, 300]
         self.baseView.galery(data,[100,100],3)
 
-    def listView(self):
-        self.baseView.listView([100, 775,440,100],self.data.stars)
+    def list_view(self):
+        self.baseView.listView([100, 775,440,100],self.data.stars,'Stars')
+        self.baseView.listView([1000,200,500,800],self.data.movies,'Movies')
 
     def changelabeltext(self):
         print('from view')
 
     def setupUi(self):
         self.baseView.avatar([100, 100,250,250])
-        self.listView()
+        self.list_view()
         self.title()
         self.info()
         self.galery()

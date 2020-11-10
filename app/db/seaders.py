@@ -98,11 +98,12 @@ class series(abstractSeader):
         self.addItems()
 
     def addMoviesToSeries(self):
-        self.getItem(2)
-        self.addRelations(self.item.movies, Movies, [7,8,9,10,11,12,13,14,15,16])
         self.getItem(1)
-        self.addRelations(self.item.movies, Movies, [17])
+        self.addRelations(self.item.movies, Movies, [7,8,9,10,11,12,13,14,15,16])
         self.addRelations(self.item.photos, Photos, [1, 2, 3, 4, 5, 6, 7, 8])
+        self.getItem(2)
+        self.addRelations(self.item.movies, Movies, [17])
+
 
 
 class initSeader:
