@@ -21,7 +21,6 @@ class movies(abstractSeader):
         self.generateObjects(self.model, 100)
         self.addItems()
 
-
 class stars(abstractSeader):
 
     model=Stars
@@ -34,6 +33,9 @@ class stars(abstractSeader):
         self.getItem(1)
         self.addRelations(self.item.movies, Movies, [1,2,3,4,5,6])
         self.addRelations(self.item.photos, Photos, [1,2,3,4,5,6,7,8])
+        self.addRelations(self.item.series, Series, [1,2])
+
+        self.getItem(2)
         self.addRelations(self.item.series, Series, [1,2])
 
     def addStar(self):

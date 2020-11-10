@@ -4,17 +4,17 @@ from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
 
-class abstractPaginator(ABC):
+class AbstractPaginator(ABC):
 
     def __init__(self,obj):
-        super(abstractPaginator, self).__init__()
+        super(AbstractPaginator, self).__init__()
         self.obj=obj
 
     @abstractmethod
     def paginate(self):
         pass
 
-class seriesPaginator(abstractPaginator):
+class SeriesPaginator(AbstractPaginator):
 
     def paginate(self):
 
@@ -27,7 +27,7 @@ class seriesPaginator(abstractPaginator):
             seriesItem = self.seriesItem(grid)
             self.title(grid,seriesItem,item)
             self.avatar(grid, seriesItem, item)
-            self.ifmore(grid, seriesItem, item)
+            self.if_more(grid, seriesItem, item)
             self.moviesList(grid,seriesItem,item)
 
             left = left + 390
@@ -46,7 +46,7 @@ class seriesPaginator(abstractPaginator):
 
             seriesElment = seriesElment + 1
 
-    def ifmore(self,grid,seriesItem,item):
+    def if_more(self,grid,seriesItem,item):
         if len(item['movies']) > 4:
             more = QtWidgets.QPushButton(grid)
             more.setMinimumSize(QtCore.QSize(30, 0))
@@ -111,7 +111,7 @@ class seriesPaginator(abstractPaginator):
                       "</span></body></html>")
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
-class pagination:
+class Pagination:
 
     def __init__(self,obj):
         self.obj=obj
@@ -124,19 +124,38 @@ class pagination:
 
     def paginate(self,type,obj):
         switcher = {
-            'seriesPaginator' : seriesPaginator(obj)
+            'seriesPaginator' : SeriesPaginator(obj)
         }
         classObj = switcher.get(type, "Invalid data");
         return classObj.paginate()
-""""
-class abstractList(ABC):
+
+class AbstractList(ABC):
 
     def __init__(self,obj,data,object):
         self.obj=obj
         self.data=data
         self.objectData=object
 
+    def grid_for_list(self,data):
+        self.data=data
+        self.gridForList = QtWidgets.QWidget(self.obj)
+        self.gridForList.setGeometry(QtCore.QRect(self.data[0], self.data[1], self.data[2], self.data[3]))
+        self.gridForList.setObjectName("infoWidget")
+
+    def grid_info(self):
+        self.infoGrid = QtWidgets.QGridLayout(self.gridForList)
+        self.infoGrid.setContentsMargins(0, 0, 0, 0)
+        self.infoGrid.setObjectName("infoGrid")
+
     def list(self,data,dataList):
+        self.grid_for_list(data)
+        self.grid_info()
+        row = 0
+        self.buttongroup = QtWidgets.QButtonGroup()
+        for item in dataList:
+            self.abstrat_row(item, row)
+            row = row + 1
+        """
         self.gridForList(data)
         self.gridinfo()
         row = 0
@@ -145,18 +164,14 @@ class abstractList(ABC):
         for item in dataList:
             self.abstratRow(item,row)
             row=row+1
+        """
         
-
-    @abstractmethod
-    def abstratRow(self):
-        pass
-
     def changelabeltext(self):
         print('from list')
 
-class starList(abstractList):
+class StarList(AbstractList):
 
-    def abstratRow(self,item,row):
+    def abstrat_row(self,item,row):
         col1 = QtWidgets.QLabel(self.gridForList)
         col1.setMinimumSize(QtCore.QSize(1400000, 0))
         col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
@@ -187,29 +202,86 @@ class starList(abstractList):
 
     def open(self, item):
         print(item)
-"""
+
+class List:
+
+    def __init__(self,obj):
+        self.obj=obj
+
+    def generate_grid_for_list(self,data):
+        self.object_data=data
+        self.grid_for_list = QtWidgets.QWidget(self.obj)
+        self.grid_for_list.setGeometry(QtCore.QRect(self.object_data[0], self.object_data[1], self.object_data[2], self.object_data[3]))
+        self.grid_for_list.setObjectName("infoWidget")
+
+    def grid_info(self):
+        self.info_grid = QtWidgets.QGridLayout(self.grid_for_list)
+        self.info_grid.setContentsMargins(0, 0, 0, 0)
+        self.info_grid.setObjectName("infoGrid")
+
+    def generate_Loop(self, data, data_list, obj):
+        self.buttongroup = QtWidgets.QButtonGroup()
+        self.generate_grid_for_list(data)
+        self.grid_info()
+        row = 0
+
+        for item in data_list:
+            obj(item, row,self)
+            row = row + 1
+
+
+
 class baseView:
 
     def __init__(self,data,obj):
         self.data=data
         self.model=obj.model
         self.obj=obj.obj
-        self.pagination = pagination(self.obj)
+        self.pagination = Pagination(self.obj)
         self.menu=obj.menu
+        self.list=List(self.obj)
 
-    def gridForList(self,data):
-        self.dataObject=data
-        self.gridForList = QtWidgets.QWidget(self.obj)
-        self.gridForList.setGeometry(QtCore.QRect(self.dataObject[0], self.dataObject[1], self.dataObject[2], self.dataObject[3]))
-        self.gridForList.setObjectName("infoWidget")
+    def generate_Loop(self, data, data_list, obj):
+        self.button_group = QtWidgets.QButtonGroup()
+        self.list.generate_Loop(data, data_list, obj)
 
-    def gridinfo(self):
-        self.infoGrid = QtWidgets.QGridLayout(self.gridForList)
-        self.infoGrid.setContentsMargins(0, 0, 0, 0)
-        self.infoGrid.setObjectName("infoGrid")
+    def get_series(self, data, data_list):
 
+        def abstrat_row(item, row, obj):
+
+            col1 = QtWidgets.QLabel()
+            col1.setMinimumSize(QtCore.QSize(1400000, 0))
+            col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
+            col1.setObjectName("col1")
+
+            if obj.object_data[2] > 400:
+                col1.setText(stringManipupations.short(item.name, 35))
+            else:
+                col1.setText(item.name)
+
+            obj.info_grid.addWidget(col1, row, 0, 2, 2)
+
+            el = QtWidgets.QPushButton()
+            el.setMinimumSize(QtCore.QSize(30, 0))
+            el.setMaximumSize(QtCore.QSize(10, 16777215))
+            el.setObjectName(item.name)
+            el.setText('info')
+            el.data = item
+
+            self.button_group.addButton(el)
+            obj.info_grid.addWidget(el, row, 1, 2, 2)
+            self.button_group.buttonClicked[int].connect(self.on_button_clicked)
+
+        self.generate_Loop(data, data_list, abstrat_row)
 
     def listView(self,data,dataList):
+
+        switcher = {
+            'Series' : self.get_series
+        }
+        classObj = switcher.get(self.model().returmNmae(), "Invalid data");
+        classObj(data,dataList)
+
 
         """
         self.gridForList(data)
@@ -220,7 +292,7 @@ class baseView:
         classObj = switcher.get(self.model().returmNmae(), "Invalid data");
         classObj.list(data,dataList)
         """
-
+        """
         self.gridForList(data)
         self.gridinfo()
         row = 0
@@ -229,35 +301,13 @@ class baseView:
         for item in dataList:
             self.abstratRow(item,row)
             row=row+1
-
-    def abstratRow(self,item,row):
-        col1 = QtWidgets.QLabel(self.gridForList)
-        col1.setMinimumSize(QtCore.QSize(1400000, 0))
-        col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
-        col1.setObjectName("col1")
-
-        if self.dataObject[2]>400:
-            col1.setText(stringManipupations.short(item.name, 35))
-        else:
-            col1.setText(item.name)
-
-        self.infoGrid.addWidget(col1, row, 0, 2, 2)
-
-        el = QtWidgets.QPushButton()
-        el.setMinimumSize(QtCore.QSize(30, 0))
-        el.setMaximumSize(QtCore.QSize(10, 16777215))
-        el.setObjectName(item.name)
-        el.setText('info')
-        el.data = item
-
-        self.buttongroup.addButton(el)
-        self.infoGrid.addWidget(el,row, 1, 2, 2)
-        self.buttongroup.buttonClicked[int].connect(self.on_button_clicked)
+        """
 
     def on_button_clicked(self, id):
-        for button in self.buttongroup.buttons():
-            if button is self.buttongroup.button(id):
-                self.open(self.buttongroup.button(id).data)
+        print(id)
+        for button in self.button_group.buttons():
+            if button is self.button_group.button(id):
+                self.open(self.button_group.button(id).data)
 
     def open(self, item):
         self.menu.open(item,'stars')

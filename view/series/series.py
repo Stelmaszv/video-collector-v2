@@ -27,18 +27,15 @@ class series(abstractView):
                "</span></p></body></html>"
         self.baseView.title(data,text)
 
-
-
     def galery(self):
-        data= [100, 500, 250, 361]
+        data= [100, 500, 250, 300]
         self.baseView.galery(data,[100,100],3)
 
     def listView(self):
-        self.baseView.listView([1500, 800,440,100],self.data.stars)
+        self.baseView.listView([100, 775,440,100],self.data.stars)
 
     def changelabeltext(self):
         print('from view')
-
 
     def setupUi(self):
         self.baseView.avatar([100, 100,250,250])
