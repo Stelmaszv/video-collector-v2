@@ -33,7 +33,7 @@ class series(abstractView):
 
     def list_view(self):
         self.baseView.listView([100, 775,440,100],self.data.stars,'Stars')
-        self.baseView.listView([1000,200,500,800],self.data.movies,'Movies')
+        self.baseView.listView([1250,100,500,700],self.data.movies,'Movies')
 
     def changelabeltext(self):
         print('from view')

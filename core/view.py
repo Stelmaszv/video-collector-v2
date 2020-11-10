@@ -66,6 +66,7 @@ class SeriesPaginator(AbstractPaginator):
 
     def moviesList(self,grid,seriesItem,item):
         row=1
+
         for el in item['movies']:
             if row < 6:
                 name = QtWidgets.QLabel(grid)
@@ -129,80 +130,6 @@ class Pagination:
         classObj = switcher.get(type, "Invalid data");
         return classObj.paginate()
 
-class AbstractList(ABC):
-
-    def __init__(self,obj,data,object):
-        self.obj=obj
-        self.data=data
-        self.objectData=object
-
-    def grid_for_list(self,data):
-        self.data=data
-        self.gridForList = QtWidgets.QWidget(self.obj)
-        self.gridForList.setGeometry(QtCore.QRect(self.data[0], self.data[1], self.data[2], self.data[3]))
-        self.gridForList.setObjectName("infoWidget")
-
-    def grid_info(self):
-        self.infoGrid = QtWidgets.QGridLayout(self.gridForList)
-        self.infoGrid.setContentsMargins(0, 0, 0, 0)
-        self.infoGrid.setObjectName("infoGrid")
-
-    def list(self,data,dataList):
-        self.grid_for_list(data)
-        self.grid_info()
-        row = 0
-        self.buttongroup = QtWidgets.QButtonGroup()
-        for item in dataList:
-            self.abstrat_row(item, row)
-            row = row + 1
-        """
-        self.gridForList(data)
-        self.gridinfo()
-        row = 0
-        self.buttongroup = QtWidgets.QButtonGroup()
-
-        for item in dataList:
-            self.abstratRow(item,row)
-            row=row+1
-        """
-        
-    def changelabeltext(self):
-        print('from list')
-
-class StarList(AbstractList):
-
-    def abstrat_row(self,item,row):
-        col1 = QtWidgets.QLabel(self.gridForList)
-        col1.setMinimumSize(QtCore.QSize(1400000, 0))
-        col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
-        col1.setObjectName("col1")
-
-        if self.data[2]>400:
-            col1.setText(stringManipupations.short(item.name, 35))
-        else:
-            col1.setText(item.name)
-
-        self.infoGrid.addWidget(col1, row, 0, 2, 2)
-
-        el = QtWidgets.QPushButton()
-        el.setMinimumSize(QtCore.QSize(30, 0))
-        el.setMaximumSize(QtCore.QSize(10, 16777215))
-        el.setObjectName(item.name)
-        el.setText('info')
-        el.data = item
-
-        self.buttongroup.addButton(el)
-        self.infoGrid.addWidget(el,row, 1, 2, 2)
-        self.buttongroup.buttonClicked[int].connect(self.on_button_clicked)
-
-    def on_button_clicked(self, id):
-        for button in self.buttongroup.buttons():
-            if button is self.buttongroup.button(id):
-                self.open(self.buttongroup.button(id).data)
-
-    def open(self, item):
-        print(item)
-
 class List:
 
     def __init__(self,obj):
@@ -247,9 +174,32 @@ class baseView:
     def generate_Loop(self, data, data_list, obj):
         self.list.generate_Loop(data, data_list, obj)
 
+    def create_pagination(self):
+
+        self.tab = Pagination(self.obj).tabs([600,100,1200,900])
+
+        self.starPage = QtWidgets.QWidget()
+        self.starPage.setObjectName("tabWidgetPage1")
+        self.addPage=self.starPage
+        self.tab.addTab(self.addPage, "")
+
+        self.NPage = QtWidgets.QWidget()
+        self.NPage.setObjectName("tabWidgetPage1")
+        self.tab.addTab(self.NPage, "")
+
     def get_movies(self,data, data_list):
+        self.create_pagination()
+
         self.button_group_movies_play = QtWidgets.QButtonGroup()
         self.button_group_movies_info = QtWidgets.QButtonGroup()
+
+        def grid(left, top):
+            grid = QtWidgets.QWidget(self.addPage)
+            grid.setGeometry(QtCore.QRect(left, top, 0, 0))
+            grid.setMinimumSize(QtCore.QSize(390, 200))
+            grid.setMaximumSize(QtCore.QSize(380, 200))
+            grid.setObjectName("gridLayoutWidget_15")
+            return grid
 
         def movie_play(item):
             print('movie play ' + str(item))
@@ -263,8 +213,11 @@ class baseView:
         def on_movies_info(id):
             self.buttom_genarator(self.button_group_movies_info, movie_info, id)
 
+
+        grid=grid(0,0)
+
         def abstrat_row(item, row, obj):
-            col1 = QtWidgets.QLabel()
+            col1 = QtWidgets.QLabel(grid)
             col1.setMinimumSize(QtCore.QSize(1400000, 0))
             col1.setMaximumSize(QtCore.QSize(1400000, 16777215))
             col1.setObjectName("col1")
@@ -276,7 +229,7 @@ class baseView:
 
             obj.info_grid.addWidget(col1, row, 0)
 
-            el = QtWidgets.QPushButton()
+            el = QtWidgets.QPushButton(grid)
             el.setMinimumSize(QtCore.QSize(30, 0))
             el.setMaximumSize(QtCore.QSize(10, 16777215))
             el.setObjectName(item.name)
@@ -287,7 +240,7 @@ class baseView:
             obj.info_grid.addWidget(el, row, 1)
             self.button_group_movies_info.buttonClicked[int].connect(on_movies_info)
 
-            el = QtWidgets.QPushButton()
+            el = QtWidgets.QPushButton(grid)
             el.setMinimumSize(QtCore.QSize(30, 0))
             el.setMaximumSize(QtCore.QSize(10, 16777215))
             el.setObjectName(item.name)
