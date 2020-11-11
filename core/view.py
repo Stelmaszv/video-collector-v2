@@ -112,6 +112,69 @@ class SeriesPaginator(AbstractPaginator):
                       "</span></body></html>")
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
+class Scroller:
+
+    def __init__(self,obj):
+        self.obj=obj
+
+    def scroll_area(self,data,obj=None):
+        if self.obj == None:
+            obj=self.obj
+
+        scroll_area_obj = QtWidgets.QScrollArea(obj)
+        scroll_area_obj.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        scroll_area_obj.setWidgetResizable(True)
+        scroll_area_obj.setObjectName("scrollArea")
+        return  scroll_area_obj
+
+    def scroll_area_widget_contents(self):
+        scrollAreaWidgetContents = QtWidgets.QWidget()
+        scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 279, 499))
+        scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        return scrollAreaWidgetContents
+
+    def grid_for_scroll (self):
+        grid_for_scroll_obj = QtWidgets.QGridLayout()
+        grid_for_scroll_obj.setObjectName("gridLayout")
+        return grid_for_scroll_obj
+
+    def vertical_layout(self,obj):
+        vertical_Layout_grid = QtWidgets.QVBoxLayout(obj)
+        vertical_Layout_grid.setObjectName("verticalLayout")
+        return vertical_Layout_grid
+
+    def movie_list(self,obj,grid,layout,scroll_area,list,buttons):
+
+        row=0
+        for item in list:
+            label = QtWidgets.QLabel(obj)
+            label.setObjectName("label")
+            label.setText(item.name)
+            grid.addWidget(label, row, 0, 1, 1)
+
+            pushButton = QtWidgets.QPushButton(obj)
+            pushButton.setObjectName("pushButton")
+            pushButton.setText('info')
+            pushButton.data=item
+            grid.addWidget(pushButton, row, 1, 1, 1)
+            buttons[0]['obejct'].addButton(pushButton)
+            buttons[0]['obejct'].buttonClicked[int].connect(buttons[0]['button'])
+
+            pushButton_2 = QtWidgets.QPushButton(obj)
+            pushButton_2.setObjectName("pushButton_2")
+            pushButton_2.setText('play')
+            pushButton_2.data = item
+            buttons[1]['obejct'].addButton(pushButton_2)
+            buttons[1]['obejct'].buttonClicked[int].connect(buttons[1]['button'])
+            grid.addWidget(pushButton_2, row, 2, 1, 1)
+
+            row=row+1
+
+        layout.addLayout(grid)
+        scroll_area.setWidget(obj)
+
+
+
 class Pagination:
 
     def __init__(self,obj):
@@ -120,6 +183,7 @@ class Pagination:
     def tabs(self,data):
         tab = QtWidgets.QTabWidget(self.obj)
         tab.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        tab.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
         tab.setObjectName("tabWidget")
         return tab
 
@@ -129,6 +193,11 @@ class Pagination:
         }
         classObj = switcher.get(type, "Invalid data");
         return classObj.paginate()
+
+    def tab(self):
+        tab = QtWidgets.QWidget()
+        tab.setObjectName("tab")
+        return tab
 
 class List:
 
@@ -165,11 +234,12 @@ class baseView:
         self.pagination = Pagination(self.obj)
         self.menu=obj.menu
         self.list=List(self.obj)
+        self.Scroller=Scroller(self.obj)
 
     def buttom_genarator(self,list,fuction,id):
         for button in list.buttons():
             if button is list.button(id):
-                fuction(list.button(id).data)
+                fuction(list.button(id))
 
     def generate_Loop(self, data, data_list, obj):
         self.list.generate_Loop(data, data_list, obj)
@@ -187,7 +257,7 @@ class baseView:
         self.NPage.setObjectName("tabWidgetPage1")
         self.tab.addTab(self.NPage, "")
 
-    def get_movies(self,data, data_list):
+    def get_movie(self,data, data_list):
         self.create_pagination()
 
         self.button_group_movies_play = QtWidgets.QButtonGroup()
@@ -290,11 +360,75 @@ class baseView:
 
         self.generate_Loop(data, data_list, abstrat_row)
 
+    def get_movies(self, data, data_list):
+        def movie_play(item):
+            print('movie play ' + str(item.data))
+
+        def movie_info(item):
+            print('movie info ' + str(item.data))
+
+        def on_movies_play(id):
+           self.buttom_genarator(self.button_group_movies_play, movie_play, id)
+
+        def on_movies_info(id):
+            self.buttom_genarator(self.button_group_movies_info, movie_info, id)
+
+        self.button_group_movies_play = QtWidgets.QButtonGroup()
+        self.button_group_movies_info = QtWidgets.QButtonGroup()
+
+        self.tabWidget = self.pagination.tabs(data)
+
+        self.tab = self.pagination.tab()
+
+
+        #scoroller
+
+        self.scrollArea = self.Scroller.scroll_area([400,10,780,850],self.tab)
+
+        self.scrollAreaWidgetContents = self.Scroller.scroll_area_widget_contents()
+
+        self.verticalLayout= self.Scroller.vertical_layout(self.scrollAreaWidgetContents)
+
+
+        self.grid_for_scroll = self.Scroller.grid_for_scroll()
+
+        self.Scroller.movie_list(
+            self.scrollAreaWidgetContents,
+            self.grid_for_scroll,
+            self.verticalLayout,
+            self.scrollArea,
+            self.data.movies,
+            [
+             {'button': on_movies_info,  'obejct': self.button_group_movies_info},
+             {'button': on_movies_play,  'obejct': self.button_group_movies_play}
+            ]
+        )
+
+        src='C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg'
+        self.avatar([50, 50, 250, 250],self.tab,src)
+
+        data   = [100,300,300,200]
+
+        rows = ['itemNmae','itemName2']
+
+        info_data=[
+            {"itemNmae" : "anser","itemName2" :"anser1"},
+            {"itemNmae" : "anser2","itemName2" :"anser2"},
+            {"itemNmae": "anser3","itemName2" :"anser2"}
+        ]
+
+        data2 = [50, 520, 300, 200]
+
+        self.info(info_data,data,rows,self.tab)
+        self.galery(data2,[100,100],3,self.tab)
+
+        self.tabWidget.addTab(self.tab, "Seson 1")
+
     def listView(self, data, data_list,obj_name):
 
         switcher = {
             'Stars'  : self.get_stars,
-            'Movies' : self.get_movies
+            'Movies' : self.get_movies,
         }
         classObj = switcher.get(obj_name, "Invalid data");
         classObj(data, data_list)
@@ -305,26 +439,30 @@ class baseView:
         self.title.setObjectName("title")
         self.title.setText(text)
 
-    def avatar(self,data):
-        self.avatar = QtWidgets.QLabel(self.obj)
-        self.avatar.setGeometry(QtCore.QRect(data[0],data[1],data[2],data[3]))
-        self.avatar.setText("")
-        self.avatar.setPixmap(QtGui.QPixmap(self.data.avatar))
-        self.avatar.setScaledContents(True)
-        self.avatar.setObjectName("avatar")
+    def avatar(self,data,obj=None,src=None):
+        if obj == None:
+            obj = self.obj
+        if src == None:
+            src = self.data.avatar
+        self.avatar_photo = QtWidgets.QLabel(obj)
+        self.avatar_photo.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.avatar_photo.setText("")
+        self.avatar_photo.setPixmap(QtGui.QPixmap(src))
+        self.avatar_photo.setScaledContents(True)
+        self.avatar_photo.setObjectName("avatar")
 
-    def info(self,infoData,data,rows):
-        self.infoWidget = QtWidgets.QWidget(self.obj)
+    def info(self,infoData,data,rows,obj=None):
+        if obj==None:
+            obj=self.obj
+        self.infoWidget = QtWidgets.QWidget(obj)
         self.infoWidget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.infoWidget.setObjectName("infoWidget")
         self.infoGrid = QtWidgets.QGridLayout(self.infoWidget)
         self.infoGrid.setContentsMargins(0, 0, 0, 0)
         self.infoGrid.setObjectName("infoGrid")
-
         row=0
 
         for item in infoData:
-
             col1 = QtWidgets.QLabel(self.infoWidget)
             col1.setObjectName("col1")
             col1.setText(item[rows[0]])
@@ -337,9 +475,13 @@ class baseView:
 
             row=row+1
 
-    def galery(self,data,size,inRow):
-        photos = self.data.photos
-        self.galeryGrid = QtWidgets.QWidget(self.obj)
+    def galery(self,data,size,inRow,obj=None,photos=None):
+        if photos == None:
+            photos = self.data.photos
+        if obj == None:
+            obj = self.obj
+
+        self.galeryGrid = QtWidgets.QWidget(obj)
         self.galeryGrid.setGeometry(QtCore.QRect(data[0],data[1],data[2],data[3]))
         self.galeryGrid.setObjectName("galeryGrid")
 
