@@ -39,15 +39,9 @@ class stars(abstractView):
         self.baseView.info(infData,data,rows)
 
     def seriesResult(self):
-        data=[80, 430, 1571, 581]
-        self.tab=self.baseView.pagination.tabs(data)
-        self.starPage = QtWidgets.QWidget()
-        self.starPage.setObjectName("tabWidgetPage1")
-        self.grid = QtWidgets.QWidget(self.starPage)
-        self.addPage=self.starPage
-        self.tab.addTab(self.addPage, "")
+        self.seriesList=[]
         self.seriesList = seriesCreator(self.data).returnObj()
-        self.baseView.pagination.paginate('seriesPaginator',self)
+        self.baseView.listView([80, 430, 1571, 581], self.seriesList, 'Stars')
 
     def setupUi(self):
         self.baseView.avatar([100, 80,400,400])
@@ -55,5 +49,4 @@ class stars(abstractView):
         self.galery()
         self.info()
         self.seriesResult()
-        self.tab.setCurrentIndex(1)
 
