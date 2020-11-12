@@ -32,7 +32,6 @@ class series(abstractView):
         self.baseView.galery(data,[100,100],3)
 
     def list_view(self):
-        self.baseView.listView([100, 775,440,100],self.data.stars,'Stars')
         self.baseView.listView([500,100,1200,900],self.data.movies,'Movies')
 
     def changelabeltext(self):

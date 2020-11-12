@@ -143,37 +143,40 @@ class Scroller:
         vertical_Layout_grid.setObjectName("verticalLayout")
         return vertical_Layout_grid
 
-    def movie_list(self,obj,grid,layout,scroll_area,list,buttons):
+    def run(self,data,obj):
+        self.scrollArea = self.scroll_area([400, 10, 780, 850], obj)
+        self.scrollAreaWidgetContents = self.scroll_area_widget_contents()
+        self.verticalLayout = self.vertical_layout(self.scrollAreaWidgetContents)
+        self.grid_for_scroll = self.grid_for_scroll()
+
+    def movie_list(self,list,buttons):
 
         row=0
         for item in list:
-            label = QtWidgets.QLabel(obj)
+            label = QtWidgets.QLabel(self.scrollAreaWidgetContents)
             label.setObjectName("label")
             label.setText(item.name)
-            grid.addWidget(label, row, 0, 1, 1)
+            self.grid_for_scroll.addWidget(label, row, 0, 1, 1)
 
-            pushButton = QtWidgets.QPushButton(obj)
+            pushButton = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
             pushButton.setObjectName("pushButton")
             pushButton.setText('info')
             pushButton.data=item
-            grid.addWidget(pushButton, row, 1, 1, 1)
+            self.grid_for_scroll.addWidget(pushButton, row, 1, 1, 1)
             buttons[0]['obejct'].addButton(pushButton)
             buttons[0]['obejct'].buttonClicked[int].connect(buttons[0]['button'])
 
-            pushButton_2 = QtWidgets.QPushButton(obj)
+            pushButton_2 = QtWidgets.QPushButton(self.scrollAreaWidgetContents)
             pushButton_2.setObjectName("pushButton_2")
             pushButton_2.setText('play')
             pushButton_2.data = item
             buttons[1]['obejct'].addButton(pushButton_2)
             buttons[1]['obejct'].buttonClicked[int].connect(buttons[1]['button'])
-            grid.addWidget(pushButton_2, row, 2, 1, 1)
-
+            self.grid_for_scroll.addWidget(pushButton_2, row, 2, 1, 1)
             row=row+1
 
-        layout.addLayout(grid)
-        scroll_area.setWidget(obj)
-
-
+        self.verticalLayout.addLayout(self.grid_for_scroll)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
 class Pagination:
 
@@ -198,6 +201,58 @@ class Pagination:
         tab = QtWidgets.QWidget()
         tab.setObjectName("tab")
         return tab
+
+class SeriesList:
+
+    def __init__(self, BaseView):
+        self.obj = BaseView.obj
+        self.data= BaseView.data
+        self.BaseView=BaseView
+        self.Scroller = Scroller(self.obj)
+        self.pagination = Pagination(self.obj)
+        self.button_group_movies_play = QtWidgets.QButtonGroup()
+        self.button_group_movies_info = QtWidgets.QButtonGroup()
+
+    def info(self):
+        data   = [100,300,300,200]
+        rows = ['itemNmae','itemName2']
+        info_data=[
+            {"itemNmae" : "anser","itemName2" :"anser1"},
+            {"itemNmae" : "anser2","itemName2" :"anser2"},
+            {"itemNmae": "anser3","itemName2" :"anser2"}
+        ]
+        self.BaseView.info(info_data,data,rows,self.tab)
+
+    def movie_play(self,item):
+        print('movie play ' + str(item.data))
+
+    def movie_info(self,item):
+        print('movie info ' + str(item.data))
+
+    def run(self):
+        def on_movies_play(id):
+           self.BaseView.buttom_genarator(self.button_group_movies_play, self.movie_play, id)
+
+        def on_movies_info(id):
+            self.BaseView.buttom_genarator(self.button_group_movies_info, self.movie_info, id)
+
+        self.tabWidget = self.pagination.tabs([500,100,1200,900])
+        self.tab = self.pagination.tab()
+
+        src = 'C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg'
+        self.BaseView.avatar([50, 50, 250, 250], self.tab, src)
+        self.info()
+        self.BaseView.galery([50, 520, 300, 200],[100,100],3,self.tab)
+
+        self.Scroller.run([400, 10, 780, 850], self.tab)
+        self.Scroller.movie_list(
+            self.data.movies,
+            [
+             {'button': on_movies_info,  'obejct': self.button_group_movies_info},
+             {'button': on_movies_play,  'obejct': self.button_group_movies_play}
+            ]
+        )
+        self.tabWidget.addTab(self.tab, "Seson 1")
 
 class List:
 
@@ -383,7 +438,7 @@ class baseView:
 
         #scoroller
 
-        self.scrollArea = self.Scroller.scroll_area([400,10,780,850],self.tab)
+        self.scrollArea = self.Scroller.scroll_area([400, 10, 780, 850], self.tab)
 
         self.scrollAreaWidgetContents = self.Scroller.scroll_area_widget_contents()
 
@@ -427,11 +482,13 @@ class baseView:
     def listView(self, data, data_list,obj_name):
 
         switcher = {
-            'Stars'  : self.get_stars,
-            'Movies' : self.get_movies,
+            'Stars'    : self.get_stars,
+            'Movies'   : SeriesList,
         }
+
         classObj = switcher.get(obj_name, "Invalid data");
-        classObj(data, data_list)
+        classObj(self).run()
+
 
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)
