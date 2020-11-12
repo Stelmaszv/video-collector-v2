@@ -1,7 +1,7 @@
-from core.view import abstractView
+from core.view import AbstractView
 from app.db.models import Series
 from PyQt5 import QtWidgets
-class series(abstractView):
+class series(AbstractView):
     model = Series
 
     def info(self):

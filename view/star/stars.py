@@ -1,9 +1,9 @@
 from app.db.models import Stars
 from PyQt5 import QtCore, QtWidgets
 from core.creator import seriesCreator
-from core.view import abstractView
+from core.view import AbstractView
 
-class stars(abstractView):
+class stars(AbstractView):
 
     model = Stars
     seriesList=[]
