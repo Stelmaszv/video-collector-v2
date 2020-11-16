@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import  QWidget,QPushButton
 from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
+from core.actions import OpenView
 
 class Pagination:
 
@@ -49,10 +50,10 @@ class AbstractList(ABC):
         self.buttons[index]['obejct'].addButton(button)
         self.buttons[index]['obejct'].buttonClicked[int].connect(self.buttons[index]['button'])
 
-
 class MoviesList (AbstractList):
 
-    def __init__(self):
+    def __init__(self,menu):
+        self.menu=menu
         self.button_group_movies_play = QtWidgets.QButtonGroup()
         self.button_group_movies_info = QtWidgets.QButtonGroup()
         self.buttons= [
@@ -64,7 +65,7 @@ class MoviesList (AbstractList):
         print('movie play ' + str(item.data))
 
     def movie_info(self,item):
-        print('movie info ' + str(item.data))
+        self.menu.open(item.data,'movies')
 
     def on_movies_play(self,id):
        self.buttom_genarator(self.button_group_movies_play, self.movie_play, id)
@@ -81,8 +82,6 @@ class MoviesList (AbstractList):
 
              row=row+1
 
-
-
 class List:
 
     def __init__(self,obj):
@@ -91,7 +90,7 @@ class List:
     def generate_list(self,place,list,el,grid,col):
 
         switcher = {
-            'Movies': MoviesList(),
+            'Movies': MoviesList(self.obj),
         }
 
         classObj = switcher.get(place, "Invalid data");
@@ -135,8 +134,8 @@ class Scroller:
         self.verticalLayout = self.vertical_layout(self.scrollAreaWidgetContents)
         self.grid_for_scroll = self.grid_for_scroll()
 
-    def movie_list(self,list):
-        List(self.obj).generate_list(
+    def movie_list(self,list,menu):
+        List(menu).generate_list(
             'Movies',
             list,
             self.scrollAreaWidgetContents,
@@ -158,7 +157,7 @@ class StarsSection(AbstractSection):
     def __init__(self, BaseView):
         self.BaseView = BaseView
         self.obj =BaseView.obj
-        self.List= List
+        self.List= List(self.BaseView.menu)
         self.pagination = Pagination(self.obj)
 
     def if_more(self,grid,seriesItem,item):
@@ -214,13 +213,14 @@ class StarsSection(AbstractSection):
             self.avatar(grid, seriesItem, item)
             self.if_more(grid, seriesItem, item)
 
-            List(self.obj).generate_list(
+            self.List.generate_list(
                 'Movies',
                 item['movies'],
                 grid,
                 seriesItem,
                 1,
             )
+
             left = left + 390
 
             if seriesElment % 4 == 0:
@@ -267,8 +267,11 @@ class SeriesList(AbstractSection):
         self.Scroller.run([400, 10, 780, 850], self.tab)
 
         self.Scroller.movie_list(
-            self.data.movies
+            self.data.movies,
+            self.BaseView.menu
         )
+
+
         self.tabWidget.addTab(self.tab, "Seson 1")
 
 class BaseView:
@@ -291,6 +294,46 @@ class BaseView:
         classObj = switcher.get(obj_name, "Invalid data");
         classObj.run(data,data_list)
 
+    def get_nav(self,data,obj=None):
+        if obj==None:
+            obj=self.obj
+
+
+
+        self.ManuWidget = QtWidgets.QWidget(obj)
+        self.ManuWidget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.ManuWidget.setObjectName("infoWidget")
+        self.ManuGrid = QtWidgets.QGridLayout(self.ManuWidget)
+        self.ManuGrid.setContentsMargins(0, 0, 0, 0)
+        self.ManuGrid.setObjectName("infoGrid")
+
+        open = QtWidgets.QPushButton(self.ManuWidget)
+        open.setMinimumSize(QtCore.QSize(100, 0))
+        open.setMaximumSize(QtCore.QSize(10, 16777215))
+        open.setObjectName("col1")
+        open.setText('Open')
+        self.ManuGrid.addWidget(open, 0, 0, 2, 2)
+
+        favirite = QtWidgets.QPushButton(self.ManuWidget)
+        favirite.setMinimumSize(QtCore.QSize(100, 0))
+        favirite.setMaximumSize(QtCore.QSize(10, 16777215))
+        favirite.setObjectName("col1")
+        favirite.setText('favirite')
+        self.ManuGrid.addWidget(favirite, 0, 1, 2, 2)
+
+        edit = QtWidgets.QPushButton(self.ManuWidget)
+        edit.setMinimumSize(QtCore.QSize(100, 0))
+        edit.setMaximumSize(QtCore.QSize(10, 16777215))
+        edit.setObjectName("col1")
+        edit.setText('edit')
+        self.ManuGrid.addWidget(edit, 0, 2, 2, 2)
+
+        delete = QtWidgets.QPushButton(self.ManuWidget)
+        delete.setObjectName("col1")
+        delete.setText('Delete')
+        delete.setMinimumSize(QtCore.QSize(100, 0))
+        delete.setMaximumSize(QtCore.QSize(10, 16777215))
+        self.ManuGrid.addWidget(delete, 0, 2, 2, 2)
 
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)

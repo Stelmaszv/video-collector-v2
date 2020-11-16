@@ -1,6 +1,6 @@
 from view.star.stars import stars
 from view.series.series import series
-from view.movie.test import movie
+from view.movie.movie import Movie
 
 
 class setWindow():
@@ -9,7 +9,7 @@ class setWindow():
 
     def returnObj(self, menu):
         switcher = {
-            'movies' : movie(),
+            'movies' : Movie(),
             'series' : series(),
             'stars'  : stars()
         }
