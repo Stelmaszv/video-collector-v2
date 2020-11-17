@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import  QWidget,QPushButton
 from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
-from core.actions import OpenView
+from core.actions import ActionList
 
 class Pagination:
 
@@ -65,7 +65,7 @@ class MoviesList (AbstractList):
         print('movie play ' + str(item.data))
 
     def movie_info(self,item):
-        self.menu.open(item.data,'movies')
+        self.menu.open(item.data, 'movies')
 
     def on_movies_play(self,id):
        self.buttom_genarator(self.button_group_movies_play, self.movie_play, id)
@@ -79,7 +79,6 @@ class MoviesList (AbstractList):
              self.label(el,grid,item,[row,col_start,1,1])
              self.button(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
              self.button(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
-
              row=row+1
 
 class List:

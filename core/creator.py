@@ -1,3 +1,5 @@
+from core.view import MoviesList
+
 class seriesCreator:
     noneList=[]
     singlesList=[]
@@ -100,3 +102,10 @@ class seriesCreator:
         self.setSingles()
         self.create()
         return self.createList
+
+class MoviesCreator:
+    def __init__(self,menu):
+        self.list=MoviesList(menu)
+
+    def get_all_movies(self):
+        print('dqwd')

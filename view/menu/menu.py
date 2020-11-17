@@ -5,6 +5,7 @@ from core.search import setFactory
 from core.PyQt5Helpel import Layout
 from core.setWindow import setWindow
 from app.db.seaders import initSeader
+from core.view import MoviesList,SeriesList,List
 
 
 initSeader().initNow()
@@ -48,18 +49,26 @@ class menu(QMainWindow):
         self.resultArea.setObjectName("resultArea")
 
     def searchResult(self):
-        row=0
         self.buttongroup = QtWidgets.QButtonGroup()
         self.Layout.clear(self.resultArea)
-        for item in setFactory(self.searchIn,self).getFactory():
-             el = QtWidgets.QPushButton()
-             el.setObjectName(item.name)
-             el.setText(item.name)
-             el.data=item
-             self.buttongroup.addButton(el)
-             self.resultArea.addWidget(el)
-             self.buttongroup.buttonClicked[int].connect(self.on_button_clicked)
-             row=row+1
+
+        self.ManuGrid = QtWidgets.QGridLayout(self.centralwidget)
+        self.ManuGrid.setContentsMargins(0, 0, 0, 0)
+        self.ManuGrid.setObjectName("infoGrid")
+        list = setFactory(self.searchIn, self).getFactory()
+        self.set_list(list, self.centralwidget, self.ManuGrid)
+
+
+
+
+    def set_list(self,list,grid,el):
+        List(self).generate_list(
+            'Movies',
+            list,
+            grid,
+            el,
+            1,
+        )
 
     def on_button_clicked(self, id):
         for button in self.buttongroup.buttons():

@@ -1,6 +1,4 @@
+class ActionList:
 
-
-class OpenView:
-
-    def open(self,view):
-        setWindow.open(view)
+    def set_action(self,obj,item,place):
+        self.menu.open(item.data,place)
