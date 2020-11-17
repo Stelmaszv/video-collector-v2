@@ -33,6 +33,7 @@ class AbstractList(ABC):
             if button is list.button(id):
                 fuction(list.button(id))
 
+
     def label(self,el,grid,item,data):
         label = QtWidgets.QLabel(el)
         label.setObjectName("label")
@@ -67,6 +68,7 @@ class MoviesList (AbstractList):
     def movie_info(self,item):
         self.menu.open(item.data, 'movies')
 
+
     def on_movies_play(self,id):
        self.buttom_genarator(self.button_group_movies_play, self.movie_play, id)
 
@@ -76,10 +78,34 @@ class MoviesList (AbstractList):
     def genrate(self,data,el,grid,col_start):
         row=1
         for item in data:
-             self.label(el,grid,item,[row,col_start,1,1])
-             self.button(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
-             self.button(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
-             row=row+1
+            if row <5:
+                self.label(el,grid,item,[row,col_start,1,1])
+                self.button(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
+                self.button(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
+            row=row+1
+
+class SeriesList(AbstractList):
+
+    def __init__(self,menu):
+        self.menu=menu
+        self.button_group_series_info = QtWidgets.QButtonGroup()
+        self.buttons= [
+            {'button': self.on_series_info, 'obejct': self.button_group_series_info},
+        ]
+
+    def on_series_info(self,id):
+       self.buttom_genarator(self.button_group_series_info,self.series_info, id)
+
+    def series_info(self,item):
+       self.menu.open(item.data, 'series')
+
+    def genrate(self,data,el,grid,col_start):
+        row = 1
+        for item in data:
+            if row < 5:
+                self.label(el, grid, item, [row, col_start, 1, 1])
+                self.button(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
+            row = row + 1
 
 class List:
 
@@ -89,7 +115,8 @@ class List:
     def generate_list(self,place,list,el,grid,col):
 
         switcher = {
-            'Movies': MoviesList(self.obj),
+            'movies': MoviesList(self.obj),
+            'series': SeriesList(self.obj)
         }
 
         classObj = switcher.get(place, "Invalid data");
@@ -135,13 +162,12 @@ class Scroller:
 
     def movie_list(self,list,menu):
         List(menu).generate_list(
-            'Movies',
+            'movies',
             list,
             self.scrollAreaWidgetContents,
             self.grid_for_scroll,
             1,
         )
-
         self.verticalLayout.addLayout(self.grid_for_scroll)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
@@ -235,7 +261,7 @@ class StarsSection(AbstractSection):
             seriesElment = seriesElment + 1
         self.tabWidget.addTab(self.addPage, "1")
 
-class SeriesList(AbstractSection):
+class SeriesSection(AbstractSection):
 
     def __init__(self, BaseView):
         self.obj = BaseView.obj
@@ -255,7 +281,7 @@ class SeriesList(AbstractSection):
         self.BaseView.info(info_data,data,rows,self.tab)
 
     def run(self,data,data_list):
-        self.tabWidget = self.pagination.tabs([500,100,1200,900])
+        self.tabWidget = self.pagination.tabs([500, 100, 1200, 900])
         self.tab = self.pagination.tab()
 
         src = 'C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg'
@@ -270,8 +296,8 @@ class SeriesList(AbstractSection):
             self.BaseView.menu
         )
 
-
         self.tabWidget.addTab(self.tab, "Seson 1")
+
 
 class BaseView:
 
@@ -287,9 +313,8 @@ class BaseView:
 
         switcher = {
             'Stars'    : StarsSection(self),
-            'Movies'   : SeriesList(self),
+            'Series'   : SeriesSection(self),
         }
-
         classObj = switcher.get(obj_name, "Invalid data");
         classObj.run(data,data_list)
 
@@ -421,8 +446,8 @@ class AbstractView(QWidget):
         self.obj.resize(1920, 1080)
 
     def show(self,data):
-
         self.id = data.id
+
         self.createObj()
 
         self.setBaseView(data,self)

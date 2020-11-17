@@ -32,15 +32,15 @@ class series(AbstractView):
         self.baseView.galery(data,[100,100],3)
 
     def list_view(self):
-        self.baseView.listView([500,100,1200,900],self.data.movies,'Movies')
+        self.baseView.listView([500,100,1200,900],self.data.movies,'Series')
 
     def changelabeltext(self):
         print('from view')
 
     def setupUi(self):
-        self.baseView.avatar([100, 100,250,250])
-        self.list_view()
         self.title()
+        self.baseView.avatar([100, 100, 250, 250])
         self.info()
         self.galery()
+        self.list_view()
 

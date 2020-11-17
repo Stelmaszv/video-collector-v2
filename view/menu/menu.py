@@ -5,7 +5,7 @@ from core.search import setFactory
 from core.PyQt5Helpel import Layout
 from core.setWindow import setWindow
 from app.db.seaders import initSeader
-from core.view import MoviesList,SeriesList,List
+from core.view import List
 
 
 initSeader().initNow()
@@ -49,31 +49,24 @@ class menu(QMainWindow):
         self.resultArea.setObjectName("resultArea")
 
     def searchResult(self):
-        self.buttongroup = QtWidgets.QButtonGroup()
-        self.Layout.clear(self.resultArea)
 
-        self.ManuGrid = QtWidgets.QGridLayout(self.centralwidget)
-        self.ManuGrid.setContentsMargins(0, 0, 0, 0)
-        self.ManuGrid.setObjectName("infoGrid")
+        menu_grid = QtWidgets.QGridLayout(self.centralwidget)
+        menu_grid.setGeometry(QtCore.QRect(10, 150, 381, 841))
+        menu_grid.setObjectName("infoGrid")
+
         list = setFactory(self.searchIn, self).getFactory()
-        self.set_list(list, self.centralwidget, self.ManuGrid)
 
-
-
+        self.set_list(list, self.serchAreaMain, menu_grid)
 
     def set_list(self,list,grid,el):
+
         List(self).generate_list(
-            'Movies',
+            self.searchIn,
             list,
             grid,
             el,
-            1,
+            1
         )
-
-    def on_button_clicked(self, id):
-        for button in self.buttongroup.buttons():
-            if button is self.buttongroup.button(id):
-                self.open(self.buttongroup.button(id).data)
 
     def open(self,item,setObject=None):
         self.getDataFrom(setObject)
@@ -101,6 +94,8 @@ class menu(QMainWindow):
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.pushButton)
 
     def getDataFrom(self,setObject=None):
+        print(self.isVisible())
+
         self.searchFaze=self.serchLineEdit.text() or None
         if setObject:
             self.searchIn=setObject
@@ -143,9 +138,9 @@ class menu(QMainWindow):
         MainWindow.setWindowTitle(_translate("Main Window", "Main Window"))
         self.serchLabel.setText(_translate("MainWindow", "Search"))
         self.serchInLabel.setText(_translate("MainWindow", "Search In"))
-        self.serchInComboBox.setItemText(0, _translate("MainWindow", "series"))
+        self.serchInComboBox.setItemText(0, _translate("MainWindow", "movies"))
         self.serchInComboBox.setItemText(1, _translate("MainWindow", "stars"))
-        self.serchInComboBox.setItemText(2, _translate("MainWindow", "movies"))
+        self.serchInComboBox.setItemText(2, _translate("MainWindow", "series"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
 
 
