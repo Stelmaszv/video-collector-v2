@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import  QWidget,QPushButton
 from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
-from core.actions import ActionList
 
 class Pagination:
 
@@ -33,7 +32,6 @@ class AbstractList(ABC):
             if button is list.button(id):
                 fuction(list.button(id))
 
-
     def label(self,el,grid,item,data):
         label = QtWidgets.QLabel(el)
         label.setObjectName("label")
@@ -54,6 +52,7 @@ class AbstractList(ABC):
 class MoviesList (AbstractList):
 
     def __init__(self,menu):
+
         self.menu=menu
         self.button_group_movies_play = QtWidgets.QButtonGroup()
         self.button_group_movies_info = QtWidgets.QButtonGroup()
@@ -66,8 +65,7 @@ class MoviesList (AbstractList):
         print('movie play ' + str(item.data))
 
     def movie_info(self,item):
-        self.menu.open(item.data, 'movies')
-
+        self.menu.load_view(item,'movies')
 
     def on_movies_play(self,id):
        self.buttom_genarator(self.button_group_movies_play, self.movie_play, id)
@@ -97,7 +95,7 @@ class SeriesList(AbstractList):
        self.buttom_genarator(self.button_group_series_info,self.series_info, id)
 
     def series_info(self,item):
-       self.menu.open(item.data, 'series')
+       self.menu.load_view(item, 'series')
 
     def genrate(self,data,el,grid,col_start):
         row = 1
@@ -182,7 +180,7 @@ class StarsSection(AbstractSection):
     def __init__(self, BaseView):
         self.BaseView = BaseView
         self.obj =BaseView.obj
-        self.List= List(self.BaseView.menu)
+        self.List= List(self.obj)
         self.pagination = Pagination(self.obj)
 
     def if_more(self,grid,seriesItem,item):
@@ -280,6 +278,11 @@ class SeriesSection(AbstractSection):
         ]
         self.BaseView.info(info_data,data,rows,self.tab)
 
+    def seriesItem(self,grid):
+        seriesItem = QtWidgets.QGridLayout(grid)
+        seriesItem.setObjectName("seriesItem")
+        return seriesItem
+
     def run(self,data,data_list):
         self.tabWidget = self.pagination.tabs([500, 100, 1200, 900])
         self.tab = self.pagination.tab()
@@ -298,22 +301,87 @@ class SeriesSection(AbstractSection):
 
         self.tabWidget.addTab(self.tab, "Seson 1")
 
+class Form:
+
+    def __init__(self,obj):
+        self.obj = obj
+
+    def combo_box(self,data,list):
+        combo_box = QtWidgets.QComboBox(self.obj)
+        combo_box.setGeometry(data[0], data[1], data[2], data[3])
+        combo_box.addItems(list)
+
+    def button(self,info,data,click=None,grid=None):
+        button = QtWidgets.QPushButton(self.obj)
+        button.setGeometry(data[0], data[1], data[2], data[3])
+        button.setObjectName(info[0])
+        button.setText(info[1])
+        if click is not None:
+            button.clicked.connect(click)
+        if grid is not None:
+            grid.addWidget(button)
+
+    def edit_line(self,data):
+        line = QtWidgets.QLineEdit(self.obj)
+        line.setGeometry(data[0], data[1], data[2], data[3])
+
+class MenuSection(AbstractSection):
+    def __init__(self, BaseView):
+        self.obj = BaseView.obj
+        self.BaseView = BaseView
+        self.Scroller = Scroller(self.obj)
+        self.List = List(self.BaseView)
+        self.pagination = Pagination(self.obj)
+
+    def scroll_area_widget_contents(self):
+        self.scrollAreaWidgetContents = QtWidgets.QWidget(self.obj)
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+
+    def grid_for_scroll(self):
+        self.grid_for_scroll_obj = QtWidgets.QGridLayout(self.obj)
+        self.grid_for_scroll_obj.setObjectName("gridLayout")
+
+    def grid(self):
+        seriesItem = QtWidgets.QGridLayout(self.tab)
+        seriesItem.setObjectName("seriesItem")
+        return seriesItem
+
+    def run(self, data, data_list):
+        self.tabWidget = self.pagination.tabs([0, 200, 400, 800])
+        self.tab = self.pagination.tab()
+        grid=self.grid()
+
+        self.List.generate_list(
+            self.BaseView.menu.searchIn,
+            data_list,
+            self.tab,
+            grid,
+            0,
+        )
+
+        self.tabWidget.addTab(self.tab, "Page 1")
 
 class BaseView:
 
     def __init__(self,data,obj):
+        self.menu=obj
         self.data=data
-        self.model=obj.model
+        if obj.model is not None:
+            self.model=obj.model
         self.obj=obj.obj
+        self.form = Form(self.obj)
         self.pagination = Pagination(self.obj)
-        self.menu=obj.menu
         self.Scroller=Scroller(self.obj)
+
+    def load_view(self,item,view):
+        self.menu.open(item,view)
 
     def listView(self, data, data_list,obj_name):
 
         switcher = {
             'Stars'    : StarsSection(self),
             'Series'   : SeriesSection(self),
+            'Menu'     : MenuSection(self)
         }
         classObj = switcher.get(obj_name, "Invalid data");
         classObj.run(data,data_list)
@@ -321,8 +389,6 @@ class BaseView:
     def get_nav(self,data,obj=None):
         if obj==None:
             obj=self.obj
-
-
 
         self.ManuWidget = QtWidgets.QWidget(obj)
         self.ManuWidget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
@@ -431,11 +497,15 @@ class BaseView:
 
 class AbstractView(QWidget):
 
+    width_val=1920
+    height_val= 1080
+
     def __init__(self):
         super(AbstractView, self).__init__()
 
     def getOne(self):
-        self.data=session.query(self.model).get(self.id)
+        if self.model:
+            self.data=session.query(self.model).get(self.id)
 
     def setupUi(self):
         pass
@@ -443,10 +513,11 @@ class AbstractView(QWidget):
     def createObj(self):
         self.obj = QtWidgets.QMainWindow()
         self.obj.setObjectName("StarList")
-        self.obj.resize(1920, 1080)
+        self.obj.resize(self.width_val, self.height_val)
 
-    def show(self,data):
-        self.id = data.id
+    def show(self,data=None):
+        if data is not None:
+            self.id = data.id
 
         self.createObj()
 

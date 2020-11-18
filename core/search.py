@@ -35,18 +35,16 @@ class AbstractFactory(ABC):
 
 class setFactory:
 
-    def __init__(self,className,obj):
-        self.className=className
+    def __init__(self,obj):
         self.obj=obj
 
-    def getFactory(self):
+    def getFactory(self,name):
         switcher = {
             'movies' : getMovies,
             'series' : getSeries,
             'stars'  : getStar
         }
-
-        classObj = switcher.get(self.className, "Invalid data");
+        classObj = switcher.get(name, "Invalid data");
         return classObj(self.obj).getQuery()
 
 class getMovies(AbstractFactory):

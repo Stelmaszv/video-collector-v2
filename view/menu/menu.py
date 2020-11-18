@@ -6,10 +6,91 @@ from core.PyQt5Helpel import Layout
 from core.setWindow import setWindow
 from app.db.seaders import initSeader
 from core.view import List
-
+from core.view import AbstractView
+from view.movie.movie import Movie
 
 initSeader().initNow()
 
+class Menu(AbstractView):
+    model = False
+    searchIn = 'series'
+    deepSearch=False
+    searchFaze=''
+    width_val=400
+    height_val= 1000
+
+    def title(self):
+        data = [0, 0, 400 ,100]
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\" font-size:18pt;font-weight:600; " \
+               "text-decoration: none;\">search</span></p></body></html>"
+        self.baseView.title(data,text)
+
+    def search_box(self):
+        data = [0, 150, 200, 50]
+        list = ['movies','series','stars']
+        self.baseView.form.combo_box(data, list)
+        data_search_button = [200,150,200,50]
+        data_button_info=['serch003','search']
+        self.baseView.form.button(data_button_info,data_search_button,self.click_search)
+        data_line = [0,100,400,50]
+        self.baseView.form.edit_line(data_line)
+
+    def list_view(self):
+        data = [500, 100, 1200, 900]
+        list = setFactory(self).getFactory(self.searchIn)
+        self.baseView.listView(data, list, 'Menu')
+
+    def set_list(self,list,grid,el):
+
+        List(self).generate_list(
+            self.searchIn,
+            list,
+            grid,
+            el,
+            1
+        )
+
+    def click_search(self):
+        print('dqwdqwd')
+        self.hide()
+
+    def load_view(self):
+        print('fwef')
+
+
+    def setupUi(self):
+        self.title()
+        self.search_box()
+        self.list_view()
+
+    def getDataFrom(self,setObject=None):
+        self.searchFaze=self.serchLineEdit.text() or None
+        if setObject:
+            self.searchIn=setObject
+        else:
+            self.searchIn = self.serchInComboBox.currentText() or None
+        self.deepSearch=self.deepSerchCheckBox.isChecked()
+        self.searchResult()
+
+
+
+    def open(self, item, view=None):
+        #self.getDataFrom(view)
+        obj=setWindow(self.searchIn)
+        self.window = obj.returnObj(self)
+        self.window.menu = self
+        self.window.MainWindow=QtWidgets.QMainWindow()
+        self.close()
+        if self.window.isVisible():
+            self.window.hide()
+        else:
+            self.window.show(item.data)
+
+
+
+"""
 class menu(QMainWindow):
     searchIn='series'
     searchFaze=''
@@ -142,15 +223,14 @@ class menu(QMainWindow):
         self.serchInComboBox.setItemText(1, _translate("MainWindow", "stars"))
         self.serchInComboBox.setItemText(2, _translate("MainWindow", "series"))
         self.pushButton.setText(_translate("MainWindow", "Search"))
-
-
+"""
 
 
 
 app = QApplication(sys.argv)
 MainWindow = QtWidgets.QMainWindow()
-ui = menu()
-ui.setupUi(MainWindow)
-MainWindow.show()
+ui = Menu()
+ui.menu = MainWindow
+ui.show()
 app.exec_()
 
