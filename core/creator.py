@@ -1,5 +1,3 @@
-from core.view import MoviesList
-
 class SeriesCreator:
     none_list=[]
     singles_list=[]
@@ -29,7 +27,6 @@ class SeriesCreator:
 
     def add_movies_to_series(self, movies_list) -> []:
         movies=[]
-        print(movies_list)
         for movie in movies_list:
             for star in movie.stars:
                 if star.id == self.item.id:

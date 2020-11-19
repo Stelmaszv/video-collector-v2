@@ -216,7 +216,7 @@ class StarsSection(AbstractSection):
     def __init__(self, BaseView):
         self.BaseView = BaseView
         self.obj =BaseView.obj
-        self.List= List(self.BaseView)
+        self.List= List(self.obj)
         self.pagination = Pagination(self.obj)
 
     def if_more(self,grid,seriesItem,item):
@@ -295,7 +295,6 @@ class StarsSection(AbstractSection):
             seriesElment = seriesElment +1
 
         self.tabWidget.addTab(self.addPage, "1")
-
 
 class SeriesSection(AbstractSection):
 

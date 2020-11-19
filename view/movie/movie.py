@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from app.db.models import Movies
+from core.setWindow import Router
+
 class Movie(QWidget):
     def __init__(self):
         super().__init__()
