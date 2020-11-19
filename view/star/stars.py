@@ -1,8 +1,22 @@
 from app.db.models import Stars
 from PyQt5 import QtCore, QtWidgets
-from core.creator import seriesCreator
 from core.view import AbstractView
+from app.db.models import Stars
 
+from PyQt5.QtWidgets import QWidget
+class stars(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.window_title = 'PyQt5 button - pythonspot.com'
+        self.model = Stars
+
+    def run_window(self):
+
+        self.show()
+
+
+"""
 class stars(AbstractView):
 
     model = Stars
@@ -49,4 +63,5 @@ class stars(AbstractView):
         self.galery()
         self.info()
         self.seriesResult()
+"""
 

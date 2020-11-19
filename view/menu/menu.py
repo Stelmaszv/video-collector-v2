@@ -4,15 +4,15 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 from core.view import BaseView
 from core.search import setFactory
-from core.setWindow import setWindow
 from app.db.seaders import initSeader
+
 
 
 initSeader().initNow()
 class Menu(QWidget):
     deepSearch = False
     searchFaze = ''
-    searchIn = 'movies'
+    searchIn = 'series'
 
     def __init__(self):
         super().__init__()
@@ -62,42 +62,6 @@ class Menu(QWidget):
         self.title()
         self.list_view()
         self.show()
-
-    def open(self, item, view):
-        #self.getDataFrom(setObject)
-        obj = setWindow(self.searchIn)
-
-        self.window = obj.returnObj(self.searchIn)
-        self.window.obj = self
-        self.window.id=item.data.id
-
-        if self.is_open(view,item.data.id):
-            self.window.run_window()
-            self.windows_opens.append({'view': view, 'id': item.data.id})
-
-    def close_window(self):
-        self.windows_opens=[]
-
-    def is_open(self,view,id):
-        count=0
-        for item in self.windows_opens:
-            if item['view'] == view and item['id']==id:
-                count=count+1
-
-        if count==0:
-            return True
-
-
-        """
-        if self.window.isVisible():
-            self.window.hide()
-        else:
-            self.window.show(item)
-        """
-
-
-
-
 
     @pyqtSlot()
     def on_click(self):

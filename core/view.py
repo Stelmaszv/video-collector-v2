@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import  QWidget,QPushButton
 from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
-from app.db.models import Movies
+from core.setWindow import Router
 
 class Pagination:
 
@@ -377,7 +377,7 @@ class BaseView:
 
     def __init__(self,data,obj):
         self.obj=obj
-        self.menu=obj
+        self.menu=Router(self.obj)
         self.data=data
         if obj.model is not None:
             self.model=obj.model
@@ -386,7 +386,8 @@ class BaseView:
         self.Scroller=Scroller(self.obj)
 
     def load_view(self,item,view,id):
-        self.menu.open(item,view)
+        self.menu.searchIn=view
+        self.menu.open(item)
 
     def listView(self, data, data_list,obj_name):
 
@@ -487,9 +488,7 @@ class BaseView:
 
     def set_data(self,id):
         if self.model:
-            print(id)
-            return  session.query(self.model).get(id)
-        return None
+            self.data = session.query(self.model).get(id)
 
     def galery(self,data,size,inRow,obj=None,photos=None):
         if photos == None:
