@@ -97,7 +97,7 @@ class SeriesCreator:
 
         self.add_series()
 
-    def returnObj(self):
+    def return_obj(self):
         self.set_none()
         self.set_singles()
         self.create()

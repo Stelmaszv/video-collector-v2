@@ -297,45 +297,6 @@ class StarsSection(AbstractSection):
         self.tabWidget.addTab(self.addPage, "1")
 
 
-        """
-        self.tabWidget =   self.pagination.tabs([data[0],data[1], data[2], data[2]])
-        self.addPage   =   self.pagination.tab()
-
-        left = 5
-        top = 50
-        seriesElment = 1
-
-        for item in data_list:
-            grid = self.grid(left, top)
-            seriesItem = self.seriesItem(grid)
-            self.title(grid, seriesItem, item)
-            self.avatar(grid, seriesItem, item)
-            self.if_more(grid, seriesItem, item)
-
-            self.List.generate_list(
-                'Movies',
-                item['movies'],
-                grid,
-                seriesItem,
-                1,
-            )
-
-            left = left + 390
-
-            if seriesElment % 4 == 0:
-                top = 280
-                left = 5
-
-            if seriesElment % 8 == 0:
-                top = 50
-                left = 5
-                self.addPage = self.pagination.tab()
-                self.tabWidget.addTab(self.addPage, "2")
-
-            seriesElment = seriesElment + 1
-        self.tabWidget.addTab(self.addPage, "1")
-        """
-
 class SeriesSection(AbstractSection):
 
     def __init__(self, BaseView):
