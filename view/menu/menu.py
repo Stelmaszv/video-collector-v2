@@ -12,7 +12,7 @@ initSeader().initNow()
 class Menu(QWidget):
     deepSearch = False
     searchFaze = ''
-    searchIn = 'movies'
+    searchIn = 'stars'
 
     def __init__(self):
         super().__init__()
