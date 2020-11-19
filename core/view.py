@@ -117,6 +117,29 @@ class SeriesList(AbstractList):
                 self.button(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
+class StarList(AbstractList):
+
+    def __init__(self,menu):
+        self.menu=menu
+        self.button_group_stars_info = QtWidgets.QButtonGroup()
+        self.buttons= [
+            {'button': self.on_stars_info, 'obejct': self.button_group_stars_info},
+        ]
+
+    def on_stars_info(self,id):
+        self.buttom_genarator(self.button_group_stars_info, self.star_info, id)
+
+    def star_info(self,item):
+        self.menu.load_view(item, 'stars',self.run)
+
+    def genrate(self,data,el,grid,col_start):
+        row = 1
+        for item in data:
+            if row < 5:
+                self.label(el, grid, item, [row, col_start, 1, 1])
+                self.button(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
+            row = row + 1
+
 class List:
 
     def __init__(self,obj):
@@ -125,8 +148,9 @@ class List:
     def generate_list(self,place,list,el,grid,col):
 
         switcher = {
-            'movies': MoviesList(self.obj),
-            'series': SeriesList(self.obj)
+            'movies' : MoviesList(self.obj),
+            'series' : SeriesList(self.obj),
+            'stars'  : StarList(self.obj)
         }
 
         classObj = switcher.get(place, "Invalid data");
@@ -192,7 +216,7 @@ class StarsSection(AbstractSection):
     def __init__(self, BaseView):
         self.BaseView = BaseView
         self.obj =BaseView.obj
-        self.List= List(self.obj)
+        self.List= List(self.BaseView)
         self.pagination = Pagination(self.obj)
 
     def if_more(self,grid,seriesItem,item):
@@ -234,6 +258,46 @@ class StarsSection(AbstractSection):
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
     def run(self,data,data_list):
+        self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[2]])
+        self.addPage = self.pagination.tab()
+
+        left = 5
+        top = 50
+        seriesElment = 1
+
+        for item in data_list:
+            grid = self.grid(left, top)
+            seriesItem = self.seriesItem(grid)
+            self.title(grid, seriesItem, item)
+            self.avatar(grid, seriesItem, item)
+            self.if_more(grid, seriesItem, item)
+
+            self.List.generate_list(
+                'movies',
+                item['movies'],
+                grid,
+                seriesItem,
+                1,
+            )
+
+            left = left + 390
+
+            if seriesElment % 4 == 0:
+                top = 280
+                left = 5
+
+            if seriesElment % 8 == 0:
+                top = 50
+                left = 5
+                self.addPage = self.pagination.tab()
+                self.tabWidget.addTab(self.addPage, "2")
+
+            seriesElment = seriesElment +1
+
+        self.tabWidget.addTab(self.addPage, "1")
+
+
+        """
         self.tabWidget =   self.pagination.tabs([data[0],data[1], data[2], data[2]])
         self.addPage   =   self.pagination.tab()
 
@@ -270,6 +334,7 @@ class StarsSection(AbstractSection):
 
             seriesElment = seriesElment + 1
         self.tabWidget.addTab(self.addPage, "1")
+        """
 
 class SeriesSection(AbstractSection):
 
@@ -397,7 +462,7 @@ class BaseView:
             'Menu'     : MenuSection(self)
         }
         classObj = switcher.get(obj_name, "Invalid data");
-        classObj.run(data,data_list)
+        classObj.run(data, data_list)
 
     def get_nav(self,data,obj=None):
         if obj==None:

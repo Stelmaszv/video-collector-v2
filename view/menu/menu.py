@@ -12,11 +12,11 @@ initSeader().initNow()
 class Menu(QWidget):
     deepSearch = False
     searchFaze = ''
-    searchIn = 'series'
+    searchIn = 'stars'
 
     def __init__(self):
         super().__init__()
-        self.window_title = 'PyQt5 button - pythonspot.com'
+        self.window_title = 'Menu'
         self.left = 30
         self.top = 20
         self.width = 1320
@@ -37,9 +37,7 @@ class Menu(QWidget):
         self.base_view.form.edit_line(data_line)
 
     def click_search(self):
-        print('dqwdqwd')
         self.hide()
-
 
     def title(self):
         data = [0, 0, 400 ,100]
@@ -51,7 +49,8 @@ class Menu(QWidget):
 
     def list_view(self):
         data = [500, 100, 1200, 900]
-        list = setFactory(self).getFactory(self.searchIn)
+        self.base_view.menu.searchIn=self.searchIn
+        list = setFactory(self).getFactory(self.base_view.menu.searchIn)
         self.base_view.listView(data, list, 'Menu')
 
     def initUI(self):
