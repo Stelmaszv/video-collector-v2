@@ -1,16 +1,132 @@
-from PyQt5.QtWidgets import QMainWindow,QApplication
 import sys
-from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import pyqtSlot
+from core.view import BaseView
 from core.search import setFactory
-from core.PyQt5Helpel import Layout
 from core.setWindow import setWindow
 from app.db.seaders import initSeader
-from core.view import List
-from core.view import AbstractView
-from view.movie.movie import Movie
+
 
 initSeader().initNow()
+class Menu(QWidget):
+    deepSearch = False
+    searchFaze = ''
+    searchIn = 'movies'
 
+    def __init__(self):
+        super().__init__()
+        self.window_title = 'PyQt5 button - pythonspot.com'
+        self.left = 30
+        self.top = 20
+        self.width = 1320
+        self.height = 1200
+        self.model=''
+        self.base_view=BaseView([],self)
+        self.initUI()
+        self.windows_opens=[]
+
+    def search_box(self):
+        data = [0, 150, 200, 50]
+        list = ['movies','series','stars']
+        self.base_view.form.combo_box(data, list)
+        data_search_button = [200,150,200,50]
+        data_button_info=['serch003','search']
+        self.base_view.form.button(data_button_info,data_search_button,self.click_search)
+        data_line = [0,100,400,50]
+        self.base_view.form.edit_line(data_line)
+
+    def click_search(self):
+        print('dqwdqwd')
+        self.hide()
+
+
+    def title(self):
+        data = [0, 0, 400 ,100]
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\" font-size:18pt;font-weight:600; " \
+               "text-decoration: none;\">search</span></p></body></html>"
+        self.base_view.title(data,text)
+
+    def list_view(self):
+        data = [500, 100, 1200, 900]
+        list = setFactory(self).getFactory(self.searchIn)
+        self.base_view.listView(data, list, 'Menu')
+
+    def initUI(self):
+
+        self.setWindowTitle(self.window_title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+        self.search_box()
+        self.title()
+        self.list_view()
+        self.show()
+
+    def open(self, item, view):
+        #self.getDataFrom(setObject)
+        obj = setWindow(self.searchIn)
+
+        self.window = obj.returnObj(self.searchIn)
+        self.window.obj = self
+        self.window.id=item.data.id
+
+        if self.is_open(view,item.data.id):
+            self.window.run_window()
+            self.windows_opens.append({'view': view, 'id': item.data.id})
+
+    def close_window(self):
+        self.windows_opens=[]
+
+    def is_open(self,view,id):
+        count=0
+        for item in self.windows_opens:
+            if item['view'] == view and item['id']==id:
+                count=count+1
+
+        if count==0:
+            return True
+
+
+        """
+        if self.window.isVisible():
+            self.window.hide()
+        else:
+            self.window.show(item)
+        """
+
+
+
+
+
+    @pyqtSlot()
+    def on_click(self):
+        print('PyQt5 button click')
+        print(self.base_view)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = Menu()
+    sys.exit(app.exec_())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 class Menu(AbstractView):
     model = False
     searchIn = 'series'
@@ -18,6 +134,10 @@ class Menu(AbstractView):
     searchFaze=''
     width_val=400
     height_val= 1000
+    widows_array=[]
+
+    def closeEvent(self, event):
+        print(event)
 
     def title(self):
         data = [0, 0, 400 ,100]
@@ -74,21 +194,31 @@ class Menu(AbstractView):
         self.deepSearch=self.deepSerchCheckBox.isChecked()
         self.searchResult()
 
-
-
-    def open(self, item, view=None):
+    def open(self, item, view,id):
+        if id != 0:
+            self.widows_array.append({'view': view, 'id': id})
         #self.getDataFrom(view)
         obj=setWindow(self.searchIn)
         self.window = obj.returnObj(self)
-        self.window.menu = self
-        self.window.MainWindow=QtWidgets.QMainWindow()
-        self.close()
-        if self.window.isVisible():
-            self.window.hide()
-        else:
+
+        if self.if_window_active(view,id):
             self.window.show(item.data)
+        else:
+            self.window.obj.hide()
 
+    def if_window_active(self,view,id):
+        count=0
+        for item in self.widows_array:
+            if item['view'] == view and item['id']==id:
+                count=count+1
 
+        print(count)
+
+        if count==0:
+            return True
+        return  False
+
+"""
 
 """
 class menu(QMainWindow):
@@ -225,12 +355,4 @@ class menu(QMainWindow):
         self.pushButton.setText(_translate("MainWindow", "Search"))
 """
 
-
-
-app = QApplication(sys.argv)
-MainWindow = QtWidgets.QMainWindow()
-ui = Menu()
-ui.menu = MainWindow
-ui.show()
-app.exec_()
 

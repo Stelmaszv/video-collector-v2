@@ -7,11 +7,11 @@ class setWindow():
     def __init__(self,className):
         self.className=className
 
-    def returnObj(self, menu):
+    def returnObj(self, object):
+
         switcher = {
             'movies' : Movie(),
             'series' : series(),
             'stars'  : stars()
         }
-        print(switcher.get(self.className, "Invalid data"))
-        return  switcher.get(self.className, "Invalid data");
+        return  switcher.get(object, "Invalid data");

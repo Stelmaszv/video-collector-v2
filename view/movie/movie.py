@@ -1,3 +1,42 @@
+from PyQt5.QtWidgets import QWidget
+from core.view import BaseView
+from app.db.models import Movies
+class Movie(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.window_title = 'PyQt5 button - pythonspot.com'
+        self.left = 30
+        self.top = 20
+        self.width = 1320
+        self.height = 1200
+        self.model = Movies
+        self.base_view= BaseView([],self)
+
+
+    def title(self):
+        data = [0, 0, 2000 ,100]
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\" font-size:20pt;font-weight:600; " \
+               "text-decoration: none;\">" + self.data.name + \
+               "</span></p></body></html>"
+        self.base_view.title(data,text)
+
+    def run_window(self):
+        self.data=self.base_view.set_data(self.id)
+        self.initUI()
+        self.show()
+
+
+    def initUI(self):
+        self.title()
+        self.base_view.get_nav([850, -100, 400, 400])
+
+    def closeEvent(self, QCloseEvent):
+        self.obj.close_window()
+
+
+"""
 from core.view import AbstractView
 from app.db.models import Movies
 class Movie(AbstractView):
@@ -33,3 +72,4 @@ class Movie(AbstractView):
         self.info()
         self.title()
         self.get_menu()
+"""

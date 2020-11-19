@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import  QWidget,QPushButton
 from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
+from app.db.models import Movies
 
 class Pagination:
 
@@ -23,6 +24,9 @@ class Pagination:
 
 class AbstractList(ABC):
 
+    count=0
+    run=0
+
     @abstractmethod
     def genrate(self,data,el,grid,col_start):
         pass
@@ -38,6 +42,15 @@ class AbstractList(ABC):
         label.setText(item.name)
         grid.addWidget(label, data[0], data[1], data[2], data[3])
 
+    def if_run(self):
+        count=0
+        for item in self.ids:
+            if item == self.run:
+                count = count + 1
+
+        if count == 1:
+            return True
+
     def button(self, el, grid, item, data, info, index):
         button = QtWidgets.QPushButton(el)
         button.setMinimumSize(QtCore.QSize(30, 0))
@@ -52,7 +65,6 @@ class AbstractList(ABC):
 class MoviesList (AbstractList):
 
     def __init__(self,menu):
-
         self.menu=menu
         self.button_group_movies_play = QtWidgets.QButtonGroup()
         self.button_group_movies_info = QtWidgets.QButtonGroup()
@@ -65,7 +77,7 @@ class MoviesList (AbstractList):
         print('movie play ' + str(item.data))
 
     def movie_info(self,item):
-        self.menu.load_view(item,'movies')
+        self.menu.load_view(item,'movies',self.run)
 
     def on_movies_play(self,id):
        self.buttom_genarator(self.button_group_movies_play, self.movie_play, id)
@@ -76,7 +88,7 @@ class MoviesList (AbstractList):
     def genrate(self,data,el,grid,col_start):
         row=1
         for item in data:
-            if row <5:
+            if row <10:
                 self.label(el,grid,item,[row,col_start,1,1])
                 self.button(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
                 self.button(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
@@ -92,10 +104,10 @@ class SeriesList(AbstractList):
         ]
 
     def on_series_info(self,id):
-       self.buttom_genarator(self.button_group_series_info,self.series_info, id)
+        self.buttom_genarator(self.button_group_series_info, self.series_info, id)
 
     def series_info(self,item):
-       self.menu.load_view(item, 'series')
+        self.menu.load_view(item, 'series',self.run)
 
     def genrate(self,data,el,grid,col_start):
         row = 1
@@ -296,7 +308,7 @@ class SeriesSection(AbstractSection):
 
         self.Scroller.movie_list(
             self.data.movies,
-            self.BaseView.menu
+            self.BaseView
         )
 
         self.tabWidget.addTab(self.tab, "Seson 1")
@@ -364,16 +376,16 @@ class MenuSection(AbstractSection):
 class BaseView:
 
     def __init__(self,data,obj):
+        self.obj=obj
         self.menu=obj
         self.data=data
         if obj.model is not None:
             self.model=obj.model
-        self.obj=obj.obj
         self.form = Form(self.obj)
         self.pagination = Pagination(self.obj)
         self.Scroller=Scroller(self.obj)
 
-    def load_view(self,item,view):
+    def load_view(self,item,view,id):
         self.menu.open(item,view)
 
     def listView(self, data, data_list,obj_name):
@@ -425,6 +437,12 @@ class BaseView:
         delete.setMaximumSize(QtCore.QSize(10, 16777215))
         self.ManuGrid.addWidget(delete, 0, 2, 2, 2)
 
+    def n_title(self,obj):
+        button = QPushButton('PyQt5 button', obj)
+        button.setToolTip('This is an example button')
+        button.move(100, 70)
+
+
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)
         self.title.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
@@ -467,6 +485,12 @@ class BaseView:
 
             row=row+1
 
+    def set_data(self,id):
+        if self.model:
+            print(id)
+            return  session.query(self.model).get(id)
+        return None
+
     def galery(self,data,size,inRow,obj=None,photos=None):
         if photos == None:
             photos = self.data.photos
@@ -503,9 +527,8 @@ class AbstractView(QWidget):
     def __init__(self):
         super(AbstractView, self).__init__()
 
-    def getOne(self):
-        if self.model:
-            self.data=session.query(self.model).get(self.id)
+    def closeEvent(self, event):
+        print(event)
 
     def setupUi(self):
         pass
@@ -529,3 +552,6 @@ class AbstractView(QWidget):
 
     def setBaseView(self,data,obj):
         self.baseView = BaseView(data, obj)
+
+    def close(self):
+        print('dqwd')
