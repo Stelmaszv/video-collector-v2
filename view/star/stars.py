@@ -1,5 +1,5 @@
 from app.db.models import Stars
-from core.creator import seriesCreator
+from core.creator import SeriesCreator
 from core.view import BaseView
 
 from PyQt5.QtWidgets import QWidget
@@ -47,11 +47,10 @@ class StarView(QWidget):
         self.base_view.info(infData,data,rows)
 
     def seriesResult(self):
-        self.seriesList=[]
-        self.seriesList = seriesCreator(self.data).returnObj()
-        self.base_view.listView([80, 430, 1571, 581], self.seriesList, 'Stars')
+        self.base_view.listView([80, 430, 1571, 581], self.list , 'Stars')
 
     def initUI(self):
+        self.list = SeriesCreator(self.data).returnObj()
         self.base_view.avatar([100, 80, 400, 400])
         self.title()
         self.galery()
