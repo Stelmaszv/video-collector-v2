@@ -77,7 +77,7 @@ class MoviesList (AbstractList):
         print('movie play ' + str(item.data))
 
     def movie_info(self,item):
-        self.menu.load_view(item,'movies')
+        self.menu.load_view('movies',item)
 
     def on_movies_play(self,id):
        self.buttom_genarator(self.button_group_movies_play, self.movie_play, id)
@@ -107,7 +107,7 @@ class SeriesList(AbstractList):
         self.buttom_genarator(self.button_group_series_info, self.series_info, id)
 
     def series_info(self,item):
-        self.menu.load_view(item, 'series')
+        self.menu.load_view('series',item)
 
     def genrate(self,data,el,grid,col_start):
         row = 1
@@ -130,7 +130,7 @@ class StarList(AbstractList):
         self.buttom_genarator(self.button_group_stars_info, self.star_info, id)
 
     def star_info(self,item):
-        self.menu.load_view(item, 'stars')
+        self.menu.load_view('stars',item)
 
     def genrate(self,data,el,grid,col_start):
         row = 1
@@ -410,7 +410,7 @@ class BaseView:
         self.pagination = Pagination(self.obj)
         self.Scroller=Scroller(self.obj)
 
-    def load_view(self,item,view):
+    def load_view(self,view,item=False):
         self.menu.searchIn=view
         self.menu.open(item)
 

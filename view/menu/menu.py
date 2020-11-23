@@ -1,15 +1,13 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton,QMenu, QAction,QMainWindow
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 from core.view import BaseView
 from core.search import setFactory
 from app.db.seaders import initSeader
 
-
-
 initSeader().initNow()
-class Menu(QWidget):
+class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
     searchIn = 'stars'
@@ -59,8 +57,20 @@ class Menu(QWidget):
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.search_box()
         self.title()
+        self.menu()
         self.list_view()
         self.show()
+
+    def menu(self):
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('Add')
+        newAct = QAction('new movie', self)
+        newAct.triggered.connect(self.add_new_movie)
+        fileMenu.addAction(newAct)
+
+    def add_new_movie(self):
+
+        self.base_view.load_view('add_movie')
 
     @pyqtSlot()
     def on_click(self):

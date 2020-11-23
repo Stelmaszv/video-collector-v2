@@ -4,6 +4,7 @@ from app.db.models import Movies
 from core.setWindow import Router
 
 class Movie(QWidget):
+
     def __init__(self):
         super().__init__()
         self.window_title = 'PyQt5 button - pythonspot.com'

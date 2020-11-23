@@ -4,11 +4,14 @@ class setWindow():
         from view.star.stars import StarView
         from view.series.series import Serie
         from view.movie.movie import Movie
+        from view.movie.add_movie import AddMovieView
+
 
         switcher = {
-            'stars':   StarView(),
-            'movies' : Movie(),
-            'series' : Serie()
+            'stars'     :   StarView(),
+            'movies'    :   Movie(),
+            'series'    :   Serie(),
+            'add_movie' :   AddMovieView()
         }
         return  switcher.get(object, "Invalid data");
 
@@ -18,16 +21,21 @@ class Router:
     def __init__(self,base_view):
         self.base_view=base_view
 
-    def open(self,item):
+    def open(self,item=False):
         #self.getDataFrom(setObject)
         self.window = setWindow().returnObj(self.searchIn)
+
         self.window.Router=self
         self.window.obj = self.base_view
-        self.window.id=item.data.id
 
-        if self.is_open(self.searchIn,item.data.id):
+        if item:
+            self.window.id=item.data.id
+        else:
+            self.window.id = 0
+
+        if self.is_open(self.searchIn,self.window.id):
             self.window.run_window()
-            self.windows_opens.append({'view': self.searchIn, 'id': item.data.id})
+            self.windows_opens.append({'view': self.searchIn, 'id': self.window.id})
 
     def close_window(self):
         self.windows_opens = []
