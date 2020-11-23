@@ -32,7 +32,7 @@ class Menu(QMainWindow):
         data_button_info=['serch003','search']
         self.base_view.form.button(data_button_info,data_search_button,self.click_search)
         data_line = [0,100,400,50]
-        self.base_view.form.edit_line(data_line)
+        self.base_view.form.edit_line(data_line,'search Faze')
 
     def click_search(self):
         self.hide()

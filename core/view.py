@@ -358,8 +358,9 @@ class Form:
         if grid is not None:
             grid.addWidget(button)
 
-    def edit_line(self,data):
+    def edit_line(self,data,placeholder):
         line = QtWidgets.QLineEdit(self.obj)
+        line.setPlaceholderText(placeholder)
         line.setGeometry(data[0], data[1], data[2], data[3])
 
 class MenuSection(AbstractSection):
