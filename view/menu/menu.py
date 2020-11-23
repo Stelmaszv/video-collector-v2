@@ -6,11 +6,11 @@ from core.view import BaseView
 from core.search import setFactory
 from app.db.seaders import initSeader
 
-initSeader().initNow()
+#initSeader().initNow()
 class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
-    searchIn = 'stars'
+    searchIn = 'movies'
 
     def __init__(self):
         super().__init__()
@@ -78,10 +78,6 @@ class Menu(QMainWindow):
         print(self.base_view)
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Menu()
-    sys.exit(app.exec_())
 
 
 

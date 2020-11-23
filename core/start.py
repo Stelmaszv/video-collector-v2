@@ -1,4 +1,4 @@
-from core.dir import manageDir
+from core.dir import ManageDir
 class start:
     fiels  = ['test grgeg (qefqefqef qgqrgr)','[fqefqef] test grgeg' , 'test grgeg', 'test grgeg (fwefwfwef and dqwdqf)', 'fqefqeff' , '[fqefqe] feqfeqf (fewfwef wgwrgwrg)']
 
@@ -7,4 +7,4 @@ class start:
 
     def manageDirByLoop(self):
         for i in self.fiels:
-            manageDir(i).set()
+            ManageDir(i).set()

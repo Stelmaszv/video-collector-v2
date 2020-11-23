@@ -347,6 +347,7 @@ class Form:
         combo_box = QtWidgets.QComboBox(self.obj)
         combo_box.setGeometry(data[0], data[1], data[2], data[3])
         combo_box.addItems(list)
+        return combo_box
 
     def button(self,info,data,click=None,grid=None):
         button = QtWidgets.QPushButton(self.obj)
@@ -362,6 +363,7 @@ class Form:
         line = QtWidgets.QLineEdit(self.obj)
         line.setPlaceholderText(placeholder)
         line.setGeometry(data[0], data[1], data[2], data[3])
+        return line
 
 class MenuSection(AbstractSection):
     def __init__(self, BaseView):

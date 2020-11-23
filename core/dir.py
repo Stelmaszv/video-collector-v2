@@ -1,4 +1,6 @@
 import re
+from app.db.models import Stars,Movies
+from app.db.models import session
 
 class abstratValid:
 
@@ -73,33 +75,87 @@ class faindStar:
 class ifStar(abstratValid):
 
     validValue = "[a-zA-Z0-9]+\s+\([a-zA-Z0-9\s]+\)";
+    model = Stars
+    movies = Movies
+    objects_stars=[]
+    objects_movies=[]
+    session= session
 
-    def __init__(self,dir):
+
+    def __init__(self,dir,name):
         super(ifStar, self).__init__(dir)
         self.faindStarObj = faindStar(dir)
+        self.name=name
 
     def onValidPass(self):
         self.faindStar()
         return True
 
     def faindStar(self):
-        print(self.faindStarObj.starArray)
+        for star in self.faindStarObj.starArray:
+            self.objects_stars.append(
+                self.model(
+                    name=star,
+                    avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"
+                )
+            )
 
-class manageDir:
+        self.session.add_all(self.objects_stars)
+        self.session.commit()
 
-    def __init__(self,dir):
+        self.objects_movies=[
+            self.movies(name=self.name)
+        ]
+
+        self.session.add_all(self.objects_movies)
+        self.session.commit()
+
+        self.add_stars_to_movie()
+
+    def add_stars_to_movie(self):
+
+        for movie in self.objects_movies:
+            for star in self.objects_stars:
+                movie.stars.append(star)
+
+class ManageDir:
+
+    movies = Movies
+    session = session
+
+    def __init__(self,dir,base_view):
         self.dir = dir
-        self.ifStar= ifStar(dir)
-        self.ifHasSeries = ifHasSeries(dir)
+        self.base_view_model=base_view.model
+        self.ifStar = ifStar(dir,self.clear_name(dir))
+
+    def clear_name(self,dir):
+        str=''
+        stop=False
+        for i in range(0,len(dir)):
+
+            if dir[i] == "(":
+                stop=True
+
+            if dir[i] == ".":
+                stop=False
+
+            if stop is False:
+                str=str+dir[i]
+
+        return str
+
 
     def set(self):
         self.runValidate()
 
     def runValidate(self):
         starstan = self.ifStar.validate()
-        seriesstan = self.ifHasSeries.validate()
 
-        if starstan is False and seriesstan is False:
-            pass
+        if starstan is False:
+            self.objects_movies = [
+                self.movies(name=self.dir)
+            ]
 
+            self.session.add_all(self.objects_movies)
+            self.session.commit()
 
