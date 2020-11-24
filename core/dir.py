@@ -164,6 +164,13 @@ class ManageDir:
             self.session.add_all(self.objects_movies)
             self.session.commit()
 
+class MovieNormalLoopDir:
+    def __init__(self,filenames,obj):
+        for files in filenames:
+            dir = ManageDir(files, obj, False)
+            dir.set()
+
+
 class MoviesIsStarNameDir:
 
     objects_stars=[]

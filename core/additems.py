@@ -1,47 +1,43 @@
 import os
-from core.dir import ManageDir,MoviesIsStarNameDir,AddMovieToStarDir,AddMovieToSeriesDir
-from app.db.models import session
-session= session
+from core.dir import ManageDir,MoviesIsStarNameDir,AddMovieToStarDir,AddMovieToSeriesDir,MovieNormalLoopDir
+from abc import ABC,abstractmethod
 
-class MovieNormalLoop:
+class AbstracAddLoop(ABC):
+
+    @abstractmethod
+    def run(self,obj):
+        pass
+
+    def faind_last_elment(self,dir):
+        path=dir.split('\\')
+        value=path[len(path)-1]
+        return value
+
+class MovieNormalLoop(AbstracAddLoop):
 
      def run(self,obj):
          filenames = os.listdir(obj.dir_location_value)
-         for files in filenames:
-             dir=ManageDir(files,obj,False)
-             dir.set()
+         MovieNormalLoopDir(filenames,obj)
 
-
-class MoviesIsStarName:
+class MoviesIsStarName(AbstracAddLoop):
 
     def run(self, obj):
         filenames = os.listdir(obj.dir_location_value)
         MoviesIsStarNameDir(filenames)
 
-class AddMovieToStar:
+class AddMovieToStar(AbstracAddLoop):
 
     def run(self,obj):
         star=self.faind_last_elment(obj.dir_location_value)
         filenames = os.listdir(obj.dir_location_value)
         AddMovieToStarDir(filenames,star,obj)
 
-    def faind_last_elment(self,dir):
-        path=dir.split('\\')
-        value=path[len(path)-1]
-        return value
-
-class AddMovieToSeries:
+class AddMovieToSeries(AbstracAddLoop):
 
     def run(self,obj):
         series = self.faind_last_elment(obj.dir_location_value)
         filenames = os.listdir(obj.dir_location_value)
         AddMovieToSeriesDir(filenames, series, obj)
-
-    def faind_last_elment(self,dir):
-        path=dir.split('\\')
-        value=path[len(path)-1]
-        return value
-
 
 class MovieAddLoop:
 
