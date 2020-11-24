@@ -27,7 +27,7 @@ class AddMovieView(QWidget):
 
     def form(self):
         data = [100, 150, 200, 50]
-        list = ['normal']
+        list = ['normal','movieisstarname']
         self.add_type=self.base_view.form.combo_box(data, list)
         data_line = [100,100,400,50]
         self.dir_location=self.base_view.form.edit_line(data_line,'dir location')

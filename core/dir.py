@@ -159,3 +159,56 @@ class ManageDir:
             self.session.add_all(self.objects_movies)
             self.session.commit()
 
+class MoviesIsStarNameDir:
+
+    objects_stars=[]
+    objects_movies=[]
+    session = session
+
+    def __init__(self, base_view, movies):
+        self.base_view=base_view
+        index=0
+        for movie in movies:
+            name=self.set_name(movie)
+            self.objects_stars.append(
+                Stars(
+                    name=name,
+                    avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"
+                )
+            )
+
+            self.objects_movies.append(
+                Movies(
+                    name=name,
+                    stars=[]
+                )
+            )
+
+            self.objects_movies[index].stars.append(self.objects_stars[index])
+
+            index=index+1
+
+        self.session.add_all(self.objects_stars)
+        self.session.commit()
+        self.session.add_all(self.objects_movies)
+        self.session.commit()
+
+
+
+    def set_name(self,name):
+
+        str=''
+        stop=False
+
+        for i in range(0,len(name)):
+
+            if name[i] == ".":
+                stop=True
+
+            if stop is False:
+                str=str+name[i]
+
+        return str
+
+
+

@@ -1,13 +1,20 @@
 import os
-from core.dir import ManageDir
+from core.dir import ManageDir,MoviesIsStarNameDir
 class MovieNormalLoop:
 
      def run(self,obj):
-         self.base_view=obj
-         filenames = os.listdir(self.base_view.dir_location_value)
+         filenames = os.listdir(obj.dir_location_value)
          for files in filenames:
-             dir=ManageDir(files,self.base_view)
+             dir=ManageDir(files,obj)
              dir.set()
+
+
+class MoviesIsStarName:
+
+    def run(self, obj):
+        filenames = os.listdir(obj.dir_location_value)
+        MoviesIsStarNameDir(obj,filenames)
+
 
 class MovieAddLoop:
 
@@ -18,6 +25,7 @@ class MovieAddLoop:
 
         switcher = {
             'normal': MovieNormalLoop(),
+            'movieisstarname': MoviesIsStarName()
         }
 
         return switcher.get(self.base_view.add_type_value, "Invalid data");
