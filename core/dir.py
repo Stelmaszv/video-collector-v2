@@ -165,8 +165,7 @@ class MoviesIsStarNameDir:
     objects_movies=[]
     session = session
 
-    def __init__(self, base_view, movies):
-        self.base_view=base_view
+    def __init__(self,movies):
         index=0
         for movie in movies:
             name=self.set_name(movie)
@@ -209,6 +208,66 @@ class MoviesIsStarNameDir:
                 str=str+name[i]
 
         return str
+
+class AddMovieToStarDir:
+
+
+    objects_movies = []
+    objects_stars  = []
+    session = session
+
+    def __init__(self,movies,star,base_view):
+        self.base_view=base_view
+        self.objects_stars.append(
+            Stars(
+                name=star,
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"
+            )
+        )
+        self.session.add_all(self.objects_stars)
+        self.session.commit()
+
+        addstar = self.objects_stars[0]
+
+        index=0
+        for files in movies:
+            name = self.set_name(files)
+            self.objects_movies.append(
+                Movies(
+                    name=name,
+                    stars=[]
+                )
+            )
+
+            self.objects_movies[index].stars.append(addstar)
+            index=index+1
+
+        self.session.add_all(self.objects_movies)
+        self.session.commit()
+
+
+    def set_name(self,name):
+
+        str=''
+        stop=False
+
+        for i in range(0,len(name)):
+
+            if name[i] == "." or name[i] == "(":
+                stop=True
+
+            if stop is False:
+                str=str+name[i]
+
+        return str
+
+
+
+
+
+
+
+
 
 
 
