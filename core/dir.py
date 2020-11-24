@@ -1,7 +1,7 @@
 import re
 from app.db.models import Stars,Movies,Series
 from app.db.models import session
-from abc import ABC,abstractmethod
+from abc import ABC
 
 class abstratValid:
 

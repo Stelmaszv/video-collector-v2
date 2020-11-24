@@ -2,6 +2,7 @@ import os
 from core.dir import MoviesIsStarNameDir,AddMovieToStarDir,AddMovieToSeriesDir,MovieNormalLoopDir
 from abc import ABC,abstractmethod
 
+
 class AbstracAddLoop(ABC):
 
     @abstractmethod
@@ -62,7 +63,6 @@ class AddItems:
         self.loop_obj=self.set_obj()
         self.run_obj=self.loop_obj.return_obj()
         self.run_obj.run(self.base_view)
-
 
     def set_obj(self):
         switcher = {

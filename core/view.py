@@ -1,5 +1,5 @@
 from PyQt5 import QtGui,QtCore, QtWidgets
-from PyQt5.QtWidgets import  QWidget,QPushButton
+from PyQt5.QtWidgets import  QWidget,QPushButton,QMessageBox
 from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
@@ -365,6 +365,16 @@ class Form:
         line.setGeometry(data[0], data[1], data[2], data[3])
         return line
 
+class Message:
+
+    def show(self,data):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setText(data[0])
+        msg.setInformativeText(data[1])
+        msg.setWindowTitle(data[2])
+        msg.exec_()
+
 class MenuSection(AbstractSection):
     def __init__(self, BaseView):
         self.obj = BaseView.obj
@@ -410,6 +420,7 @@ class BaseView:
         if obj.model is not None:
             self.model=obj.model
         self.form = Form(self.obj)
+        self.Massage=Message()
         self.pagination = Pagination(self.obj)
         self.Scroller=Scroller(self.obj)
 

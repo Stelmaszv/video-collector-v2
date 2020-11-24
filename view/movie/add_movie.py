@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QWidget,QApplication
+from PyQt5.QtWidgets import QWidget,QApplication,QMessageBox
+from PyQt5 import QtWidgets
 from core.view import BaseView
 from app.db.models import Movies
 import sys
@@ -40,8 +41,16 @@ class AddMovieView(QWidget):
 
     def click_add_items(self):
         self.set_data()
-        AddItems(self)
-        print('run self.close()')
+        if self.dir_location_value:
+            AddItems(self)
+        else:
+            data=[
+                'Empty value',
+                'Please enter value for dir_location_value',
+                'Validation Eror'
+            ]
+            self.base_view.Massage.show(data)
+
 
     def set_data(self):
         self.add_type_value=self.add_type.currentText()
