@@ -81,7 +81,6 @@ class ifStar(abstratValid):
     objects_movies=[]
     session= session
 
-
     def __init__(self,dir,name):
         super(ifStar, self).__init__(dir)
         self.faindStarObj = faindStar(dir)
@@ -144,7 +143,6 @@ class ManageDir:
 
         return str
 
-
     def set(self):
         self.runValidate()
 
@@ -192,8 +190,6 @@ class MoviesIsStarNameDir:
         self.session.add_all(self.objects_movies)
         self.session.commit()
 
-
-
     def set_name(self,name):
 
         str=''
@@ -210,7 +206,6 @@ class MoviesIsStarNameDir:
         return str
 
 class AddMovieToStarDir:
-
 
     objects_movies = []
     objects_stars  = []
@@ -244,7 +239,6 @@ class AddMovieToStarDir:
 
         self.session.add_all(self.objects_movies)
         self.session.commit()
-
 
     def set_name(self,name):
 
