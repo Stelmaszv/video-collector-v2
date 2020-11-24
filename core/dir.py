@@ -1,6 +1,7 @@
 import re
-from app.db.models import Stars,Movies
+from app.db.models import Stars,Movies,Series
 from app.db.models import session
+from abc import ABC,abstractmethod
 
 class abstratValid:
 
@@ -120,10 +121,41 @@ class ifStar(abstratValid):
             for star in self.objects_stars:
                 movie.stars.append(star)
 
-class ManageDir:
+class AbstractManageDir(ABC):
 
-    movies = Movies
+    objects_stars=[]
+    objects_movies=[]
+    objects_series=[]
     session = session
+
+    def set_name(self,name):
+
+        str=''
+        stop=False
+
+        for i in range(0,len(name)):
+
+            if name[i] == "." or name[i] == "(":
+                stop=True
+
+            if stop is False:
+                str=str+name[i]
+
+        return str
+
+    def add_item_to_model(self,Model,array,data):
+        array.append(
+            Model(
+                name=data[0],
+                avatar=data[1]
+            )
+        )
+        self.session.add_all(array)
+        self.session.commit()
+
+        return array[0]
+
+class ManageDir(AbstractManageDir):
 
     def __init__(self,dir,base_view,series=False):
         self.series=series
@@ -154,8 +186,9 @@ class ManageDir:
         starstan = self.ifStar.validate()
 
         if starstan is False:
+            name =self.set_name(self.dir)
             self.objects_movies = [
-                self.movies(name=self.dir)
+                Movies(name=name)
             ]
 
             if self.series:
@@ -164,18 +197,14 @@ class ManageDir:
             self.session.add_all(self.objects_movies)
             self.session.commit()
 
-class MovieNormalLoopDir:
+class MovieNormalLoopDir(AbstractManageDir):
+
     def __init__(self,filenames,obj):
         for files in filenames:
             dir = ManageDir(files, obj, False)
             dir.set()
 
-
-class MoviesIsStarNameDir:
-
-    objects_stars=[]
-    objects_movies=[]
-    session = session
+class MoviesIsStarNameDir(AbstractManageDir):
 
     def __init__(self,movies):
         index=0
@@ -204,39 +233,15 @@ class MoviesIsStarNameDir:
         self.session.add_all(self.objects_movies)
         self.session.commit()
 
-    def set_name(self,name):
-
-        str=''
-        stop=False
-
-        for i in range(0,len(name)):
-
-            if name[i] == ".":
-                stop=True
-
-            if stop is False:
-                str=str+name[i]
-
-        return str
-
-class AddMovieToStarDir:
-
-    objects_movies = []
-    objects_stars  = []
-    session = session
+class AddMovieToStarDir(AbstractManageDir):
 
     def __init__(self,movies,star,base_view):
-        self.base_view=base_view
-        self.objects_stars.append(
-            Stars(
-                name=star,
-                avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"
-            )
-        )
-        self.session.add_all(self.objects_stars)
-        self.session.commit()
 
-        addstar = self.objects_stars[0]
+        add_star= self.add_item_to_model(
+            Stars,
+            self.objects_stars,
+            [star,"C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"]
+        )
 
         index=0
         for files in movies:
@@ -248,45 +253,21 @@ class AddMovieToStarDir:
                 )
             )
 
-            self.objects_movies[index].stars.append(addstar)
+            self.objects_movies[index].stars.append(add_star)
             index=index+1
 
         self.session.add_all(self.objects_movies)
         self.session.commit()
 
-    def set_name(self,name):
-
-        str=''
-        stop=False
-
-        for i in range(0,len(name)):
-
-            if name[i] == "." or name[i] == "(":
-                stop=True
-
-            if stop is False:
-                str=str+name[i]
-
-        return str
-
-class AddMovieToSeriesDir:
-
-    session = session
-    objects_series = []
+class AddMovieToSeriesDir(AbstractManageDir):
 
     def __init__(self, movies, series, base_view):
 
-
-        self.objects_series.append(
-            Stars(
-                name=series,
-                avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"
-            )
+        addseries = self.add_item_to_model(
+            Series,
+            self.objects_series,
+            [series,"C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"]
         )
-        self.session.add_all(self.objects_series)
-        self.session.commit()
-
-        addseries = self.objects_series[0]
 
         for files in movies:
             dir = ManageDir(files, base_view,addseries)

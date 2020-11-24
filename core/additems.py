@@ -1,5 +1,5 @@
 import os
-from core.dir import ManageDir,MoviesIsStarNameDir,AddMovieToStarDir,AddMovieToSeriesDir,MovieNormalLoopDir
+from core.dir import MoviesIsStarNameDir,AddMovieToStarDir,AddMovieToSeriesDir,MovieNormalLoopDir
 from abc import ABC,abstractmethod
 
 class AbstracAddLoop(ABC):
@@ -47,10 +47,10 @@ class MovieAddLoop:
     def return_obj(self):
 
         switcher = {
-            'normal'           : MovieNormalLoop(),
-            'movieisstarname'  : MoviesIsStarName(),
-            'addmovietostar'   : AddMovieToStar(),
-            'addmovietoseties' : AddMovieToSeries()
+            'normal'              : MovieNormalLoop(),
+            'movie_is_star_name'  : MoviesIsStarName(),
+            'add_movie_to_star'   : AddMovieToStar(),
+            'add_movie_to_series' : AddMovieToSeries()
         }
 
         return switcher.get(self.base_view.add_type_value, "Invalid data");

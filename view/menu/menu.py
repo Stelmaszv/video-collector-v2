@@ -69,7 +69,6 @@ class Menu(QMainWindow):
         fileMenu.addAction(newAct)
 
     def add_new_movie(self):
-
         self.base_view.load_view('add_movie')
 
     @pyqtSlot()

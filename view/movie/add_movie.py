@@ -27,7 +27,7 @@ class AddMovieView(QWidget):
 
     def form(self):
         data = [100, 150, 200, 50]
-        list = ['normal','movieisstarname','addmovietostar','addmovietoseties']
+        list = ['normal','movie_is_star_name','add_movie_to_star','add_movie_to_series']
         self.add_type=self.base_view.form.combo_box(data, list)
         data_line = [100,100,400,50]
         self.dir_location=self.base_view.form.edit_line(data_line,'dir location')
@@ -41,6 +41,7 @@ class AddMovieView(QWidget):
     def click_add_items(self):
         self.set_data()
         AddItems(self)
+        print('run self.close()')
 
     def set_data(self):
         self.add_type_value=self.add_type.currentText()
