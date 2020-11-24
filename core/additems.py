@@ -1,5 +1,5 @@
 import os
-from core.dir import ManageDir,MoviesIsStarNameDir,AddMovieToStarDir
+from core.dir import ManageDir,MoviesIsStarNameDir,AddMovieToStarDir,AddMovieToSeriesDir
 from app.db.models import session
 session= session
 
@@ -8,7 +8,7 @@ class MovieNormalLoop:
      def run(self,obj):
          filenames = os.listdir(obj.dir_location_value)
          for files in filenames:
-             dir=ManageDir(files,obj)
+             dir=ManageDir(files,obj,False)
              dir.set()
 
 
@@ -19,7 +19,6 @@ class MoviesIsStarName:
         MoviesIsStarNameDir(filenames)
 
 class AddMovieToStar:
-    objects_stars=[]
 
     def run(self,obj):
         star=self.faind_last_elment(obj.dir_location_value)
@@ -31,6 +30,19 @@ class AddMovieToStar:
         value=path[len(path)-1]
         return value
 
+class AddMovieToSeries:
+
+    def run(self,obj):
+        series = self.faind_last_elment(obj.dir_location_value)
+        filenames = os.listdir(obj.dir_location_value)
+        AddMovieToSeriesDir(filenames, series, obj)
+
+    def faind_last_elment(self,dir):
+        path=dir.split('\\')
+        value=path[len(path)-1]
+        return value
+
+
 class MovieAddLoop:
 
     def __init__(self,base_view):
@@ -41,7 +53,8 @@ class MovieAddLoop:
         switcher = {
             'normal'           : MovieNormalLoop(),
             'movieisstarname'  : MoviesIsStarName(),
-            'addmovietostar'   : AddMovieToStar()
+            'addmovietostar'   : AddMovieToStar(),
+            'addmovietoseties' : AddMovieToSeries()
         }
 
         return switcher.get(self.base_view.add_type_value, "Invalid data");

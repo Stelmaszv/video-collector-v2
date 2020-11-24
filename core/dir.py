@@ -81,8 +81,9 @@ class ifStar(abstratValid):
     objects_movies=[]
     session= session
 
-    def __init__(self,dir,name):
+    def __init__(self,dir,name,series=False):
         super(ifStar, self).__init__(dir)
+        self.series=series
         self.faindStarObj = faindStar(dir)
         self.name=name
 
@@ -106,6 +107,8 @@ class ifStar(abstratValid):
             self.movies(name=self.name)
         ]
 
+        if self.series:
+            self.series.movies.append(self.objects_movies[0])
         self.session.add_all(self.objects_movies)
         self.session.commit()
 
@@ -122,10 +125,11 @@ class ManageDir:
     movies = Movies
     session = session
 
-    def __init__(self,dir,base_view):
+    def __init__(self,dir,base_view,series=False):
+        self.series=series
         self.dir = dir
         self.base_view_model=base_view.model
-        self.ifStar = ifStar(dir,self.clear_name(dir))
+        self.ifStar = ifStar(dir,self.clear_name(dir),series)
 
     def clear_name(self,dir):
         str=''
@@ -153,6 +157,9 @@ class ManageDir:
             self.objects_movies = [
                 self.movies(name=self.dir)
             ]
+
+            if self.series:
+                self.series.movies.append(self.objects_movies[0])
 
             self.session.add_all(self.objects_movies)
             self.session.commit()
@@ -254,6 +261,31 @@ class AddMovieToStarDir:
                 str=str+name[i]
 
         return str
+
+class AddMovieToSeriesDir:
+
+    session = session
+    objects_series = []
+
+    def __init__(self, movies, series, base_view):
+
+
+        self.objects_series.append(
+            Stars(
+                name=series,
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"
+            )
+        )
+        self.session.add_all(self.objects_series)
+        self.session.commit()
+
+        addseries = self.objects_series[0]
+
+        for files in movies:
+            dir = ManageDir(files, base_view,addseries)
+            dir.set()
+
+
 
 
 
