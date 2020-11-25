@@ -4,6 +4,7 @@ from core.view import BaseView
 from app.db.models import Movies
 import sys
 from core.additems import AddItems
+from view.menu.menu import Menu
 class AddMovieView(QWidget):
 
     model=Movies
@@ -43,6 +44,8 @@ class AddMovieView(QWidget):
         self.set_data()
         if self.dir_location_value:
             AddItems(self)
+            self.close()
+            Menu(['movies', ''])
         else:
             data=[
                 'Empty value',

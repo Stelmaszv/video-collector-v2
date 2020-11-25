@@ -23,7 +23,6 @@ class Menu(QMainWindow):
         self.model=''
         self.BaseView=BaseView([], self)
         self.initUI(data)
-        self.windows_opens=[]
 
     def search_box(self):
         data = [0, 150, 200, 50]
@@ -79,6 +78,7 @@ class Menu(QMainWindow):
 
     def add_new_movie(self):
         self.BaseView.load_view('add_movie')
+        self.close()
 
     @pyqtSlot()
     def on_click(self):
