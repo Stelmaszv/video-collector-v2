@@ -71,10 +71,16 @@ class Menu(QMainWindow):
 
     def menu(self):
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu('Add')
-        newAct = QAction('new movie', self)
-        newAct.triggered.connect(self.add_new_movie)
-        fileMenu.addAction(newAct)
+        action_menu = menubar.addMenu('Add')
+        new_movie_menu_item = QAction('new movie', self)
+        new_movie_menu_item.triggered.connect(self.add_new_movie)
+        new_menu_object = QAction('new menu', self)
+        new_menu_object.triggered.connect(self.new_menu_object_button)
+        action_menu.addAction(new_movie_menu_item)
+        action_menu.addAction(new_menu_object)
+
+    def new_menu_object_button(self):
+        Menu([self.searchIn, self.searchFaze])
 
     def add_new_movie(self):
         self.BaseView.load_view('add_movie')
