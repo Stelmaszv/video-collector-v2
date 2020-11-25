@@ -1,5 +1,6 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton,QMenu, QAction,QMainWindow
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton,QMenu, QAction,QMainWindow,QLabel
+from PyQt5.QtCore import QObject
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 from core.view import BaseView
@@ -12,7 +13,7 @@ class Menu(QMainWindow):
     searchFaze = ''
     searchIn = 'movies'
 
-    def __init__(self):
+    def __init__(self,data=False):
         super().__init__()
         self.window_title = 'Menu'
         self.left = 30
@@ -20,22 +21,25 @@ class Menu(QMainWindow):
         self.width = 1320
         self.height = 1200
         self.model=''
-        self.base_view=BaseView([],self)
-        self.initUI()
+        self.BaseView=BaseView([], self)
+        self.initUI(data)
         self.windows_opens=[]
 
     def search_box(self):
         data = [0, 150, 200, 50]
         list = ['movies','series','stars']
-        self.base_view.form.combo_box(data, list)
+        self.search_in_combo_box=self.BaseView.form.combo_box(data, list)
         data_search_button = [200,150,200,50]
         data_button_info=['serch003','search']
-        self.base_view.form.button(data_button_info,data_search_button,self.click_search)
+        self.BaseView.form.button(data_button_info, data_search_button, self.click_search)
         data_line = [0,100,400,50]
-        self.base_view.form.edit_line(data_line,'search Faze')
+        self.search_button_edit_line=self.BaseView.form.edit_line(data_line, 'search Faze')
 
     def click_search(self):
-        self.hide()
+        self.close()
+        self.searchIn = self.search_in_combo_box.currentText()
+        self.searchFaze = self.search_button_edit_line.text()
+        Menu([self.searchIn,self.searchFaze])
 
     def title(self):
         data = [0, 0, 400 ,100]
@@ -43,16 +47,21 @@ class Menu(QMainWindow):
                "<p align=\"center\">" \
                "<span style=\" font-size:18pt;font-weight:600; " \
                "text-decoration: none;\">search</span></p></body></html>"
-        self.base_view.title(data,text)
+        self.BaseView.title(data, text)
 
     def list_view(self):
         data = [500, 100, 1200, 900]
-        self.base_view.menu.searchIn=self.searchIn
-        list = setFactory(self).getFactory(self.base_view.menu.searchIn)
-        self.base_view.listView(data, list, 'Menu')
+        self.BaseView.menu.searchIn=self.searchIn
+        list = setFactory(self).getFactory(self.BaseView.menu.searchIn)
+        self.BaseView.listView(data, list, 'Menu')
 
-    def initUI(self):
+    def set_up(self,data):
+        self.searchIn=data[0]
+        self.searchFaze=data[1]
 
+    def initUI(self,data=False):
+        if data:
+            self.set_up(data)
         self.setWindowTitle(self.window_title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.search_box()
@@ -69,12 +78,12 @@ class Menu(QMainWindow):
         fileMenu.addAction(newAct)
 
     def add_new_movie(self):
-        self.base_view.load_view('add_movie')
+        self.BaseView.load_view('add_movie')
 
     @pyqtSlot()
     def on_click(self):
         print('PyQt5 button click')
-        print(self.base_view)
+        print(self.BaseView)
 
 
 
