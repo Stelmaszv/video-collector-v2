@@ -106,8 +106,9 @@ class Stars(Base):
 
 class Movies(Base):
     __tablename__ ='movies'
-    id= Column('id',Integer,primary_key=True)
+    id=    Column('id',Integer,primary_key=True)
     name = Column('name',String)
+    src=   Column('src',String)
     stars = relationship(
         "Stars",
         secondary=association_table,

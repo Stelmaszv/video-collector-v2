@@ -1,7 +1,6 @@
 from core.seader import abstractSeader
 from app.db.models import Movies,Stars,Photos,Series
 from core.strings import stringManipupations
-
 class movies(abstractSeader):
 
     model=Movies
@@ -11,14 +10,12 @@ class movies(abstractSeader):
 
     def addMovies(self):
         self.objects = [
-            self.model(name="none"),
-            self.model(name="none1"),
-            self.model(name="none2"),
-            self.model(name="none3"),
-            self.model(name="none4"),
-            self.model(name="none5"),
+            self.model(
+                name="The World is Not Enough [1999]",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+            ),
         ]
-        self.generateObjects(self.model, 100)
+        #self.generateObjects(self.model, 100)
         self.addItems()
 
 class stars(abstractSeader):
@@ -48,20 +45,9 @@ class stars(abstractSeader):
 
     def addMovieRelations(self):
         self.getItem(1)
-        movie = self.series.query(Movies).get(7)
+        movie = self.series.query(Movies).get(1)
         self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(8)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(9)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(10)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(11)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(12)
-        self.addRelations(movie.stars, Stars, [self.item.id])
-        movie = self.series.query(Movies).get(17)
-        self.addRelations(movie.stars, Stars, [self.item.id])
+
 
 class photos(abstractSeader):
 

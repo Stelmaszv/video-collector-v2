@@ -1,3 +1,5 @@
+from core.media_player import Player
+
 class setWindow():
 
     def returnObj(self, object):
@@ -11,7 +13,8 @@ class setWindow():
             'stars'     :   StarView(),
             'movies'    :   Movie(),
             'series'    :   Serie(),
-            'add_movie' :   AddMovieView()
+            'add_movie' :   AddMovieView(),
+            'play'      :   Player()
         }
         return  switcher.get(object, "Invalid data");
 

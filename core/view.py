@@ -4,6 +4,7 @@ from app.db.models import session
 from core.strings import stringManipupations
 from abc import ABC,abstractmethod
 from core.setWindow import Router
+from core.media_player import Player
 
 class Pagination:
 
@@ -74,7 +75,9 @@ class MoviesList (AbstractList):
         ]
 
     def movie_play(self,item):
-        print('movie play ' + str(item.data))
+
+        #print('movie play ' + str(item.data))
+        self.menu.load_view('play', item)
 
     def movie_info(self,item):
         self.menu.load_view('movies',item)

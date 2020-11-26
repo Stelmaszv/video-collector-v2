@@ -5,32 +5,42 @@ from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import QIcon, QPalette
 from PyQt5.QtCore import Qt, QUrl,pyqtSignal
-
+from app.db.models import Movies
 
 class Player(QWidget):
 
-    file_name='C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi'
     playerMuted = False
+    model=Movies
 
     def __init__(self):
         super().__init__()
-
-        self.setWindowTitle("The World is Not Enough (1999)")
         self.setGeometry(0, 0, 2560 , 1300)
         self.setWindowIcon(QIcon('player.png'))
+        from core.view import BaseView
+        self.base_view = BaseView([], self)
 
         p = self.palette()
         p.setColor(QPalette.Window, Qt.black)
         self.setPalette(p)
 
-        self.init_ui()
 
+
+    def run_window(self):
+        self.base_view.set_data(self.id)
+        self.data = self.base_view.data
+        self.file_name = self.data.src
+        self.init_ui()
         self.show()
+        self.setWindowTitle(self.data.name)
+        self.mediaPlayer.play()
+
 
     def init_ui(self):
 
+
         # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.file_name)))
 
         # create videowidget object
 
@@ -94,16 +104,16 @@ class Player(QWidget):
 
         self.mediaPlayer.setVideoOutput(videowidget)
 
-        if self.file_name:
-            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.file_name)))
-            self.playBtn.setEnabled(True)
-            self.mediaPlayer.play()
 
         # media player signals
 
         self.mediaPlayer.stateChanged.connect(self.mediastate_changed)
         self.mediaPlayer.positionChanged.connect(self.position_changed)
         self.mediaPlayer.durationChanged.connect(self.duration_changed)
+
+    def closeEvent(self, QCloseEvent):
+        self.mediaPlayer.stop()
+        self.Router.close_window()
 
     def muteClicked(self):
         if self.mediaPlayer.isMuted() is False:
@@ -169,7 +179,8 @@ class Player(QWidget):
         self.playBtn.setEnabled(False)
         self.label.setText("Error: " + self.mediaPlayer.errorString())
 
-
+"""
 app = QApplication(sys.argv)
-window = Player()
+window = Player('C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi')
 sys.exit(app.exec_())
+"""
