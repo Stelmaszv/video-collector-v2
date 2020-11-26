@@ -47,6 +47,9 @@ class stars(abstractSeader):
         self.getItem(1)
         movie = self.series.query(Movies).get(1)
         self.addRelations(movie.stars, Stars, [self.item.id])
+        self.getItem(2)
+        movie = self.series.query(Movies).get(1)
+        self.addRelations(movie.stars, Stars, [self.item.id])
 
 
 class photos(abstractSeader):

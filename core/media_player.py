@@ -1,21 +1,23 @@
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, \
-    QSlider, QStyle, QSizePolicy, QFileDialog,QToolButton
+    QSlider, QStyle, QSizePolicy, QFileDialog,QToolButton,QButtonGroup
 import sys
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import QIcon, QPalette
 from PyQt5.QtCore import Qt, QUrl,pyqtSignal
-from app.db.models import Movies
+from app.db.models import Movies,Stars
+from app.db.models import session
 
 class Player(QWidget):
 
     playerMuted = False
     model=Movies
+    session=session
+    list=1
 
     def __init__(self):
         super().__init__()
-        self.setGeometry(0, 0, 2560 , 1300)
-        self.setWindowIcon(QIcon('player.png'))
+        self.setGeometry(0, 0, 1560 , 300)
         from core.view import BaseView
         self.base_view = BaseView([], self)
 
@@ -28,6 +30,7 @@ class Player(QWidget):
     def run_window(self):
         self.base_view.set_data(self.id)
         self.data = self.base_view.data
+        print(self.data.id)
         self.file_name = self.data.src
         self.init_ui()
         self.show()
@@ -82,22 +85,12 @@ class Player(QWidget):
         hboxLayout.addWidget(self.mute)
         hboxLayout.addWidget(self.show_full_screen_button)
 
-        self.next_video_in_series = QPushButton('next video in series')
-        self.next_video_in_series.clicked.connect(self.next_series)
-
-        self.next_video_with_star = QPushButton('next video with star')
-        self.next_video_with_star.clicked.connect(self.next_star)
-
-        hboxLayout2 = QHBoxLayout()
-        hboxLayout2.setContentsMargins(10, 10, 10, 10)
-        hboxLayout2.addWidget(self.next_video_in_series)
-        hboxLayout2.addWidget(self.next_video_with_star)
 
         # create vbox layout
         vboxLayout = QVBoxLayout()
         vboxLayout.addWidget(videowidget)
         vboxLayout.addLayout(hboxLayout)
-        vboxLayout.addLayout(hboxLayout2)
+        vboxLayout.addLayout(self.add_grup_movies_buttons())
         vboxLayout.addWidget(self.label)
 
         self.setLayout(vboxLayout)
@@ -110,6 +103,43 @@ class Player(QWidget):
         self.mediaPlayer.stateChanged.connect(self.mediastate_changed)
         self.mediaPlayer.positionChanged.connect(self.position_changed)
         self.mediaPlayer.durationChanged.connect(self.duration_changed)
+
+    def buttom_genarator(self,list,fuction,id):
+        for button in list.buttons():
+            if button is list.button(id):
+                fuction(button.data)
+
+    def on_movies_play(self, id):
+        self.buttom_genarator(self.buttons_stars, self.next_star, id)
+
+    def add_grup_movies_buttons(self):
+        hboxLayout2 = QHBoxLayout()
+        hboxLayout2.setContentsMargins(10, 10, 10, 10)
+
+
+        self.buttons_stars = QButtonGroup()
+
+        self.buttons= [
+            {'button': self.on_movies_play, 'obejct': self.buttons_stars},
+        ]
+
+        index=0
+        for star in self.data.stars:
+            button = QPushButton('next video with star '+str(star))
+            hboxLayout2.addWidget(button)
+            button.data=star
+            self.buttons[0]['obejct'].addButton(button)
+            self.buttons[0]['obejct'].buttonClicked[int].connect(self.buttons[0]['button'])
+            index = index+1
+
+
+        """
+        self.next_video_in_series = QPushButton('next video in series')
+        self.next_video_in_series.clicked.connect(self.next_series)
+        """
+
+        #hboxLayout2.addWidget(self.next_video_in_series)
+        return hboxLayout2
 
     def closeEvent(self, QCloseEvent):
         self.mediaPlayer.stop()
@@ -129,8 +159,15 @@ class Player(QWidget):
     def next_series(self):
         print('series')
 
-    def next_star(self):
-        print('star')
+    def next_star(self,star):
+        movies_with_star=session.query(self.model).filter(Stars.id==star.id).all()
+
+        self.close()
+
+        self.base_view.menu.searchIn='play'
+        self.base_view.menu.open(movies_with_star[self.list])
+
+
 
     def full_screen_switch(self):
         if self.isFullScreen() is False:

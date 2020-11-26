@@ -91,7 +91,7 @@ class MoviesList (AbstractList):
     def genrate(self,data,el,grid,col_start):
         row=1
         for item in data:
-            if row <10:
+            if row <2:
                 self.label(el,grid,item,[row,col_start,1,1])
                 self.button(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
                 self.button(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
@@ -428,8 +428,9 @@ class BaseView:
         self.Scroller=Scroller(self.obj)
 
     def load_view(self,view,item=False):
+        print(item)
         self.menu.searchIn=view
-        self.menu.open(item)
+        self.menu.open(item.data)
 
     def listView(self, data, data_list,obj_name):
 

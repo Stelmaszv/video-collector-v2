@@ -24,15 +24,16 @@ class Router:
     def __init__(self,base_view):
         self.base_view=base_view
 
-    def open(self,item=False):
+    def open(self,item=False,type=False):
         #self.getDataFrom(setObject)
         self.window = setWindow().returnObj(self.searchIn)
 
         self.window.Router=self
         self.window.obj = self.base_view
 
+
         if item:
-            self.window.id=item.data.id
+            self.window.id=item.id
         else:
             self.window.id = 0
 
