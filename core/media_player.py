@@ -1,10 +1,9 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, \
-    QSlider, QStyle, QSizePolicy, QFileDialog,QToolButton,QButtonGroup
-import sys
+from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, \
+    QSlider, QStyle, QSizePolicy, QFileDialog,QButtonGroup
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtGui import QIcon, QPalette
-from PyQt5.QtCore import Qt, QUrl,pyqtSignal
+from PyQt5.QtGui import QPalette
+from PyQt5.QtCore import Qt, QUrl
 from app.db.models import Movies,Stars,Series
 from app.db.models import session
 
@@ -24,8 +23,6 @@ class Player(QWidget):
         p.setColor(QPalette.Window, Qt.black)
         self.setPalette(p)
 
-
-
     def run_window(self):
         self.base_view.set_data(self.id)
         self.data = self.base_view.data
@@ -35,10 +32,7 @@ class Player(QWidget):
         self.setWindowTitle(self.data.name)
         self.mediaPlayer.play()
 
-
     def init_ui(self):
-
-
         # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.file_name)))
@@ -101,7 +95,6 @@ class Player(QWidget):
 
         self.mediaPlayer.setVideoOutput(videowidget)
 
-
         # media player signals
 
         self.mediaPlayer.stateChanged.connect(self.mediastate_changed)
@@ -147,7 +140,6 @@ class Player(QWidget):
             self.buttons_star[0]['obejct'].buttonClicked[int].connect(self.buttons_star[0]['button'])
             index = index+1
 
-
     def closeEvent(self, QCloseEvent):
         self.mediaPlayer.stop()
         self.Router.close_window()
@@ -161,7 +153,6 @@ class Player(QWidget):
             self.mediaPlayer.setMuted(False)
 
         self.mute.setIcon(self.style().standardIcon(icon))
-
 
     def next_series(self,series):
         movies_in_series = session.query(self.model).filter(Series.id == series.id).all()
@@ -241,9 +232,3 @@ class Player(QWidget):
     def handle_errors(self):
         self.playBtn.setEnabled(False)
         self.label.setText("Error: " + self.mediaPlayer.errorString())
-
-"""
-app = QApplication(sys.argv)
-window = Player('C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi')
-sys.exit(app.exec_())
-"""
