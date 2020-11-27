@@ -35,7 +35,7 @@ class AbstractList(ABC):
     def buttom_genarator(self,list,fuction,id):
         for button in list.buttons():
             if button is list.button(id):
-                fuction(list.button(id))
+                fuction(list.button(id).data)
 
     def label(self,el,grid,item,data):
         label = QtWidgets.QLabel(el)
@@ -428,9 +428,8 @@ class BaseView:
         self.Scroller=Scroller(self.obj)
 
     def load_view(self,view,item=False):
-        print(item)
         self.menu.searchIn=view
-        self.menu.open(item.data)
+        self.menu.open(item)
 
     def listView(self, data, data_list,obj_name):
 

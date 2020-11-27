@@ -169,14 +169,12 @@ class Player(QWidget):
     def next_series(self,series):
         movies_in_series = session.query(self.model).filter(Series.id == Series.id).all()
         self.close()
-        self.base_view.menu.searchIn = 'play'
-        self.base_view.menu.open(movies_in_series[self.movies_in_series_list])
+        self.base_view.load_view('play',movies_in_series[self.movies_in_series_list])
 
     def next_star(self,star):
         movies_with_star=session.query(self.model).filter(Stars.id==star.id).all()
         self.close()
-        self.base_view.menu.searchIn='play'
-        self.base_view.menu.open(movies_with_star[self.list])
+        self.base_view.load_view('play', movies_with_star[self.list])
 
     def full_screen_switch(self):
         if self.isFullScreen() is False:
