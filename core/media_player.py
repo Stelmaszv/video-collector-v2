@@ -5,7 +5,7 @@ from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import QIcon, QPalette
 from PyQt5.QtCore import Qt, QUrl,pyqtSignal
-from app.db.models import Movies,Stars
+from app.db.models import Movies,Stars,Series
 from app.db.models import session
 
 class Player(QWidget):
@@ -14,6 +14,7 @@ class Player(QWidget):
     model=Movies
     session=session
     list=1
+    movies_in_series_list = 1
 
     def __init__(self):
         super().__init__()
@@ -89,6 +90,8 @@ class Player(QWidget):
         self.hboxLayout2.setContentsMargins(10, 10, 10, 10)
 
         self.buttons_stars = QButtonGroup()
+        self.buttons_series = QButtonGroup()
+
         self.add_grup_movies_buttons()
         # create vbox layout
         vboxLayout = QVBoxLayout()
@@ -113,13 +116,29 @@ class Player(QWidget):
             if button is list.button(id):
                 fuction(button.data)
 
-    def on_movies_play(self, id):
+    def on_movies_series_play(self, id):
+        self.buttom_genarator(self.buttons_series, self.next_series, id)
+
+    def on_movies_star_play(self, id):
         self.buttom_genarator(self.buttons_stars, self.next_star, id)
 
     def add_grup_movies_buttons(self):
+        self.button_series= [
+            {'button': self.on_movies_series_play, 'obejct': self.buttons_series},
+        ]
 
-        self.buttons= [
-            {'button': self.on_movies_play, 'obejct': self.buttons_stars},
+        index=0
+        for star in self.data.series:
+            button = QPushButton('next video in series '+str(star))
+            self.hboxLayout2.addWidget(button)
+            button.data=star
+            self.button_series[0]['obejct'].addButton(button)
+            self.button_series[0]['obejct'].buttonClicked[int].connect(self.button_series[0]['button'])
+            index = index+1
+
+
+        self.buttons_star= [
+            {'button': self.on_movies_star_play, 'obejct': self.buttons_stars},
         ]
 
         index=0
@@ -127,9 +146,10 @@ class Player(QWidget):
             button = QPushButton('next video with star '+str(star))
             self.hboxLayout2.addWidget(button)
             button.data=star
-            self.buttons[0]['obejct'].addButton(button)
-            self.buttons[0]['obejct'].buttonClicked[int].connect(self.buttons[0]['button'])
+            self.buttons_star[0]['obejct'].addButton(button)
+            self.buttons_star[0]['obejct'].buttonClicked[int].connect(self.buttons_star[0]['button'])
             index = index+1
+
 
     def closeEvent(self, QCloseEvent):
         self.mediaPlayer.stop()
@@ -146,18 +166,17 @@ class Player(QWidget):
         self.mute.setIcon(self.style().standardIcon(icon))
 
 
-    def next_series(self):
-        print('series')
+    def next_series(self,series):
+        movies_in_series = session.query(self.model).filter(Series.id == Series.id).all()
+        self.close()
+        self.base_view.menu.searchIn = 'play'
+        self.base_view.menu.open(movies_in_series[self.movies_in_series_list])
 
     def next_star(self,star):
         movies_with_star=session.query(self.model).filter(Stars.id==star.id).all()
-
         self.close()
-
         self.base_view.menu.searchIn='play'
         self.base_view.menu.open(movies_with_star[self.list])
-
-
 
     def full_screen_switch(self):
         if self.isFullScreen() is False:

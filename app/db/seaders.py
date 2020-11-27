@@ -14,6 +14,14 @@ class movies(abstractSeader):
                 name="The World is Not Enough [1999]",
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
             ),
+            self.model(
+                name="qe",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+            ),
+            self.model(
+                name="qeqe",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+            ),
         ]
         #self.generateObjects(self.model, 100)
         self.addItems()
@@ -88,10 +96,7 @@ class series(abstractSeader):
 
     def addMoviesToSeries(self):
         self.getItem(1)
-        self.addRelations(self.item.movies, Movies, [7,8,9,10,11,12,13,14,15,16])
-        self.addRelations(self.item.photos, Photos, [1, 2, 3, 4, 5, 6, 7, 8])
-        self.getItem(2)
-        self.addRelations(self.item.movies, Movies, [17])
+        self.addRelations(self.item.movies, Movies, [1,2,3])
 
 
 
