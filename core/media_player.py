@@ -13,8 +13,6 @@ class Player(QWidget):
     playerMuted = False
     model=Movies
     session=session
-    list=1
-    movies_in_series_list = 1
 
     def __init__(self):
         super().__init__()
@@ -31,7 +29,6 @@ class Player(QWidget):
     def run_window(self):
         self.base_view.set_data(self.id)
         self.data = self.base_view.data
-        print(self.data.id)
         self.file_name = self.data.src
         self.init_ui()
         self.show()
@@ -167,14 +164,36 @@ class Player(QWidget):
 
 
     def next_series(self,series):
-        movies_in_series = session.query(self.model).filter(Series.id == Series.id).all()
+        movies_in_series = session.query(self.model).filter(Series.id == series.id).all()
         self.close()
-        self.base_view.load_view('play',movies_in_series[self.movies_in_series_list])
+        self.base_view.load_view('play',self.faind_item(movies_in_series))
 
     def next_star(self,star):
         movies_with_star=session.query(self.model).filter(Stars.id==star.id).all()
         self.close()
-        self.base_view.load_view('play', movies_with_star[self.list])
+        self.base_view.load_view('play', self.faind_item(movies_with_star))
+
+    def faind_item(self,array):
+        def faind_item_greater_then_actual_item(array,math_index):
+            index_item=0
+            for item in array:
+
+                if index_item > math_index:
+                    if index_item==3:
+                        return 0
+                    else:
+                        return index_item
+                index_item = index_item + 1
+
+        math_index=''
+        index_in_array = 0;
+        for item in array:
+            if self.data.id == item.id:
+                math_index=index_in_array;
+            index_in_array = index_in_array+1;
+
+        next_item=faind_item_greater_then_actual_item(array,math_index)
+        return array[next_item]
 
     def full_screen_switch(self):
         if self.isFullScreen() is False:

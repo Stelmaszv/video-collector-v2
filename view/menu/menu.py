@@ -11,7 +11,7 @@ initSeader().initNow()
 class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
-    searchIn = 'movies'
+    searchIn = 'series'
 
     def __init__(self,data=False):
         super().__init__()
