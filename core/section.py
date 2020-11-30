@@ -1,8 +1,8 @@
 from abc import ABC,abstractmethod
 from PyQt5 import QtGui,QtCore, QtWidgets
 from .list import List
-from .view import Pagination,Scroller
 from core.strings import stringManipupations
+from .helper import Pagination, Scroller
 
 class AbstractSection(ABC):
 
@@ -11,6 +11,7 @@ class AbstractSection(ABC):
         pass
 
 class StarsSection(AbstractSection):
+
 
     def __init__(self, BaseView):
         self.BaseView = BaseView

@@ -1,10 +1,10 @@
 from PyQt5 import QtGui,QtCore, QtWidgets
-from PyQt5.QtWidgets import  QWidget,QPushButton
 from app.db.models import session
 from core.setWindow import Router
-from .helper import Message,Pagination,Scroller
 
 class Form:
+
+    buttons_loop=[]
 
     def __init__(self,obj):
         self.obj = obj
@@ -14,6 +14,32 @@ class Form:
         combo_box.setGeometry(data[0], data[1], data[2], data[3])
         combo_box.addItems(list)
         return combo_box
+
+    def label(self,info,data,grid,el=None):
+        if el is not None:
+            el=self.obj
+
+        label = QtWidgets.QLabel(el)
+        label.setObjectName(info[0])
+        label.setText(info[1])
+        grid.addWidget(label, data[0], data[1], data[2], data[3])
+
+    def buttom_genarator(self,list,fuction,id):
+        for button in list.buttons():
+            if button is list.button(id):
+                fuction(list.button(id).data)
+
+    def button_loop(self, el, grid, item, data, info, index):
+        button = QtWidgets.QPushButton(el)
+        button.setMinimumSize(QtCore.QSize(30, 0))
+        button.setMaximumSize(QtCore.QSize(10, 16777215))
+        button.setObjectName("InfoButton")
+        button.setText(info[0])
+        button.data = item
+        grid.addWidget(button, data[0], data[1], data[2], data[3])
+        self.buttons_loop[index]['obejct'].addButton(button)
+        self.buttons_loop[index]['obejct'].buttonClicked[int].connect(self.buttons_loop[index]['button'])
+
 
     def button(self,info,data=[],click=None,gird=None,grid_pos=[],size=[]):
         button = QtWidgets.QPushButton(self.obj)
@@ -29,6 +55,7 @@ class Form:
 
         if click is not None:
             button.clicked.connect(click)
+
         if gird is not None and len(grid_pos):
             gird.addWidget(button, grid_pos[0], grid_pos[1], grid_pos[2], grid_pos[3])
 
@@ -41,12 +68,13 @@ class Form:
 class BaseView:
 
     def __init__(self,data,obj):
+        from .helper import Message, Pagination, Scroller
         self.obj=obj
         self.menu=Router(self.obj)
         self.data=data
         if obj.model is not None:
             self.model=obj.model
-        self.form = Form(self.obj)
+        self.Form = Form(self.obj)
         self.Massage=Message()
         self.pagination = Pagination(self.obj)
         self.Scroller=Scroller(self.obj)
@@ -68,16 +96,16 @@ class BaseView:
         classObj.run(data, data_list)
 
     def get_nav(self,data,buttons=[]):
-        self.ManuWidget = QtWidgets.QWidget(self.obj)
-        self.ManuWidget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        self.ManuWidget.setObjectName("movie-navbar")
-        self.ManuGrid = QtWidgets.QGridLayout(self.ManuWidget)
-        self.ManuGrid.setContentsMargins(0, 0, 0, 0)
-        self.ManuGrid.setObjectName("movie-grid")
-        self.form.button(['open', 'open'],[],buttons[0],self.ManuGrid,[0,0,2,2],[100,0,10,16777215])
-        self.form.button(['favirite', 'favirite'], [], buttons[1], self.ManuGrid,[0,1,2,2], [100, 0, 10, 16777215])
-        self.form.button(['edit', 'edit'], [], buttons[2], self.ManuGrid, [0, 2, 2, 2], [100, 0, 10, 16777215])
-        self.form.button(['Delete', 'Delete'], [], buttons[3], self.ManuGrid, [0, 3, 2, 2], [100, 0, 10, 16777215])
+        self.nav_widget = QtWidgets.QWidget(self.obj)
+        self.nav_widget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.nav_widget.setObjectName("movie-navbar")
+        self.nav_grid = QtWidgets.QGridLayout(self.nav_widget)
+        self.nav_grid.setContentsMargins(0, 0, 0, 0)
+        self.nav_grid.setObjectName("movie-grid")
+        self.Form.button(['open', 'Open'], [], buttons[0], self.nav_grid, [0, 0, 2, 2], [100, 0, 10, 16777215])
+        self.Form.button(['favirite', 'Favirite'], [], buttons[1], self.nav_grid, [0, 1, 2, 2], [100, 0, 10, 16777215])
+        self.Form.button(['edit', 'Edit'], [], buttons[2], self.nav_grid, [0, 2, 2, 2], [100, 0, 10, 16777215])
+        self.Form.button(['Delete', 'Delete'], [], buttons[3], self.nav_grid, [0, 3, 2, 2], [100, 0, 10, 16777215])
 
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)
@@ -152,35 +180,3 @@ class BaseView:
             if row > inRow:
                 row = 0
                 col = col + 1
-
-class AbstractView(QWidget):
-
-    width_val=1920
-    height_val= 1080
-
-    def __init__(self):
-        super(AbstractView, self).__init__()
-
-    def setupUi(self):
-        pass
-
-    def createObj(self):
-        self.obj = QtWidgets.QMainWindow()
-        self.obj.setObjectName("StarList")
-        self.obj.resize(self.width_val, self.height_val)
-
-    def show(self,data=None):
-        if data is not None:
-            self.id = data.id
-
-        self.createObj()
-
-        self.setBaseView(data,self)
-        self.getOne()
-        self.setupUi()
-        QtCore.QMetaObject.connectSlotsByName(self.obj)
-        self.obj.show()
-
-    def setBaseView(self,data,obj):
-        self.baseView = BaseView(data, obj)
-

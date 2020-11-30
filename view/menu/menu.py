@@ -26,12 +26,12 @@ class Menu(QMainWindow):
     def search_box(self):
         data = [0, 150, 200, 50]
         list = ['movies','series','stars']
-        self.search_in_combo_box=self.BaseView.form.combo_box(data, list)
+        self.search_in_combo_box=self.BaseView.Form.combo_box(data, list)
         data_search_button = [200,150,200,50]
         data_button_info=['serch003','search']
-        self.BaseView.form.button(data_button_info, data_search_button, self.click_search)
+        self.BaseView.Form.button(data_button_info, data_search_button, self.click_search)
         data_line = [0,100,400,50]
-        self.search_button_edit_line=self.BaseView.form.edit_line(data_line, 'search Faze')
+        self.search_button_edit_line=self.BaseView.Form.edit_line(data_line, 'search Faze')
 
     def click_search(self):
         self.close()

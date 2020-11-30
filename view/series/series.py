@@ -1,6 +1,3 @@
-from core.view import AbstractView
-from app.db.models import Series
-
 from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from app.db.models import Series
@@ -56,7 +53,7 @@ class Serie(QWidget):
     def initUI(self):
         self.info()
         self.title()
-        self.galery()
+        #self.galery()
         self.base_view.avatar([100, 100, 250, 250],self,self.data.avatar)
         self.window_title=self.data.name
         self.list_view()

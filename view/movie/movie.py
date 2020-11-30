@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from app.db.models import Movies
-from core.setWindow import Router
 
 class Movie(QWidget):
 
@@ -9,7 +8,7 @@ class Movie(QWidget):
         super().__init__()
         self.window_title = 'PyQt5 button - pythonspot.com'
         self.model = Movies
-        self.base_view= BaseView([],self)
+        self.BaseView= BaseView([], self)
 
 
     def title(self):
@@ -19,18 +18,18 @@ class Movie(QWidget):
                "<span style=\" font-size:20pt;font-weight:600; " \
                "text-decoration: none;\">" + self.data.name + \
                "</span></p></body></html>"
-        self.base_view.title(data,text)
+        self.BaseView.title(data, text)
 
     def run_window(self):
-        self.base_view.set_data(self.id)
-        self.data = self.base_view.data
+        self.BaseView.set_data(self.id)
+        self.data = self.BaseView.data
         self.initUI()
         self.show()
         self.setWindowTitle(self.window_title)
 
     def initUI(self):
         self.title()
-        self.base_view.get_nav([850, -100, 400, 400],[self.open_movie,self.add_favorits,self.show_edit,self.delete])
+        self.BaseView.get_nav([850, -100, 400, 400], [self.open_movie, self.add_favorits, self.show_edit, self.delete])
         self.window_title=self.data.name
 
     def open_movie(self):

@@ -1,13 +1,13 @@
 from core.media_player import Player
+
 windows_opens=[]
 class setWindow():
 
     def returnObj(self, object):
-        from view.star.stars import StarView
         from view.series.series import Serie
         from view.movie.movie import Movie
         from view.movie.add_movie import AddMovieView
-
+        from view.star.stars import StarView
 
         switcher = {
             'stars'     :   StarView(),
@@ -19,6 +19,8 @@ class setWindow():
         return  switcher.get(object, "Invalid data");
 
 class Router:
+
+    searchIn='movies'
 
     def __init__(self,base_view):
         self.base_view=base_view
