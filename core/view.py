@@ -15,15 +15,22 @@ class Form:
         combo_box.addItems(list)
         return combo_box
 
-    def button(self,info,data,click=None,grid=None):
+    def button(self,info,data=[],click=None,gird=None,grid_pos=[],size=[]):
         button = QtWidgets.QPushButton(self.obj)
-        button.setGeometry(data[0], data[1], data[2], data[3])
         button.setObjectName(info[0])
         button.setText(info[1])
+
+        if len(data):
+            button.setGeometry(data[0], data[1], data[2], data[3])
+
+        if len(size):
+            button.setMinimumSize(QtCore.QSize(size[0], size[1]))
+            button.setMaximumSize(QtCore.QSize(size[2], size[3]))
+
         if click is not None:
             button.clicked.connect(click)
-        if grid is not None:
-            grid.addWidget(button)
+        if gird is not None and len(grid_pos):
+            gird.addWidget(button, grid_pos[0], grid_pos[1], grid_pos[2], grid_pos[3])
 
     def edit_line(self,data,placeholder):
         line = QtWidgets.QLineEdit(self.obj)
@@ -60,50 +67,17 @@ class BaseView:
         classObj = switcher.get(obj_name, "Invalid data");
         classObj.run(data, data_list)
 
-    def get_nav(self,data,obj=None):
-        if obj==None:
-            obj=self.obj
-
-        self.ManuWidget = QtWidgets.QWidget(obj)
+    def get_nav(self,data,buttons=[]):
+        self.ManuWidget = QtWidgets.QWidget(self.obj)
         self.ManuWidget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        self.ManuWidget.setObjectName("infoWidget")
+        self.ManuWidget.setObjectName("movie-navbar")
         self.ManuGrid = QtWidgets.QGridLayout(self.ManuWidget)
         self.ManuGrid.setContentsMargins(0, 0, 0, 0)
-        self.ManuGrid.setObjectName("infoGrid")
-
-        open = QtWidgets.QPushButton(self.ManuWidget)
-        open.setMinimumSize(QtCore.QSize(100, 0))
-        open.setMaximumSize(QtCore.QSize(10, 16777215))
-        open.setObjectName("col1")
-        open.setText('Open')
-        self.ManuGrid.addWidget(open, 0, 0, 2, 2)
-
-        favirite = QtWidgets.QPushButton(self.ManuWidget)
-        favirite.setMinimumSize(QtCore.QSize(100, 0))
-        favirite.setMaximumSize(QtCore.QSize(10, 16777215))
-        favirite.setObjectName("col1")
-        favirite.setText('favirite')
-        self.ManuGrid.addWidget(favirite, 0, 1, 2, 2)
-
-        edit = QtWidgets.QPushButton(self.ManuWidget)
-        edit.setMinimumSize(QtCore.QSize(100, 0))
-        edit.setMaximumSize(QtCore.QSize(10, 16777215))
-        edit.setObjectName("col1")
-        edit.setText('edit')
-        self.ManuGrid.addWidget(edit, 0, 2, 2, 2)
-
-        delete = QtWidgets.QPushButton(self.ManuWidget)
-        delete.setObjectName("col1")
-        delete.setText('Delete')
-        delete.setMinimumSize(QtCore.QSize(100, 0))
-        delete.setMaximumSize(QtCore.QSize(10, 16777215))
-        self.ManuGrid.addWidget(delete, 0, 2, 2, 2)
-
-    def n_title(self,obj):
-        button = QPushButton('PyQt5 button', obj)
-        button.setToolTip('This is an example button')
-        button.move(100, 70)
-
+        self.ManuGrid.setObjectName("movie-grid")
+        self.form.button(['open', 'open'],[],buttons[0],self.ManuGrid,[0,0,2,2],[100,0,10,16777215])
+        self.form.button(['favirite', 'favirite'], [], buttons[1], self.ManuGrid,[0,1,2,2], [100, 0, 10, 16777215])
+        self.form.button(['edit', 'edit'], [], buttons[2], self.ManuGrid, [0, 2, 2, 2], [100, 0, 10, 16777215])
+        self.form.button(['Delete', 'Delete'], [], buttons[3], self.ManuGrid, [0, 3, 2, 2], [100, 0, 10, 16777215])
 
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)

@@ -168,7 +168,6 @@ class Player(QWidget):
         def faind_item_greater_then_actual_item(array,math_index):
             index_item=0
             for item in array:
-                print(index_item, math_index)
                 if index_item > math_index:
                     return index_item
                 elif math_index == len(array)-1:

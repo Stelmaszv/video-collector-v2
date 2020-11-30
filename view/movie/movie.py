@@ -30,8 +30,20 @@ class Movie(QWidget):
 
     def initUI(self):
         self.title()
-        self.base_view.get_nav([850, -100, 400, 400])
+        self.base_view.get_nav([850, -100, 400, 400],[self.open_movie,self.add_favorits,self.show_edit,self.delete])
         self.window_title=self.data.name
+
+    def open_movie(self):
+        print('open')
+
+    def add_favorits(self):
+        print('faforits')
+
+    def show_edit(self):
+        print('show edit')
+
+    def delete(self):
+        print('delete')
 
     def closeEvent(self, QCloseEvent):
         self.Router.close_window('movies', self.data.id)

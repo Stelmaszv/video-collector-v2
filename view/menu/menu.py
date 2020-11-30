@@ -10,7 +10,7 @@ from app.db.seaders import initSeader
 class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
-    searchIn = 'series'
+    searchIn = 'movies'
 
     def __init__(self,data=False):
         super().__init__()
