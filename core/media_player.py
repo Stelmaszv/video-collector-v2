@@ -168,12 +168,11 @@ class Player(QWidget):
         def faind_item_greater_then_actual_item(array,math_index):
             index_item=0
             for item in array:
-
+                print(index_item, math_index)
                 if index_item > math_index:
-                    if index_item==3:
-                        return 0
-                    else:
-                        return index_item
+                    return index_item
+                elif math_index == len(array)-1:
+                    return 0
                 index_item = index_item + 1
 
         math_index=''

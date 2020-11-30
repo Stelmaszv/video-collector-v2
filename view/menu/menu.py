@@ -7,7 +7,6 @@ from core.view import BaseView
 from core.search import setFactory
 from app.db.seaders import initSeader
 
-initSeader().initNow()
 class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''

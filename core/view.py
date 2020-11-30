@@ -1,74 +1,8 @@
 from PyQt5 import QtGui,QtCore, QtWidgets
-from PyQt5.QtWidgets import  QWidget,QPushButton,QMessageBox
+from PyQt5.QtWidgets import  QWidget,QPushButton
 from app.db.models import session
 from core.setWindow import Router
-from .list import List
-
-class Pagination:
-
-    def __init__(self,obj):
-        self.obj=obj
-
-    def tabs(self,data):
-        tab = QtWidgets.QTabWidget(self.obj)
-        tab.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        tab.setContextMenuPolicy(QtCore.Qt.PreventContextMenu)
-        tab.setObjectName("tabWidget")
-        return tab
-
-    def tab(self):
-        tab = QtWidgets.QWidget()
-        tab.setObjectName("tab")
-        return tab
-
-class Scroller:
-
-    def __init__(self,obj):
-        self.obj=obj
-        self.List=List
-
-    def scroll_area(self,data,obj=None):
-        if self.obj == None:
-            obj=self.obj
-
-        scroll_area_obj = QtWidgets.QScrollArea(obj)
-        scroll_area_obj.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        scroll_area_obj.setWidgetResizable(True)
-        scroll_area_obj.setObjectName("scrollArea")
-        return  scroll_area_obj
-
-    def scroll_area_widget_contents(self):
-        scrollAreaWidgetContents = QtWidgets.QWidget()
-        scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 279, 499))
-        scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        return scrollAreaWidgetContents
-
-    def grid_for_scroll (self):
-        grid_for_scroll_obj = QtWidgets.QGridLayout()
-        grid_for_scroll_obj.setObjectName("gridLayout")
-        return grid_for_scroll_obj
-
-    def vertical_layout(self,obj):
-        vertical_Layout_grid = QtWidgets.QVBoxLayout(obj)
-        vertical_Layout_grid.setObjectName("verticalLayout")
-        return vertical_Layout_grid
-
-    def run(self,data,obj):
-        self.scrollArea = self.scroll_area([400, 10, 780, 850], obj)
-        self.scrollAreaWidgetContents = self.scroll_area_widget_contents()
-        self.verticalLayout = self.vertical_layout(self.scrollAreaWidgetContents)
-        self.grid_for_scroll = self.grid_for_scroll()
-
-    def movie_list(self,list,menu):
-        List(menu).generate_list(
-            'movies',
-            list,
-            self.scrollAreaWidgetContents,
-            self.grid_for_scroll,
-            1,
-        )
-        self.verticalLayout.addLayout(self.grid_for_scroll)
-        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+from .helper import Message,Pagination,Scroller
 
 class Form:
 
@@ -96,16 +30,6 @@ class Form:
         line.setPlaceholderText(placeholder)
         line.setGeometry(data[0], data[1], data[2], data[3])
         return line
-
-class Message:
-
-    def show(self,data):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Critical)
-        msg.setText(data[0])
-        msg.setInformativeText(data[1])
-        msg.setWindowTitle(data[2])
-        msg.exec_()
 
 class BaseView:
 
@@ -263,9 +187,6 @@ class AbstractView(QWidget):
     def __init__(self):
         super(AbstractView, self).__init__()
 
-    def closeEvent(self, event):
-        print(event)
-
     def setupUi(self):
         pass
 
@@ -289,5 +210,3 @@ class AbstractView(QWidget):
     def setBaseView(self,data,obj):
         self.baseView = BaseView(data, obj)
 
-    def close(self):
-        print('dqwd')

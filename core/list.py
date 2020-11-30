@@ -3,9 +3,6 @@ from PyQt5 import QtGui,QtCore, QtWidgets
 
 class AbstractList(ABC):
 
-    count=0
-    run=0
-
     @abstractmethod
     def genrate(self,data,el,grid,col_start):
         pass
@@ -20,15 +17,6 @@ class AbstractList(ABC):
         label.setObjectName("label")
         label.setText(item.name)
         grid.addWidget(label, data[0], data[1], data[2], data[3])
-
-    def if_run(self):
-        count=0
-        for item in self.ids:
-            if item == self.run:
-                count = count + 1
-
-        if count == 1:
-            return True
 
     def button(self, el, grid, item, data, info, index):
         button = QtWidgets.QPushButton(el)
@@ -53,8 +41,6 @@ class MoviesList (AbstractList):
         ]
 
     def movie_play(self,item):
-
-        #print('movie play ' + str(item.data))
         self.menu.load_view('play', item)
 
     def movie_info(self,item):
