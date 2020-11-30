@@ -30,7 +30,6 @@ class Router:
         self.window.Router=self
         self.window.obj = self.base_view
 
-
         if item:
             self.window.id=item.id
         else:
