@@ -21,7 +21,7 @@ class Serie(QWidget):
         self.setWindowTitle(self.window_title)
 
     def closeEvent(self, QCloseEvent):
-        self.Router.close_window()
+        self.Router.close_window('series', self.data.id)
 
     def info(self):
 

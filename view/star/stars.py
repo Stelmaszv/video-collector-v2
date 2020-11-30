@@ -59,6 +59,6 @@ class StarView(QWidget):
         self.window_title=self.data.name
 
     def closeEvent(self, QCloseEvent):
-        self.Router.close_window()
+        self.Router.close_window('stars', self.data.id)
 
 

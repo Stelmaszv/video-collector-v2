@@ -1,5 +1,5 @@
 from core.media_player import Player
-
+windows_opens=[]
 class setWindow():
 
     def returnObj(self, object):
@@ -19,7 +19,6 @@ class setWindow():
         return  switcher.get(object, "Invalid data");
 
 class Router:
-    windows_opens=[]
 
     def __init__(self,base_view):
         self.base_view=base_view
@@ -39,14 +38,16 @@ class Router:
 
         if self.is_open(self.searchIn,self.window.id):
             self.window.run_window()
-            self.windows_opens.append({'view': self.searchIn, 'id': self.window.id})
+            windows_opens.append({'view': self.searchIn, 'id': self.window.id})
 
-    def close_window(self):
-        self.windows_opens = []
+    def close_window(self,view,id):
+        for win in windows_opens:
+            if win['view'] == view and win['id'] == id:
+                windows_opens.remove(win)
 
     def is_open(self, view, id):
         count = 0
-        for item in self.windows_opens:
+        for item in windows_opens:
             if item['view'] == view and item['id'] == id:
                 count = count + 1
 

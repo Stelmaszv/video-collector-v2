@@ -34,4 +34,4 @@ class Movie(QWidget):
         self.window_title=self.data.name
 
     def closeEvent(self, QCloseEvent):
-        self.Router.close_window()
+        self.Router.close_window('movies', self.data.id)
