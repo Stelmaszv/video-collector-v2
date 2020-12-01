@@ -1,6 +1,8 @@
 from core.media_player import Player
+from core.strings import stringManipupations
 
-windows_opens=[]
+open_wnidows=[]
+
 class setWindow():
 
     def returnObj(self, object):
@@ -10,47 +12,48 @@ class setWindow():
         from view.star.stars import StarView
 
         switcher = {
-            'stars'     :   StarView(),
-            'movies'    :   Movie(),
-            'series'    :   Serie(),
-            'add_movie' :   AddMovieView(),
-            'play'      :   Player()
+            'stars': StarView(),
+            'movies': Movie(),
+            'series': Serie(),
+            'add_movie': AddMovieView(),
+            'play': Player()
         }
-        return  switcher.get(object, "Invalid data");
+        return switcher.get(object, "Invalid data");
 
 class Router:
+    searchIn = 'movies'
+    active=0
 
-    searchIn='movies'
+    def __init__(self, base_view):
+        self.base_view = base_view
 
-    def __init__(self,base_view):
-        self.base_view=base_view
-
-    def open(self,item=False,type=False):
-        #self.getDataFrom(setObject)
+    def open(self, item=False, type=False):
+        # self.getDataFrom(setObject)
         self.window = setWindow().returnObj(self.searchIn)
 
-        self.window.Router=self
+        self.window.Router = self
         self.window.obj = self.base_view
 
         if item:
-            self.window.id=item.id
+            self.window.id = item.id
         else:
             self.window.id = 0
 
-        if self.is_open(self.searchIn,self.window.id):
-            self.window.run_window()
-            windows_opens.append({'view': self.searchIn, 'id': self.window.id})
+        self.window.run_window()
+        open_wnidows.append(self.window)
+        self.window.window_id=stringManipupations.random(20)
+        self.active=self.window.window_id
+        self.is_open()
 
-    def close_window(self,view,id):
-        for win in windows_opens:
-            if win['view'] == view and win['id'] == id:
-                windows_opens.remove(win)
+    def close_window(self, view, id):
+        for item in open_wnidows:
+            if item.window_id==0:
+                open_wnidows.remove(item)
 
-    def is_open(self, view, id):
-        count = 0
-        for item in windows_opens:
-            if item['view'] == view and item['id'] == id:
-                count = count + 1
+        self.active=0
 
-        if count == 0:
-            return True
+    def is_open(self):
+        for item in open_wnidows:
+            if item.window_id != self.active:
+                item.window_id=0
+                item.close()

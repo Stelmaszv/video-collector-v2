@@ -1,10 +1,10 @@
 from PyQt5 import QtGui,QtCore, QtWidgets
 from app.db.models import session
 from core.setWindow import Router
-
 class Form:
 
     buttons_loop=[]
+
 
     def __init__(self,obj):
         self.obj = obj

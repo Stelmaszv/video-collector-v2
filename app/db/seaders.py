@@ -9,6 +9,7 @@ class movies(abstractSeader):
         self.addMovies()
 
     def addMovies(self):
+        """
         self.objects = [
             self.model(
                 name="The World is Not Enough [1999]",
@@ -22,8 +23,21 @@ class movies(abstractSeader):
                 name="qeqe",
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
             ),
+            self.model(
+                name="fqef",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+            ),
+            self.model(
+                name="zvzcv",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+            ),
+            self.model(
+                name="vqeqegqegqeg",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+            ),
         ]
-        #self.generateObjects(self.model, 100)
+        """
+        self.generateObjects(self.model, 25)
         self.addItems()
 
 class stars(abstractSeader):
