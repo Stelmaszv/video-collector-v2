@@ -40,7 +40,6 @@ class Form:
         self.buttons_loop[index]['obejct'].addButton(button)
         self.buttons_loop[index]['obejct'].buttonClicked[int].connect(self.buttons_loop[index]['button'])
 
-
     def button(self,info,data=[],click=None,gird=None,grid_pos=[],size=[]):
         button = QtWidgets.QPushButton(self.obj)
         button.setObjectName(info[0])

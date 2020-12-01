@@ -1,10 +1,12 @@
 from abc import ABC,abstractmethod
 from PyQt5 import QtWidgets
+from .view import Form
 
 class AbstractList(ABC):
 
     def __init__(self,BaseView):
         self.BaseView = BaseView
+        self.Form=Form(self.BaseView.obj)
 
     @abstractmethod
     def genrate(self,data,el,grid,col_start):
@@ -16,7 +18,7 @@ class MoviesList (AbstractList):
         super(MoviesList, self).__init__(BaseView)
         self.button_group_movies_play = QtWidgets.QButtonGroup()
         self.button_group_movies_info = QtWidgets.QButtonGroup()
-        self.BaseView.Form.buttons_loop= [
+        self.Form.buttons_loop= [
             {'button': self.on_movies_info, 'obejct': self.button_group_movies_info},
             {'button': self.on_movies_play, 'obejct': self.button_group_movies_play}
         ]
@@ -36,9 +38,9 @@ class MoviesList (AbstractList):
         row=1
         for item in data:
             if row <4:
-                self.BaseView.Form.label([str(item.id),item.name],[row,col_start,1,1],grid,el)
-                self.BaseView.Form.button_loop(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
-                self.BaseView.Form.button_loop(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
+                self.Form.label([str(item.id),item.name],[row,col_start,1,1],grid,el)
+                self.Form.button_loop(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
+                self.Form.button_loop(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
             row=row+1
 
 class SeriesList(AbstractList):
@@ -46,7 +48,7 @@ class SeriesList(AbstractList):
     def __init__(self, BaseView):
         super(SeriesList, self).__init__(BaseView)
         self.button_group_series_info = QtWidgets.QButtonGroup()
-        self.BaseView.Form.buttons_loop= [
+        self.Form.buttons_loop= [
             {'button': self.on_series_info, 'obejct': self.button_group_series_info},
         ]
 
@@ -60,8 +62,8 @@ class SeriesList(AbstractList):
         row = 1
         for item in data:
             if row < 5:
-                self.BaseView.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
-                self.BaseView.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
+                self.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
+                self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
 class StarList(AbstractList):
@@ -69,7 +71,7 @@ class StarList(AbstractList):
     def __init__(self,BaseView):
         super(StarList, self).__init__(BaseView)
         self.button_group_stars_info = QtWidgets.QButtonGroup()
-        self.BaseView.Form.buttons_loop= [
+        self.Form.buttons_loop= [
             {'button': self.on_stars_info, 'obejct': self.button_group_stars_info},
         ]
 
@@ -83,8 +85,8 @@ class StarList(AbstractList):
         row = 1
         for item in data:
             if row < 5:
-                self.BaseView.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
-                self.BaseView.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
+                self.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
+                self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
 class List:
