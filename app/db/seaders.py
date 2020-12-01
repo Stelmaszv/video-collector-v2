@@ -9,10 +9,9 @@ class movies(abstractSeader):
         self.addMovies()
 
     def addMovies(self):
-        """
         self.objects = [
             self.model(
-                name="The World is Not Enough [1999]",
+                name="Świat to za mało [1999]",
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
             ),
             self.model(
@@ -36,8 +35,7 @@ class movies(abstractSeader):
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
             ),
         ]
-        """
-        self.generateObjects(self.model, 25)
+        #self.generateObjects(self.model, 25)
         self.addItems()
 
 class stars(abstractSeader):
@@ -45,8 +43,9 @@ class stars(abstractSeader):
     model=Stars
 
     def run(self):
-        self.addStar()
-        self.addRelationsList()
+        pass
+        #self.addStar()
+        #self.addRelationsList()
 
     def addRelationsList(self):
         self.getItem(1)
@@ -62,8 +61,8 @@ class stars(abstractSeader):
             self.model(name="topcia",avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
             self.model(name="test", avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg")
         ]
-        self.addItems()
-        self.addMovieRelations()
+        #self.addItems()
+        #self.addMovieRelations()
 
     def addMovieRelations(self):
         self.getItem(1)
@@ -97,8 +96,9 @@ class series(abstractSeader):
     model = Series
 
     def run(self):
-        self.addSeries()
-        self.addMoviesToSeries()
+        pass
+        #self.addSeries()
+        #self.addMoviesToSeries()
 
     def addSeries(self):
         self.objects = [
