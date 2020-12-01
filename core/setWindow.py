@@ -6,15 +6,15 @@ open_wnidows=[]
 class setWindow():
 
     def returnObj(self, object):
-        from view.series.series import Serie
-        from view.movie.movie import Movie
+        from view.series.series import SerieView
+        from view.movie.movie import MovieView
         from view.movie.add_movie import AddMovieView
         from view.star.stars import StarView
 
         switcher = {
             'stars': StarView(),
-            'movies': Movie(),
-            'series': Serie(),
+            'movies': MovieView(),
+            'series': SerieView(),
             'add_movie': AddMovieView(),
             'play': Player()
         }
@@ -27,8 +27,7 @@ class Router:
     def __init__(self, base_view):
         self.base_view = base_view
 
-    def open(self, item=False, type=False):
-        # self.getDataFrom(setObject)
+    def open(self, item=False):
         self.window = setWindow().returnObj(self.searchIn)
 
         self.window.Router = self
@@ -45,7 +44,7 @@ class Router:
         self.active=self.window.window_id
         self.is_open()
 
-    def close_window(self, view, id):
+    def close_window(self):
         for item in open_wnidows:
             if item.window_id==0:
                 open_wnidows.remove(item)

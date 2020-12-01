@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from app.db.models import Movies
 
-class Movie(QWidget):
+class MovieView(QWidget):
 
     def __init__(self):
         super().__init__()
@@ -33,7 +33,7 @@ class Movie(QWidget):
         self.window_title=self.data.name
 
     def open_movie(self):
-        print('open')
+        self.BaseView.load_view('play', self)
 
     def add_favorits(self):
         print('faforits')
@@ -45,4 +45,4 @@ class Movie(QWidget):
         print('delete')
 
     def closeEvent(self, QCloseEvent):
-        self.Router.close_window('movies', self.data.id)
+        self.Router.close_window()

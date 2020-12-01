@@ -140,7 +140,7 @@ class Player(QWidget):
 
     def closeEvent(self, QCloseEvent):
         self.mediaPlayer.stop()
-        self.Router.close_window('play', self.id)
+        self.Router.close_window()
 
     def muteClicked(self):
         if self.mediaPlayer.isMuted() is False:
