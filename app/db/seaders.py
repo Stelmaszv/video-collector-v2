@@ -1,6 +1,9 @@
 from core.seader import abstractSeader
 from app.db.models import Movies,Stars,Photos,Series
 from core.strings import stringManipupations
+
+
+
 class movies(abstractSeader):
 
     model=Movies
@@ -31,7 +34,7 @@ class movies(abstractSeader):
                 sezon=2
             )
         ]
-        #self.generateObjects(self.model, 50)
+        self.generateObjects(self.model, 50) #max 89 limit
         self.addItems()
 
 class stars(abstractSeader):

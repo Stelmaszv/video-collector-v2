@@ -149,7 +149,7 @@ class SeriesSection(AbstractSection):
 
 class MenuSection(AbstractSection):
 
-    per_page=25
+    per_page=20
 
     def __init__(self, BaseView):
         self.obj = BaseView.obj
