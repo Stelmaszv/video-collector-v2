@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import  QMessageBox
 from PyQt5 import QtCore, QtWidgets
 from .list import List
+from app.db.models import Movies
 
 class Message:
 
@@ -13,6 +14,7 @@ class Message:
         msg.exec_()
 
 class Pagination:
+
 
     def __init__(self,obj):
         self.obj=obj
@@ -29,9 +31,9 @@ class Pagination:
         tab.setObjectName("tab")
         return tab
 
-    def paginate(self,loop,obj,per_page):
+    def paginate(self,data,loop,obj,per_page):
         pages=int(loop.count()/per_page)
-        self.tabWidget = obj.Pagination.tabs([0, 200, 400, 800])
+        self.tabWidget = obj.Pagination.tabs([data[0], data[1], data[2], data[3]])
         start=0
         end=per_page
         for page in range(0,pages+1):
@@ -48,11 +50,33 @@ class Pagination:
             start=start+per_page
             end=end+per_page
 
+    def paginate2(self,data,loop,obj,per_page):
+        pages = obj.data.sezons
+        self.tabWidget = obj.Pagination.tabs([data[0], data[1], data[2], data[3]])
+        for page in range(1, pages + 1):
+
+            movies =self.faind_movies_with_sezon(obj.data.movies,page)
+            tab = obj.Pagination.tab()
+
+            obj.Scroller.run([400, 10, 780, 850], tab)
+            obj.Scroller.movie_list(
+                movies,
+                obj
+            )
+            self.tabWidget.addTab(tab, "Seson 1")
+
+    def faind_movies_with_sezon(self,arry,page):
+        movies_in_sezon=[]
+        for movie in arry:
+            if movie.sezon == page:
+                movies_in_sezon.append(movie)
+
+        return movies_in_sezon
+
 class Scroller:
 
     def __init__(self,obj):
         self.obj=obj
-        self.List=List
 
     def scroll_area(self,data,obj=None):
         if self.obj == None:
@@ -81,18 +105,18 @@ class Scroller:
         return vertical_Layout_grid
 
     def run(self,data,obj):
-        self.scrollArea = self.scroll_area([400, 10, 780, 850], obj)
+        self.scrollArea = self.scroll_area([data[0], data[1], data[2], data[3]], obj)
         self.scrollAreaWidgetContents = self.scroll_area_widget_contents()
         self.verticalLayout = self.vertical_layout(self.scrollAreaWidgetContents)
-        self.grid_for_scroll = self.grid_for_scroll()
+        self.grid_for_scroll_var = self.grid_for_scroll()
 
-    def movie_list(self,list,menu):
-        List(menu).generate_list(
+    def movie_list(self,list,BaseView):
+        BaseView.List.generate_list(
             'movies',
             list,
             self.scrollAreaWidgetContents,
-            self.grid_for_scroll,
+            self.grid_for_scroll_var,
             1,
         )
-        self.verticalLayout.addLayout(self.grid_for_scroll)
+        self.verticalLayout.addLayout(self.grid_for_scroll_var)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)

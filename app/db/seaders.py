@@ -13,7 +13,7 @@ class movies(abstractSeader):
             self.model(
                 name="Świat to za mało",
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
-                sezon=3
+                sezon=4
             ),
             self.model(
                 name="Doktor No",
@@ -92,23 +92,23 @@ class series(abstractSeader):
     model = Series
 
     def run(self):
-        pass
-        #self.addSeries()
-        #self.addMoviesToSeries()
+        self.addSeries()
+        self.addMoviesToSeries()
 
     def addSeries(self):
         self.objects = [
-            self.model(name="ser1 jdpqi jpqjf qipe jfpiqe ", avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
-            self.model(name="ser1", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
-            self.model(name="ser1", avatar="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
+            self.model(
+                name="James Bond Movies",
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg",
+                sezons=4
+            ),
         ]
         self.addItems()
 
     def addMoviesToSeries(self):
         self.getItem(1)
-        self.addRelations(self.item.movies, Movies, [1,2,3])
-
-
+        self.addRelations(self.item.movies, Movies, [1,2,3,4])
+        self.addItems()
 
 class initSeader:
 

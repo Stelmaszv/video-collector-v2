@@ -98,10 +98,13 @@ class StarsSection(AbstractSection):
 
 class SeriesSection(AbstractSection):
 
+    per_page = 25
+
     def __init__(self, BaseView):
         self.obj = BaseView.obj
         self.data= BaseView.data
         self.BaseView=BaseView
+        self.List = List(self.BaseView, self.per_page)
         self.Scroller = Scroller(self.obj)
         self.Pagination = Pagination(self.obj)
 
@@ -121,6 +124,9 @@ class SeriesSection(AbstractSection):
         return seriesItem
 
     def run(self,data,data_list):
+        self.Pagination.paginate2(data, data_list, self, self.per_page)
+
+        """
         self.tabWidget = self.Pagination.tabs([500, 100, 1200, 900])
         self.tab = self.Pagination.tab()
 
@@ -137,6 +143,7 @@ class SeriesSection(AbstractSection):
         )
 
         self.tabWidget.addTab(self.tab, "Seson 1")
+        """
 
 class MenuSection(AbstractSection):
 
@@ -163,20 +170,4 @@ class MenuSection(AbstractSection):
         return seriesItem
 
     def run(self, data, data_list):
-        self.tabWidget = self.Pagination.tabs([0, 200, 400, 800])
-        self.Pagination.paginate(data_list,self,self.per_page)
-        """
-        self.tabWidget = self.pagination.tabs([0, 200, 400, 800])
-        self.tab = self.pagination.tab()
-        grid=self.grid()
-
-        self.List.generate_list(
-            self.BaseView.menu.searchIn,
-            data_list,
-            self.tab,
-            grid,
-            0,
-        )
-
-        self.tabWidget.addTab(self.tab, "Page 1")
-        """
+        self.Pagination.paginate(data,data_list,self,self.per_page)
