@@ -16,7 +16,6 @@ class AbstractFactory(ABC):
     def deepSearch(self) -> session:
         pass
 
-
     def returnAll(self) -> session:
         return self.ifIssearchFaze()
 

@@ -4,8 +4,9 @@ from .view import Form
 
 class AbstractList(ABC):
 
-    def __init__(self,BaseView):
+    def __init__(self,BaseView,per_page):
         self.BaseView = BaseView
+        self.per_page=per_page
         self.Form=Form(self.BaseView.obj)
 
     @abstractmethod
@@ -14,8 +15,8 @@ class AbstractList(ABC):
 
 class MoviesList (AbstractList):
 
-    def __init__(self, BaseView):
-        super(MoviesList, self).__init__(BaseView)
+    def __init__(self, BaseView,per_page):
+        super(MoviesList, self).__init__(BaseView,per_page)
         self.button_group_movies_play = QtWidgets.QButtonGroup()
         self.button_group_movies_info = QtWidgets.QButtonGroup()
         self.Form.buttons_loop= [
@@ -37,15 +38,16 @@ class MoviesList (AbstractList):
     def genrate(self,data,el,grid,col_start):
         row=1
         for item in data:
-            self.Form.label([str(item.id),item.name],[row,col_start,1,1],grid,el)
-            self.Form.button_loop(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
-            #self.Form.button_loop(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
-            row=row+1
+            if row < self.per_page:
+                self.Form.label([str(item.id),item.name],[row,col_start,1,1],grid,el)
+                self.Form.button_loop(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
+                #self.Form.button_loop(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
+                row=row+1
 
 class SeriesList(AbstractList):
 
-    def __init__(self, BaseView):
-        super(SeriesList, self).__init__(BaseView)
+    def __init__(self, BaseView,per_page):
+        super(SeriesList, self).__init__(BaseView,per_page)
         self.button_group_series_info = QtWidgets.QButtonGroup()
         self.Form.buttons_loop= [
             {'button': self.on_series_info, 'obejct': self.button_group_series_info},
@@ -67,8 +69,8 @@ class SeriesList(AbstractList):
 
 class StarList(AbstractList):
 
-    def __init__(self,BaseView):
-        super(StarList, self).__init__(BaseView)
+    def __init__(self,BaseView,per_page):
+        super(StarList, self).__init__(BaseView,per_page)
         self.button_group_stars_info = QtWidgets.QButtonGroup()
         self.Form.buttons_loop= [
             {'button': self.on_stars_info, 'obejct': self.button_group_stars_info},
@@ -83,22 +85,24 @@ class StarList(AbstractList):
     def genrate(self,data,el,grid,col_start):
         row = 1
         for item in data:
-            if row < 5:
+            if row < self.per_page:
                 self.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
                 self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
+
 class List:
 
-    def __init__(self,obj):
+    def __init__(self,obj,per_page):
         self.obj=obj
+        self.per_page=per_page
 
     def generate_list(self,place,list,el,grid,col):
 
         switcher = {
-            'movies' : MoviesList(self.obj),
-            'series' : SeriesList(self.obj),
-            'stars'  : StarList(self.obj)
+            'movies' : MoviesList(self.obj,self.per_page),
+            'series' : SeriesList(self.obj,self.per_page),
+            'stars'  : StarList(self.obj,self.per_page)
         }
 
         classObj = switcher.get(place, "Invalid data");

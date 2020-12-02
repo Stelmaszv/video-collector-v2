@@ -83,7 +83,6 @@ class BaseView:
         self.menu.open(item)
 
     def listView(self, data, data_list,obj_name):
-
         from .section import SeriesSection, StarsSection, MenuSection
 
         switcher = {

@@ -51,7 +51,8 @@ class Menu(QMainWindow):
     def list_view(self):
         data = [500, 100, 1200, 900]
         self.BaseView.menu.searchIn=self.searchIn
-        list = setFactory(self).getFactory(self.BaseView.menu.searchIn)
+        factory=setFactory(self)
+        list = factory.getFactory(self.BaseView.menu.searchIn)
         self.BaseView.listView(data, list, 'Menu')
 
     def set_up(self,data):

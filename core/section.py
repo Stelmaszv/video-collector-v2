@@ -16,7 +16,7 @@ class StarsSection(AbstractSection):
     def __init__(self, BaseView):
         self.BaseView = BaseView
         self.obj =BaseView.obj
-        self.List= List(self.BaseView)
+        self.List= List(self.BaseView,25)
         self.pagination = Pagination(self.obj)
 
     def if_more(self,grid,seriesItem,item):
@@ -103,7 +103,7 @@ class SeriesSection(AbstractSection):
         self.data= BaseView.data
         self.BaseView=BaseView
         self.Scroller = Scroller(self.obj)
-        self.pagination = Pagination(self.obj)
+        self.Pagination = Pagination(self.obj)
 
     def info(self):
         data   = [100,300,300,200]
@@ -121,8 +121,8 @@ class SeriesSection(AbstractSection):
         return seriesItem
 
     def run(self,data,data_list):
-        self.tabWidget = self.pagination.tabs([500, 100, 1200, 900])
-        self.tab = self.pagination.tab()
+        self.tabWidget = self.Pagination.tabs([500, 100, 1200, 900])
+        self.tab = self.Pagination.tab()
 
         src = 'C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg'
         self.BaseView.avatar([50, 50, 250, 250], self.tab, src)
@@ -139,12 +139,15 @@ class SeriesSection(AbstractSection):
         self.tabWidget.addTab(self.tab, "Seson 1")
 
 class MenuSection(AbstractSection):
+
+    per_page=25
+
     def __init__(self, BaseView):
         self.obj = BaseView.obj
         self.BaseView = BaseView
         self.Scroller = Scroller(self.obj)
-        self.List = List(self.BaseView)
-        self.pagination = Pagination(self.obj)
+        self.List = List(self.BaseView,self.per_page)
+        self.Pagination = Pagination(self.obj)
 
     def scroll_area_widget_contents(self):
         self.scrollAreaWidgetContents = QtWidgets.QWidget(self.obj)
@@ -154,12 +157,15 @@ class MenuSection(AbstractSection):
         self.grid_for_scroll_obj = QtWidgets.QGridLayout(self.obj)
         self.grid_for_scroll_obj.setObjectName("gridLayout")
 
-    def grid(self):
-        seriesItem = QtWidgets.QGridLayout(self.tab)
+    def grid(self,tab):
+        seriesItem = QtWidgets.QGridLayout(tab)
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
     def run(self, data, data_list):
+        self.tabWidget = self.Pagination.tabs([0, 200, 400, 800])
+        self.Pagination.paginate(data_list,self,self.per_page)
+        """
         self.tabWidget = self.pagination.tabs([0, 200, 400, 800])
         self.tab = self.pagination.tab()
         grid=self.grid()
@@ -173,3 +179,4 @@ class MenuSection(AbstractSection):
         )
 
         self.tabWidget.addTab(self.tab, "Page 1")
+        """
