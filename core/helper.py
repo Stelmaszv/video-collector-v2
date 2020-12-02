@@ -31,25 +31,6 @@ class Pagination:
         tab.setObjectName("tab")
         return tab
 
-    def paginate(self,data,loop,obj,per_page):
-        pages=int(loop.count()/per_page)
-        self.tabWidget = obj.Pagination.tabs([data[0], data[1], data[2], data[3]])
-        start=0
-        end=per_page
-        for page in range(0,pages+1):
-            tab=obj.Pagination.tab()
-            grid = obj.grid(tab)
-            obj.List.generate_list(
-                obj.BaseView.menu.searchIn,
-                loop[start:end],
-                tab,
-                grid,
-                0,
-            )
-            self.tabWidget.addTab(tab, str(page+1))
-            start=start+per_page
-            end=end+per_page
-
 class Scroller:
 
     def __init__(self,obj):

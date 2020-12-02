@@ -172,4 +172,20 @@ class MenuSection(AbstractSection):
         return seriesItem
 
     def run(self, data, data_list):
-        self.Pagination.paginate(data,data_list,self,self.per_page)
+        pages = int(data_list.count() / self.per_page)
+        self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
+        start = 0
+        end = self.per_page
+        for page in range(0, pages + 1):
+            tab = self.Pagination.tab()
+            grid = self.grid(tab)
+            self.List.generate_list(
+                self.BaseView.menu.searchIn,
+                data_list[start:end],
+                tab,
+                grid,
+                0,
+            )
+            self.tabWidget.addTab(tab, str(page + 1))
+            start = start + self.per_page
+            end = end + self.per_page
