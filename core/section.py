@@ -108,7 +108,7 @@ class SeriesSection(AbstractSection):
         self.Scroller = Scroller(self.obj)
         self.Pagination = Pagination(self.obj)
 
-    def info(self):
+    def info(self,tab):
         data   = [100,300,300,200]
         rows = ['itemNmae','itemName2']
         info_data=[
@@ -116,7 +116,7 @@ class SeriesSection(AbstractSection):
             {"itemNmae" : "anser2","itemName2" :"anser2"},
             {"itemNmae": "anser3","itemName2" :"anser2"}
         ]
-        self.BaseView.info(info_data,data,rows,self.tab)
+        self.BaseView.info(info_data,data,rows,tab)
 
     def seriesItem(self,grid):
         seriesItem = QtWidgets.QGridLayout(grid)
@@ -124,26 +124,28 @@ class SeriesSection(AbstractSection):
         return seriesItem
 
     def run(self,data,data_list):
-        self.Pagination.paginate2(data, data_list, self, self.per_page)
+        pages = self.data.sezons
+        self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
+        for page in range(1, pages + 1):
+            movies = self.faind_movies_with_sezon(self.data.movies, page)
+            tab = self.Pagination.tab()
+            src = 'C:/Users/DeadlyComputer/Desktop/photo/5c8df35745d2a09e00a18c36.jpg'
+            self.BaseView.avatar([50, 50, 250, 250], tab, src)
+            self.info(tab)
+            self.Scroller.run([400, 10, 780, 850], tab)
+            self.Scroller.movie_list(
+                movies,
+                self
+            )
+            self.tabWidget.addTab(tab,str(page))
 
-        """
-        self.tabWidget = self.Pagination.tabs([500, 100, 1200, 900])
-        self.tab = self.Pagination.tab()
+    def faind_movies_with_sezon(self,arry,page):
+        movies_in_sezon=[]
+        for movie in arry:
+            if movie.sezon == page:
+                movies_in_sezon.append(movie)
 
-        src = 'C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg'
-        self.BaseView.avatar([50, 50, 250, 250], self.tab, src)
-        self.info()
-        self.BaseView.galery([50, 520, 300, 200],[100,100],3,self.tab)
-
-        self.Scroller.run([400, 10, 780, 850], self.tab)
-
-        self.Scroller.movie_list(
-            self.data.movies,
-            self.BaseView
-        )
-
-        self.tabWidget.addTab(self.tab, "Seson 1")
-        """
+        return movies_in_sezon
 
 class MenuSection(AbstractSection):
 

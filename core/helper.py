@@ -50,29 +50,6 @@ class Pagination:
             start=start+per_page
             end=end+per_page
 
-    def paginate2(self,data,loop,obj,per_page):
-        pages = obj.data.sezons
-        self.tabWidget = obj.Pagination.tabs([data[0], data[1], data[2], data[3]])
-        for page in range(1, pages + 1):
-
-            movies =self.faind_movies_with_sezon(obj.data.movies,page)
-            tab = obj.Pagination.tab()
-
-            obj.Scroller.run([400, 10, 780, 850], tab)
-            obj.Scroller.movie_list(
-                movies,
-                obj
-            )
-            self.tabWidget.addTab(tab, "Seson 1")
-
-    def faind_movies_with_sezon(self,arry,page):
-        movies_in_sezon=[]
-        for movie in arry:
-            if movie.sezon == page:
-                movies_in_sezon.append(movie)
-
-        return movies_in_sezon
-
 class Scroller:
 
     def __init__(self,obj):
