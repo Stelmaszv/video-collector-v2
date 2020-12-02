@@ -9,35 +9,29 @@ class movies(abstractSeader):
         self.addMovies()
 
     def addMovies(self):
-        """
         self.objects = [
             self.model(
-                name="Świat to za mało [1999]",
-                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+                name="Świat to za mało",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=3
             ),
             self.model(
-                name="qe",
-                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+                name="Doktor No",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=1
             ),
             self.model(
-                name="qeqe",
-                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
+                name="W obliczy śmierci",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=3
             ),
             self.model(
-                name="fqef",
-                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
-            ),
-            self.model(
-                name="zvzcv",
-                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
-            ),
-            self.model(
-                name="vqeqegqegqeg",
-                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"
-            ),
+                name="Tylko dla twoich oczu",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=2
+            )
         ]
-        """
-        self.generateObjects(self.model, 50)
+        #self.generateObjects(self.model, 50)
         self.addItems()
 
 class stars(abstractSeader):

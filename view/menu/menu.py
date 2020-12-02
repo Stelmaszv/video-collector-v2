@@ -1,7 +1,4 @@
-import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton,QMenu, QAction,QMainWindow,QLabel
-from PyQt5.QtCore import QObject
-from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QAction,QMainWindow
 from PyQt5.QtCore import pyqtSlot
 from core.view import BaseView
 from core.search import setFactory

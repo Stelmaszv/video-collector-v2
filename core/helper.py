@@ -34,7 +34,7 @@ class Pagination:
         self.tabWidget = obj.Pagination.tabs([0, 200, 400, 800])
         start=0
         end=per_page
-        for page in range(1,pages+1):
+        for page in range(0,pages+1):
             tab=obj.Pagination.tab()
             grid = obj.grid(tab)
             obj.List.generate_list(
@@ -44,7 +44,7 @@ class Pagination:
                 grid,
                 0,
             )
-            self.tabWidget.addTab(tab, str(page))
+            self.tabWidget.addTab(tab, str(page+1))
             start=start+per_page
             end=end+per_page
 
