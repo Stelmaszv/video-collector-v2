@@ -10,7 +10,7 @@ class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
     searchIn = 'movies'
-    page=1
+    page=0
 
     def __init__(self,data=False):
         super().__init__()

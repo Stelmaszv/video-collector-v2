@@ -58,6 +58,14 @@ class Player(QWidget):
         self.show_full_screen_button = QPushButton('Full Screen')
         self.show_full_screen_button.clicked.connect(self.full_screen_switch)
 
+        self.movie_info_button = QPushButton('Movie')
+        self.movie_info_button.clicked.connect(self.movie_info)
+
+        if self.data.series:
+            self.series_info_button = QPushButton('Series')
+            self.series_info_button.clicked.connect(self.series_info)
+
+
         self.mute = QPushButton()
         self.mute.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
         self.mute.clicked.connect(self.muteClicked)
@@ -74,6 +82,9 @@ class Player(QWidget):
         hboxLayout.addWidget(self.playBtn)
         hboxLayout.addWidget(self.slider)
         hboxLayout.addWidget(self.mute)
+        hboxLayout.addWidget(self.movie_info_button)
+        if self.data.series:
+            hboxLayout.addWidget(self.series_info_button)
         hboxLayout.addWidget(self.show_full_screen_button)
 
         self.hboxLayout2 = QHBoxLayout()
@@ -99,6 +110,13 @@ class Player(QWidget):
         self.mediaPlayer.stateChanged.connect(self.mediastate_changed)
         self.mediaPlayer.positionChanged.connect(self.position_changed)
         self.mediaPlayer.durationChanged.connect(self.duration_changed)
+
+    def series_info(self):
+        self.base_view.load_view('series', self.data.series[0])
+
+    def movie_info(self):
+        self.base_view.load_view('movies', self.data.series[0])
+
 
     def buttom_genarator(self, list, fuction, id):
         for button in list.buttons():
