@@ -82,7 +82,7 @@ class BaseView:
         self.menu.searchIn=view
         self.menu.open(item)
 
-    def listView(self, data, data_list,obj_name):
+    def listView(self, data, data_list,obj_name,page=False):
         from .section import SeriesSection, StarsSection, MenuSection
 
         switcher = {
@@ -91,7 +91,7 @@ class BaseView:
             'Menu'     : MenuSection(self)
         }
         classObj = switcher.get(obj_name, "Invalid data");
-        classObj.run(data, data_list)
+        classObj.run(data, data_list,page)
 
     def get_nav(self,data,buttons=[]):
         self.nav_widget = QtWidgets.QWidget(self.obj)

@@ -34,7 +34,7 @@ class movies(abstractSeader):
                 sezon=2
             )
         ]
-        self.generateObjects(self.model, 50) #max 89 limit
+        self.generateObjects(self.model, 2000) #max 89 limit
         self.addItems()
 
 class stars(abstractSeader):

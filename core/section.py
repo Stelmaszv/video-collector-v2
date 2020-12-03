@@ -7,7 +7,7 @@ from .helper import Pagination, Scroller
 class AbstractSection(ABC):
 
     @abstractmethod
-    def run(self,data,data_list):
+    def run(self,data,data_list,page):
         pass
 
 class StarsSection(AbstractSection):
@@ -123,7 +123,7 @@ class SeriesSection(AbstractSection):
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
-    def run(self,data,data_list):
+    def run(self,data,data_list,page):
         pages = self.data.sezons
         self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
         for page in range(1, pages + 1):
@@ -139,6 +139,7 @@ class SeriesSection(AbstractSection):
             )
             self.tabWidget.addTab(tab,str(page))
 
+
     def faind_movies_with_sezon(self,arry,page):
         movies_in_sezon=[]
         for movie in arry:
@@ -149,7 +150,7 @@ class SeriesSection(AbstractSection):
 
 class MenuSection(AbstractSection):
 
-    per_page=20
+    per_page=50
 
     def __init__(self, BaseView):
         self.obj = BaseView.obj
@@ -171,21 +172,22 @@ class MenuSection(AbstractSection):
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
-    def run(self, data, data_list):
-        pages = int(data_list.count() / self.per_page)
-        self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
-        start = 0
-        end = self.per_page
-        for page in range(0, pages + 1):
-            tab = self.Pagination.tab()
-            grid = self.grid(tab)
-            self.List.generate_list(
-                self.BaseView.menu.searchIn,
-                data_list[start:end],
-                tab,
-                grid,
-                0,
-            )
-            self.tabWidget.addTab(tab, str(page + 1))
-            start = start + self.per_page
-            end = end + self.per_page
+    def run(self, data, data_list,page):
+        start = self.return_start_page(page)
+        end = self.return_end_page(start,page)
+        self.Scroller.run([data[0], data[1], data[2], data[3]], self.obj)
+        self.Scroller.movie_list(
+            data_list[start:end],
+            self
+        )
+
+    def return_start_page(self,page):
+        if page<0:
+            return 0
+        else:
+            return page*25
+
+    def return_end_page(self,start,page):
+        if page>0:
+            return start+self.per_page;
+        return self.per_page

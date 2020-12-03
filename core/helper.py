@@ -3,6 +3,18 @@ from PyQt5 import QtCore, QtWidgets
 from .list import List
 from app.db.models import Movies
 
+class QueryCounter:
+
+    def __init__(self,query,per_page):
+        self.query=query;
+        self.per_page=per_page
+        self.page_count=query.count()
+
+    def if_page_exist(self,page):
+        if page in range(0,int(self.page_count/self.per_page)):
+            return True
+        return False
+
 class Message:
 
     def show(self,data):
