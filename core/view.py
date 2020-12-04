@@ -90,7 +90,7 @@ class BaseView:
             'Menu'     : MenuSection(self)
         }
         classObj = switcher.get(obj_name, "Invalid data");
-        classObj.run(data, data_list,page,obj_name)
+        classObj.run(data, data_list,page)
 
     def get_nav(self,data,buttons=[]):
         self.nav_widget = QtWidgets.QWidget(self.obj)

@@ -7,7 +7,7 @@ from .helper import Pagination, Scroller
 class AbstractSection(ABC):
 
     @abstractmethod
-    def run(self,data,data_list,page,search_in):
+    def run(self,data,data_list,page):
         pass
 
 class StarsSection(AbstractSection):
@@ -57,8 +57,8 @@ class StarsSection(AbstractSection):
                       "</span></body></html>")
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
-    def run(self,data,data_list,page,search_in):
-        pass
+    def run(self, data, data_list, page):
+        print('go')
         """
         self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[2]])
         self.addPage = self.pagination.tab()
@@ -126,7 +126,7 @@ class SeriesSection(AbstractSection):
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
-    def run(self, data, data_list, page,search_in):
+    def run(self, data, data_list, page):
         pages = self.data.sezons
         self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
         for item in range(1, pages + 1):
@@ -176,7 +176,7 @@ class MenuSection(AbstractSection):
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
-    def run(self, data, data_list,page,search_in):
+    def run(self, data, data_list,page):
         start = self.return_start_page(page)
         end = self.return_end_page(start,page)
         self.Scroller.run([data[0], data[1], data[2], data[3]], self.obj)

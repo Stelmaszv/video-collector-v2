@@ -9,14 +9,21 @@ class SeriesCreator:
 
     def set_singles(self):
         series= self.item.series
-        faind_star_in_movie=[]
+        faind_star_in_movie_array=[]
+
+        def faind_star_in_movie(stars):
+            for star in stars:
+                if star.id == self.item.id:
+                    return True
+            return False
+
         for serie in series:
             for movie in serie.movies:
-                if self.faind_star_in_movie(movie.stars):
-                    faind_star_in_movie.append({'series':serie,'movie':movie})
+                if faind_star_in_movie(movie.stars):
+                    faind_star_in_movie_array.append({'series':serie,'movie':movie})
 
 
-        series_array=self.series_order(faind_star_in_movie)
+        series_array=self.series_order(faind_star_in_movie_array)
         for serie in series_array:
             if len(serie.movies) < 3:
                 for movie in serie.movies:
@@ -39,15 +46,6 @@ class SeriesCreator:
                 series_array.append(item['series'])
 
         return series_array
-
-
-
-
-    def faind_star_in_movie(self,stars):
-        for star in stars:
-            if star.id == self.item.id:
-                return True
-        return False
 
     def set_none(self):
         movies=self.item.movies
