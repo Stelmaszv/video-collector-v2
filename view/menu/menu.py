@@ -25,7 +25,7 @@ class Menu(QMainWindow):
 
     def search_box(self):
         data = [0, 150, 200, 50]
-        list = ['movies','series','stars']
+        list = ['stars','movies','series']
         self.search_in_combo_box=self.BaseView.Form.combo_box(data, list)
         data_search_button = [200,150,200,50]
         data_button_info=['serch003','search']

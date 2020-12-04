@@ -37,8 +37,6 @@ class Router:
         else:
             self.window.id = 0
 
-
-        #self.window.run_window()
         self.window.window_id = stringManipupations.random(20)
         open_wnidows.append(self.window)
         if self.active ==0:

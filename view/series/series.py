@@ -15,7 +15,6 @@ class SerieView(QWidget):
         self.initUI()
         self.show()
         self.setWindowTitle(self.window_title)
-        print('eqwe')
 
     def info(self):
 
