@@ -20,6 +20,9 @@ class StarView(QWidget):
         self.show()
         self.setWindowTitle(self.window_title)
 
+    def closeEvent(self, event):
+        self.list=[]
+
     def title(self):
         data = [530, 60, 391, 91]
         text = "<html><head/><body>" \
@@ -49,6 +52,7 @@ class StarView(QWidget):
         self.BaseView.info(infData, data, rows)
 
     def seriesResult(self):
+        self.list=[]
         self.list = SeriesCreator(self.data).return_obj()
         self.BaseView.listView([80, 430, 1571, 581], self.list , 'Stars')
 

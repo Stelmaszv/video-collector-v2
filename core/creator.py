@@ -17,6 +17,13 @@ class SeriesCreator:
                     return True
             return False
 
+        def if_movie_on_series(movie,singles_list):
+            stan=True
+            for item in singles_list:
+                if item.id==movie.id:
+                    stan=False
+            return stan
+
         for serie in series:
             for movie in serie.movies:
                 if faind_star_in_movie(movie.stars):
@@ -27,7 +34,8 @@ class SeriesCreator:
         for serie in series_array:
             if len(serie.movies) < 3:
                 for movie in serie.movies:
-                    self.singles_list.append(movie)
+                    if if_movie_on_series(movie,self.singles_list):
+                        self.singles_list.append(movie)
             else:
                 self.series_list.append(serie)
 
@@ -62,7 +70,7 @@ class SeriesCreator:
                 if star.id == self.item.id:
                     movies.append(movie)
 
-        if len(movies)<5:
+        if len(movies)<3:
             for movie in movies:
                 self.singles_list.append(movie)
         return  movies
@@ -90,7 +98,7 @@ class SeriesCreator:
 
     def add_series(self):
         for item in self.series_list:
-            if self.if_showin_Serie(item.movies) and self.count_items(item.movies)>3 :
+            if self.if_showin_Serie(item.movies) and self.count_items(item.movies)>3 and self.if_item_item_list(item.name) :
 
                 el = {
                     'name'  :  item.name,
@@ -100,13 +108,21 @@ class SeriesCreator:
                 self.create_list.append(el)
 
             else:
+                pass
+                #self.add_singles_from_series(item.movies)
 
-                self.add_singles_from_series(item.movies)
-
+    def if_item_item_list(self,name=False,id=False):
+        stan = True
+        for item in self.create_list:
+            if name:
+                if name == item['name']:
+                    stan=False
+        return stan
 
     def create(self):
 
-        if len(self.none_list):
+
+        if len(self.none_list) and self.if_item_item_list('none'):
             none = {
                 'name'   : 'none',
                 'avatar' : 'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
@@ -114,7 +130,7 @@ class SeriesCreator:
             }
             self.create_list.append(none)
 
-        if len(self.singles_list):
+        if len(self.singles_list) and self.if_item_item_list('singles'):
             singles = {
                 'name'   : 'singles',
                 'avatar' :'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
@@ -123,7 +139,10 @@ class SeriesCreator:
             self.create_list.append(singles)
         self.add_series()
 
+
     def return_obj(self):
+
+
         self.set_none()
         self.set_singles()
         self.create()
