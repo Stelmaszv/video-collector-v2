@@ -9,7 +9,7 @@ from core.helper import QueryCounter
 class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
-    searchIn = 'movies'
+    searchIn = 'series'
     page=0
 
     def __init__(self,data=False):

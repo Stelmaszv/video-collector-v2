@@ -24,7 +24,7 @@ class abstractSeader(ABC):
 
     def addRelations(self,object,related,ids):
         for item in self.series.query(related).all():
-            if item.id in ids:
+           if item.id in ids:
                 object.append(item)
 
 

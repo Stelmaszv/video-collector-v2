@@ -7,7 +7,7 @@ from .helper import Pagination, Scroller
 class AbstractSection(ABC):
 
     @abstractmethod
-    def run(self,data,data_list,page):
+    def run(self,data,data_list,page,search_in):
         pass
 
 class StarsSection(AbstractSection):
@@ -57,7 +57,7 @@ class StarsSection(AbstractSection):
                       "</span></body></html>")
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
-    def run(self,data,data_list):
+    def run(self,data,data_list,page,search_in):
         self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[2]])
         self.addPage = self.pagination.tab()
 
@@ -101,6 +101,7 @@ class SeriesSection(AbstractSection):
     per_page = 25
 
     def __init__(self, BaseView):
+        print(BaseView.obj)
         self.obj = BaseView.obj
         self.data= BaseView.data
         self.BaseView=BaseView
@@ -123,11 +124,11 @@ class SeriesSection(AbstractSection):
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
-    def run(self,data,data_list,page):
+    def run(self, data, data_list, page,search_in):
         pages = self.data.sezons
         self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
-        for page in range(1, pages + 1):
-            movies = self.faind_movies_with_sezon(self.data.movies, page)
+        for item in range(1, pages + 1):
+            movies = self.faind_movies_with_sezon(self.data.movies, item)
             tab = self.Pagination.tab()
             src = 'C:/Users/DeadlyComputer/Desktop/photo/5c8df35745d2a09e00a18c36.jpg'
             self.BaseView.avatar([50, 50, 250, 250], tab, src)
@@ -135,9 +136,10 @@ class SeriesSection(AbstractSection):
             self.Scroller.run([400, 10, 780, 850], tab)
             self.Scroller.movie_list(
                 movies,
-                self
+                self,
+                'movies'
             )
-            self.tabWidget.addTab(tab,str(page))
+            self.tabWidget.addTab(tab, str(item))
 
 
     def faind_movies_with_sezon(self,arry,page):
@@ -172,13 +174,14 @@ class MenuSection(AbstractSection):
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
-    def run(self, data, data_list,page):
+    def run(self, data, data_list,page,search_in):
         start = self.return_start_page(page)
         end = self.return_end_page(start,page)
         self.Scroller.run([data[0], data[1], data[2], data[3]], self.obj)
         self.Scroller.movie_list(
             data_list[start:end],
-            self
+            self,
+            self.obj.searchIn
         )
 
     def return_start_page(self,page):

@@ -29,7 +29,6 @@ class Router:
 
     def open(self, item=False):
         self.window = setWindow().returnObj(self.searchIn)
-
         self.window.Router = self
         self.window.obj = self.base_view
 
@@ -43,6 +42,7 @@ class Router:
         self.window.window_id=stringManipupations.random(20)
         self.active=self.window.window_id
         self.is_open()
+
 
     def close_window(self):
         for item in open_wnidows:

@@ -55,7 +55,7 @@ class StarView(QWidget):
         self.title()
         self.galery()
         self.info()
-        self.seriesResult()
+        #self.seriesResult()
         self.window_title=self.data.name
 
     def closeEvent(self, QCloseEvent):

@@ -6,7 +6,6 @@ from PyQt5.QtGui import QPalette
 from PyQt5.QtCore import Qt, QUrl
 from app.db.models import Movies, Stars, Series
 from app.db.models import session
-from core.strings import stringManipupations
 
 class Player(QWidget):
     playerMuted = False
@@ -39,12 +38,6 @@ class Player(QWidget):
         # create videowidget object
 
         videowidget = QVideoWidget()
-
-        # create open button
-        """
-        openBtn = QPushButton('Open Video')
-        openBtn.clicked.connect(self.open_file)
-        """
 
         self.playBtn = QPushButton()
         self.playBtn.setEnabled(False)

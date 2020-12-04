@@ -80,9 +80,9 @@ class Scroller:
         self.verticalLayout = self.vertical_layout(self.scrollAreaWidgetContents)
         self.grid_for_scroll_var = self.grid_for_scroll()
 
-    def movie_list(self,list,BaseView):
+    def movie_list(self,list,BaseView,searchIn):
         BaseView.List.generate_list(
-            'movies',
+            searchIn,
             list,
             self.scrollAreaWidgetContents,
             self.grid_for_scroll_var,
@@ -90,3 +90,5 @@ class Scroller:
         )
         self.verticalLayout.addLayout(self.grid_for_scroll_var)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+
+

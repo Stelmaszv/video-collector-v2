@@ -14,14 +14,14 @@ class movies(abstractSeader):
     def addMovies(self):
         self.objects = [
             self.model(
-                name="Świat to za mało",
-                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
-                sezon=4
-            ),
-            self.model(
                 name="Doktor No",
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
                 sezon=1
+            ),
+            self.model(
+                name="Tylko dla twoich oczu",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=2
             ),
             self.model(
                 name="W obliczy śmierci",
@@ -29,9 +29,9 @@ class movies(abstractSeader):
                 sezon=3
             ),
             self.model(
-                name="Tylko dla twoich oczu",
+                name="Świat to za mało",
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
-                sezon=2
+                sezon=4
             )
         ]
         #self.generateObjects(self.model, 2000) #max 89 limit
@@ -42,9 +42,8 @@ class stars(abstractSeader):
     model=Stars
 
     def run(self):
-        pass
-        #self.addStar()
-        #self.addRelationsList()
+        self.addStar()
+        self.addMovieRelations()
 
     def addRelationsList(self):
         self.getItem(1)
@@ -57,20 +56,36 @@ class stars(abstractSeader):
 
     def addStar(self):
         self.objects=[
-            self.model(name="topcia",avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
-            self.model(name="test", avatar="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg")
+            self.model(
+                name="Sean Connery",
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/5c8df35745d2a09e00a18c36.jpg"),
+            self.model(
+                name="Roger Moore",
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/roger_moore_wolnosc24.jpg"),
+            self.model(
+                name="Timothy Dalton",
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/fb14c3c0bcd545a9ed5b11f99a278afe.jpg"),
+            self.model(
+                name="Pierce Brosnan",
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/AR-312089935.jpg"),
+
         ]
-        #self.addItems()
-        #self.addMovieRelations()
+        self.addItems()
+        self.addMovieRelations()
 
     def addMovieRelations(self):
         self.getItem(1)
         movie = self.series.query(Movies).get(1)
         self.addRelations(movie.stars, Stars, [self.item.id])
         self.getItem(2)
-        movie = self.series.query(Movies).get(1)
+        movie = self.series.query(Movies).get(2)
         self.addRelations(movie.stars, Stars, [self.item.id])
-
+        self.getItem(3)
+        movie = self.series.query(Movies).get(3)
+        self.addRelations(movie.stars, Stars, [self.item.id])
+        self.getItem(4)
+        movie = self.series.query(Movies).get(4)
+        self.addRelations(movie.stars, Stars, [self.item.id])
 
 class photos(abstractSeader):
 

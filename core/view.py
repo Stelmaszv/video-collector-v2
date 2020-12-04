@@ -84,14 +84,13 @@ class BaseView:
 
     def listView(self, data, data_list,obj_name,page=False):
         from .section import SeriesSection, StarsSection, MenuSection
-
         switcher = {
             'Stars'    : StarsSection(self),
             'Series'   : SeriesSection(self),
             'Menu'     : MenuSection(self)
         }
         classObj = switcher.get(obj_name, "Invalid data");
-        classObj.run(data, data_list,page)
+        classObj.run(data, data_list,page,obj_name)
 
     def get_nav(self,data,buttons=[]):
         self.nav_widget = QtWidgets.QWidget(self.obj)
