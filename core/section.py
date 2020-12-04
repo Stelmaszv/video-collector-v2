@@ -58,6 +58,8 @@ class StarsSection(AbstractSection):
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
     def run(self,data,data_list,page,search_in):
+        pass
+        """
         self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[2]])
         self.addPage = self.pagination.tab()
 
@@ -95,13 +97,13 @@ class StarsSection(AbstractSection):
             seriesElment = seriesElment +1
 
         self.tabWidget.addTab(self.addPage, "1")
+        """
 
 class SeriesSection(AbstractSection):
 
     per_page = 25
 
     def __init__(self, BaseView):
-        print(BaseView.obj)
         self.obj = BaseView.obj
         self.data= BaseView.data
         self.BaseView=BaseView

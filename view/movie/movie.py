@@ -27,6 +27,7 @@ class MovieView(QWidget):
         self.show()
         self.setWindowTitle(self.window_title)
 
+
     def initUI(self):
         self.title()
         self.BaseView.get_nav([850, -100, 400, 400], [self.open_movie, self.add_favorits, self.show_edit, self.delete])

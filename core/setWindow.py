@@ -37,12 +37,15 @@ class Router:
         else:
             self.window.id = 0
 
-        self.window.run_window()
-        open_wnidows.append(self.window)
-        self.window.window_id=stringManipupations.random(20)
-        self.active=self.window.window_id
-        self.is_open()
 
+        #self.window.run_window()
+        self.window.window_id = stringManipupations.random(20)
+        open_wnidows.append(self.window)
+        if self.active ==0:
+            self.active=self.window.window_id
+        item=self.is_open()
+        if item is not None:
+            item.run_window()
 
     def close_window(self):
         for item in open_wnidows:
@@ -52,7 +55,11 @@ class Router:
         self.active=0
 
     def is_open(self):
+        movie=None
         for item in open_wnidows:
             if item.window_id != self.active:
                 item.window_id=0
-                item.close()
+                movie = None
+            elif item.window_id == self.active:
+                movie = item
+        return movie

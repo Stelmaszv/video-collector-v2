@@ -7,14 +7,6 @@ class SeriesCreator:
     def __init__(self,item):
         self.item=item
 
-    def set_none(self):
-        movies=self.item.movies
-        for movie in movies:
-            if len(movie.series) == 0:
-                for star in movie.stars:
-                    if star.id == self.item.id:
-                        self.none_list.append(movie)
-
     def set_singles(self):
         series= self.item.series
         for serie in series:
@@ -24,6 +16,13 @@ class SeriesCreator:
             else:
                 self.series_list.append(serie)
 
+    def set_none(self):
+        movies=self.item.movies
+        for movie in movies:
+            if len(movie.series) == 0:
+                for star in movie.stars:
+                    if star.id == self.item.id:
+                        self.none_list.append(movie)
 
     def add_movies_to_series(self, movies_list) -> []:
         movies=[]
@@ -84,6 +83,7 @@ class SeriesCreator:
             }
             self.create_list.append(none)
 
+        print(self.singles_list)
         if len(self.singles_list):
             singles = {
                 'name'   : 'singles',
@@ -91,7 +91,6 @@ class SeriesCreator:
                 'movies': self.singles_list
             }
             self.create_list.append(singles)
-
         self.add_series()
 
     def return_obj(self):

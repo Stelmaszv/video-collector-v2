@@ -72,6 +72,7 @@ class stars(abstractSeader):
         ]
         self.addItems()
         self.addMovieRelations()
+        self.addItems()
 
     def addMovieRelations(self):
         self.getItem(1)
@@ -126,11 +127,17 @@ class series(abstractSeader):
     def addMoviesToSeries(self):
         self.getItem(1)
         self.addRelations(self.item.movies, Movies, [1,2,3,4])
+        star1 = self.series.query(Stars).get(1)
+        star2 = self.series.query(Stars).get(2)
+        star3 = self.series.query(Stars).get(3)
+        star4 = self.series.query(Stars).get(4)
+        self.addRelations(self.item.stars, Stars, [star1.id, star2.id, star3.id, star4.id])
+
         self.addItems()
 
 class initSeader:
 
-    seaders = [photos(),movies(),series(), stars()]
+    seaders = [photos(),movies(),stars(),series()]
 
     def initNow(self):
         for item in self.seaders:
