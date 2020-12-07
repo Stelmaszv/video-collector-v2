@@ -139,14 +139,11 @@ class SeriesSection(AbstractSection):
 
 class MovieListSection(AbstractSection):
 
-    per_page = 50
-
     def __init__(self, BaseView):
         self.obj = BaseView.obj
         self.BaseView = BaseView
         self.Scroller = Scroller(self.obj)
-        self.List = List(self.BaseView,self.per_page)
-        #self.Pagination = Pagination(self.obj)
+        self.List = List(self.BaseView)
 
     def run(self, data, data_list, page):
         self.Scroller.run([400, 10, 780, 850],self.obj)

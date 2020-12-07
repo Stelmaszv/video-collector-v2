@@ -90,11 +90,12 @@ class StarList(AbstractList):
 
 class List:
 
-    def __init__(self,obj,per_page):
+    def __init__(self,obj,per_page=0):
         self.obj=obj
         self.per_page=per_page
 
     def generate_list(self,place,list,el,grid,col):
+        self.set_per_page(list)
 
         switcher = {
             'movies' : MoviesList(self.obj,self.per_page),
@@ -104,3 +105,7 @@ class List:
 
         classObj = switcher.get(place, "Invalid data");
         classObj.genrate(list,el,grid,col)
+
+    def set_per_page(self,list):
+        if self.per_page==0:
+            self.per_page=len(list)
