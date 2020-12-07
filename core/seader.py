@@ -17,14 +17,14 @@ class abstractSeader(ABC):
 
     def generateObjects(self,model,items):
         for x in range(items):
-            self.objects.append(model(name=stringManipupations.random(20)))
+            self.objects.append(model(name=stringManipupations.random(20),src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi"))
 
     def getItem(self,id):
         self.item=self.series.query(self.model).get(id)
 
     def addRelations(self,object,related,ids):
         for item in self.series.query(related).all():
-            if item.id in ids:
+           if item.id in ids:
                 object.append(item)
 
 

@@ -32,6 +32,7 @@ class Series(Base):
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
     avatar = Column('avatar', String)
+    sezons= Column('sezons',Integer)
 
     stars = relationship(
         "Stars",
@@ -109,6 +110,7 @@ class Movies(Base):
     id=    Column('id',Integer,primary_key=True)
     name = Column('name',String)
     src=   Column('src',String)
+    sezon = Column('sezon',Integer)
     stars = relationship(
         "Stars",
         secondary=association_table,

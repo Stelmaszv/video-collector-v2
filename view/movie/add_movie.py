@@ -30,12 +30,12 @@ class AddMovieView(QWidget):
     def form(self):
         data = [100, 150, 200, 50]
         list = ['normal','movie_is_star_name','add_movie_to_star','add_movie_to_series']
-        self.add_type=self.base_view.form.combo_box(data, list)
+        self.add_type=self.base_view.Form.combo_box(data, list)
         data_line = [100,100,400,50]
-        self.dir_location=self.base_view.form.edit_line(data_line,'dir location')
+        self.dir_location=self.base_view.Form.edit_line(data_line, 'dir location')
         data_search_button = [300,150,200,50]
         data_button_info=['add_item','add']
-        self.base_view.form.button(data_button_info,data_search_button,self.click_add_items)
+        self.base_view.Form.button(data_button_info, data_search_button, self.click_add_items)
 
     def closeEvent(self, QCloseEvent):
         self.Router.close_window()

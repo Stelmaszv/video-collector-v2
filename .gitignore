@@ -1,3 +1,5 @@
 env/
 .idea/
 !/core/mediaPlayer.py
+!/build/
+!/dist/
