@@ -31,21 +31,18 @@ class StarsSection(AbstractSection):
     def info_button(self,data):
         self.BaseView.load_view('movie_list', data)
 
-    def if_more(self,grid,seriesItem,item):
-        if len(item['movies']) > 4:
-            button = QtWidgets.QPushButton(grid)
-            button.setMinimumSize(QtCore.QSize(30, 0))
-            button.setMaximumSize(QtCore.QSize(10, 16777215))
-            button.setObjectName("InfoButton")
-            button.setText('info')
-            button.data = item
-            seriesItem.addWidget(button, 0, 2, 1,2)
-            self.Form.buttons_loop[0]['obejct'].addButton(button)
-            self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
+    def more(self,grid,seriesItem,item,left,top):
+        button = QtWidgets.QPushButton(self.addPage)
+        button.setObjectName("show-movies")
+        button.setText('Show Movies')
+        button.setGeometry(left+20,top+200, 130,50)
+        button.data = item
+        self.Form.buttons_loop[0]['obejct'].addButton(button)
+        self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
 
     def avatar(self,grid,seriesItem,item):
         seriesAvatar = QtWidgets.QLabel(grid)
-        seriesAvatar.setMaximumSize(QtCore.QSize(100, 100))
+        seriesAvatar.setMaximumSize(QtCore.QSize(150, 150))
         seriesAvatar.setText("")
         seriesAvatar.setPixmap(QtGui.QPixmap(item['avatar']))
         seriesAvatar.setScaledContents(True)
@@ -74,6 +71,21 @@ class StarsSection(AbstractSection):
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
     def run(self, data, data_list, page):
+        self.tabWidget = self.pagination.tabs([80, 430, 1080, 500])
+        self.addPage = self.pagination.tab()
+        left = 5
+        top = 50
+        seriesElment = 1
+        for item in data_list:
+            grid = self.grid(left, top)
+            seriesItem = self.seriesItem(grid)
+            self.title(grid, seriesItem, item)
+            self.avatar(grid, seriesItem, item)
+            self.more(grid, seriesItem, item,left,top)
+            left = left + 200
+        self.tabWidget.addTab(self.addPage, "1")
+        print('run')
+        """
         self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[2]])
         self.addPage = self.pagination.tab()
 
@@ -111,6 +123,7 @@ class StarsSection(AbstractSection):
             seriesElment = seriesElment +1
 
         self.tabWidget.addTab(self.addPage, "1")
+        """
 
 class SeriesSection(AbstractSection):
 

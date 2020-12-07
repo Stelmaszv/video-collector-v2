@@ -89,7 +89,6 @@ class BaseView:
 
     def listView(self, data, data_list,obj_name,page=False):
         from .section import SeriesSection, StarsSection, MenuSection,MovieListSection
-        print(obj_name)
         switcher = {
             'Stars'      : StarsSection(self),
             'Series'     : SeriesSection(self),
