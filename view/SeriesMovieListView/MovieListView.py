@@ -39,6 +39,9 @@ class MovieListView(QWidget):
     def set_window_title(self):
         self.window_title = self.title_var
 
+    def closeEvent(self, QCloseEvent):
+        self.Router.close_window()
+
     def initUI(self):
         self.title_var = str(self.data['name']) + " movies with " + str(self.data['star'])
         self.set_window_title()
