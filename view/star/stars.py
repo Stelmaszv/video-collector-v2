@@ -59,7 +59,7 @@ class StarView(QWidget):
     def seriesResult(self):
         self.list=[]
         self.list = SeriesCreator(self.data).return_obj()
-        self.BaseView.listView([80, 430, 1080, 100], self.list , 'Stars')
+        self.BaseView.listView([80, 430, 1080, 500], self.list , 'Stars')
 
     def initUI(self):
         self.BaseView.avatar([100, 80, 300, 300])
