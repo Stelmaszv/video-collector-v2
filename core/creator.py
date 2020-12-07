@@ -56,12 +56,20 @@ class SeriesCreator:
         return series_array
 
     def set_none(self):
+        def if_movie_on_series(movie, singles_list):
+            stan = True
+            for item in singles_list:
+                if item.id == movie.id:
+                    stan = False
+            return stan
+
         movies=self.item.movies
         for movie in movies:
             if len(movie.series) == 0:
                 for star in movie.stars:
-                    if star.id == self.item.id:
+                    if if_movie_on_series(movie,self.none_list):
                         self.none_list.append(movie)
+
 
     def add_movies_to_series(self, movies_list) -> []:
         movies=[]
@@ -121,7 +129,7 @@ class SeriesCreator:
 
     def create(self):
 
-
+        print(self.none_list)
         if len(self.none_list) and self.if_item_item_list('none'):
             none = {
                 'name'   : 'none',

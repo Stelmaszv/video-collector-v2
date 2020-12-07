@@ -61,12 +61,32 @@ class movies(abstractSeader):
             self.model(
                 name="Jeden kot to za mało ",
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
-                sezon=4
+                sezon=1
             ),
             self.model(
                 name="Jeden kot to za mało 2 ",
                 src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
-                sezon=4
+                sezon=1
+            ),
+            self.model(
+                name="Jeq  ",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=1
+            ),
+            self.model(
+                name="wrg",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=1
+            ),
+            self.model(
+                name="Jeq  ",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=1
+            ),
+            self.model(
+                name="wttwt",
+                src="C:/Users/DeadlyComputer/Desktop/Super star/The World is Not Enough (1999).avi",
+                sezon=1
             )
         ]
         #self.generateObjects(self.model, 2000) #max 89 limit
@@ -197,9 +217,16 @@ class series(abstractSeader):
         self.getItem(2)
         movie10 = self.series.query(Movies).get(10)
         movie11 = self.series.query(Movies).get(11)
-        self.addRelations(self.item.movies, Movies, [movie10.id, movie11.id])
+        movie12 = self.series.query(Movies).get(12)
+        movie13 = self.series.query(Movies).get(13)
+        movie14 = self.series.query(Movies).get(14)
+        movie15 = self.series.query(Movies).get(15)
         self.addRelations(movie10.stars, Stars, [star1.id])
         self.addRelations(movie11.stars, Stars, [star1.id])
+        self.addRelations(movie12.stars, Stars, [star1.id])
+        self.addRelations(movie13.stars, Stars, [star1.id])
+        self.addRelations(movie14.stars, Stars, [star1.id])
+        self.addRelations(movie15.stars, Stars, [star1.id])
         self.addRelations(self.item.stars, Stars, [star1.id])
         self.getItem(3)
         self.addRelations(self.item.stars, Stars, [star1.id])

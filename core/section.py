@@ -3,6 +3,7 @@ from PyQt5 import QtGui,QtCore, QtWidgets
 from .list import List
 from core.strings import stringManipupations
 from .helper import Pagination, Scroller
+from .view import Form
 
 class AbstractSection(ABC):
 
@@ -18,14 +19,28 @@ class StarsSection(AbstractSection):
         self.obj =BaseView.obj
         self.List= List(self.BaseView,25)
         self.pagination = Pagination(self.obj)
+        self.button_group_info = QtWidgets.QButtonGroup()
+        self.Form = Form(self.BaseView.obj)
+        self.Form.buttons_loop= [
+            {'button': self.on_info_button, 'obejct': self.button_group_info },
+        ]
+
+    def on_info_button(self,id):
+        self.BaseView.Form.buttom_genarator(self.button_group_info , self.info_button, id)
+
+    def info_button(self):
+        print('dqwd')
 
     def if_more(self,grid,seriesItem,item):
         if len(item['movies']) > 4:
+            self.Form.button_loop(grid, seriesItem, item, [0, 2, 2, 2], ['info'], 0)
+            """
             more = QtWidgets.QPushButton(grid)
             more.setMinimumSize(QtCore.QSize(30, 0))
             more.setObjectName("InfoButton")
             more.setText("more")
             seriesItem.addWidget(more, 0, 2, 1, 2)
+            """
 
     def avatar(self,grid,seriesItem,item):
         seriesAvatar = QtWidgets.QLabel(grid)
@@ -70,7 +85,8 @@ class StarsSection(AbstractSection):
             seriesItem = self.seriesItem(grid)
             self.title(grid, seriesItem, item)
             self.avatar(grid, seriesItem, item)
-            self.if_more(grid, seriesItem, item)
+            #self.if_more(grid, seriesItem, item)
+            self.Form.button_loop(grid, seriesItem, item, [0, 2, 1, 2], ['info'], 0)
 
             self.List.generate_list(
                 'movies',
