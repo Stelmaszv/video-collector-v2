@@ -29,6 +29,11 @@ class Form:
             if button is list.button(id):
                 fuction(list.button(id).data)
 
+    def buttom_genarator2(self,list,fuction,id):
+        for button in list.buttons():
+            if button is list.button(id):
+                fuction(list.button(id).data)
+
     def button_loop(self, el, grid, item, data, info, index):
         button = QtWidgets.QPushButton(el)
         button.setMinimumSize(QtCore.QSize(30, 0))
@@ -83,11 +88,13 @@ class BaseView:
         self.menu.open(item)
 
     def listView(self, data, data_list,obj_name,page=False):
-        from .section import SeriesSection, StarsSection, MenuSection
+        from .section import SeriesSection, StarsSection, MenuSection,MovieListSection
+        print(obj_name)
         switcher = {
-            'Stars'    : StarsSection(self),
-            'Series'   : SeriesSection(self),
-            'Menu'     : MenuSection(self)
+            'Stars'      : StarsSection(self),
+            'Series'     : SeriesSection(self),
+            'Menu'       : MenuSection(self),
+            'Movie_List' : MovieListSection(self)
         }
         classObj = switcher.get(obj_name, "Invalid data");
         classObj.run(data, data_list,page)
@@ -115,6 +122,7 @@ class BaseView:
             obj = self.obj
         if src == None:
             src = self.data.avatar
+
         self.avatar_photo = QtWidgets.QLabel(obj)
         self.avatar_photo.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.avatar_photo.setText("")

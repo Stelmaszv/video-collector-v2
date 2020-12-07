@@ -26,21 +26,22 @@ class StarsSection(AbstractSection):
         ]
 
     def on_info_button(self,id):
-        self.BaseView.Form.buttom_genarator(self.button_group_info , self.info_button, id)
+        self.Form.buttom_genarator(self.button_group_info , self.info_button, id)
 
-    def info_button(self):
-        print('dqwd')
+    def info_button(self,data):
+        self.BaseView.load_view('movie_list', data)
 
     def if_more(self,grid,seriesItem,item):
         if len(item['movies']) > 4:
-            self.Form.button_loop(grid, seriesItem, item, [0, 2, 2, 2], ['info'], 0)
-            """
-            more = QtWidgets.QPushButton(grid)
-            more.setMinimumSize(QtCore.QSize(30, 0))
-            more.setObjectName("InfoButton")
-            more.setText("more")
-            seriesItem.addWidget(more, 0, 2, 1, 2)
-            """
+            button = QtWidgets.QPushButton(grid)
+            button.setMinimumSize(QtCore.QSize(30, 0))
+            button.setMaximumSize(QtCore.QSize(10, 16777215))
+            button.setObjectName("InfoButton")
+            button.setText('info')
+            button.data = item
+            seriesItem.addWidget(button, 0, 2, 1,2)
+            self.Form.buttons_loop[0]['obejct'].addButton(button)
+            self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
 
     def avatar(self,grid,seriesItem,item):
         seriesAvatar = QtWidgets.QLabel(grid)
@@ -85,8 +86,7 @@ class StarsSection(AbstractSection):
             seriesItem = self.seriesItem(grid)
             self.title(grid, seriesItem, item)
             self.avatar(grid, seriesItem, item)
-            #self.if_more(grid, seriesItem, item)
-            self.Form.button_loop(grid, seriesItem, item, [0, 2, 1, 2], ['info'], 0)
+            self.if_more(grid, seriesItem, item)
 
             self.List.generate_list(
                 'movies',
@@ -164,6 +164,25 @@ class SeriesSection(AbstractSection):
                 movies_in_sezon.append(movie)
 
         return movies_in_sezon
+
+class MovieListSection(AbstractSection):
+
+    per_page = 50
+
+    def __init__(self, BaseView):
+        self.obj = BaseView.obj
+        self.BaseView = BaseView
+        self.Scroller = Scroller(self.obj)
+        self.List = List(self.BaseView,self.per_page)
+        #self.Pagination = Pagination(self.obj)
+
+    def run(self, data, data_list, page):
+        self.Scroller.run([400, 10, 780, 850],self.obj)
+        self.Scroller.movie_list(
+            data_list,
+            self,
+            'movies'
+        )
 
 class MenuSection(AbstractSection):
 

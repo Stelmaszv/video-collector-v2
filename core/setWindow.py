@@ -1,5 +1,6 @@
 from core.media_player import Player
 from core.strings import stringManipupations
+import json
 
 open_wnidows=[]
 
@@ -10,12 +11,15 @@ class setWindow():
         from view.movie.movie import MovieView
         from view.movie.add_movie import AddMovieView
         from view.star.stars import StarView
+        from view.SeriesMovieListView.MovieListView import MovieListView
+
 
         switcher = {
             'stars': StarView(),
             'movies': MovieView(),
             'series': SerieView(),
             'add_movie': AddMovieView(),
+            'movie_list' : MovieListView(),
             'play': Player()
         }
         return switcher.get(object, "Invalid data");
@@ -31,15 +35,20 @@ class Router:
         self.window = setWindow().returnObj(self.searchIn)
         self.window.Router = self
         self.window.obj = self.base_view
-
         if item:
-            self.window.id = item.id
+
+            if str(item).find("{")==-1:
+                self.window.id = item.id
+            else:
+                self.window.data = item
+                self.window.id   = item['id']
         else:
             self.window.id = 0
 
+
         self.window.window_id = stringManipupations.random(20)
         open_wnidows.append(self.window)
-        if self.active ==0:
+        if self.active == 0:
             self.active=self.window.window_id
         item=self.is_open()
         if item is not None:

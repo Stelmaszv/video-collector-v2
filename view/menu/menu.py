@@ -15,10 +15,10 @@ class Menu(QMainWindow):
     def __init__(self,data=False):
         super().__init__()
         self.window_title = 'Menu'
-        self.left = 30
-        self.top = 20
-        self.width = 1320
-        self.height = 1200
+        self.left = 2562
+        self.top =400
+        self.width = 400
+        self.height = 985
         self.model=''
         self.BaseView=BaseView([], self)
         self.initUI(data)

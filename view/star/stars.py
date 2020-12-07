@@ -11,6 +11,10 @@ class StarView(QWidget):
     def __init__(self):
         super().__init__()
         self.BaseView= BaseView([], self)
+        self.left = 2562+400
+        self.top =400
+        self.width = 1280
+        self.height = 985
 
     def run_window(self):
         self.BaseView.set_data(self.id)
@@ -19,6 +23,7 @@ class StarView(QWidget):
         self.initUI()
         self.show()
         self.setWindowTitle(self.window_title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
     def closeEvent(self, event):
         self.list=[]
@@ -57,7 +62,7 @@ class StarView(QWidget):
         self.BaseView.listView([80, 430, 1571, 581], self.list , 'Stars')
 
     def initUI(self):
-        self.BaseView.avatar([100, 80, 400, 400])
+        self.BaseView.avatar([100, 80, 300, 300])
         self.title()
         self.galery()
         self.info()

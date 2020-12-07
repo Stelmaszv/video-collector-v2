@@ -109,8 +109,10 @@ class SeriesCreator:
             if self.if_showin_Serie(item.movies) and self.count_items(item.movies)>3 and self.if_item_item_list(item.name) :
 
                 el = {
+                    'id'    :  item.id,
                     'name'  :  item.name,
-                    'avatar': item.avatar,
+                    'star':    self.item,
+                    'avatar':  item.avatar,
                     'movies': self.add_movies_to_series(item.movies)
                 }
                 self.create_list.append(el)
@@ -129,9 +131,10 @@ class SeriesCreator:
 
     def create(self):
 
-        print(self.none_list)
         if len(self.none_list) and self.if_item_item_list('none'):
             none = {
+                'id'     : 0,
+                'star'   : self.item,
                 'name'   : 'none',
                 'avatar' : 'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
                 'movies' : self.none_list
@@ -140,7 +143,9 @@ class SeriesCreator:
 
         if len(self.singles_list) and self.if_item_item_list('singles'):
             singles = {
+                'id': 0,
                 'name'   : 'singles',
+                'star': self.item,
                 'avatar' :'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
                 'movies': self.singles_list
             }
