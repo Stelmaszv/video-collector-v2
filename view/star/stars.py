@@ -29,7 +29,7 @@ class StarView(QWidget):
         self.list=[]
 
     def title(self):
-        data = [530, 60, 391, 91]
+        data = [450, 0, 300, 100]
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
                "<span style=\" font-size:18pt;font-weight:600; " \
@@ -44,14 +44,16 @@ class StarView(QWidget):
 
     def info(self):
 
-        data   = [650, 180, 391, 161]
+        data   = [450, 50, 800, 400]
 
         rows = ['itemNmae','itemName2']
 
         infData=[
             {"itemNmae" : "anser","itemName2" :"anser1"},
             {"itemNmae" : "anser2","itemName2" :"anser2"},
-            {"itemNmae": "anser3","itemName2" :"anser2"}
+            {"itemNmae": "anser3","itemName2" :"anser2"},
+            {"itemNmae": "anser2", "itemName2": "anser2"},
+            {"itemNmae": "anser3", "itemName2": "anser2"}
         ]
 
         self.BaseView.info(infData, data, rows)
