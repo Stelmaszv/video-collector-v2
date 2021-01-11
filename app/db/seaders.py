@@ -98,14 +98,13 @@ class stars(abstractSeader):
 
     def run(self):
         self.addStar()
-        self.addMovieRelations()
+        self.addRelationsList()
 
     def addRelationsList(self):
         self.getItem(1)
         self.addRelations(self.item.movies, Movies, [1,2,3,4,5,6])
-        self.addRelations(self.item.photos, Photos, [1,2,3,4,5,6,7,8])
+        self.addRelations(self.item.photos, Photos, [1,2,3,4,5,6])
         self.addRelations(self.item.series, Series, [1,2])
-
         self.getItem(2)
         self.addRelations(self.item.series, Series, [1,2])
 
@@ -155,12 +154,12 @@ class photos(abstractSeader):
 
     def addPhotos(self):
         self.objects = [
-            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/61mJMflh3uL._AC_SY450_.jpg"),
-            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
-            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/unnamed.jpg"),
-            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/578211-gettyimages-542930526.jpg"),
-            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg"),
-            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg")
+            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/SeanConnery/_89670552_89670551.jpg"),
+            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/SeanConnery/66b70d99599a63c95c21180a0ab37132.jpg"),
+            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/SeanConnery/607390704.0.jpg"),
+            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/SeanConnery/MV5BMzcwNTM4MzctYjQzMi00NTA2LTljYWItNTYzNmE1MTYxN2RlXkEyXkFqcGdeQXVyMDI2NDg0NQ@@._V1_UY1200_CR152,0,630,1200_AL_.jpg"),
+            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/SeanConnery/pobrane.jfif"),
+            self.model(src="C:/Users/DeadlyComputer/Desktop/photo/SeanConnery/sean-connery-najlepsze-filmy-filmografia-aktora-to-nie-tylko-james-bond.jpeg")
         ]
         self.addItems()
 
