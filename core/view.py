@@ -87,13 +87,13 @@ class BaseView:
         self.menu.searchIn=view
         self.menu.open(item)
 
-    def listView(self, data, data_list,obj_name,page=False):
+    def listView(self, data, data_list,obj_name,QWidget,page=False):
         from .section import SeriesSection, StarsSection, MenuSection,MovieListSection
         switcher = {
-            'Stars'      : StarsSection(self),
-            'Series'     : SeriesSection(self),
-            'Menu'       : MenuSection(self),
-            'Movie_List' : MovieListSection(self)
+            'Stars'      : StarsSection(self,QWidget),
+            'Series'     : SeriesSection(self,QWidget),
+            'Menu'       : MenuSection(self,QWidget),
+            'Movie_List' : MovieListSection(self,QWidget)
         }
         classObj = switcher.get(obj_name, "Invalid data");
         classObj.run(data, data_list,page)

@@ -13,8 +13,9 @@ class AbstractSection(ABC):
 
 class StarsSection(AbstractSection):
 
-    def __init__(self, BaseView):
+    def __init__(self, BaseView,QWidget):
         self.BaseView = BaseView
+        self.OBJ_QWidget  =QWidget
         self.obj =BaseView.obj
         self.Scroller = Scroller(self.obj)
         self.List= List(self.BaseView,25)
@@ -71,10 +72,13 @@ class StarsSection(AbstractSection):
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
     def run(self, data, data_list, page):
+
+        print(self.OBJ_QWidget.WindowSize['section']['left'])
+
         self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[3]])
         self.page = self.pagination.tab()
-        left = 15
-        top = 0
+        left = self.OBJ_QWidget.WindowSize['section']['left']
+        top =  self.OBJ_QWidget.WindowSize['section']['top']
         el = 0;
         pages=[]
         pages.append(self.page)
@@ -87,13 +91,13 @@ class StarsSection(AbstractSection):
             self.title(grid, seriesItem, item)
             self.avatar(grid, seriesItem, item)
             self.more(item, left, top, self.add_page)
-            left = left + 200
+            left = left + self.OBJ_QWidget.WindowSize['section']['left_add']
 
-            if el  % 6 == 0:
-                left = 15
-                top  = top+250
+            if el  % self.OBJ_QWidget.WindowSize['section']['per_row'] == 0:
+                left = self.OBJ_QWidget.WindowSize['section']['left']
+                top  = top+self.OBJ_QWidget.WindowSize['section']['top_add']
 
-            if el % 12==0:
+            if el % self.OBJ_QWidget.WindowSize['section']['per_page']==0:
                 self.next_page=self.pagination.tab()
                 self.add_page = self.next_page
                 pages.append(self.next_page)
@@ -104,15 +108,13 @@ class StarsSection(AbstractSection):
             self.tabWidget.addTab(page_tap, str(tab_name))
             tab_name=tab_name+1
 
-
-
-
 class SeriesSection(AbstractSection):
 
     per_page = 25
 
-    def __init__(self, BaseView):
+    def __init__(self, BaseView,QWidget):
         self.obj = BaseView.obj
+        self.OBJ_QWidget = QWidget
         self.data= BaseView.data
         self.BaseView=BaseView
         self.List = List(self.BaseView, self.per_page)
@@ -162,8 +164,9 @@ class SeriesSection(AbstractSection):
 
 class MovieListSection(AbstractSection):
 
-    def __init__(self, BaseView):
+    def __init__(self, BaseView,QWidget):
         self.obj = BaseView.obj
+        self.OBJ_QWidget = QWidget
         self.BaseView = BaseView
         self.Scroller = Scroller(self.obj)
         self.List = List(self.BaseView)
@@ -180,8 +183,10 @@ class MenuSection(AbstractSection):
 
     per_page=50
 
-    def __init__(self, BaseView):
+    def __init__(self, BaseView,QWidget):
+
         self.obj = BaseView.obj
+        self.OBJ_QWidget = QWidget
         self.BaseView = BaseView
         self.Scroller = Scroller(self.obj)
         self.List = List(self.BaseView,self.per_page)
