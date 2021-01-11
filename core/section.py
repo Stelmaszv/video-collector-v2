@@ -13,10 +13,10 @@ class AbstractSection(ABC):
 
 class StarsSection(AbstractSection):
 
-
     def __init__(self, BaseView):
         self.BaseView = BaseView
         self.obj =BaseView.obj
+        self.Scroller = Scroller(self.obj)
         self.List= List(self.BaseView,25)
         self.pagination = Pagination(self.obj)
         self.button_group_info = QtWidgets.QButtonGroup()
@@ -31,8 +31,8 @@ class StarsSection(AbstractSection):
     def info_button(self,data):
         self.BaseView.load_view('movie_list', data)
 
-    def more(self,grid,seriesItem,item,left,top):
-        button = QtWidgets.QPushButton(self.addPage)
+    def more(self,item,left,top,page):
+        button = QtWidgets.QPushButton(page)
         button.setObjectName("show-movies")
         button.setText('Show Movies')
         button.setGeometry(left+20,top+200, 130,50)
@@ -54,8 +54,8 @@ class StarsSection(AbstractSection):
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
-    def grid(self,left,top):
-        grid = QtWidgets.QWidget(self.addPage)
+    def grid(self,left,top,page):
+        grid = QtWidgets.QWidget(page)
         grid.setGeometry(QtCore.QRect(left, top, 0, 0))
         grid.setMinimumSize(QtCore.QSize(390, 200))
         grid.setMaximumSize(QtCore.QSize(380, 200))
@@ -72,17 +72,40 @@ class StarsSection(AbstractSection):
 
     def run(self, data, data_list, page):
         self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[3]])
-        self.addPage = self.pagination.tab()
-        left = 5
-        top = 50
+        self.page = self.pagination.tab()
+        left = 15
+        top = 0
+        el = 0;
+        pages=[]
+        pages.append(self.page)
+        self.add_page=self.page
         for item in data_list:
-            grid = self.grid(left, top)
+            el=el+1;
+
+            grid = self.grid(left, top, self.add_page)
             seriesItem = self.seriesItem(grid)
             self.title(grid, seriesItem, item)
             self.avatar(grid, seriesItem, item)
-            self.more(grid, seriesItem, item,left,top)
+            self.more(item, left, top, self.add_page)
             left = left + 200
-        self.tabWidget.addTab(self.addPage, "1")
+
+            if el  % 6 == 0:
+                left = 15
+                top  = top+250
+
+            if el % 12==0:
+                self.next_page=self.pagination.tab()
+                self.add_page = self.next_page
+                pages.append(self.next_page)
+                top = 0
+
+        tab_name=1
+        for page_tap in pages:
+            self.tabWidget.addTab(page_tap, str(tab_name))
+            tab_name=tab_name+1
+
+
+
 
 class SeriesSection(AbstractSection):
 

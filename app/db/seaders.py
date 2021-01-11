@@ -104,9 +104,6 @@ class stars(abstractSeader):
         self.getItem(1)
         self.addRelations(self.item.movies, Movies, [1,2,3,4,5,6])
         self.addRelations(self.item.photos, Photos, [1,2,3,4,5,6])
-        self.addRelations(self.item.series, Series, [1,2])
-        self.getItem(2)
-        self.addRelations(self.item.series, Series, [1,2])
 
     def addStar(self):
         self.objects=[
@@ -184,12 +181,82 @@ class series(abstractSeader):
                 sezons=1
             ),
             self.model(
-                name="wgrrwg",
+                name=stringManipupations.random(20),
                 avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
                 sezons=1
             ),
             self.model(
-                name="gwrgwrg",
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                sezons=1
+            ),
+            self.model(
+                name=stringManipupations.random(20),
                 avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
                 sezons=1
             ),
@@ -197,6 +264,143 @@ class series(abstractSeader):
         self.addItems()
 
     def addMoviesToSeries(self):
+        star1 = self.series.query(Stars).get(1)
+
+        self.getItem(1)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        movie5 = self.series.query(Movies).get(5)
+        movie6 = self.series.query(Movies).get(6)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id,movie5.id,movie6.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(2)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(3)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(4)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(5)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(6)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(7)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(8)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(9)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(10)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(11)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(12)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(13)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(14)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+
+        self.getItem(15)
+        movie1 = self.series.query(Movies).get(1)
+        movie2 = self.series.query(Movies).get(2)
+        movie3 = self.series.query(Movies).get(3)
+        movie4 = self.series.query(Movies).get(4)
+        self.addRelations(self.item.movies, Movies, [movie1.id,movie2.id,movie3.id,movie4.id])
+        self.addRelations(self.item.stars, Stars, [star1.id])
+        self.addItems()
+
+        """
+        star1 = self.series.query(Stars).get(1)
+        self.getItem(1)
+        self.addRelations(self.item.stars, Stars, [ star1.id])
+        self.getItem(2)
+        self.addRelations(self.item.stars, Stars, [star1.id])
+        self.getItem(3)
+        self.addRelations(self.item.stars, Stars, [star1.id])
+        self.getItem(4)
+        self.addRelations(self.item.stars, Stars, [star1.id])
+        self.addItems()
+        
         self.getItem(1)
         movie1 = self.series.query(Movies).get(1)
         movie2 = self.series.query(Movies).get(2)
@@ -233,6 +437,7 @@ class series(abstractSeader):
         self.addRelations(self.item.stars, Stars, [star1.id])
 
         self.addItems()
+        """
 
 class initSeader:
 
