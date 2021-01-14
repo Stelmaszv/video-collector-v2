@@ -1,20 +1,21 @@
 from abc import ABC,abstractmethod
 
 class WindowSize:
-    type = 'defult'
+    type = ''
 
     def __init__(self,QWidget):
         self.Obj_QWidget=QWidget;
         self.width =  self.Obj_QWidget.frameGeometry().width()
         self.height = self.Obj_QWidget.frameGeometry().height()
-        self.window_size = self.set_window_type()
-        self.size_data = self.window_size.defult()
+
 
     def set_window_size(self):
+        self.window_size = self.set_window_type()
+        self.size_data = self.window_size.half_smal()
 
         if self.width > 1250 and self.width < 1679:
-            self.type='defult'
-            self.size_data=self.window_size.defult()
+            self.type='half_smal'
+            self.size_data=self.window_size.half_smal()
 
         if self.width > 1680 and self.width < 2559:
             self.type = 'small'
@@ -37,7 +38,7 @@ class AbstractWindowType(ABC):
         pass
 
     @abstractmethod
-    def defult(self):
+    def half_smal(self):
         pass
 
     @abstractmethod
@@ -49,7 +50,7 @@ class StarWindowSize(AbstractWindowType):
     def big(self):
         pass
 
-    def defult(self):
+    def half_smal(self):
         return {
             "avatar_size"       : [50, 80, 300, 300],
             "title_size"        : [400, 0, 300, 100],
@@ -69,7 +70,19 @@ class StarWindowSize(AbstractWindowType):
 
     def small(self):
 
-
         return {
-            "avatar": ['0', '0']
+            "avatar_size": [100, 80, 300, 300],
+            "title_size": [600, 0, 300, 100],
+            "info_size": [570, 50, 800, 400],
+            "galery_size": [1000, 70, 581, 361],
+            "list_view_size": [105, 430, 1450, 550],
+            "galery_photo_size": [150, 150],
+            "section": {
+                "left": 35,
+                "left_add": 200,
+                "top": 0,
+                "top_add": 250,
+                "per_row": 7,
+                "per_page": 14
+            }
         }

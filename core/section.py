@@ -72,9 +72,6 @@ class StarsSection(AbstractSection):
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
     def run(self, data, data_list, page):
-
-        print(self.OBJ_QWidget.WindowSize['section']['left'])
-
         self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[3]])
         self.page = self.pagination.tab()
         left = self.OBJ_QWidget.WindowSize['section']['left']

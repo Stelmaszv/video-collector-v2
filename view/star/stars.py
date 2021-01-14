@@ -27,6 +27,7 @@ class StarView(QWidget):
         self.data = self.BaseView.data
         self.seriesResult()
         self.initUI()
+        self.window_title = self.data.name
         self.show()
         self.setWindowTitle(self.window_title)
         self.setGeometry(self.left, self.top, self.width, self.height)
@@ -35,8 +36,12 @@ class StarView(QWidget):
         self.list=[]
 
     def resizeEvent(self, event: QtGui.QResizeEvent):
-        WS=WindowSize(self)
+        WS = WindowSize(self)
         WS.set_window_size()
+        self.WindowSize = WS.size_data
+        self.BaseView.clear()
+        self.galery()
+        self.BaseView.upadete()
 
     def title(self):
         data = [
@@ -96,17 +101,20 @@ class StarView(QWidget):
             self.WindowSize['list_view_size'][3]
         ], self.list , 'Stars',self)
 
-    def initUI(self):
+    def avatar(self):
         self.BaseView.avatar([
             self.WindowSize['avatar_size'][0],
             self.WindowSize['avatar_size'][1],
             self.WindowSize['avatar_size'][2],
             self.WindowSize['avatar_size'][3]
         ])
+
+    def initUI(self):
+        self.avatar();
         self.title()
         self.galery()
         self.info()
-        self.window_title=self.data.name
+
 
     def closeEvent(self, QCloseEvent):
         self.Router.close_window()
