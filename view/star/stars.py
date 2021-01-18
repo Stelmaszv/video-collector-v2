@@ -1,9 +1,7 @@
 from app.db.models import Stars
 from core.view import BaseView
-from core.rezolution import WindowSize
 from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
-from PyQt5 import QtGui
 from core.rezolution import SetResolution
 
 class StarView(QWidget):
@@ -20,7 +18,6 @@ class StarView(QWidget):
         self.width =  self.SetResolution.menu_set['Stars']['position']['width']
         self.height = self.SetResolution.menu_set['Stars']['position']['height']
         self.WindowSize=self.SetResolution.menu_set['Stars']['window']
-
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
@@ -59,7 +56,7 @@ class StarView(QWidget):
             self.WindowSize['galery_photo_size'][0],
             self.WindowSize['galery_photo_size'][1]
         ]
-        self.BaseView.galery(data, size, 2)
+        self.BaseView.galery(data, size, self.WindowSize['galery_item_show'])
 
     def info(self):
 
