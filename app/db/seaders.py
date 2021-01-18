@@ -1,6 +1,7 @@
 from core.seader import abstractSeader
 from app.db.models import Movies,Stars,Photos,Series
 from core.strings import stringManipupations
+from datetime import datetime
 
 
 
@@ -109,7 +110,9 @@ class stars(abstractSeader):
         self.objects=[
             self.model(
                 name="Sean Connery",
-                avatar="C:/Users/DeadlyComputer/Desktop/photo/5c8df35745d2a09e00a18c36.jpg"),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/5c8df35745d2a09e00a18c36.jpg",
+                date_of_birth=datetime(1930,8,25)
+            ),
             self.model(
                 name="Roger Moore",
                 avatar="C:/Users/DeadlyComputer/Desktop/photo/roger_moore_wolnosc24.jpg"),

@@ -3,7 +3,7 @@ from core.view import BaseView
 from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
 from core.rezolution import SetResolution
-
+from datetime import datetime
 class StarView(QWidget):
 
     model        = Stars
@@ -70,7 +70,7 @@ class StarView(QWidget):
         rows = ['itemNmae','itemName2']
 
         infData=[
-            {"itemNmae" : "anser","itemName2" :"anser1"},
+            {"itemNmae" : "Date of birth","itemName2" : self.show_age()},
             {"itemNmae" : "anser2","itemName2" :"anser2"},
             {"itemNmae": "anser3","itemName2" :"anser2"},
             {"itemNmae": "anser2", "itemName2": "anser2"},
@@ -78,6 +78,18 @@ class StarView(QWidget):
         ]
 
         self.BaseView.info(infData, data, rows)
+
+    def show_age(self):
+        difrence=datetime.now()-self.data.date_of_birth
+        age=difrence/365
+
+        day=   self.data.date_of_birth.day
+        year =  self.data.date_of_birth.year
+        month = self.data.date_of_birth.month
+        data=str(year)+' : '+str(month)+' : '+str(day)+' ( age - '+str(age.days)+')'
+        return str(data)
+
+
 
     def seriesResult(self):
         self.list=[]

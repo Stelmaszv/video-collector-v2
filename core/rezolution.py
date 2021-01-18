@@ -84,7 +84,7 @@ class MenuHalfSmal(MenuType):
                 "window":{
                     "avatar_size"       : [50, 80, 300, 300],
                     "title_size"        : [400, 0, 300, 100],
-                    "info_size"         : [370, 50, 800, 400],
+                    "info_size"         : [370, 50, 600, 400],
                     "galery_size"       : [700, 70, 581, 361],
                     "list_view_size"    : [50, 430, 1200, 550],
                     "galery_photo_size" : [150, 150],
