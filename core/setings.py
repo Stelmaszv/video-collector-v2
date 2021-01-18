@@ -1,1 +1,1 @@
-window_type="half-smal" # half-smal, half-big
+window_type="half-big" # half-smal, half-big

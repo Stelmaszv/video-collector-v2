@@ -4,6 +4,7 @@ from core.rezolution import WindowSize
 from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
 from PyQt5 import QtGui
+from core.rezolution import SetResolution
 
 class StarView(QWidget):
 
@@ -13,14 +14,12 @@ class StarView(QWidget):
     def __init__(self):
         super().__init__()
         self.BaseView= BaseView([], self)
-        self.left = 2562+400
-        self.top =400
-        self.width = 1280
-        self.height = 985
-
-        WS=WindowSize(self)
-        WS.set_window_size()
-        self.WindowSize=WS.size_data
+        self.SetResolution = SetResolution()
+        self.left =   self.SetResolution.menu_set['Stars']['position']['left']
+        self.top =    self.SetResolution.menu_set['Stars']['position']['top']
+        self.width =  self.SetResolution.menu_set['Stars']['position']['width']
+        self.height = self.SetResolution.menu_set['Stars']['position']['height']
+        self.WindowSize=self.SetResolution.menu_set['Stars']['window']
 
     def run_window(self):
         self.BaseView.set_data(self.id)
@@ -34,11 +33,6 @@ class StarView(QWidget):
 
     def closeEvent(self, event):
         self.list=[]
-
-    def resizeEvent(self, event: QtGui.QResizeEvent):
-        WS = WindowSize(self)
-        WS.set_window_size()
-        self.WindowSize = WS.size_data
 
     def title(self):
         data = [

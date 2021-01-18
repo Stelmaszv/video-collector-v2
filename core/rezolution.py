@@ -1,6 +1,7 @@
 from abc import ABC,abstractmethod
 from core.setings import window_type
 
+
 class SetResolution:
     windows_type=window_type
 
@@ -32,6 +33,31 @@ class MenuHalfbig(MenuType):
                     "width": 400,
                     "height": 1400
                 }
+            },
+
+            "Stars": {
+                "position": {
+                    "left": 400,
+                    "top": 25,
+                    "width": 2155,
+                    "height": 1400
+                },
+                "window": {
+                    "avatar_size": [150, 80, 300, 300],
+                    "title_size": [700, 0, 300, 100],
+                    "info_size": [700, 50, 800, 400],
+                    "galery_size": [1200, 70, 581, 361],
+                    "list_view_size": [150, 430, 1800, 920],
+                    "galery_photo_size": [150, 150],
+                    "section": {
+                        "left": 50,
+                        "left_add": 220,
+                        "top": 0,
+                        "top_add": 250,
+                        "per_row": 8,
+                        "per_page": 32
+                    }
+                }
             }
         }
 
@@ -46,6 +72,32 @@ class MenuHalfSmal(MenuType):
                     "width": 400,
                     "height": 985
                 }
+            },
+
+            "Stars": {
+                "position": {
+                    "left": 2562+400,
+                    "top": 400,
+                    "width": 1280,
+                    "height": 985
+                },
+                "window":{
+                    "avatar_size": [50, 80, 300, 300],
+                    "title_size": [400, 0, 300, 100],
+                    "info_size": [370, 50, 800, 400],
+                    "galery_size": [700, 70, 581, 361],
+                    "list_view_size": [50, 430, 1200, 550],
+                    "galery_photo_size": [150, 150],
+                    "section": {
+                        "left": 15,
+                        "left_add": 250,
+                        "top": 0,
+                        "top_add": 250,
+                        "per_row": 6,
+                        "per_page": 12
+                    }
+                }
+
             }
         }
 
