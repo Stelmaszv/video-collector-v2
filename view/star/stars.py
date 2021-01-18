@@ -39,9 +39,6 @@ class StarView(QWidget):
         WS = WindowSize(self)
         WS.set_window_size()
         self.WindowSize = WS.size_data
-        self.BaseView.clear()
-        self.galery()
-        self.BaseView.upadete()
 
     def title(self):
         data = [

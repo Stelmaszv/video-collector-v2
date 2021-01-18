@@ -1,4 +1,54 @@
 from abc import ABC,abstractmethod
+from core.setings import window_type
+
+class SetResolution:
+    windows_type=window_type
+
+    def __init__(self):
+        self.menu_set=self.set_menu_type()
+
+    def set_menu_type(self):
+        switcher = {
+            'half-smal': MenuHalfSmal(),
+            'half-big': MenuHalfbig()
+        }
+        obj=switcher.get(self.windows_type, "Invalid data");
+        return obj.show()
+
+class MenuType(ABC):
+
+    @abstractmethod
+    def show(self):
+        pass
+
+class MenuHalfbig(MenuType):
+
+    def show(self):
+        return {
+            "Menu": {
+                "position":{
+                    "left": -2,
+                    "top": 25,
+                    "width": 400,
+                    "height": 1400
+                }
+            }
+        }
+
+class MenuHalfSmal(MenuType):
+
+    def show(self):
+        return {
+            "Menu": {
+                "position":{
+                    "left": 2562,
+                    "top": 400,
+                    "width": 400,
+                    "height": 985
+                }
+            }
+        }
+
 
 class WindowSize:
     type = ''
