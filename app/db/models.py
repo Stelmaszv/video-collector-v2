@@ -1,5 +1,5 @@
 from core.db.config import Base,engine
-from sqlalchemy import Column,Integer, String,Table,ForeignKey,DateTime
+from sqlalchemy import Column,Integer, String,Table,ForeignKey,DateTime,Boolean
 from sqlalchemy.orm import sessionmaker,relationship
 
 association_table = Table('association', Base.metadata,
@@ -83,6 +83,14 @@ class Stars(Base):
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
     avatar = Column('avatar',String)
+    description = Column('description', String)
+    views =      Column('views', Integer,default=0)
+    likes = Column('likes', Integer,default=0)
+    favourite = Column('favourite', Boolean,default=False)
+    weight   = Column('weight ', Integer,default=0)
+    height = Column('height', Integer, default=0)
+    ethnicity = Column('ethnicity', String)
+    hair_color =  Column('hair_color', String)
     date_of_birth = Column(DateTime)
     series = relationship(
         "Series",

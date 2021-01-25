@@ -5,7 +5,6 @@ from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
 from core.rezolution import SetResolution
 from core.strings import stringManipupations
-from datetime import datetime
 
 class StarView(QWidget):
 
@@ -84,7 +83,23 @@ class StarView(QWidget):
             },
             {
                 "itemNmae": "Views / Likes",
-                "itemName2": str(13500)+ ' / ' +str(131)
+                "itemName2": str(self.data.views)+ ' / ' +str(self.data.likes)
+            },
+            {
+                "itemNmae": "Favourite",
+                "itemName2": str(self.data.favourite)
+            },
+            {
+                "itemNmae": "Height / Weight",
+                "itemName2": str(self.data.height)+' cm  / '+str(self.data.weight)+' kg'
+            },
+            {
+                "itemNmae": "Ethnicity",
+                "itemName2": self.data.ethnicity
+            },
+            {
+                "itemNmae": "Hair color",
+                "itemName2": self.data.hair_color
             },
             {
                 "itemNmae": "Tags",
@@ -101,7 +116,7 @@ class StarView(QWidget):
         ]
 
         limit=self.WindowSize['description'][4]
-        self.BaseView.description(stringManipupations.short('Thomas Sean Connery urodził się 25 sierpnia 1930 roku w Edynburgu. Jego ojciec Joe, był robotnikiem i kierowcą ciężarówki, matka Euphemia prowadziła dom. Pierwszej pracy (roznosiciela mleka) podjął się w wieku 9 lat. Jako 13-latek rzucił szkołę i rozpoczął pracę w hucie. Gdy miał lat 16 zaciągnął się do marynarki. Trzy lata później musiał z wojska zrezygnować z powodu kłopotów z układem pokarmowym.  Dla żartu zgłosił się na próbę do musicalu "South Pacific" i dostał w nim niewielką rolę. Zaczął grać epizodyczne role w telewizyjnych spektaklach. Uznanie przyniosła mu rola boksera w telewizyjnym spektaklu "Requiem for a Heavyweight". Po raz pierwszy na dużym ekranie pojawił się w 1954 roku w filmie "Lilacs in the Spring". Pierwszym znaczącym tytułem w jego filmografii był "Najdłuższy dzień". Z dużymi wątpliwościami wcielił się w postać Bonda. Zagrał w ponad 140 filmach, za rolę Jima Malone w filmie "Nietykalni" zdobył Oscara w kategorii najlepszy aktor drugoplanowy.',limit),data);
+        self.BaseView.description(stringManipupations.short(self.data.description,limit),data);
 
     def count_series(self):
         return str(len(self.list))

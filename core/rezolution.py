@@ -85,12 +85,12 @@ class MenuHalfSmal(MenuType):
                 "window":{
                     "avatar_size"       : [50, 80, 250, 300],
                     "title_size"        : [400, 0, 300, 100],
-                    "info_size"         : [330, 100, 700, 100],
+                    "info_size"         : [330, 100, 700, 150],
                     "galery_size"       : [750, 70, 581, 361],
                     "list_view_size"    : [50, 430, 1200, 550],
                     "galery_photo_size" : [150, 150],
                     "galery_item_show"  : 2,
-                    "description"       : [330,150,450,200,500], # 5 String limit
+                    "description"       : [330,200,450,200,500], # 5 String limit
                     "section": {
                         "left"         : 15,
                         "left_add"     : 250,

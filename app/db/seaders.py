@@ -111,17 +111,29 @@ class stars(abstractSeader):
             self.model(
                 name="Sean Connery",
                 avatar="C:/Users/DeadlyComputer/Desktop/photo/5c8df35745d2a09e00a18c36.jpg",
-                date_of_birth=datetime(1930,8,25)
+                description="Thomas Sean Connery urodził się 25 sierpnia 1930 roku w Edynburgu. Jego ojciec Joe, był robotnikiem i kierowcą ciężarówki, matka Euphemia prowadziła dom. Pierwszej pracy (roznosiciela mleka) podjął się w wieku 9 lat. Jako 13-latek rzucił szkołę i rozpoczął pracę w hucie. Gdy miał lat 16 zaciągnął się do marynarki. Trzy lata później musiał z wojska zrezygnować z powodu kłopotów z układem pokarmowym.  Dla żartu zgłosił się na próbę do musicalu South Pacific i dostał w nim niewielką rolę. Zaczął grać epizodyczne role w telewizyjnych spektaklach. Uznanie przyniosła mu rola boksera w telewizyjnym spektaklu Requiem for a Heavyweight. Po raz pierwszy na dużym ekranie pojawił się w 1954 roku w filmie Lilacs in the Spring. Pierwszym znaczącym tytułem w jego filmografii był  Najdłuższy dzień . Z dużymi wątpliwościami wcielił się w postać Bonda. Zagrał w ponad 140 filmach, za rolę Jima Malone w filmie Nietykalni zdobył Oscara w kategorii najlepszy aktor drugoplanowy.",
+                date_of_birth=datetime(1930,8,25),
+                weight=100,
+                height=189,
+                ethnicity='White',
+                hair_color='Black'
             ),
             self.model(
                 name="Roger Moore",
-                avatar="C:/Users/DeadlyComputer/Desktop/photo/roger_moore_wolnosc24.jpg"),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/roger_moore_wolnosc24.jpg",
+                description = ""
+            ),
+
             self.model(
                 name="Timothy Dalton",
-                avatar="C:/Users/DeadlyComputer/Desktop/photo/fb14c3c0bcd545a9ed5b11f99a278afe.jpg"),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/fb14c3c0bcd545a9ed5b11f99a278afe.jpg",
+                description = ""
+            ),
             self.model(
                 name="Pierce Brosnan",
-                avatar="C:/Users/DeadlyComputer/Desktop/photo/AR-312089935.jpg"),
+                avatar="C:/Users/DeadlyComputer/Desktop/photo/AR-312089935.jpg",
+                description = ""
+            ),
 
         ]
         self.addItems()
