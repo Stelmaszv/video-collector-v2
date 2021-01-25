@@ -164,6 +164,21 @@ class BaseView:
 
             row=row+1
 
+
+    def description(self,text,data,obj=None):
+        if obj==None:
+            obj=self.obj
+        self.description = QtWidgets.QWidget(obj)
+        self.description_Grid = QtWidgets.QGridLayout(self.description)
+        self.description_Grid.setContentsMargins(0, 0, 0, 0)
+        self.description_Grid.setObjectName("infoGrid")
+        col2 = QtWidgets.QLabel(self.description)
+        self.description.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        col2.setObjectName("col2")
+        col2.setText(text)
+        col2.setWordWrap(True)
+        self.description_Grid.addWidget(col2,0, 0, 2, 2)
+
     def set_data(self,id):
         if self.model:
             self.data = session.query(self.model).get(id)

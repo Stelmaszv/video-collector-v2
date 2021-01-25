@@ -23,8 +23,9 @@ class Data:
         age=difrence/365;
         return str(age.days)
 
-
     def show(self):
         return str(self.get_day())+' '+self.get_mount()+' '+str(self.get_year())
+
+
 
 

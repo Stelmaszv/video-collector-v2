@@ -4,6 +4,7 @@ from core.datamanipulation import Data
 from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
 from core.rezolution import SetResolution
+from core.strings import stringManipupations
 from datetime import datetime
 
 class StarView(QWidget):
@@ -73,14 +74,43 @@ class StarView(QWidget):
         rows = ['itemNmae','itemName2']
 
         infData=[
-            {"itemNmae" : "Date of birth","itemName2" : self.Data.show()},
-            {"itemNmae" : "Age","itemName2" :           self.Data.get_age()},
-            {"itemNmae": "anser3","itemName2" :"anser2"},
-            {"itemNmae": "anser2", "itemName2": "anser2"},
-            {"itemNmae": "anser3", "itemName2": "anser2"}
+            {
+             "itemNmae"  :  "Date of birth / Age",
+             "itemName2" : self.Data.show()+' / '+self.Data.get_age()
+            },
+            {
+             "itemNmae"  : "Movies / Series",
+             "itemName2" : self.count_series()+' / '+self.count_movies()
+            },
+            {
+                "itemNmae": "Views / Likes",
+                "itemName2": str(13500)+ ' / ' +str(131)
+            },
+            {
+                "itemNmae": "Tags",
+                "itemName2": 'Bond, dead, Action'
+            },
         ]
 
         self.BaseView.info(infData, data, rows)
+        data=[
+            self.WindowSize['description'][0],
+            self.WindowSize['description'][1],
+            self.WindowSize['description'][2],
+            self.WindowSize['description'][3],
+        ]
+
+        limit=self.WindowSize['description'][4]
+        self.BaseView.description(stringManipupations.short('Thomas Sean Connery urodził się 25 sierpnia 1930 roku w Edynburgu. Jego ojciec Joe, był robotnikiem i kierowcą ciężarówki, matka Euphemia prowadziła dom. Pierwszej pracy (roznosiciela mleka) podjął się w wieku 9 lat. Jako 13-latek rzucił szkołę i rozpoczął pracę w hucie. Gdy miał lat 16 zaciągnął się do marynarki. Trzy lata później musiał z wojska zrezygnować z powodu kłopotów z układem pokarmowym.  Dla żartu zgłosił się na próbę do musicalu "South Pacific" i dostał w nim niewielką rolę. Zaczął grać epizodyczne role w telewizyjnych spektaklach. Uznanie przyniosła mu rola boksera w telewizyjnym spektaklu "Requiem for a Heavyweight". Po raz pierwszy na dużym ekranie pojawił się w 1954 roku w filmie "Lilacs in the Spring". Pierwszym znaczącym tytułem w jego filmografii był "Najdłuższy dzień". Z dużymi wątpliwościami wcielił się w postać Bonda. Zagrał w ponad 140 filmach, za rolę Jima Malone w filmie "Nietykalni" zdobył Oscara w kategorii najlepszy aktor drugoplanowy.',limit),data);
+
+    def count_series(self):
+        return str(len(self.list))
+
+    def count_movies(self):
+        count=0;
+        for item in self.list:
+            count=count+len(item['movies'])
+        return str(count)
 
     def seriesResult(self):
         self.list=[]
@@ -109,5 +139,4 @@ class StarView(QWidget):
 
     def closeEvent(self, QCloseEvent):
         self.Router.close_window()
-
 
