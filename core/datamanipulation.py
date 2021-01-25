@@ -1,3 +1,4 @@
+from datetime import datetime
 class Data:
     LANG= "eng";
 
@@ -16,6 +17,12 @@ class Data:
     def convert_mount(self,mount):
         if mount == 8:
             return 'August'
+
+    def get_age(self):
+        difrence=datetime.now()-self.data
+        age=difrence/365;
+        return str(age.days)
+
 
     def show(self):
         return str(self.get_day())+' '+self.get_mount()+' '+str(self.get_year())

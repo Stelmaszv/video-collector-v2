@@ -73,31 +73,14 @@ class StarView(QWidget):
         rows = ['itemNmae','itemName2']
 
         infData=[
-            {"itemNmae" : "Date of birth","itemName2" : self.show_data()},
-            {"itemNmae" : "Age","itemName2" :str(self.show_age())},
+            {"itemNmae" : "Date of birth","itemName2" : self.Data.show()},
+            {"itemNmae" : "Age","itemName2" :           self.Data.get_age()},
             {"itemNmae": "anser3","itemName2" :"anser2"},
             {"itemNmae": "anser2", "itemName2": "anser2"},
             {"itemNmae": "anser3", "itemName2": "anser2"}
         ]
 
         self.BaseView.info(infData, data, rows)
-
-    def show_data(self):
-        age   = self.show_age()
-        day   = self.data.date_of_birth.day
-        year  = self.data.date_of_birth.year
-        month = self.data.date_of_birth.month
-
-        day=   self.data.date_of_birth.day
-        year =  self.data.date_of_birth.year
-        month = self.data.date_of_birth.month
-        data=str(year)+' : '+self.Data.get_mount()+' : '+str(day)+' ( age - '+str(age.days)+')'
-        return self.Data.show()
-
-    def show_age(self):
-        difrence=datetime.now()-self.data.date_of_birth
-        return difrence/365
-
 
     def seriesResult(self):
         self.list=[]
