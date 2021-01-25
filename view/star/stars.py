@@ -1,9 +1,11 @@
 from app.db.models import Stars
 from core.view import BaseView
+from core.datamanipulation import Data
 from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
 from core.rezolution import SetResolution
 from datetime import datetime
+
 class StarView(QWidget):
 
     model        = Stars
@@ -21,6 +23,7 @@ class StarView(QWidget):
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
+        self.Data = Data(self.data.date_of_birth)
         self.seriesResult()
         self.initUI()
         self.window_title = self.data.name
@@ -70,8 +73,8 @@ class StarView(QWidget):
         rows = ['itemNmae','itemName2']
 
         infData=[
-            {"itemNmae" : "Date of birth","itemName2" : self.show_age()},
-            {"itemNmae" : "anser2","itemName2" :"anser2"},
+            {"itemNmae" : "Date of birth","itemName2" : self.show_data()},
+            {"itemNmae" : "Age","itemName2" :str(self.show_age())},
             {"itemNmae": "anser3","itemName2" :"anser2"},
             {"itemNmae": "anser2", "itemName2": "anser2"},
             {"itemNmae": "anser3", "itemName2": "anser2"}
@@ -79,16 +82,21 @@ class StarView(QWidget):
 
         self.BaseView.info(infData, data, rows)
 
-    def show_age(self):
-        difrence=datetime.now()-self.data.date_of_birth
-        age=difrence/365
+    def show_data(self):
+        age   = self.show_age()
+        day   = self.data.date_of_birth.day
+        year  = self.data.date_of_birth.year
+        month = self.data.date_of_birth.month
 
         day=   self.data.date_of_birth.day
         year =  self.data.date_of_birth.year
         month = self.data.date_of_birth.month
-        data=str(year)+' : '+str(month)+' : '+str(day)+' ( age - '+str(age.days)+')'
-        return str(data)
+        data=str(year)+' : '+self.Data.get_mount()+' : '+str(day)+' ( age - '+str(age.days)+')'
+        return self.Data.show()
 
+    def show_age(self):
+        difrence=datetime.now()-self.data.date_of_birth
+        return difrence/365
 
 
     def seriesResult(self):
