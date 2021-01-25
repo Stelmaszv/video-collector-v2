@@ -18,6 +18,12 @@ class Data:
         if mount == 8:
             return 'August'
 
+        if mount == 10:
+            return 'October'
+
+        if mount == 5:
+            return 'May'
+
     def get_age(self):
         difrence=datetime.now()-self.data
         age=difrence/365;

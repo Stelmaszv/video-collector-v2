@@ -121,7 +121,8 @@ class stars(abstractSeader):
             self.model(
                 name="Roger Moore",
                 avatar="C:/Users/DeadlyComputer/Desktop/photo/roger_moore_wolnosc24.jpg",
-                description = ""
+                description = "",
+                date_of_birth = datetime(1927, 10, 14),
             ),
 
             self.model(
@@ -132,7 +133,8 @@ class stars(abstractSeader):
             self.model(
                 name="Pierce Brosnan",
                 avatar="C:/Users/DeadlyComputer/Desktop/photo/AR-312089935.jpg",
-                description = ""
+                description = "",
+                date_of_birth = datetime(1953, 5, 16),
             ),
 
         ]

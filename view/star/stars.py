@@ -71,43 +71,52 @@ class StarView(QWidget):
         ]
 
         rows = ['itemNmae','itemName2']
+        data_info=[];
+        if self.data.date_of_birth:
+            data_info.append( {
+                 "itemNmae"  :  "Date of birth / Age",
+                 "itemName2" : self.Data.show()+' / '+self.Data.get_age()
+            })
 
-        infData=[
-            {
-             "itemNmae"  :  "Date of birth / Age",
-             "itemName2" : self.Data.show()+' / '+self.Data.get_age()
-            },
-            {
+        data_info.append({
              "itemNmae"  : "Movies / Series",
              "itemName2" : self.count_series()+' / '+self.count_movies()
-            },
-            {
+            })
+
+        data_info.append({
                 "itemNmae": "Views / Likes",
                 "itemName2": str(self.data.views)+ ' / ' +str(self.data.likes)
-            },
-            {
+        })
+
+        data_info.append({
                 "itemNmae": "Favourite",
                 "itemName2": str(self.data.favourite)
-            },
-            {
+        })
+
+        if self.data.height and self.data.weight:
+            data_info.append({
                 "itemNmae": "Height / Weight",
-                "itemName2": str(self.data.height)+' cm  / '+str(self.data.weight)+' kg'
-            },
-            {
+                "itemName2": str(self.data.height) + ' cm  / ' + str(self.data.weight) + ' kg'
+            })
+
+        if self.data.ethnicity:
+            data_info.append({
                 "itemNmae": "Ethnicity",
                 "itemName2": self.data.ethnicity
-            },
-            {
+            })
+
+        if self.data.hair_color:
+            data_info.append({
                 "itemNmae": "Hair color",
                 "itemName2": self.data.hair_color
-            },
-            {
-                "itemNmae": "Tags",
-                "itemName2": 'Bond, dead, Action'
-            },
-        ]
+            })
 
-        self.BaseView.info(infData, data, rows)
+        data_info.append({
+            "itemNmae": "Tags",
+            "itemName2": 'Bond, dead, Action'
+        })
+
+        self.BaseView.info(data_info, data, rows)
         data=[
             self.WindowSize['description'][0],
             self.WindowSize['description'][1],
@@ -117,6 +126,7 @@ class StarView(QWidget):
 
         limit=self.WindowSize['description'][4]
         self.BaseView.description(stringManipupations.short(self.data.description,limit),data);
+        
 
     def count_series(self):
         return str(len(self.list))

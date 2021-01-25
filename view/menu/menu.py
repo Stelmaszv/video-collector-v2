@@ -6,7 +6,7 @@ from app.db.seaders import initSeader
 from core.helper import QueryCounter
 from core.rezolution import SetResolution
 
-#initSeader().initNow()
+initSeader().initNow()
 class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
