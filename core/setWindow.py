@@ -36,15 +36,11 @@ class Router:
         """
         self.window = setWindow().returnObj(self.searchIn)
         self.window.window_id = stringManipupations.random(20)
-        self.window.obj = self.base_view
-        self.window.run_window()
-
-        self.window = setWindow().returnObj(self.searchIn)
-        self.window.window_id = stringManipupations.random(20)
         app = QApplication(sys.argv)
         ex = self.window
         ex.run_window()
         sys.exit(app.exec_())
+        """
         self.window = setWindow().returnObj(self.searchIn)
         self.window.Router = self
         self.window.obj = self.base_view
@@ -61,15 +57,11 @@ class Router:
 
         self.window.window_id = stringManipupations.random(20)
         open_wnidows.append(self.window)
-        print(open_wnidows)
         if self.active == 0:
             self.active=self.window.window_id
         item=self.is_open()
         if item is not None:
             item.run_window()
-
-        """
-
 
     def close_window(self):
         for item in open_wnidows:

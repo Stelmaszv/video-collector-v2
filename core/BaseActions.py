@@ -25,8 +25,7 @@ class ViewBaseAction:
         self.session.commit()
 
     def reset(self):
-        from view.star.stars import StarView
         self.obj.close()
-        self.obj.BaseView.load_view(StarView)
+        self.obj.BaseView.load_view('stars',self.obj.data)
         return True;
 

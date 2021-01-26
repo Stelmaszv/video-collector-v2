@@ -31,6 +31,7 @@ class StarsSection(AbstractSection):
 
     def info_button(self,data):
         self.BaseView.load_view('movie_list', data)
+        return True;
 
     def more(self,item,left,top,page):
         button = QtWidgets.QPushButton(page)

@@ -79,6 +79,7 @@ class StarList(AbstractList):
 
     def star_info(self,item):
         self.BaseView.load_view('stars', item)
+        return False
 
     def genrate(self,data,el,grid,col_start):
         row = 1
