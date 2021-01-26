@@ -1,5 +1,4 @@
 from app.db.models import session
-from core.strings import stringManipupations
 class ViewBaseAction:
 
     def __init__(self,obj):
@@ -13,6 +12,12 @@ class ViewBaseAction:
     def add_like(self):
         self.obj.data.likes = self.obj.data.likes + 1;
         self.session.commit()
+        self.reset()
+
+    def edit(self):
+        self.obj.close()
+        self.obj.BaseView.load_view('edit_star',self.obj.data)
+        return True;
 
     def add_favourite(self):
 
@@ -23,6 +28,7 @@ class ViewBaseAction:
 
         self.obj.data.favourite = stan;
         self.session.commit()
+        self.reset()
 
     def reset(self):
         self.obj.close()

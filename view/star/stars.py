@@ -74,7 +74,7 @@ class StarView(QWidget):
         self.BaseActions.add_like()
 
     def edit(self):
-        print('edit')
+        self.BaseActions.edit()
 
     def reset(self):
         self.BaseActions.reset()
