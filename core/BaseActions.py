@@ -1,4 +1,5 @@
 from app.db.models import session
+from core.strings import stringManipupations
 class ViewBaseAction:
 
     def __init__(self,obj):
@@ -22,4 +23,10 @@ class ViewBaseAction:
 
         self.obj.data.favourite = stan;
         self.session.commit()
+
+    def reset(self):
+        from view.star.stars import StarView
+        self.obj.close()
+        self.obj.BaseView.load_view(StarView)
+        return True;
 
