@@ -5,23 +5,24 @@ from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
 from core.rezolution import SetResolution
 from core.strings import stringManipupations
-from core.nav import NavStars
+from  core.BaseActions import ViewBaseAction
 
 class StarView(QWidget):
 
     model        = Stars
-    nav          = NavStars
     window_type  = 'star'
 
     def __init__(self):
         super().__init__()
         self.BaseView= BaseView([], self)
+        self.BaseActions=ViewBaseAction(self)
         self.SetResolution = SetResolution()
         self.left =   self.SetResolution.menu_set['Stars']['position']['left']
         self.top =    self.SetResolution.menu_set['Stars']['position']['top']
         self.width =  self.SetResolution.menu_set['Stars']['position']['width']
         self.height = self.SetResolution.menu_set['Stars']['position']['height']
         self.WindowSize=self.SetResolution.menu_set['Stars']['window']
+
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
@@ -32,19 +33,20 @@ class StarView(QWidget):
         self.show()
         self.setWindowTitle(self.window_title)
         self.setGeometry(self.left, self.top, self.width, self.height)
+        self.BaseActions.update_view();
 
     def closeEvent(self, event):
         self.list=[]
 
     def get_nav(self):
-        def add_favorits():
-            print('add f')
+        def add_favorits(obj):
+            obj.BaseActions.add_favourite();
 
-        def add_like():
-            print('add_like')
+        def add_like(obj):
+            obj.BaseActions.add_like();
 
-        def edit():
-            print('edit')
+        def edit(obj):
+            obj.BaseView.load_view('add_movie')
 
         self.BaseView.get_nav_star(
             [650, -145, 350, 400],
@@ -52,30 +54,22 @@ class StarView(QWidget):
                 {
                     "name": "Add to favorits",
                     "item_name": "add_to_favorits",
-                    "button": add_favorits
+                    "button": add_favorits(self)
                 },
                 {
                     "name": "Add like",
                     "item_name": "add_like",
-                    "button": add_like
+                    "button": add_like(self)
                 },
                 {
                     "name": "Edit",
                     "item_name": "edit",
-                    "button": edit
+                    "button": edit(self)
                 }
             ]
         )
 
     def title(self):
-        def add_favorits():
-            print('add f')
-
-        def add_like():
-            print('add_like')
-
-        def edit():
-            print('edit')
         data = [
             self.WindowSize['title_size'][0],
             self.WindowSize['title_size'][1],

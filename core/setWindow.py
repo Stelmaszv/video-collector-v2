@@ -1,7 +1,5 @@
 from core.media_player import Player
 from core.strings import stringManipupations
-import json
-
 open_wnidows=[]
 
 class setWindow():

@@ -1,7 +1,6 @@
 class NavStars:
 
-    def __init__(self,obj):
-        self.obj=obj
+    def __init__(self):
         self.buttons=[
                 {
                     "name": "Add to favorits",
@@ -19,6 +18,25 @@ class NavStars:
                     "button": self.edit
                 }
             ]
+
+    def return_buttons(self):
+        return  [
+                {
+                    "name": "Add to favorits",
+                    "item_name": "add_to_favorits",
+                    "button": self.add_favorits
+                },
+                {
+                    "name": "Add like",
+                    "item_name": "add_like",
+                    "button": self.add_like
+                },
+                {
+                    "name": "Edit",
+                    "item_name": "edit",
+                    "button": self.edit
+                }
+        ]
 
     def add_favorits(self):
         print('add f')
