@@ -78,21 +78,6 @@ class StarView(QWidget):
                  "itemName2" : self.Data.show()+' / '+self.Data.get_age()
             })
 
-        data_info.append({
-             "itemNmae"  : "Movies / Series",
-             "itemName2" : self.count_series()+' / '+self.count_movies()
-            })
-
-        data_info.append({
-                "itemNmae": "Views / Likes",
-                "itemName2": str(self.data.views)+ ' / ' +str(self.data.likes)
-        })
-
-        data_info.append({
-                "itemNmae": "Favourite",
-                "itemName2": str(self.data.favourite)
-        })
-
         if self.data.height and self.data.weight:
             data_info.append({
                 "itemNmae": "Height / Weight",
@@ -110,6 +95,21 @@ class StarView(QWidget):
                 "itemNmae": "Hair color",
                 "itemName2": self.data.hair_color
             })
+
+        data_info.append({
+             "itemNmae"  : "Movies / Series",
+             "itemName2" : self.count_series()+' / '+self.count_movies()
+            })
+
+        data_info.append({
+                "itemNmae": "Views / Likes",
+                "itemName2": str(self.data.views)+ ' / ' +str(self.data.likes)
+        })
+
+        data_info.append({
+                "itemNmae": "Favourite",
+                "itemName2": str(self.data.favourite)
+        })
 
         data_info.append({
             "itemNmae": "Tags",
