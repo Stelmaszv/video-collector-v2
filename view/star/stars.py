@@ -34,6 +34,7 @@ class StarView(QWidget):
         self.setWindowTitle(self.window_title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.BaseActions.update_view();
+        return True
 
     def closeEvent(self, event):
         self.list=[]

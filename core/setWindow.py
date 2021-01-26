@@ -33,14 +33,6 @@ class Router:
         self.base_view = base_view
 
     def open(self, item=False):
-        """
-        self.window = setWindow().returnObj(self.searchIn)
-        self.window.window_id = stringManipupations.random(20)
-        app = QApplication(sys.argv)
-        ex = self.window
-        ex.run_window()
-        sys.exit(app.exec_())
-        """
         self.window = setWindow().returnObj(self.searchIn)
         self.window.Router = self
         self.window.obj = self.base_view
