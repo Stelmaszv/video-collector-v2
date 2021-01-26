@@ -48,6 +48,29 @@ class StarView(QWidget):
                "</span></p></body></html>"
         self.BaseView.title(data, text)
 
+        self.BaseView.get_nav_star(
+            [650, -145, 350, 400],
+            [
+                {
+                    "name": "Add to favorits",
+                    "item_name": "add_to_favorits",
+                    "button": self.add_favorits
+                },
+                {
+                    "name": "Add like",
+                    "item_name": "add_like",
+                    "button": self.add_like
+                },
+                {
+                    "name": "Edit",
+                    "item_name": "edit",
+                    "button": self.edit
+                }
+            ]
+
+
+        )
+
     def galery(self):
         data= [
             self.WindowSize['galery_size'][0],
@@ -161,6 +184,14 @@ class StarView(QWidget):
         self.galery()
         self.info()
 
+    def add_favorits(self):
+        print('add f')
+
+    def add_like(self):
+        print('add_like')
+
+    def edit(self):
+        print('add_like')
 
     def closeEvent(self, QCloseEvent):
         self.Router.close_window()

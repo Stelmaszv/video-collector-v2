@@ -164,6 +164,18 @@ class BaseView:
 
             row=row+1
 
+    def get_nav_star(self,data,buttons=[]):
+        self.nav_widget = QtWidgets.QWidget(self.obj)
+        self.nav_widget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.nav_widget.setObjectName("movie-navbar")
+        self.nav_grid = QtWidgets.QGridLayout(self.nav_widget)
+        self.nav_grid.setContentsMargins(0, 0, 0, 0)
+        self.nav_grid.setObjectName("movie-grid")
+        row=0
+        for button in buttons:
+            self.Form.button([button['item_name'], button['name']], [],button['button'], self.nav_grid, [0, row, 2, 2], [100, 0, 10, 16777215])
+            row=row+1
+
 
     def description(self,text,data,obj=None):
         if obj==None:
