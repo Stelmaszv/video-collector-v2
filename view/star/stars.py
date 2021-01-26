@@ -5,10 +5,12 @@ from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
 from core.rezolution import SetResolution
 from core.strings import stringManipupations
+from core.nav import NavStars
 
 class StarView(QWidget):
 
     model        = Stars
+    nav          = NavStars
     window_type  = 'star'
 
     def __init__(self):
@@ -34,7 +36,46 @@ class StarView(QWidget):
     def closeEvent(self, event):
         self.list=[]
 
+    def get_nav(self):
+        def add_favorits():
+            print('add f')
+
+        def add_like():
+            print('add_like')
+
+        def edit():
+            print('edit')
+
+        self.BaseView.get_nav_star(
+            [650, -145, 350, 400],
+            [
+                {
+                    "name": "Add to favorits",
+                    "item_name": "add_to_favorits",
+                    "button": add_favorits
+                },
+                {
+                    "name": "Add like",
+                    "item_name": "add_like",
+                    "button": add_like
+                },
+                {
+                    "name": "Edit",
+                    "item_name": "edit",
+                    "button": edit
+                }
+            ]
+        )
+
     def title(self):
+        def add_favorits():
+            print('add f')
+
+        def add_like():
+            print('add_like')
+
+        def edit():
+            print('edit')
         data = [
             self.WindowSize['title_size'][0],
             self.WindowSize['title_size'][1],
@@ -48,28 +89,6 @@ class StarView(QWidget):
                "</span></p></body></html>"
         self.BaseView.title(data, text)
 
-        self.BaseView.get_nav_star(
-            [650, -145, 350, 400],
-            [
-                {
-                    "name": "Add to favorits",
-                    "item_name": "add_to_favorits",
-                    "button": self.add_favorits
-                },
-                {
-                    "name": "Add like",
-                    "item_name": "add_like",
-                    "button": self.add_like
-                },
-                {
-                    "name": "Edit",
-                    "item_name": "edit",
-                    "button": self.edit
-                }
-            ]
-
-
-        )
 
     def galery(self):
         data= [
@@ -83,6 +102,7 @@ class StarView(QWidget):
             self.WindowSize['galery_photo_size'][1]
         ]
         self.BaseView.galery(data, size, self.WindowSize['galery_item_show'])
+
 
     def info(self):
 
@@ -183,15 +203,7 @@ class StarView(QWidget):
         self.title()
         self.galery()
         self.info()
-
-    def add_favorits(self):
-        print('add f')
-
-    def add_like(self):
-        print('add_like')
-
-    def edit(self):
-        print('add_like')
+        self.get_nav()
 
     def closeEvent(self, QCloseEvent):
         self.Router.close_window()

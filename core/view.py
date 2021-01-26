@@ -177,6 +177,7 @@ class BaseView:
             row=row+1
 
 
+
     def description(self,text,data,obj=None):
         if obj==None:
             obj=self.obj
