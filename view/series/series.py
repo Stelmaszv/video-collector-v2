@@ -44,7 +44,7 @@ class SerieView(QWidget):
         self.BaseView.galery(data, [100, 100], 3)
 
     def list_view(self):
-        self.BaseView.listView([500, 100, 1200, 900], self.data.movies, 'Series')
+        self.BaseView.listView([500, 100, 1200, 900], self.data.movies, 'Series',self)
 
     def initUI(self):
         self.info()

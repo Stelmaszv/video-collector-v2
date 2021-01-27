@@ -4,6 +4,7 @@ from core.view import BaseView
 from core.search import setFactory
 from app.db.seaders import initSeader
 from core.helper import QueryCounter
+from core.rezolution import SetResolution
 
 #initSeader().initNow()
 class Menu(QMainWindow):
@@ -14,11 +15,12 @@ class Menu(QMainWindow):
 
     def __init__(self,data=False):
         super().__init__()
+        self.SetResolution=SetResolution()
         self.window_title = 'Menu'
-        self.left = 2562
-        self.top =400
-        self.width = 400
-        self.height = 985
+        self.left = self.SetResolution.menu_set['Menu']['position']['left']
+        self.top =self.SetResolution.menu_set['Menu']['position']['top']
+        self.width = self.SetResolution.menu_set['Menu']['position']['width']
+        self.height = self.SetResolution.menu_set['Menu']['position']['height']
         self.model=''
         self.BaseView=BaseView([], self)
         self.initUI(data)

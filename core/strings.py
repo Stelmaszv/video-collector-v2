@@ -1,6 +1,7 @@
 import random
 import string
 class stringManipupations:
+
     @staticmethod
     def short(string,limit) ->str:
         new=''

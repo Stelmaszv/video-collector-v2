@@ -5,7 +5,6 @@ class Form:
 
     buttons_loop=[]
 
-
     def __init__(self,obj):
         self.obj = obj
 
@@ -23,6 +22,7 @@ class Form:
         label.setObjectName(info[0])
         label.setText(info[1])
         grid.addWidget(label, data[0], data[1], data[2], data[3])
+        return label
 
     def buttom_genarator(self,list,fuction,id):
         for button in list.buttons():
@@ -87,14 +87,25 @@ class BaseView:
         self.menu.searchIn=view
         self.menu.open(item)
 
-    def listView(self, data, data_list,obj_name,page=False):
+    def clear(self):
+        self.avatar_photo.clear()
+        self.galeryGrid.close()
+        self.infoWidget.close()
+        self.title.clear()
+
+    def upadete(self):
+        self.avatar_photo.show()
+
+    def listView(self, data, data_list,obj_name,QWidget=False,page=False):
         from .section import SeriesSection, StarsSection, MenuSection,MovieListSection
+
         switcher = {
-            'Stars'      : StarsSection(self),
-            'Series'     : SeriesSection(self),
-            'Menu'       : MenuSection(self),
-            'Movie_List' : MovieListSection(self)
+            'Stars'      : StarsSection(self,QWidget),
+            'Series'     : SeriesSection(self,QWidget),
+            'Menu'       : MenuSection(self,QWidget),
+            'Movie_List' : MovieListSection(self,QWidget)
         }
+
         classObj = switcher.get(obj_name, "Invalid data");
         classObj.run(data, data_list,page)
 
@@ -152,6 +163,34 @@ class BaseView:
             self.infoGrid.addWidget(col2, row, 1, 2, 2)
 
             row=row+1
+
+    def get_nav_star(self,data,buttons=[]):
+        self.nav_widget = QtWidgets.QWidget(self.obj)
+        self.nav_widget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.nav_widget.setObjectName("movie-navbar")
+        self.nav_grid = QtWidgets.QGridLayout(self.nav_widget)
+        self.nav_grid.setContentsMargins(0, 0, 0, 0)
+        self.nav_grid.setObjectName("movie-grid")
+        row=0
+        for button in buttons:
+            self.Form.button([button['item_name'], button['name']], [],button['button'], self.nav_grid, [0, row, 2, 2], [100, 0, 10, 16777215])
+            row=row+1
+
+
+
+    def description(self,text,data,obj=None):
+        if obj==None:
+            obj=self.obj
+        self.description = QtWidgets.QWidget(obj)
+        self.description_Grid = QtWidgets.QGridLayout(self.description)
+        self.description_Grid.setContentsMargins(0, 0, 0, 0)
+        self.description_Grid.setObjectName("infoGrid")
+        col2 = QtWidgets.QLabel(self.description)
+        self.description.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        col2.setObjectName("col2")
+        col2.setText(text)
+        col2.setWordWrap(True)
+        self.description_Grid.addWidget(col2,0, 0, 2, 2)
 
     def set_data(self,id):
         if self.model:

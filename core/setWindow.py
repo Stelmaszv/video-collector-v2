@@ -1,6 +1,7 @@
 from core.media_player import Player
 from core.strings import stringManipupations
-import json
+import sys
+from PyQt5.QtWidgets import QApplication
 
 open_wnidows=[]
 
@@ -12,10 +13,12 @@ class setWindow():
         from view.movie.add_movie import AddMovieView
         from view.star.stars import StarView
         from view.SeriesMovieListView.MovieListView import MovieListView
+        from  view.star.edit_star import EditStarView
 
 
         switcher = {
             'stars': StarView(),
+            'edit_star': EditStarView(),
             'movies': MovieView(),
             'series': SerieView(),
             'add_movie': AddMovieView(),

@@ -1,0 +1,1 @@
+window_type="half-smal" # half-smal, half-big

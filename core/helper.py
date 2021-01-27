@@ -92,3 +92,4 @@ class Scroller:
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
 
 
+
