@@ -37,6 +37,15 @@ class ViewBaseAction:
         self.obj.BaseView.load_view('stars',self.obj.data)
         return True;
 
+
+class Submit:
+
+    def set_data(self,values):
+        self.data=values
+
+    def run(self):
+        print(self.data)
+
 class FormSection:
 
     def __init__(self,obj):
@@ -66,7 +75,7 @@ class FormSection:
                 )
                 grid_array.append(
                     {
-                        'name': item['place_holder'],
+                        'item': item,
                         'button': edit_line
                     }
                 )
@@ -114,7 +123,7 @@ class FormSection:
         for item in grid:
             values.append(
                 {
-                    'name' :item['name'],
+                    'name' :item['item']['place_holder'],
                     'value':item['button'].text()
                 }
             )

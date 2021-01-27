@@ -1,47 +1,41 @@
 from PyQt5.QtWidgets import QWidget
 from app.db.models import Stars
 from core.view import BaseView
-from core.BaseActions import FormSection
+from core.BaseActions import FormSection,Submit
 class EditStarView(QWidget):
 
     model = Stars
 
     def __init__(self):
         super().__init__()
-        self.window_title = 'Edit star window'
         self.BaseView= BaseView([], self)
         self.FormSection = FormSection(self)
+        self.Submit = Submit()
 
     def run_window(self):
-        """
-        self.setWindowTitle(self.window_title)
-        self.BaseView.set_data(self.id)
-        self.data = self.BaseView.data
-        data_search_button = [300, 150, 200, 50]
-        data_button_info = ['add_item', 'add']
-        self.BaseView.Form.button(data_button_info, data_search_button, self.click_add_items)
-        data_line = [100,100,400,50]
-        self.dir_location=self.BaseView.Form.edit_line(data_line, 'dir location')
-        self.show()
-        """
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
         self.set_title();
+        self.setWindowTitle(self.window_title)
+        self.form_section()
+        self.show()
+        return True
 
+    def form_section(self):
         data_line = [50, 50, 400, 250]
 
-        buttons=[
+        buttons = [
             {
-                'type'          :  'label',
-                'name'          :  'name',
-                'place_holder'  :  'Name',
-                'grid_data'     :  [0,0,1,1]
+                'type': 'label',
+                'name': 'name',
+                'place_holder': 'Name',
+                'grid_data': [0, 0, 1, 1]
             },
             {
-                'type'          : 'edit_line',
-                'name'          : 'name',
-                'place_holder'  :  self.data.name,
-                'grid_data'     :  [0,1,1,1]
+                'type': 'edit_line',
+                'name': 'name',
+                'place_holder': self.data.name,
+                'grid_data': [0, 1, 1, 1]
             },
             {
                 'type': 'label',
@@ -52,6 +46,7 @@ class EditStarView(QWidget):
             {
                 'type': 'edit_line',
                 'name': 'height',
+                'data_type': 'string',
                 'place_holder': str(self.data.height) + ' cm',
                 'grid_data': [1, 1, 1, 1]
             },
@@ -64,7 +59,7 @@ class EditStarView(QWidget):
             {
                 'type': 'edit_line',
                 'name': 'weight',
-                'place_holder': str(self.data.weight)+' kg',
+                'place_holder': str(self.data.weight) + ' kg',
                 'grid_data': [2, 1, 1, 1]
             },
             {
@@ -108,17 +103,17 @@ class EditStarView(QWidget):
                 'name': 'submit',
                 'place_holder': 'submit',
                 'grid_data': [6, 1, 1, 1],
-                'click'    : self.submit_click
+                'click': self.submit_click
             },
         ]
-        self.FormSection.form_section(data_line,buttons)
-        self.show()
-        return True
+        self.FormSection.form_section(data_line, buttons)
     def submit_click(self,values):
-        print(values)
+        self.Submit.set_data(values)
+        self.Submit.run()
 
     def set_title(self):
         title = 'Edit star '+self.data.name
+        self.window_title = title
         data = [0, 0, 500, 50]
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
