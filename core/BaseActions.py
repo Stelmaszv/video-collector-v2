@@ -1,5 +1,7 @@
 from app.db.models import session
 from PyQt5 import QtGui,QtCore, QtWidgets
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QRegExpValidator
 
 class ViewBaseAction:
 
@@ -71,7 +73,8 @@ class FormSection:
                 edit_line = self.edit_line2(
                     item['place_holder'],
                     item['grid_data'],
-                    self.edit_section_grid
+                    self.edit_section_grid,
+                    item['validation'],
                 )
                 grid_array.append(
                     {
@@ -112,9 +115,15 @@ class FormSection:
         grid.addWidget(label, data[0], data[1], data[2], data[3])
         return label
 
-    def edit_line2(self,placeholder,data,grid):
+    def edit_line2(self,placeholder,data,grid,validator):
+        from PyQt5.QtGui import QIntValidator
         line = QtWidgets.QLineEdit(self.obj)
         line.setPlaceholderText(placeholder)
+        if validator:
+            reg_ex = QRegExp(validator)
+            validator_obj = QRegExpValidator(reg_ex, line)
+            line.setValidator(validator_obj)
+
         grid.addWidget(line,data[0], data[1], data[2], data[3])
         return line
 
