@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget
 from app.db.models import Stars
 from core.view import BaseView
+from core.BaseActions import FormSection
 class EditStarView(QWidget):
 
     model = Stars
@@ -9,6 +10,7 @@ class EditStarView(QWidget):
         super().__init__()
         self.window_title = 'Edit star window'
         self.BaseView= BaseView([], self)
+        self.FormSection = FormSection(self)
 
     def run_window(self):
         """
@@ -109,7 +111,7 @@ class EditStarView(QWidget):
                 'click'    : self.submit_click
             },
         ]
-        self.BaseView.Form.form_section(data_line,buttons)
+        self.FormSection.form_section(data_line,buttons)
         self.show()
         return True
     def submit_click(self,values):

@@ -24,60 +24,6 @@ class Form:
         grid.addWidget(label, data[0], data[1], data[2], data[3])
         return label
 
-    def form_section(self,data,buttons=[]):
-        self.widget_edit_section = QtWidgets.QWidget(self.obj)
-        self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        self.widget_edit_section.setObjectName("widget_edit_section")
-        self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
-        self.edit_section_grid.setContentsMargins(0, 0, 0, 0)
-        self.edit_section_grid.setObjectName("edit_section_grid")
-        grid_array=[]
-        for item in buttons:
-            if item['type'] == 'label':
-                self.label(
-                    [item['name'],item['place_holder']],
-                    item['grid_data'],
-                    self.edit_section_grid
-                )
-
-
-            if item['type'] == 'edit_line':
-                edit_line=self.edit_line2(
-                    item['place_holder'],
-                    item['grid_data'],
-                    self.edit_section_grid
-                )
-                grid_array.append(
-                    {
-                        'name'  :item['place_holder'],
-                        'button':edit_line
-                    }
-                )
-
-
-        submit=self.faind_submit(buttons)
-        self.button_submit(
-            submit,
-            self.edit_section_grid,
-            grid_array
-        )
-
-    def get_values(self,grid):
-        values=[]
-        for item in grid:
-            values.append(
-                {
-                    'name' :item['name'],
-                    'value':item['button'].text()
-                }
-            )
-        return values;
-
-    def faind_submit(self,buttons):
-        for item in buttons:
-            if item['type'] == 'button_submit':
-                return item
-
     def buttom_genarator(self,list,fuction,id):
         for button in list.buttons():
             if button is list.button(id):
@@ -99,21 +45,6 @@ class Form:
         self.buttons_loop[index]['obejct'].addButton(button)
         self.buttons_loop[index]['obejct'].buttonClicked[int].connect(self.buttons_loop[index]['button'])
 
-    def button_submit(self,submit,grid,grid_array):
-        button = QtWidgets.QPushButton(self.obj)
-        button.setObjectName(submit['name'])
-        button.setText('submit')
-
-        grid.addWidget(
-            button,
-            submit['grid_data'][0],
-            submit['grid_data'][1],
-            submit['grid_data'][2],
-            submit['grid_data'][3]
-        )
-
-        button.clicked.connect(lambda :submit['click'](self.get_values(grid_array)))
-
     def button(self,info,data=[],click=None,gird=None,grid_pos=[],size=[]):
         button = QtWidgets.QPushButton(self.obj)
         button.setObjectName(info[0])
@@ -132,13 +63,6 @@ class Form:
         if gird is not None and len(grid_pos):
             gird.addWidget(button, grid_pos[0], grid_pos[1], grid_pos[2], grid_pos[3])
 
-    def edit_line2(self,placeholder,data,grid):
-        line = QtWidgets.QLineEdit(self.obj)
-        line.setPlaceholderText(placeholder)
-        grid.addWidget(line,data[0], data[1], data[2], data[3])
-        return line
-
-    #error in menu.py
     def edit_line(self,data,placeholder):
         line = QtWidgets.QLineEdit(self.obj)
         line.setPlaceholderText(placeholder)
