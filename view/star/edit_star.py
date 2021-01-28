@@ -34,7 +34,7 @@ class EditStarView(QWidget):
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
-        self.Submit = Submit(AddStarModel,self.data)
+        self.Submit = Submit(AddStarModel,self.data,self)
         self.set_title();
         self.setWindowTitle(self.window_title)
         self.form_section()

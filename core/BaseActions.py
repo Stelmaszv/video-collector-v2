@@ -43,8 +43,9 @@ class ViewBaseAction:
 
 class Submit:
 
-    def __init__(self,Model,Data):
+    def __init__(self,Model,Data,Obj):
         self.Model = Model(Data)
+        self.Obj   = Obj
 
     def set_data(self,values):
         self.data=values
@@ -73,6 +74,9 @@ class Submit:
 
     def add_dat_to_model(self):
         self.Model.add_data(self.data)
+        self.Obj.close()
+        self.Obj.BaseView.load_view('stars', self.Obj.data)
+        return True;
 
 class FormSection:
 
