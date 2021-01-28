@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QWidget
 from app.db.models import Stars
 from core.view import BaseView
 from core.BaseActions import FormSection,Submit
+
 from PyQt5.QtGui import QIntValidator,QRegExpValidator
 from PyQt5.QtCore import QRegExp
 
@@ -32,8 +33,8 @@ class EditStarView(QWidget):
 
         buttons = [
             {
-                'type': 'label',
-                'name': 'name',
+                'type'        : 'label',
+                'name'        : 'name',
                 'place_holder': 'Name',
                 'grid_data': [0, 0, 1, 1]
             },
@@ -41,6 +42,7 @@ class EditStarView(QWidget):
                 'type': 'edit_line',
                 'name': 'name',
                 'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
+                'data_type': 'string',
                 'place_holder': self.data.name,
                 'grid_data': [0, 1, 1, 1]
             },
@@ -53,7 +55,7 @@ class EditStarView(QWidget):
             {
                 'type': 'edit_line',
                 'name': 'height',
-                'data_type': 'string',
+                'data_type': 'int',
                 'validation': "[0-9]+.?[0-9]{,2}",
                 'place_holder': str(self.data.height) + ' cm',
                 'grid_data': [1, 1, 1, 1]
@@ -67,6 +69,7 @@ class EditStarView(QWidget):
             {
                 'type': 'edit_line',
                 'name': 'weight',
+                'data_type': 'int',
                 'validation': "[0-9]+.?[0-9]{,2}",
                 'place_holder': str(self.data.weight) + ' kg',
                 'grid_data': [2, 1, 1, 1]
@@ -80,6 +83,7 @@ class EditStarView(QWidget):
             {
                 'type': 'edit_line',
                 'name': 'ethnicity',
+                'data_type': 'int',
                 'validation': "[0-9]+.?[0-9]{,2}",
                 'place_holder': str(self.data.ethnicity),
                 'grid_data': [3, 1, 1, 1]
@@ -93,6 +97,7 @@ class EditStarView(QWidget):
             {
                 'type': 'edit_line',
                 'name': 'hair_color',
+                'data_type': 'string',
                 'validation': "[0-9]+.?[0-9]{,2}",
                 'place_holder': str(self.data.hair_color),
                 'grid_data': [4, 1, 1, 1]
@@ -106,6 +111,7 @@ class EditStarView(QWidget):
             {
                 'type': 'edit_line',
                 'name': 'date_of_birth',
+                'data_type': 'data',
                 'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
                 'place_holder': str(self.data.date_of_birth),
                 'grid_data': [5, 1, 1, 1]

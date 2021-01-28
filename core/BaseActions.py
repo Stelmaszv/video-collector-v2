@@ -2,6 +2,7 @@ from app.db.models import session
 from PyQt5 import QtGui,QtCore, QtWidgets
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
+from datetime import datetime
 
 class ViewBaseAction:
 
@@ -46,7 +47,21 @@ class Submit:
         self.data=values
 
     def run(self):
-        print(self.data)
+        self.data_typs=[]
+        for item in self.data:
+            if item['data-type'] == 'data':
+                self.data_typs.append(item)
+
+        self.valid_data()
+
+    def valid_data(self):
+        def valid_item(item,data):
+            datetime(data[0],data[1],data[2])
+
+        for item in self.data_typs:
+            s=item['value'].split('-')
+            valid_item(item['value'],s)
+
 
 class FormSection:
 
@@ -133,7 +148,8 @@ class FormSection:
             values.append(
                 {
                     'name' :item['item']['place_holder'],
-                    'value':item['button'].text()
+                    'value':item['button'].text(),
+                    'data-type':item['item']['data_type']
                 }
             )
         return values;
