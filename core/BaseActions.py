@@ -43,21 +43,35 @@ class ViewBaseAction:
 
 class Submit:
 
+    def __init__(self,Model):
+        self.Model = Model()
+
     def set_data(self,values):
         self.data=values
-        self.DataValidator=DataValidator()
 
     def run(self):
+        error = []
         for item in self.data:
             if item['data-type'] == 'data':
                 ymd = item['value'].split('-')
                 if len(ymd)==3:
-                    self.DataValidator.set_data(int(ymd[0]),int(ymd[1]),int(ymd[2]))
-                    self.DataValidator.validate_data()
-                    print(self.DataValidator.error)
-                    #item['value']=datetime(int(ymd[0]), int(ymd[1]), int(ymd[2]))
+                    DV = DataValidator()
+                    DV.error=[]
+                    DV.set_data(int(ymd[0]),int(ymd[1]),int(ymd[2]))
+                    DV.validate_data()
+                    if len(DV.error)==0:
+                        item['value']=datetime(int(ymd[0]), int(ymd[1]), int(ymd[2]))
+                    else:
+                        for error in DV.error:
+                            error.append(error)
                 else:
-                    print('dqwd')
+                    error.append('Data is invalid')
+
+        if len(error) == 0:
+            self.add_dat_to_model()
+
+    def add_dat_to_model(self):
+        self.Model.add_data(self.data)
 
 class FormSection:
 

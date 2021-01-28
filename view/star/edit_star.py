@@ -6,6 +6,10 @@ from core.BaseActions import FormSection,Submit
 from PyQt5.QtGui import QIntValidator,QRegExpValidator
 from PyQt5.QtCore import QRegExp
 
+class AddStarModel:
+    def add_data(self,data):
+        print(data)
+
 class EditStarView(QWidget):
 
     model = Stars
@@ -14,7 +18,7 @@ class EditStarView(QWidget):
         super().__init__()
         self.BaseView= BaseView([], self)
         self.FormSection = FormSection(self)
-        self.Submit = Submit()
+        self.Submit = Submit(AddStarModel)
 
     def run_window(self):
         self.BaseView.set_data(self.id)
