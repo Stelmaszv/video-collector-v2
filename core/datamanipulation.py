@@ -33,5 +33,59 @@ class Data:
         return str(self.get_day())+' '+self.get_mount()+' '+str(self.get_year())
 
 
+class DataValidator:
+
+    error=[]
+
+    def __init__(self):
+        self.now=datetime.now()
+
+    def set_data(self,year,mount,day):
+        self.year=year
+        self.mount=mount
+        self.day=day
+
+    def validate_data(self):
+        self.valid_year()
+        self.valid_mount()
+        self.valid_day()
+
+    def valid_day(self):
+        def get_mount(number):
+            switcher = {
+                1:  31,
+                2:  29,
+                3:  31,
+                4:  30,
+                5:  31,
+                6:  30,
+                7:  31,
+                8:  31,
+                9:  30,
+                10: 30,
+                11: 30,
+                12: 31
+            }
+
+            return  switcher.get(number, "Invalid mount");
+
+        days= get_mount(self.mount);
+
+        if self.day > days:
+            self.error.append('day is invalid !')
+
+    def valid_mount(self):
+
+        if self.mount >12 or self.mount<1:
+            self.error.append('mount is invalid !')
+        else:
+            if self.day==29 and self.mount == 2 :
+                if self.year % 4 !=0 :
+                    self.error.append('mount is invalid !')
+
+    def valid_year(self):
+        if self.year > self.now.year:
+            self.error.append('Year is invalid !')
+
 
 

@@ -3,6 +3,7 @@ from PyQt5 import QtGui,QtCore, QtWidgets
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
+from core.datamanipulation import DataValidator
 
 class ViewBaseAction:
 
@@ -40,28 +41,23 @@ class ViewBaseAction:
         self.obj.BaseView.load_view('stars',self.obj.data)
         return True;
 
-
 class Submit:
 
     def set_data(self,values):
         self.data=values
+        self.DataValidator=DataValidator()
 
     def run(self):
-        self.data_typs=[]
         for item in self.data:
             if item['data-type'] == 'data':
-                self.data_typs.append(item)
-
-        self.valid_data()
-
-    def valid_data(self):
-        def valid_item(item,data):
-            datetime(data[0],data[1],data[2])
-
-        for item in self.data_typs:
-            s=item['value'].split('-')
-            valid_item(item['value'],s)
-
+                ymd = item['value'].split('-')
+                if len(ymd)==3:
+                    self.DataValidator.set_data(int(ymd[0]),int(ymd[1]),int(ymd[2]))
+                    self.DataValidator.validate_data()
+                    print(self.DataValidator.error)
+                    #item['value']=datetime(int(ymd[0]), int(ymd[1]), int(ymd[2]))
+                else:
+                    print('dqwd')
 
 class FormSection:
 
