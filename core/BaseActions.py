@@ -43,8 +43,8 @@ class ViewBaseAction:
 
 class Submit:
 
-    def __init__(self,Model):
-        self.Model = Model()
+    def __init__(self,Model,Data):
+        self.Model = Model(Data)
 
     def set_data(self,values):
         self.data=values
@@ -65,7 +65,8 @@ class Submit:
                         for error in DV.error:
                             error.append(error)
                 else:
-                    error.append('Data is invalid')
+                    if len(ymd) < 1:
+                        error.append('Data is invalid')
 
         if len(error) == 0:
             self.add_dat_to_model()
@@ -159,7 +160,8 @@ class FormSection:
                 {
                     'name' :item['item']['place_holder'],
                     'value':item['button'].text(),
-                    'data-type':item['item']['data_type']
+                    'data-type':item['item']['data_type'],
+                    'DB': item['item']['DB']
                 }
             )
         return values;

@@ -3,12 +3,24 @@ from app.db.models import Stars
 from core.view import BaseView
 from core.BaseActions import FormSection,Submit
 
-from PyQt5.QtGui import QIntValidator,QRegExpValidator
-from PyQt5.QtCore import QRegExp
-
 class AddStarModel:
+
+    def __init__(self,data):
+        self.data=data
+
     def add_data(self,data):
-        print(data)
+        if data[0]['value']:
+            self.data.name           =  data[0]['value']
+        if data[1]['value']:
+            self.data.height         =  data[1]['value']
+        if data[2]['value']:
+            self.data.weight         =  data[2]['value']
+        if data[3]['value']:
+            self.data.ethnicity      =  data[3]['value']
+        if data[4]['value']:
+            self.data.hair_color     =  data[4]['value']
+        if data[5]['value']:
+            self.data.date_of_birth  =  data[5]['value']
 
 class EditStarView(QWidget):
 
@@ -18,11 +30,11 @@ class EditStarView(QWidget):
         super().__init__()
         self.BaseView= BaseView([], self)
         self.FormSection = FormSection(self)
-        self.Submit = Submit(AddStarModel)
 
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
+        self.Submit = Submit(AddStarModel,self.data)
         self.set_title();
         self.setWindowTitle(self.window_title)
         self.form_section()
@@ -40,13 +52,14 @@ class EditStarView(QWidget):
                 'type'        : 'label',
                 'name'        : 'name',
                 'place_holder': 'Name',
-                'grid_data': [0, 0, 1, 1]
+                'grid_data'   : [0, 0, 1, 1]
             },
             {
                 'type': 'edit_line',
                 'name': 'name',
-                'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
+                'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
                 'data_type': 'string',
+                'DB': 'name',
                 'place_holder': self.data.name,
                 'grid_data': [0, 1, 1, 1]
             },
@@ -60,7 +73,8 @@ class EditStarView(QWidget):
                 'type': 'edit_line',
                 'name': 'height',
                 'data_type': 'int',
-                'validation': "[0-9]+.?[0-9]{,2}",
+                'validation': "[0-9][0-9][0-9]",
+                'DB': 'height',
                 'place_holder': str(self.data.height) + ' cm',
                 'grid_data': [1, 1, 1, 1]
             },
@@ -74,7 +88,8 @@ class EditStarView(QWidget):
                 'type': 'edit_line',
                 'name': 'weight',
                 'data_type': 'int',
-                'validation': "[0-9]+.?[0-9]{,2}",
+                'DB': 'weight',
+                'validation': "[0-9][0-9][0-9]",
                 'place_holder': str(self.data.weight) + ' kg',
                 'grid_data': [2, 1, 1, 1]
             },
@@ -88,7 +103,8 @@ class EditStarView(QWidget):
                 'type': 'edit_line',
                 'name': 'ethnicity',
                 'data_type': 'int',
-                'validation': "[0-9]+.?[0-9]{,2}",
+                'DB': 'ethnicity',
+                'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
                 'place_holder': str(self.data.ethnicity),
                 'grid_data': [3, 1, 1, 1]
             },
@@ -102,7 +118,8 @@ class EditStarView(QWidget):
                 'type': 'edit_line',
                 'name': 'hair_color',
                 'data_type': 'string',
-                'validation': "[0-9]+.?[0-9]{,2}",
+                'DB': 'hair_color',
+                'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
                 'place_holder': str(self.data.hair_color),
                 'grid_data': [4, 1, 1, 1]
             },
@@ -116,6 +133,7 @@ class EditStarView(QWidget):
                 'type': 'edit_line',
                 'name': 'date_of_birth',
                 'data_type': 'data',
+                'DB': 'date_of_birth',
                 'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
                 'place_holder': str(self.data.date_of_birth),
                 'grid_data': [5, 1, 1, 1]
