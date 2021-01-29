@@ -15,6 +15,9 @@ class Data:
         return self.data.day;
 
     def convert_mount(self,mount):
+        if mount == 2:
+            return 'February'
+
         if mount == 8:
             return 'August'
 
@@ -42,7 +45,8 @@ class DataValidator:
 
     def set_data(self,year,mount,day):
         self.year=year
-        self.mount=mount
+        self.mount=int(mount)
+        self.mount_str = mount
         self.day=day
 
     def validate_data(self):
@@ -53,35 +57,40 @@ class DataValidator:
     def valid_day(self):
         def get_mount(number):
             switcher = {
-                1:  31,
-                2:  29,
-                3:  31,
-                4:  30,
-                5:  31,
-                6:  30,
-                7:  31,
-                8:  31,
-                9:  30,
-                10: 30,
-                11: 30,
-                12: 31
+                '01':  31,
+                '02':  29,
+                '03':  31,
+                '04':  30,
+                '05':  31,
+                '06':  30,
+                '07':  31,
+                '08':  31,
+                '09':  30,
+                '10': 30,
+                '11': 30,
+                '12': 31
             }
-
             return  switcher.get(number, "Invalid mount");
 
-        days= get_mount(self.mount);
+        if self.mount > 12 or self.mount < 1:
+            self.error.append('Day is invalid !')
+        else:
+            days= get_mount(self.mount_str);
+            if self.day > days:
+                self.error.append('Day is invalid !')
 
-        if self.day > days:
-            self.error.append('day is invalid !')
 
     def valid_mount(self):
+        error=False;
+        if self.day == 29 and self.mount == 2:
+            if self.year % 4 != 0:
+                error=True
 
         if self.mount >12 or self.mount<1:
-            self.error.append('mount is invalid !')
-        else:
-            if self.day==29 and self.mount == 2 :
-                if self.year % 4 !=0 :
-                    self.error.append('mount is invalid !')
+            error=True
+
+        if error:
+            self.error.append('Mount is invalid !')
 
     def valid_year(self):
         if self.year > self.now.year:

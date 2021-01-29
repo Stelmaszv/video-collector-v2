@@ -58,24 +58,40 @@ class Submit:
                 if len(ymd)==3:
                     DV = DataValidator()
                     DV.error=[]
-                    DV.set_data(int(ymd[0]),int(ymd[1]),int(ymd[2]))
+                    DV.set_data(int(ymd[0]),ymd[1],int(ymd[2]))
                     DV.validate_data()
+
                     if len(DV.error)==0:
-                        item['value']=datetime(int(ymd[0]), int(ymd[1]), int(ymd[2]))
+                        item['value']=datetime(DV.year,DV.mount,DV.day)
                     else:
-                        for error in DV.error:
-                            error.append(error)
+                        for error_from_DV in DV.error:
+                            error.append(error_from_DV)
                 else:
                     if len(ymd[0])>0:
                         if len(ymd) == 1 or len(ymd) == 2:
                             error.append('Data is invalid')
 
         if len(error) == 0:
-            self.add_dat_to_model()
-        else:
-            print(error)
+            self.add_data_to_model()
 
-    def add_dat_to_model(self):
+        if len(error) > 0:
+            data =[
+                'Errors in form',
+                self.form_to_string(error),
+                ''
+            ]
+            self.Obj.BaseView.Massage.show(data)
+
+
+    def form_to_string(self,errors):
+
+        string="<html><head/><body>";
+        for error in errors:
+            string+=error+'<br>'
+        string +='</body></html>'
+        return str(string)
+
+    def add_data_to_model(self):
         self.Model.add_data(self.data)
         self.Obj.close()
         self.Obj.BaseView.load_view('stars', self.Obj.data)
