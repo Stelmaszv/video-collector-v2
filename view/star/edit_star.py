@@ -2,6 +2,7 @@ from PyQt5.QtWidgets import QWidget
 from app.db.models import Stars
 from core.view import BaseView
 from core.BaseActions import FormSection,Submit
+from core.rezolution import SetResolution
 
 class AddStarModel:
 
@@ -30,6 +31,12 @@ class EditStarView(QWidget):
         super().__init__()
         self.BaseView= BaseView([], self)
         self.FormSection = FormSection(self)
+        self.SetResolution = SetResolution()
+        self.left =   self.SetResolution.menu_set['EditStars']['position']['left']
+        self.top =    self.SetResolution.menu_set['EditStars']['position']['top']
+        self.width =  self.SetResolution.menu_set['EditStars']['position']['width']
+        self.height = self.SetResolution.menu_set['EditStars']['position']['height']
+        self.WindowSize=self.SetResolution.menu_set['EditStars']['window']
 
     def run_window(self):
         self.BaseView.set_data(self.id)
@@ -39,13 +46,16 @@ class EditStarView(QWidget):
         self.setWindowTitle(self.window_title)
         self.form_section()
         self.show()
-        return True
-
-    def valid_name(self):
+        self.setGeometry(self.left , self.top, self.width, self.height)
         return True
 
     def form_section(self):
-        data_line = [50, 50, 400, 250]
+        data_line = [
+            self.WindowSize['form_section'][0],
+            self.WindowSize['form_section'][1],
+            self.WindowSize['form_section'][2],
+            self.WindowSize['form_section'][3],
+        ]
 
         buttons = [
             {
@@ -154,12 +164,15 @@ class EditStarView(QWidget):
     def set_title(self):
         title = 'Edit star '+self.data.name
         self.window_title = title
-        data = [0, 0, 500, 50]
+        data = [
+            self.WindowSize['title_size'][0],
+            self.WindowSize['title_size'][1],
+            self.WindowSize['title_size'][2],
+            self.WindowSize['title_size'][3]
+        ]
+
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
                "<span style=\" font-size:20pt;font-weight:600; " \
                "text-decoration: none;\">"+title+"</span></p></body></html>"
         self.BaseView.title(data, text)
-
-    def click_add_items(self):
-        print('edit');

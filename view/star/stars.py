@@ -107,7 +107,6 @@ class StarView(QWidget):
         ]
         self.BaseView.galery(data, size, self.WindowSize['galery_item_show'])
 
-
     def info(self):
 
         data   = [
@@ -173,7 +172,6 @@ class StarView(QWidget):
 
         limit=self.WindowSize['description'][4]
         self.BaseView.description(stringManipupations.short(self.data.description,limit),data);
-        
 
     def count_series(self):
         return str(len(self.list))

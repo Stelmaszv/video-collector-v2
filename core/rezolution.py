@@ -34,6 +34,15 @@ class MenuHalfbig(MenuType):
                 }
             },
 
+            "EditStars":{
+                "position": {
+                    "left": 400,
+                    "top": 25,
+                    "width": 2155,
+                    "height": 1400
+                },
+            },
+
             "Stars": {
                 "position": {
                     "left"              : 400,
@@ -72,6 +81,19 @@ class MenuHalfSmal(MenuType):
                     "top"              : 400,
                     "width"            : 400,
                     "height"           : 985
+                }
+            },
+
+            "EditStars": {
+                "position": {
+                    "left": 2562+400,
+                    "top": 400,
+                    "width": 1280,
+                    "height": 985
+                },
+                "window": {
+                    "title_size"    : [0, 0 ,1280 ,100],
+                    "form_section"  : [300, 100 ,680 ,250]
                 }
             },
 
