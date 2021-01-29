@@ -15,17 +15,21 @@ class Data:
         return self.data.day;
 
     def convert_mount(self,mount):
-        if mount == 2:
-            return 'February'
-
-        if mount == 8:
-            return 'August'
-
-        if mount == 10:
-            return 'October'
-
-        if mount == 5:
-            return 'May'
+        switcher = {
+             1: 'January',
+             2: 'February',
+             3: 'March',
+             4: 'April',
+             5: 'May',
+             6: 'June',
+             7: 'July',
+             8: 'August',
+             9: 'September',
+            10: 'October',
+            11: 'November',
+            12: 'December'
+        }
+        return switcher.get(mount, "Invalid mount");
 
     def get_age(self):
         difrence=datetime.now()-self.data
