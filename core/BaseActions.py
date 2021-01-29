@@ -66,11 +66,14 @@ class Submit:
                         for error in DV.error:
                             error.append(error)
                 else:
-                    if len(ymd) < 1:
-                        error.append('Data is invalid')
+                    if len(ymd[0])>0:
+                        if len(ymd) == 1 or len(ymd) == 2:
+                            error.append('Data is invalid')
 
         if len(error) == 0:
             self.add_dat_to_model()
+        else:
+            print(error)
 
     def add_dat_to_model(self):
         self.Model.add_data(self.data)
