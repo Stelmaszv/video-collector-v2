@@ -27,6 +27,12 @@ movies_Series = Table('movies_Series', Base.metadata,
     Column('series_id', Integer, ForeignKey('series.id'))
 )
 
+Stars_Tags = Table('tags_series', Base.metadata,
+    Column('tags_id', Integer, ForeignKey('tags.id')),
+    Column('stars_id', Integer, ForeignKey('stars.id'))
+)
+
+
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
@@ -78,6 +84,18 @@ class Photos(Base):
     def __str__(self):
         return  self.src
 
+class Tags(Base):
+    __tablename__ = 'tags'
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String)
+
+    stars = relationship(
+        "Stars",
+        secondary=Stars_Tags,
+        back_populates="tags"
+    )
+
+
 class Stars(Base):
     __tablename__ ='stars'
     id= Column('id',Integer,primary_key=True)
@@ -92,6 +110,13 @@ class Stars(Base):
     ethnicity = Column('ethnicity', String, default='')
     hair_color =  Column('hair_color', String, default='')
     date_of_birth = Column(DateTime)
+
+    tags = relationship(
+        "Tags",
+        secondary=Stars_Tags,
+        back_populates="stars"
+    )
+
     series = relationship(
         "Series",
         secondary=stars_series,
