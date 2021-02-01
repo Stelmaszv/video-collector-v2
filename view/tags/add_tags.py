@@ -1,13 +1,26 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
-from core.BaseActions import FormSection,AddTag
+from core.BaseActions import FormSection,AddTag,ViewBaseAction
 class AddTagView(QWidget):
+
+    reset_view='edit_star'
 
     def run_window(self):
         self.init()
         self.set_title()
         self.add_tags_form()
+        self.tags_list()
         self.show()
+
+    def delete(self,tag):
+        AT=AddTag([],self.data)
+        AT.remove_tag(tag)
+        self.BaseActions.reset()
+        return True
+
+
+    def tags_list(self):
+        self.BaseView.listView([500, 100, 1200, 900], self.data.tags, 'Tags',False,False)
 
     def add_tags_form(self):
 
@@ -53,6 +66,7 @@ class AddTagView(QWidget):
         self.model=self.obj.model
         self.BaseView = BaseView([], self)
         self.FormSection = FormSection(self)
+        self.BaseActions = ViewBaseAction(self)
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
 

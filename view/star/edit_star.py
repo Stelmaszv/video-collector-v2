@@ -152,7 +152,7 @@ class EditStarView(QWidget):
                 'type': 'button',
                 'obj_name': 'add_tags',
                 'name': 'Add Tags',
-                'place_holder': 'Add Tags',
+                'place_holder': 'Tags',
                 'grid_data': [6, 1, 1, 1],
                 'click': self.add_tag
             },

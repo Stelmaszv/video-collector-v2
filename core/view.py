@@ -97,13 +97,14 @@ class BaseView:
         self.avatar_photo.show()
 
     def listView(self, data, data_list,obj_name,QWidget=False,page=False):
-        from .section import SeriesSection, StarsSection, MenuSection,MovieListSection
+        from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,TagsListSection
 
         switcher = {
             'Stars'      : StarsSection(self,QWidget),
             'Series'     : SeriesSection(self,QWidget),
             'Menu'       : MenuSection(self,QWidget),
-            'Movie_List' : MovieListSection(self,QWidget)
+            'Movie_List' : MovieListSection(self,QWidget),
+            'Tags'       : TagsListSection(self, QWidget)
         }
 
         classObj = switcher.get(obj_name, "Invalid data");

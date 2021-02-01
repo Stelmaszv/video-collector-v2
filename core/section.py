@@ -11,6 +11,51 @@ class AbstractSection(ABC):
     def run(self,data,data_list,page):
         pass
 
+class TagsListSection(AbstractSection):
+
+    def __init__(self, BaseView, QWidget):
+        self.BaseView = BaseView
+        self.OBJ_QWidget  =QWidget
+        self.obj = BaseView.obj
+        self.Form = Form(self.BaseView.obj)
+        self.buttons = QtWidgets.QButtonGroup()
+        self.Form.buttons_loop= [
+            {'button': self.on_info_button, 'obejct': self.buttons},
+        ]
+
+    def on_info_button(self,id):
+        self.Form.buttom_genarator(self.buttons, self.info_button, id)
+
+    def info_button(self,item):
+        self.obj.delete(item)
+
+    def run(self, data, data_list, page):
+        self.widget_edit_section = QtWidgets.QWidget(self.obj)
+        self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.widget_edit_section.setObjectName("widget_edit_section")
+        self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
+        self.edit_section_grid.setContentsMargins(0, 0, 0, 0)
+        self.edit_section_grid.setObjectName("edit_section_grid")
+
+        row=0
+        for item in data_list:
+
+            label = QtWidgets.QLabel()
+            label.setObjectName('test')
+            label.setText(item.name)
+            self.edit_section_grid.addWidget(label, row, 0, 1, 1)
+
+            button = QtWidgets.QPushButton(self.obj)
+            button.setObjectName('obj_name')
+            button.setText('Remowe')
+            button.data=item
+
+            self.edit_section_grid.addWidget(button, row, 2, 1, 1)
+
+            self.Form.buttons_loop[0]['obejct'].addButton(button)
+            self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
+            row=row+1
+
 class StarsSection(AbstractSection):
 
     def __init__(self, BaseView,QWidget):

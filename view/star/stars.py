@@ -9,6 +9,7 @@ from  core.BaseActions import ViewBaseAction
 
 class StarView(QWidget):
 
+    reset_view = 'stars'
     model        = Stars
     window_type  = 'star'
 

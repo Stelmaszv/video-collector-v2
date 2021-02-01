@@ -39,7 +39,7 @@ class ViewBaseAction:
 
     def reset(self):
         self.obj.close()
-        self.obj.BaseView.load_view('stars',self.obj.data)
+        self.obj.BaseView.load_view(self.obj.reset_view,self.obj.data)
         return True;
 
 class AddTag:
@@ -50,6 +50,16 @@ class AddTag:
         self.data=data
         self.Obj=Obj_data
         self.session = session
+
+    def remove_tag(self,tag):
+        value=tag.name
+        add=False
+        for item in self.Obj.tags:
+            if item.name == value:
+                add=True
+
+        if add:
+            self.Obj.tags.remove(tag)
 
     def add(self):
         value = self.data[0]['value']
