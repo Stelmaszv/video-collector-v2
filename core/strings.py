@@ -17,11 +17,13 @@ class stringManipupations:
     @staticmethod
     def array_to_string(array)->str :
         string=''
-        el=0
+        el=1
         for item in array:
             string=string+str(item.name)
-            if el<len(array)-1:
+            if el<len(array):
                 string=string+str(', ')
+                if el % 5==0:
+                    string = string + str('<br>')
             el=el+1;
         return string
 
