@@ -160,7 +160,7 @@ class StarView(QWidget):
 
         data_info.append({
             "itemNmae": "Tags",
-            "itemName2": 'Bond, dead, Action'
+            "itemName2": stringManipupations.array_to_string(self.data.tags)
         })
 
         self.BaseView.info(data_info, data, rows)
@@ -172,7 +172,9 @@ class StarView(QWidget):
         ]
 
         limit=self.WindowSize['description'][4]
+
         self.BaseView.description(stringManipupations.short(self.data.description,limit),data);
+
 
     def count_series(self):
         return str(len(self.list))
