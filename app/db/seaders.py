@@ -11,6 +11,7 @@ class Tags(abstractSeader):
             self.model(name="Bond"),
             self.model(name="Action"),
             self.model(name="Dead"),
+            self.model(name="Test"),
         ]
         self.addItems()
 

@@ -4,6 +4,7 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
+from app.db.models import Tags
 
 class ViewBaseAction:
 
@@ -40,6 +41,46 @@ class ViewBaseAction:
         self.obj.close()
         self.obj.BaseView.load_view('stars',self.obj.data)
         return True;
+
+class AddTag:
+
+    model=Tags
+
+    def __init__(self,data,Obj_data):
+        self.data=data
+        self.Obj=Obj_data
+        self.session = session
+
+    def add(self):
+        value = self.data[0]['value']
+
+        add=False
+
+        for item in self.Obj.tags:
+            if item.name == value:
+                add=True
+
+        in_db=False
+        query=self.session.query(self.model).filter(self.model.name==value).first()
+
+        if query:
+            in_db = True;
+
+        if in_db is False and add is False:
+            self.add_tag_to_db(value)
+            self.add_tag_from_db(value)
+
+        if in_db is True and add is False:
+            self.add_tag_from_db(value)
+
+    def add_tag_to_db(self,value):
+        self.session.add_all([self.model(name=value)])
+        self.session.commit()
+
+    def add_tag_from_db(self,value):
+        item = self.session.query(self.model).filter(self.model.name == value).first()
+        self.Obj.tags.append(item)
+
 
 class Submit:
 
