@@ -46,10 +46,11 @@ class AddTag:
 
     model=Tags
 
-    def __init__(self,data,Obj_data):
+    def __init__(self,data,Obj):
         self.data=data
-        self.Obj=Obj_data
+        self.Obj=Obj.data
         self.session = session
+        self.ViewBaseAction=ViewBaseAction(Obj)
 
     def remove_tag(self,tag):
         value=tag.name
@@ -60,6 +61,7 @@ class AddTag:
 
         if add:
             self.Obj.tags.remove(tag)
+            self.ViewBaseAction.reset()
 
     def add(self):
         value = self.data[0]['value']
@@ -82,6 +84,8 @@ class AddTag:
 
         if in_db is True and add is False:
             self.add_tag_from_db(value)
+
+        self.ViewBaseAction.reset()
 
     def add_tag_to_db(self,value):
         self.session.add_all([self.model(name=value)])

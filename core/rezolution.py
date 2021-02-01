@@ -84,7 +84,7 @@ class MenuHalfSmal(MenuType):
                 }
             },
 
-            "EditStars": {
+            "add_tag": {
                 "position": {
                     "left": 2562+400,
                     "top": 400,
@@ -93,7 +93,21 @@ class MenuHalfSmal(MenuType):
                 },
                 "window": {
                     "title_size"    : [0, 0 ,1280 ,100],
-                    "form_section"  : [300, 100 ,680 ,250]
+                    "form_section"  : [400, 0 ,480 ,250],
+                    "list_view_size": [300, 150, 680, 250],
+                }
+            },
+
+            "EditStars": {
+                "position": {
+                    "left": 2562 + 400,
+                    "top": 400,
+                    "width": 1280,
+                    "height": 985
+                },
+                "window": {
+                    "title_size": [0, 0, 1280, 100],
+                    "form_section": [300, 100, 680, 250]
                 }
             },
 
