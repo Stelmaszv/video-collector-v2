@@ -70,9 +70,9 @@ class DataValidator:
                 '07':  31,
                 '08':  31,
                 '09':  30,
-                '10': 30,
-                '11': 30,
-                '12': 31
+                '10':  30,
+                '11':  30,
+                '12':  31
             }
             return  switcher.get(number, "Invalid mount");
 

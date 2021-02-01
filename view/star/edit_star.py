@@ -149,10 +149,19 @@ class EditStarView(QWidget):
                 'grid_data': [5, 1, 1, 1]
             },
             {
-                'type': 'button_submit',
-                'name': 'submit',
-                'place_holder': 'submit',
+                'type': 'button',
+                'obj_name': 'add_tags',
+                'name': 'Add Tags',
+                'place_holder': 'Add Tags',
                 'grid_data': [6, 1, 1, 1],
+                'click': self.add_tag
+            },
+            {
+                'type': 'button_submit',
+                'obj_name': 'submit',
+                'name': 'Submit',
+                'place_holder': 'Submit',
+                'grid_data': [7, 1, 1, 1],
                 'click': self.submit_click
             },
         ]
@@ -160,6 +169,10 @@ class EditStarView(QWidget):
     def submit_click(self,values):
         self.Submit.set_data(values)
         self.Submit.run()
+
+    def add_tag(self,values):
+        self.close()
+        self.BaseView.load_view('add_tags', self.data)
 
     def set_title(self):
         title = 'Edit star '+self.data.name

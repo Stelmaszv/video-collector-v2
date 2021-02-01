@@ -111,6 +111,12 @@ class FormSection:
         self.edit_section_grid.setObjectName("edit_section_grid")
         grid_array = []
         for item in buttons:
+            if item['type'] == 'button':
+                self.button(
+                    item,
+                    self.edit_section_grid
+                )
+
             if item['type'] == 'label':
                 self.label(
                     [item['name'], item['place_holder']],
@@ -139,10 +145,23 @@ class FormSection:
             grid_array
         )
 
+    def button (self,info,grid):
+        button = QtWidgets.QPushButton(self.obj)
+        button.setObjectName(info['obj_name'])
+        button.setText(info['name'])
+        grid.addWidget(
+            button,
+            info['grid_data'][0],
+            info['grid_data'][1],
+            info['grid_data'][2],
+            info['grid_data'][3]
+        )
+        button.clicked.connect(lambda: info['click']('data'))
+
     def button_submit(self,submit,grid,grid_array):
         button = QtWidgets.QPushButton(self.obj)
-        button.setObjectName(submit['name'])
-        button.setText('submit')
+        button.setObjectName(submit['obj_name'])
+        button.setText(submit['name'])
 
         grid.addWidget(
             button,
