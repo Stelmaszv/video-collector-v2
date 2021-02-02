@@ -1,5 +1,5 @@
 import re
-from app.db.models import Stars,Movies,Series
+from app.db.models import Stars,Movies,Series,Photos
 from app.db.models import session
 from abc import ABC
 import os
@@ -38,16 +38,21 @@ class AddStarViaDir:
 
     model=Stars
     movie_model=Movies
+    photo_model=Photos
 
     def __init__(self,dir):
         self.session = session
         self.dir=dir
         self.star=self.if_star_exist('Sean Connery')
         self.set_movie_dir()
+        self.set_photo_dir()
         self.IfStar=IfStar()
 
     def set_movie_dir(self):
         self.movie_dir=self.dir + '' + str('/none')
+
+    def set_photo_dir(self):
+        self.photo_dir = self.dir + '' + str('/photo')
 
     def clear_name(self, dir):
         str = ''
@@ -74,7 +79,7 @@ class AddStarViaDir:
             star = self.session.query(self.model).filter(self.model.name == name).first()
         return star
 
-    def scan_dir(self):
+    def scan_movie_dir(self):
         movie_dir = os.listdir(self.movie_dir)
         object=[]
 
@@ -86,16 +91,28 @@ class AddStarViaDir:
                 for star in  stars:
                     new_stars.append(self.if_star_exist(star))
             new_stars.append(self.star)
-            object.append(self.movie_model(name=self.clear_name(movie), stars=new_stars))
-
-
+            object.append(self.movie_model(
+                name=self.clear_name(movie),
+                stars=new_stars,
+                src=movie
+            ))
 
         self.session.add_all(object)
         self.session.commit()
 
+    def scan_photo_dir(self):
+        photo_dir = os.listdir(self.photo_dir)
+        object = []
+        for photo in photo_dir:
+            src=self.photo_dir+ '' + str('/'+photo)
+            object.append(self.photo_model(src=src, stars=[self.star]))
+
+        self.session.add_all(object)
+        self.session.commit()
 
     def add_files(self):
-        self.scan_dir()
+        self.scan_movie_dir()
+        self.scan_photo_dir()
 
 class abstratValid:
 
