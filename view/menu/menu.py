@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import QAction,QMainWindow
-from PyQt5.QtCore import pyqtSlot
 from core.view import BaseView
 from core.search import setFactory
 from app.db.seaders import initSeader
@@ -116,8 +115,3 @@ class Menu(QMainWindow):
 
     def add_new_movie(self):
         self.BaseView.load_view('add_movie')
-
-    @pyqtSlot()
-    def on_click(self):
-        print('PyQt5 button click')
-        print(self.BaseView)

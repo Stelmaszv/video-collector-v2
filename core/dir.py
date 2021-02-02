@@ -2,6 +2,100 @@ import re
 from app.db.models import Stars,Movies,Series
 from app.db.models import session
 from abc import ABC
+import os
+
+class FaindStar:
+
+    str = ''
+    starArray=[]
+
+    def __init__(self,dir):
+        self.dir=dir
+        self.start = self.dir.find("(")
+        self.end = self.dir.find(")")
+
+    def return_stars_in_string(self):
+        str=''
+        for i in range(self.start+1,self.end):
+            str=str+self.dir[i]
+        return str
+    def create_star_list(self):
+        str=self.return_stars_in_string()
+        self.starArray = str.split('and')
+        return self.starArray
+
+class IfStar:
+
+    validValue = "[a-zA-Z0-9]+\s+\([a-zA-Z0-9\s]+\)";
+
+    def faind_stars(self,file):
+        FS = FaindStar(file)
+        if re.search(self.validValue, file):
+            return FS.create_star_list()
+        return None
+
+class AddStarViaDir:
+
+    model=Stars
+    movie_model=Movies
+
+    def __init__(self,dir):
+        self.session = session
+        self.dir=dir
+        self.star=self.if_star_exist('Sean Connery')
+        self.set_movie_dir()
+        self.IfStar=IfStar()
+
+    def set_movie_dir(self):
+        self.movie_dir=self.dir + '' + str('/none')
+
+    def clear_name(self, dir):
+        str = ''
+        stop = False
+        for i in range(0, len(dir)):
+            if dir[i] == "(":
+                stop = True
+
+            if dir[i] == ".":
+                stop = True
+
+            if stop is False:
+                str = str + dir[i]
+
+        return str
+
+    def if_star_exist(self,name):
+        star=self.session.query(self.model).filter(self.model.name == name).first()
+        if star:
+            self.star = star
+        else:
+            self.session.add_all([self.model(name=name)])
+            self.session.commit()
+            star = self.session.query(self.model).filter(self.model.name == name).first()
+        return star
+
+    def scan_dir(self):
+        movie_dir = os.listdir(self.movie_dir)
+        object=[]
+
+        for movie in movie_dir:
+
+            stars = self.IfStar.faind_stars(movie)
+            new_stars = []
+            if stars is not None:
+                for star in  stars:
+                    new_stars.append(self.if_star_exist(star))
+            new_stars.append(self.star)
+            object.append(self.movie_model(name=self.clear_name(movie), stars=new_stars))
+
+
+
+        self.session.add_all(object)
+        self.session.commit()
+
+
+    def add_files(self):
+        self.scan_dir()
 
 class abstratValid:
 

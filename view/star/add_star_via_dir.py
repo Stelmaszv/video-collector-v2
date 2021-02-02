@@ -1,8 +1,9 @@
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget,QApplication
 from core.view import BaseView
 from core.BaseActions import FormSection
 from core.rezolution import SetResolution
 from app.db.models import Stars
+import sys
 
 class AddStarViaDirView(QWidget):
 
@@ -48,7 +49,7 @@ class AddStarViaDirView(QWidget):
                 'obj_name': 'submit',
                 'name': 'Submit',
                 'place_holder': 'Submit',
-                'grid_data': [7, 1, 1, 1],
+                'grid_data': [1, 1, 1, 1],
                 'click': self.submit_click
             },
         ]
@@ -58,7 +59,7 @@ class AddStarViaDirView(QWidget):
         print(values)
 
     def set_title(self):
-        title = 'New star'
+        title = 'New star  via dir'
         self.window_title = title
         data = [
             self.WindowSize['title_size'][0],
@@ -79,3 +80,10 @@ class AddStarViaDirView(QWidget):
         self.form_section()
         self.show()
         self.setGeometry(self.left, self.top, self.width, self.height)
+
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = AddStarViaDirView()
+    ex.run_window()
+    sys.exit(app.exec_())
