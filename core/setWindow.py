@@ -16,10 +16,11 @@ class setWindow():
         from view.star.edit_star import EditStarView
         from view.tags.add_tags import AddTagView
         from view.star.new_star import NewStarView
-
+        from view.star.add_star_via_dir import AddStarViaDirView
 
 
         switcher = {
+            'add_star_via_dir': AddStarViaDirView(),
             'new star' : NewStarView(),
             'add_tags': AddTagView(),
             'stars': StarView(),

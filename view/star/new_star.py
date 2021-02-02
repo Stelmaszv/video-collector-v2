@@ -154,7 +154,7 @@ class NewStarView(QWidget):
         self.FormSection.form_section(data_line, buttons)
 
     def add_via_dir(self, values):
-        print('dir')
+        self.BaseView.load_view('add_star_via_dir')
 
     def add_via_dir_loop(self, values):
         print('dir loop')

@@ -108,11 +108,6 @@ class Menu(QMainWindow):
         action_menu.addAction(new_menu_object)
         action_menu.addAction(new_star)
 
-
-
-
-
-
     def new_star(self):
         self.BaseView.load_view('new star')
 
