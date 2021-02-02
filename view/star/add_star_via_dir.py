@@ -3,6 +3,8 @@ from core.view import BaseView
 from core.BaseActions import FormSection
 from core.rezolution import SetResolution
 from app.db.models import Stars
+from core.dir import AddStarViaDir
+
 import sys
 
 class AddStarViaDirView(QWidget):
@@ -38,7 +40,7 @@ class AddStarViaDirView(QWidget):
             {
                 'type': 'edit_line',
                 'name': 'name',
-                'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
+                'validation': "",
                 'data_type': 'string',
                 'DB': 'name',
                 'place_holder': '',
@@ -56,7 +58,8 @@ class AddStarViaDirView(QWidget):
         self.FormSection.form_section(data_line, buttons)
 
     def submit_click(self,values):
-        print(values)
+        ASDV = AddStarViaDir(values[0]['value'])
+        ASDV.add_files()
 
     def set_title(self):
         title = 'New star  via dir'

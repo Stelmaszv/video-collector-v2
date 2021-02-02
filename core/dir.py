@@ -131,7 +131,6 @@ class AddStarViaDirLoop:
             ASDV = AddStarViaDir(dir)
             ASDV.add_files()
 
-
 class abstratValid:
 
     def __init__(self,dir):

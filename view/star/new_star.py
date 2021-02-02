@@ -176,7 +176,7 @@ class NewStarView(QWidget):
         self.BaseView.title(data, text)
 
     def submit_click(self, values):
-        print('submit')
+        print(values)
 
     def add_tag(self, values):
         print('add tags')
