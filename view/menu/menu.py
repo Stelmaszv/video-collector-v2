@@ -97,17 +97,30 @@ class Menu(QMainWindow):
         action_menu = menubar.addMenu('Add')
         new_movie_menu_item = QAction('new movie', self)
         new_movie_menu_item.triggered.connect(self.add_new_movie)
+
         new_menu_object = QAction('new menu', self)
         new_menu_object.triggered.connect(self.new_menu_object_button)
+
+        new_star = QAction('new star', self)
+        new_star.triggered.connect(self.new_star)
+
         action_menu.addAction(new_movie_menu_item)
         action_menu.addAction(new_menu_object)
+        action_menu.addAction(new_star)
+
+
+
+
+
+
+    def new_star(self):
+        self.BaseView.load_view('new star')
 
     def new_menu_object_button(self):
         Menu([self.searchIn, self.searchFaze])
 
     def add_new_movie(self):
         self.BaseView.load_view('add_movie')
-        self.close()
 
     @pyqtSlot()
     def on_click(self):

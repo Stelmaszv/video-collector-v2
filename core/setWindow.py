@@ -15,9 +15,12 @@ class setWindow():
         from view.SeriesMovieListView.MovieListView import MovieListView
         from view.star.edit_star import EditStarView
         from view.tags.add_tags import AddTagView
+        from view.star.new_star import NewStarView
+
 
 
         switcher = {
+            'new star' : NewStarView(),
             'add_tags': AddTagView(),
             'stars': StarView(),
             'edit_star': EditStarView(),
