@@ -157,7 +157,7 @@ class NewStarView(QWidget):
         self.BaseView.load_view('add_star_via_dir')
 
     def add_via_dir_loop(self, values):
-        print('dir loop')
+        self.BaseView.load_view('add_star_via_dirLoop')
 
     def set_title(self):
         title = 'New star'

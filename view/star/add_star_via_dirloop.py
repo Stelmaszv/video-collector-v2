@@ -3,11 +3,11 @@ from core.view import BaseView
 from core.BaseActions import FormSection
 from core.rezolution import SetResolution
 from app.db.models import Stars
-from core.dir import AddStarViaDir
+from core.dir import AddStarViaDirLoop
 
 import sys
 
-class AddStarViaDirView(QWidget):
+class AddStarViaDirViewLoop(QWidget):
 
     model = Stars
 
@@ -58,12 +58,12 @@ class AddStarViaDirView(QWidget):
         self.FormSection.form_section(data_line, buttons)
 
     def submit_click(self,values):
-        ASDV = AddStarViaDir(values[0]['value'])
-        ASDV.add_files()
+        ASVDL = AddStarViaDirLoop(values[0]['value'])
+        ASVDL.add_files()
         self.close()
 
     def set_title(self):
-        title = 'New star  via dir'
+        title = 'New star  via dir loop'
         self.window_title = title
         data = [
             self.WindowSize['title_size'][0],
@@ -88,6 +88,6 @@ class AddStarViaDirView(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = AddStarViaDirView()
+    ex = AddStarViaDirViewLoop()
     ex.run_window()
     sys.exit(app.exec_())

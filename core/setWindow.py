@@ -17,9 +17,11 @@ class setWindow():
         from view.tags.add_tags import AddTagView
         from view.star.new_star import NewStarView
         from view.star.add_star_via_dir import AddStarViaDirView
+        from view.star.add_star_via_dirloop import AddStarViaDirViewLoop
 
 
         switcher = {
+            'add_star_via_dirLoop': AddStarViaDirViewLoop(),
             'add_star_via_dir': AddStarViaDirView(),
             'new star' : NewStarView(),
             'add_tags': AddTagView(),
