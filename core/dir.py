@@ -43,10 +43,16 @@ class AddStarViaDir:
     def __init__(self,dir):
         self.session = session
         self.dir=dir
-        self.star=self.if_star_exist('Sean Connery')
+        self.set_star_name()
+        self.star=self.if_star_exist(self.set_star_name())
         self.set_movie_dir()
         self.set_photo_dir()
         self.IfStar=IfStar()
+
+    def set_star_name(self):
+        name=self.dir.split('/')
+        last=len(name)-1
+        return name[last]
 
     def set_movie_dir(self):
         self.movie_dir=self.dir + '' + str('/none')
@@ -113,6 +119,18 @@ class AddStarViaDir:
     def add_files(self):
         self.scan_movie_dir()
         self.scan_photo_dir()
+
+class AddStarViaDirLoop:
+    def __init__(self,dir):
+        self.dir=dir
+
+    def add_files(self):
+        loop_dir = os.listdir(self.dir)
+        for item in loop_dir:
+            dir=self.dir+ '' + str('/'+item)
+            ASDV = AddStarViaDir(dir)
+            ASDV.add_files()
+
 
 class abstratValid:
 
