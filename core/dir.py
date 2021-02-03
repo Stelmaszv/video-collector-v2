@@ -34,6 +34,21 @@ class IfStar:
             return FS.create_star_list()
         return None
 
+class AddSeriesViaDir:
+
+    def __init__(self,dir):
+        self.dir=dir
+        self.name=self.set_series_name()
+
+    def set_series_name(self):
+        name=self.dir.split('/')
+        last=len(name)-1
+        return name[last]
+
+    def add_files(self):
+        print(self.name)
+
+
 class AddStarViaDir:
 
     model=Stars
