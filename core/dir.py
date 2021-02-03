@@ -2,6 +2,7 @@ import re
 from app.db.models import Stars,Movies,Series,Photos
 from app.db.models import session
 from abc import ABC
+from core.setings import series_avatar_defult
 import os
 
 class FaindStar:
@@ -65,7 +66,30 @@ class AddSeriesViaDir:
     def set_photo_dir(self):
         self.photo_dir = self.dir + '' + str('/photo')
 
+    def set_avatar(self):
+        avatar=''
+        photo_dir = os.listdir(self.photo_dir)
+        for photo in  photo_dir:
+            if self.clear_name(photo) == 'avatar':
+                avatar=photo;
+        if avatar:
+            avatar=self.photo_dir + '' + str('/'+avatar)
+        else:
+            avatar=series_avatar_defult
+        return avatar;
+
+    def set_sezons(self):
+        sezons=0
+        movie_dir = os.listdir(self.movie_dir)
+        for movie in movie_dir:
+            if os.path.isdir(self.movie_dir + '' + '/' + str(movie)):
+                sezons=sezons+1
+        if sezons>0:
+            return sezons;
+        return 1;
+
     def if_series_exist(self,name):
+        self.set_sezons()
         star=self.session.query(self.model).filter(self.model.name == name).first()
         if star:
             self.star = star
@@ -73,8 +97,8 @@ class AddSeriesViaDir:
             self.session.add_all([
                 self.model(
                     name=name,
-                    sezons = 4,
-                    avatar="C:/Users/DeadlyComputer/Desktop/data/series/James Bond Movies/photo/avatar.png",
+                    sezons = self.set_sezons(),
+                    avatar=self.set_avatar(),
                 )
             ])
             self.session.commit()
@@ -107,29 +131,78 @@ class AddSeriesViaDir:
         return str
 
     def add_files(self):
+        object = []
         movie_dir = os.listdir(self.movie_dir)
-        object=[]
-        for movie in movie_dir:
-            name=self.clear_name(movie)
-            src=movie
-            stars=[]
-            stars_array = self.IfStar.faind_stars(movie)
-            if stars_array is not None:
-                for item in stars_array :
-                    star_obj=self.if_star_exist(item)
-                    star_obj.series.append(self.series)
-                    stars.append(star_obj)
-            series=[self.series]
-            object.append(self.movie_model(
-                name=name,
-                src=src,
-                stars=stars,
-                series=series,
-                sezon = 1
-            ))
-        self.session.add_all(object)
-        self.session.commit()
+        for dir_element in movie_dir:
+            nev_dir = self.movie_dir + '' + '/' + str(dir_element)
+            if os.path.isdir(nev_dir):
+                nev_dir = os.listdir(nev_dir)
+                for movie in nev_dir:
+                    name = self.clear_name(movie)
+                    src = movie
+                    stars = []
+                    stars_array = self.IfStar.faind_stars(movie)
+                    if stars_array is not None:
+                        for item in stars_array:
+                            star_obj = self.if_star_exist(item)
+                            star_obj.series.append(self.series)
+                            stars.append(star_obj)
+                    series = [self.series]
+                    object.append(self.movie_model(
+                        name=name,
+                        src=src,
+                        stars=stars,
+                        series=series,
+                        sezon=dir_element
+                    ))
+                self.session.add_all(object)
+                self.session.commit()
 
+            """
+            nev_dir = self.movie_dir + '' + '/'+str(seazon)
+            if os.path.isdir(nev_dir):
+                nev_dir=os.listdir(self.movie_dir)
+                for movie in nev_dir:
+                    name = self.clear_name(movie)
+                    src = movie
+                    stars = []
+                    stars_array = self.IfStar.faind_stars(movie)
+                    if stars_array is not None:
+                        for item in stars_array:
+                            star_obj = self.if_star_exist(item)
+                            star_obj.series.append(self.series)
+                            stars.append(star_obj)
+                    series = [self.series]
+                    object.append(self.movie_model(
+                        name=name,
+                        src=src,
+                        stars=stars,
+                        series=series,
+                        sezon=seazon
+                    ))
+                self.session.add_all(object)
+                self.session.commit()
+            else:
+                name = self.clear_name(seazon)
+                src = seazon
+                stars = []
+                stars_array = self.IfStar.faind_stars(seazon)
+                if stars_array is not None:
+                    for item in stars_array:
+                        star_obj = self.if_star_exist(item)
+                        star_obj.series.append(self.series)
+                        stars.append(star_obj)
+                    series = [self.series]
+                    object.append(self.movie_model(
+                        name=name,
+                        src=src,
+                        stars=stars,
+                        series=series,
+                        sezon=1
+                    ))
+                    self.session.add_all(object)
+                    self.session.commit()
+            """
 
 class AddStarViaDir:
 

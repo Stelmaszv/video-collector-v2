@@ -204,7 +204,7 @@ class series(abstractSeader):
         self.objects = [
             self.model(
                 name="James Bond Movies",
-                avatar="C:/Users/DeadlyComputer/Desktop/data/series/James Bond Movies/photo/images.png",
+                avatar="C:/Users/DeadlyComputer/Desktop/data/series/James Bond Movies/photo/avatar.png",
                 sezons=4
             ),
             self.model(
