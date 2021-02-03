@@ -293,33 +293,29 @@ class AddSeriesViaDirLoop(AbstractLoopDir):
 
 class LoadData(ABC):
 
+    DirLoopClass=None
+
     def __init__(self,dir):
         self.dir=dir
 
-
-    @abstractmethod
     def load(self):
-        pass
+        dir = os.listdir(self.dir)
+        for item in dir:
+            new_dir = self.dir + '' + str('/' + item)
+            if os.path.isdir(new_dir):
+                LC = self.DirLoopClass(new_dir)
+                LC.add_files()
 
 class LoadSeriesFromJSON(LoadData):
-    def load(self):
-        dir = os.listdir(self.dir)
-        for item in dir:
-            new_dir = self.dir + '' + str('/' + item)
-            if os.path.isdir(new_dir):
-                ASVDL = AddSeriesViaDirLoop(new_dir)
-                ASVDL.add_files()
+
+    DirLoopClass = AddSeriesViaDirLoop
 
 class LoadStarFromJSON(LoadData):
-    def load(self):
-        dir = os.listdir(self.dir)
-        for item in dir:
-            new_dir = self.dir + '' + str('/' + item)
-            if os.path.isdir(new_dir):
-                ASVDL=AddStarViaDirLoop(new_dir)
-                ASVDL.add_files()
+
+    DirLoopClass = AddStarViaDirLoop
 
 class LoadFilesFromJson:
+
     objects={}
 
     def __init__(self,json_data):
