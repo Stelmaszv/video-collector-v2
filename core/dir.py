@@ -34,19 +34,101 @@ class IfStar:
             return FS.create_star_list()
         return None
 
+class IfSeries:
+
+    pass
+
 class AddSeriesViaDir:
+
+    model=Series
+    movie_model=Movies
+    photo_model=Photos
 
     def __init__(self,dir):
         self.dir=dir
+        self.session = session
+        self.set_movie_dir()
+        self.set_photo_dir()
+        self.IfStar = IfStar()
+        self.IFSeries=IfSeries()
         self.name=self.set_series_name()
+        self.series=self.if_series_exist(self.name)
 
     def set_series_name(self):
         name=self.dir.split('/')
         last=len(name)-1
         return name[last]
 
+    def set_movie_dir(self):
+        self.movie_dir=self.dir + '' + str('/movies')
+
+    def set_photo_dir(self):
+        self.photo_dir = self.dir + '' + str('/photo')
+
+    def if_series_exist(self,name):
+        star=self.session.query(self.model).filter(self.model.name == name).first()
+        if star:
+            self.star = star
+        else:
+            self.session.add_all([
+                self.model(
+                    name=name,
+                    sezons = 4,
+                    avatar="C:/Users/DeadlyComputer/Desktop/data/series/James Bond Movies/photo/avatar.png",
+                )
+            ])
+            self.session.commit()
+            star = self.session.query(self.model).filter(self.model.name == name).first()
+        return star
+
+    def if_star_exist(self,name):
+        star=self.session.query(Stars).filter(Stars.name == name).first()
+        if star:
+            self.star = star
+        else:
+            self.session.add_all([Stars(name=name)])
+            self.session.commit()
+            star = self.session.query(Stars).filter(Stars.name == name).first()
+        return star
+
+    def clear_name(self, dir):
+        str = ''
+        stop = False
+        for i in range(0, len(dir)):
+            if dir[i] == "(" :
+                stop = True
+
+            if dir[i] == ".":
+                stop = True
+
+            if stop is False:
+                str = str + dir[i]
+
+        return str
+
     def add_files(self):
-        print(self.name)
+        movie_dir = os.listdir(self.movie_dir)
+        object=[]
+        for movie in movie_dir:
+            name=self.clear_name(movie)
+            src=movie
+            stars=[]
+            stars_array = self.IfStar.faind_stars(movie)
+            if stars_array is not None:
+                for item in stars_array :
+                    star_obj=self.if_star_exist(item)
+                    star_obj.series.append(self.series)
+                    stars.append(star_obj)
+            series=[self.series]
+            object.append(self.movie_model(
+                name=name,
+                src=src,
+                stars=stars,
+                series=series,
+                sezon = 1
+            ))
+        self.session.add_all(object)
+        self.session.commit()
 
 
 class AddStarViaDir:
@@ -68,6 +150,16 @@ class AddStarViaDir:
         name=self.dir.split('/')
         last=len(name)-1
         return name[last]
+
+    def if_star_exist(self,name):
+        star=self.session.query(self.model).filter(self.model.name == name).first()
+        if star:
+            self.star = star
+        else:
+            self.session.add_all([self.model(name=name)])
+            self.session.commit()
+            star = self.session.query(self.model).filter(self.model.name == name).first()
+        return star
 
     def set_movie_dir(self):
         self.movie_dir=self.dir + '' + str('/none')
