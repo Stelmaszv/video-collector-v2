@@ -320,18 +320,19 @@ class LoadStarFromJSON(LoadData):
                 ASVDL.add_files()
 
 class LoadFilesFromJson:
-    objects=[]
+    objects={}
 
     def __init__(self,json_data):
         self.json_data=json_data
+        self.object={
+            "stars"  : LoadStarFromJSON,
+            "series" :  LoadSeriesFromJSON
+        }
 
     def add_files(self):
-        LD=None
         for item in self.json_data:
-            if item['type'] ==  'stars':
-                LD=LoadStarFromJSON(item['dir'])
-            if item['type'] == 'series':
-                LD = LoadSeriesFromJSON(item['dir'])
+            LD=self.object[item['type']]
+            LD=LD(item['dir'])
             LD.load()
 
 #old Versions#
