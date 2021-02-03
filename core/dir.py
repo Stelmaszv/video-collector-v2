@@ -275,6 +275,7 @@ class AddStarViaDir:
         self.scan_photo_dir()
 
 class AddStarViaDirLoop:
+
     def __init__(self,dir):
         self.dir=dir
 
@@ -284,6 +285,19 @@ class AddStarViaDirLoop:
             dir=self.dir+ '' + str('/'+item)
             ASDV = AddStarViaDir(dir)
             ASDV.add_files()
+
+class AddSeriesViaDirLoop:
+
+    def __init__(self,dir):
+        self.dir=dir
+
+    def add_files(self):
+        loop_dir = os.listdir(self.dir)
+        for item in loop_dir:
+            dir=self.dir+ '' + str('/'+item)
+            ASDV = AddSeriesViaDir(dir)
+            ASDV.add_files()
+
 
 class abstratValid:
 
