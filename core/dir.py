@@ -1,7 +1,7 @@
 import re
 from app.db.models import Stars,Movies,Series,Photos
 from app.db.models import session
-from abc import ABC
+from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult
 import os
 
@@ -35,10 +35,6 @@ class IfStar:
             return FS.create_star_list()
         return None
 
-class IfSeries:
-
-    pass
-
 class AddSeriesViaDir:
 
     model=Series
@@ -51,7 +47,6 @@ class AddSeriesViaDir:
         self.set_movie_dir()
         self.set_photo_dir()
         self.IfStar = IfStar()
-        self.IFSeries=IfSeries()
         self.name=self.set_series_name()
         self.series=self.if_series_exist(self.name)
 
@@ -274,7 +269,9 @@ class AddStarViaDir:
         self.scan_movie_dir()
         self.scan_photo_dir()
 
-class AddStarViaDirLoop:
+class AbstractLoopDir(ABC):
+
+    LoopClass=None
 
     def __init__(self,dir):
         self.dir=dir
@@ -282,22 +279,62 @@ class AddStarViaDirLoop:
     def add_files(self):
         loop_dir = os.listdir(self.dir)
         for item in loop_dir:
-            dir=self.dir+ '' + str('/'+item)
-            ASDV = AddStarViaDir(dir)
-            ASDV.add_files()
+            dir = self.dir + '' + str('/' + item)
+            LC = self.LoopClass(dir)
+            LC.add_files()
 
-class AddSeriesViaDirLoop:
+class AddStarViaDirLoop(AbstractLoopDir):
+
+    LoopClass=AddStarViaDir
+
+class AddSeriesViaDirLoop(AbstractLoopDir):
+
+    LoopClass = AddSeriesViaDir
+
+class LoadData(ABC):
 
     def __init__(self,dir):
         self.dir=dir
 
-    def add_files(self):
-        loop_dir = os.listdir(self.dir)
-        for item in loop_dir:
-            dir=self.dir+ '' + str('/'+item)
-            ASDV = AddSeriesViaDir(dir)
-            ASDV.add_files()
 
+    @abstractmethod
+    def load(self):
+        pass
+
+class LoadSeriesFromJSON(LoadData):
+    def load(self):
+        dir = os.listdir(self.dir)
+        for item in dir:
+            new_dir = self.dir + '' + str('/' + item)
+            if os.path.isdir(new_dir):
+                ASVDL = AddSeriesViaDirLoop(new_dir)
+                ASVDL.add_files()
+
+class LoadStarFromJSON(LoadData):
+    def load(self):
+        dir = os.listdir(self.dir)
+        for item in dir:
+            new_dir = self.dir + '' + str('/' + item)
+            if os.path.isdir(new_dir):
+                ASVDL=AddStarViaDirLoop(new_dir)
+                ASVDL.add_files()
+
+class LoadFilesFromJson:
+    objects=[]
+
+    def __init__(self,json_data):
+        self.json_data=json_data
+
+    def add_files(self):
+        LD=None
+        for item in self.json_data:
+            if item['type'] ==  'stars':
+                LD=LoadStarFromJSON(item['dir'])
+            if item['type'] == 'series':
+                LD = LoadSeriesFromJSON(item['dir'])
+            LD.load()
+
+#old Versions#
 
 class abstratValid:
 
