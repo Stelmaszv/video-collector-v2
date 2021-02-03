@@ -157,52 +157,26 @@ class AddSeriesViaDir:
                     ))
                 self.session.add_all(object)
                 self.session.commit()
-
-            """
-            nev_dir = self.movie_dir + '' + '/'+str(seazon)
-            if os.path.isdir(nev_dir):
-                nev_dir=os.listdir(self.movie_dir)
-                for movie in nev_dir:
-                    name = self.clear_name(movie)
-                    src = movie
-                    stars = []
-                    stars_array = self.IfStar.faind_stars(movie)
-                    if stars_array is not None:
-                        for item in stars_array:
-                            star_obj = self.if_star_exist(item)
-                            star_obj.series.append(self.series)
-                            stars.append(star_obj)
-                    series = [self.series]
-                    object.append(self.movie_model(
-                        name=name,
-                        src=src,
-                        stars=stars,
-                        series=series,
-                        sezon=seazon
-                    ))
-                self.session.add_all(object)
-                self.session.commit()
             else:
-                name = self.clear_name(seazon)
-                src = seazon
+                name = self.clear_name(dir_element)
+                src = dir_element
                 stars = []
-                stars_array = self.IfStar.faind_stars(seazon)
+                stars_array = self.IfStar.faind_stars(dir_element)
                 if stars_array is not None:
                     for item in stars_array:
                         star_obj = self.if_star_exist(item)
                         star_obj.series.append(self.series)
                         stars.append(star_obj)
-                    series = [self.series]
-                    object.append(self.movie_model(
-                        name=name,
-                        src=src,
-                        stars=stars,
-                        series=series,
-                        sezon=1
-                    ))
-                    self.session.add_all(object)
-                    self.session.commit()
-            """
+                series = [self.series]
+                object.append(self.movie_model(
+                    name=name,
+                    src=src,
+                    stars=stars,
+                    series=series,
+                    sezon=1
+                ))
+                self.session.add_all(object)
+                self.session.commit()
 
 class AddStarViaDir:
 
