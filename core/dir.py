@@ -35,90 +35,19 @@ class IfStar:
             return FS.create_star_list()
         return None
 
-class AddSeriesViaDir:
+class AbstractAddViaDir(ABC):
 
-    model=Series
     movie_model=Movies
     photo_model=Photos
+    movie_dir='/movies'
+    photo_dir='/photo'
 
-    def __init__(self,dir):
-        self.dir=dir
+    def __init__(self, dir):
+        self.dir = dir
         self.session = session
+        self.IfStar = IfStar()
         self.set_movie_dir()
         self.set_photo_dir()
-        self.IfStar = IfStar()
-        self.name=self.set_series_name()
-        self.set_seris_name_is_star_name_var=self.set_seris_name_is_star_name()
-        self.series=self.if_series_exist(self.name)
-
-    def set_series_name(self):
-        name=self.dir.split('/')
-        last=len(name)-1
-        return name[last]
-
-    def set_movie_name_is_star_name(self,name):
-        return True
-
-    def set_seris_name_is_star_name(self):
-        validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9]+";
-        if re.search(validValue, self.name):
-            return True
-        return False
-
-    def set_movie_dir(self):
-        self.movie_dir=self.dir + '' + str('/movies')
-
-    def set_photo_dir(self):
-        self.photo_dir = self.dir + '' + str('/photo')
-
-    def set_avatar(self):
-        avatar=''
-        photo_dir = os.listdir(self.photo_dir)
-        for photo in  photo_dir:
-            if self.clear_name(photo) == 'avatar':
-                avatar=photo;
-        if avatar:
-            avatar=self.photo_dir + '' + str('/'+avatar)
-        else:
-            avatar=series_avatar_defult
-        return avatar;
-
-    def set_sezons(self):
-        sezons=0
-        movie_dir = os.listdir(self.movie_dir)
-        for movie in movie_dir:
-            if os.path.isdir(self.movie_dir + '' + '/' + str(movie)):
-                sezons=sezons+1
-        if sezons>0:
-            return sezons;
-        return 1;
-
-    def if_series_exist(self,name):
-        self.set_sezons()
-        star=self.session.query(self.model).filter(self.model.name == name).first()
-        if star:
-            self.star = star
-        else:
-            self.session.add_all([
-                self.model(
-                    name=name,
-                    sezons = self.set_sezons(),
-                    avatar=self.set_avatar(),
-                )
-            ])
-            self.session.commit()
-            star = self.session.query(self.model).filter(self.model.name == name).first()
-        return star
-
-    def if_star_exist(self,name):
-        star=self.session.query(Stars).filter(Stars.name == name).first()
-        if star:
-            self.star = star
-        else:
-            self.session.add_all([Stars(name=name)])
-            self.session.commit()
-            star = self.session.query(Stars).filter(Stars.name == name).first()
-        return star
 
     def clear_name(self, dir):
         str = ''
@@ -139,7 +68,119 @@ class AddSeriesViaDir:
 
         return str
 
+    def set_name(self):
+        name=self.dir.split('/')
+        last=len(name)-1
+        return name[last]
+
+    def set_movie_dir(self):
+        self.movie_dir=self.dir + '' + str(self.movie_dir)
+
+    def set_photo_dir(self):
+        self.photo_dir = self.dir + '' + str(self.photo_dir)
+
+    def set_avatar(self,avatar_defult):
+        avatar=''
+        photo_dir = os.listdir(self.photo_dir)
+        for photo in  photo_dir:
+            if self.clear_name(photo) == 'avatar':
+                avatar=photo;
+        if avatar:
+            avatar=self.photo_dir + '' + str('/'+avatar)
+        else:
+            avatar=avatar_defult
+        return avatar;
+
+    def if_exist(self,name,Model,add):
+        Obj=self.session.query(Model).filter(Model.name == name).first()
+        if Obj:
+            self.star = Obj
+        else:
+            self.session.add_all([
+                add
+            ])
+            self.session.commit()
+            Obj = self.session.query(Model).filter(Model.name == name).first()
+        return Obj
+
+    def scan_photo_dir(self):
+        photo_dir = os.listdir(self.photo_dir)
+        object = []
+        for photo in photo_dir:
+            src=self.photo_dir+ '' + str('/'+photo)
+            object.append(self.photo_model(src=src, stars=[self.star]))
+
+        self.session.add_all(object)
+        self.session.commit()
+
+    @abstractmethod
     def add_files(self):
+        pass
+
+
+class AddSeriesViaDir(AbstractAddViaDir):
+
+    model=Series
+
+    def __init__(self,dir):
+        super().__init__(dir)
+        self.name=self.set_name()
+        self.series=self.if_series_exist(self.name)
+
+    def set_movie_name_is_star_name(self,name):
+        return True
+
+    def set_sezons(self):
+        sezons=0
+        movie_dir = os.listdir(self.movie_dir)
+        for movie in movie_dir:
+            if os.path.isdir(self.movie_dir + '' + '/' + str(movie)):
+                sezons=sezons+1
+        if sezons>0:
+            return sezons;
+        return 1;
+
+    def if_series_exist(self,name):
+        return self.if_exist(name,self.model,self.model(
+            name    =  name,
+            sezons  =  self.set_sezons(),
+            avatar  =  self.set_avatar(series_avatar_defult),
+        ))
+
+    def if_star_exist(self,name):
+        return self.if_exist(name,Stars,Stars(
+            name=name
+        ))
+
+    def add_movie(self,movie,sezon):
+        name = self.clear_name(movie)
+        src = movie
+        stars = []
+        stars_array = self.IfStar.faind_stars(movie)
+        if stars_array is not None:
+            for item in stars_array:
+                star_obj = self.if_star_exist(item)
+                star_obj.series.append(self.series)
+                stars.append(star_obj)
+        else:
+            if self.set_movie_name_is_star_name(movie):
+                star_obj = self.if_star_exist(name)
+                star_obj.series.append(self.series)
+                stars.append(star_obj)
+        series = [self.series]
+        return self.movie_model(
+            name=name,
+            src=src,
+            stars=stars,
+            series=series,
+            sezon=sezon
+        );
+
+    def add_files(self):
+        self.scan_movie_dir()
+        self.scan_photo_dir()
+
+    def scan_movie_dir(self):
         object = []
         movie_dir = os.listdir(self.movie_dir)
         for dir_element in movie_dir:
@@ -147,117 +188,26 @@ class AddSeriesViaDir:
             if os.path.isdir(nev_dir):
                 nev_dir = os.listdir(nev_dir)
                 for movie in nev_dir:
-                    name = self.clear_name(movie)
-                    src = movie
-                    stars = []
-                    stars_array = self.IfStar.faind_stars(movie)
-                    if stars_array is not None:
-                        for item in stars_array:
-                            star_obj = self.if_star_exist(item)
-                            star_obj.series.append(self.series)
-                            stars.append(star_obj)
-                    else:
-                        if self.set_movie_name_is_star_name(movie):
-                            star_obj = self.if_star_exist(name)
-                            star_obj.series.append(self.series)
-                            stars.append(star_obj)
-                    series = [self.series]
-                    object.append(self.movie_model(
-                        name=name,
-                        src=src,
-                        stars=stars,
-                        series=series,
-                        sezon=dir_element
-                    ))
-                self.session.add_all(object)
-                self.session.commit()
+                    object.append(self.add_movie(movie,dir_element))
             else:
-                name = self.clear_name(dir_element)
-                src = dir_element
-                stars = []
-                stars_array = self.IfStar.faind_stars(dir_element)
-                if stars_array is not None:
-                    for item in stars_array:
-                        star_obj = self.if_star_exist(item)
-                        star_obj.series.append(self.series)
-                        stars.append(star_obj)
-                else:
-                    if self.set_movie_name_is_star_name(dir_element):
-                        star_obj = self.if_star_exist(name)
-                        star_obj.series.append(self.series)
-                        stars.append(star_obj)
+                object.append(self.add_movie(dir_element,1))
 
-                series = [self.series]
-                object.append(self.movie_model(
-                    name=name,
-                    src=src,
-                    stars=stars,
-                    series=series,
-                    sezon=1
-                ))
-                self.session.add_all(object)
-                self.session.commit()
+        self.session.add_all(object)
+        self.session.commit()
 
-class AddStarViaDir:
+class AddStarViaDir(AbstractAddViaDir):
 
     model=Stars
-    movie_model=Movies
-    photo_model=Photos
+    movie_dir = '/none'
 
     def __init__(self,dir):
-        self.session = session
-        self.dir=dir
-        self.set_star_name()
-        self.star=self.if_star_exist(self.set_star_name())
-        self.set_movie_dir()
-        self.set_photo_dir()
-        self.IfStar=IfStar()
-
-    def set_star_name(self):
-        name=self.dir.split('/')
-        last=len(name)-1
-        return name[last]
+        super().__init__(dir)
+        self.star=self.if_star_exist(self.set_name())
 
     def if_star_exist(self,name):
-        star=self.session.query(self.model).filter(self.model.name == name).first()
-        if star:
-            self.star = star
-        else:
-            self.session.add_all([self.model(name=name)])
-            self.session.commit()
-            star = self.session.query(self.model).filter(self.model.name == name).first()
-        return star
-
-    def set_movie_dir(self):
-        self.movie_dir=self.dir + '' + str('/none')
-
-    def set_photo_dir(self):
-        self.photo_dir = self.dir + '' + str('/photo')
-
-    def clear_name(self, dir):
-        str = ''
-        stop = False
-        for i in range(0, len(dir)):
-            if dir[i] == "(":
-                stop = True
-
-            if dir[i] == ".":
-                stop = True
-
-            if stop is False:
-                str = str + dir[i]
-
-        return str
-
-    def if_star_exist(self,name):
-        star=self.session.query(self.model).filter(self.model.name == name).first()
-        if star:
-            self.star = star
-        else:
-            self.session.add_all([self.model(name=name)])
-            self.session.commit()
-            star = self.session.query(self.model).filter(self.model.name == name).first()
-        return star
+        return self.if_exist(name, self.model, self.model(
+            name=name
+        ))
 
     def scan_movie_dir(self):
         movie_dir = os.listdir(self.movie_dir)
@@ -276,16 +226,6 @@ class AddStarViaDir:
                 stars=new_stars,
                 src=movie
             ))
-
-        self.session.add_all(object)
-        self.session.commit()
-
-    def scan_photo_dir(self):
-        photo_dir = os.listdir(self.photo_dir)
-        object = []
-        for photo in photo_dir:
-            src=self.photo_dir+ '' + str('/'+photo)
-            object.append(self.photo_model(src=src, stars=[self.star]))
 
         self.session.add_all(object)
         self.session.commit()
