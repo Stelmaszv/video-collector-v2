@@ -4,6 +4,8 @@ from core.search import setFactory
 from app.db.seaders import initSeader
 from core.helper import QueryCounter
 from core.rezolution import SetResolution
+from core.setings import data_JSON
+from core.dir import LoadFilesFromJson
 
 #initSeader().initNow()
 class Menu(QMainWindow):
@@ -94,6 +96,8 @@ class Menu(QMainWindow):
     def menu(self):
         menubar = self.menuBar()
         action_menu = menubar.addMenu('Add')
+        JSDATA = menubar.addMenu('Load data from JSON')
+
         new_movie_menu_item = QAction('new movie', self)
         new_movie_menu_item.triggered.connect(self.add_new_movie)
 
@@ -101,11 +105,31 @@ class Menu(QMainWindow):
         new_menu_object.triggered.connect(self.new_menu_object_button)
 
         new_star = QAction('new star', self)
-        new_star.triggered.connect(self.new_star)
+        new_star.triggered.connect(self.load_data)
 
         action_menu.addAction(new_movie_menu_item)
         action_menu.addAction(new_menu_object)
         action_menu.addAction(new_star)
+
+        JSLOAD= QAction('Load', self)
+        JSLOAD.triggered.connect(self.load_data)
+
+        JSconfig= QAction('Load Config', self)
+        JSconfig.triggered.connect(self.load_config)
+
+        JSDATA.addAction(JSLOAD)
+        JSDATA.addAction(JSconfig)
+
+    def load_config(self):
+        print('dq')
+
+    def load_data(self):
+        LFFJ = LoadFilesFromJson(data_JSON)
+        LFFJ.add_files()
+        self.close()
+        M = Menu
+        M.page = self.page - 1
+        M([self.searchIn, self.searchFaze])
 
     def new_star(self):
         self.BaseView.load_view('new star')
