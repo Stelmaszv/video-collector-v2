@@ -48,12 +48,22 @@ class AddSeriesViaDir:
         self.set_photo_dir()
         self.IfStar = IfStar()
         self.name=self.set_series_name()
+        self.set_seris_name_is_star_name_var=self.set_seris_name_is_star_name()
         self.series=self.if_series_exist(self.name)
 
     def set_series_name(self):
         name=self.dir.split('/')
         last=len(name)-1
         return name[last]
+
+    def set_movie_name_is_star_name(self,name):
+        return True
+
+    def set_seris_name_is_star_name(self):
+        validValue = "\[[a-zA-Z0-9\s]+\]\s[a-zA-Z0-9]+";
+        if re.search(validValue, self.name):
+            return True
+        return False
 
     def set_movie_dir(self):
         self.movie_dir=self.dir + '' + str('/movies')
@@ -114,6 +124,10 @@ class AddSeriesViaDir:
         str = ''
         stop = False
         for i in range(0, len(dir)):
+
+            if dir[i] == "[":
+                stop = True
+
             if dir[i] == "(" :
                 stop = True
 
@@ -142,6 +156,11 @@ class AddSeriesViaDir:
                             star_obj = self.if_star_exist(item)
                             star_obj.series.append(self.series)
                             stars.append(star_obj)
+                    else:
+                        if self.set_movie_name_is_star_name(movie):
+                            star_obj = self.if_star_exist(name)
+                            star_obj.series.append(self.series)
+                            stars.append(star_obj)
                     series = [self.series]
                     object.append(self.movie_model(
                         name=name,
@@ -162,6 +181,12 @@ class AddSeriesViaDir:
                         star_obj = self.if_star_exist(item)
                         star_obj.series.append(self.series)
                         stars.append(star_obj)
+                else:
+                    if self.set_movie_name_is_star_name(dir_element):
+                        star_obj = self.if_star_exist(name)
+                        star_obj.series.append(self.series)
+                        stars.append(star_obj)
+
                 series = [self.series]
                 object.append(self.movie_model(
                     name=name,
