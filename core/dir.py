@@ -2,7 +2,7 @@ import re
 from app.db.models import Stars,Movies,Series,Photos
 from app.db.models import session
 from abc import ABC,abstractmethod
-from core.setings import series_avatar_defult
+from core.setings import series_avatar_defult,stars_avatar_defult
 import os
 
 class FaindStar:
@@ -105,9 +105,18 @@ class AbstractAddViaDir(ABC):
             Obj = self.session.query(Model).filter(Model.name == name).first()
         return Obj
 
+    def clear_photo(self,object):
+        if object is not None:
+            for item in object.photos:
+               self.session.delete(item)
+               self.session.commit()
+
     def scan_photo_dir(self):
         photo_dir = os.listdir(self.photo_dir)
         object = []
+        self.clear_photo(self.star)
+        self.clear_photo(self.series)
+
         for photo in photo_dir:
             src=self.photo_dir+ '' + str('/'+photo)
             if self.star is not None:
@@ -154,7 +163,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
 
     def if_star_exist(self,name):
         return self.if_exist(name,Stars,Stars(
-            name=name
+            name   = name,
+            avatar = stars_avatar_defult,
         ))
 
     def add_movie(self,movie,sezon):
@@ -173,7 +183,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
         series = [self.series]
-        print('Movie '+str(name)+' has been added')
+       # print('Movie '+str(name)+' has been added')
         return self.movie_model(
             name=name,
             src=src,
@@ -192,8 +202,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
         for dir_element in movie_dir:
             nev_dir = self.movie_dir + '' + '/' + str(dir_element)
             if os.path.isdir(nev_dir):
-                nev_dir = os.listdir(nev_dir)
-                for movie in nev_dir:
+                nev_dir_loop = os.listdir(nev_dir)
+                for movie in nev_dir_loop:
                     object.append(self.add_movie(movie,dir_element))
             else:
                 object.append(self.add_movie(dir_element,1))
@@ -212,7 +222,8 @@ class AddStarViaDir(AbstractAddViaDir):
 
     def if_star_exist(self,name):
         return self.if_exist(name, self.model, self.model(
-            name=name
+            name=name,
+            avatar = self.set_avatar(stars_avatar_defult),
         ))
 
     def scan_movie_dir(self):
@@ -232,7 +243,7 @@ class AddStarViaDir(AbstractAddViaDir):
                 stars=new_stars,
                 src=movie
             ))
-            print('Movie ' + str(name) + ' has been added')
+            #print('Movie ' + str(name) + ' has been added')
 
         self.session.add_all(object)
         self.session.commit()
