@@ -171,6 +171,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         return self.if_exist(name,Stars,Stars(
             name   = name,
             avatar = stars_avatar_defult,
+            dir    = ''
         ))
 
     def add_movie(self,movie,sezon):
@@ -268,10 +269,11 @@ class LoadPhotoFromDirs:
     def add_photos(self,dir,model):
         self.clear_photo(model)
         object=[]
-        photo_dir_loop = os.listdir(dir)
-        for photo in photo_dir_loop:
-            src=dir + '' + str('/'+photo)
-            object.append(self.photo_model(src=src))
+        if os.path.isdir(dir):
+            photo_dir_loop = os.listdir(dir)
+            for photo in photo_dir_loop:
+                src=dir + '' + str('/'+photo)
+                object.append(self.photo_model(src=src))
 
         self.session.add_all(object)
         self.session.commit()
@@ -288,6 +290,7 @@ class LoadPhotoFromDirs:
 
     def add_files(self):
         self.add_elment(Series)
+        self.add_elment(Stars)
 
 class AbstractLoopDir(ABC):
 
