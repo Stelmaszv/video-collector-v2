@@ -41,6 +41,8 @@ class AbstractAddViaDir(ABC):
     photo_model=Photos
     movie_dir='/movies'
     photo_dir='/photo'
+    star=None
+    series=None
 
     def __init__(self, dir):
         self.dir = dir
@@ -108,7 +110,10 @@ class AbstractAddViaDir(ABC):
         object = []
         for photo in photo_dir:
             src=self.photo_dir+ '' + str('/'+photo)
-            object.append(self.photo_model(src=src, stars=[self.star]))
+            if self.star is not None:
+                object.append(self.photo_model(src=src, stars=[self.star]))
+            if self.series is not None:
+                object.append(self.photo_model(src=src, series=[self.series]))
 
         self.session.add_all(object)
         self.session.commit()
@@ -168,6 +173,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
         series = [self.series]
+        print('Movie '+str(name)+' has been added')
         return self.movie_model(
             name=name,
             src=src,
@@ -214,7 +220,7 @@ class AddStarViaDir(AbstractAddViaDir):
         object=[]
 
         for movie in movie_dir:
-
+            name = self.clear_name(movie)
             stars = self.IfStar.faind_stars(movie)
             new_stars = []
             if stars is not None:
@@ -226,6 +232,7 @@ class AddStarViaDir(AbstractAddViaDir):
                 stars=new_stars,
                 src=movie
             ))
+            print('Movie ' + str(name) + ' has been added')
 
         self.session.add_all(object)
         self.session.commit()
