@@ -146,8 +146,12 @@ class AddSeriesViaDir(AbstractAddViaDir):
         self.name=self.set_name()
         self.series=self.if_series_exist(self.name)
 
-    def set_movie_name_is_star_name(self,name):
-        return True
+    def set_movie_name_is_star_name(self,dir):
+        stop = False
+        for i in range(0, len(dir)):
+            if dir[i] == "[" :
+                stop = True
+        return stop
 
     def set_sezons(self):
         sezons=0
@@ -174,7 +178,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
             dir    = ''
         ))
 
-    def add_movie(self,movie,sezon):
+    def add_movie(self,movie,sezon,movie_name_is_star=False):
         name = self.clear_name(movie)
         src = movie
         stars = []
@@ -185,7 +189,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
         else:
-            if self.set_movie_name_is_star_name(movie):
+            if movie_name_is_star:
                 star_obj = self.if_star_exist(name)
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
@@ -206,9 +210,10 @@ class AddSeriesViaDir(AbstractAddViaDir):
             nev_dir = self.movie_dir + '' + '/' + str(dir_element)
             if os.path.isdir(nev_dir):
                 nev_dir_loop = os.listdir(nev_dir)
+                stan=self.set_movie_name_is_star_name(dir_element)
                 for movie in nev_dir_loop:
                     if self.if_movie_exist(self.clear_name(movie)):
-                        object.append(self.add_movie(movie, dir_element))
+                        object.append(self.add_movie(movie, dir_element,stan))
             else:
                 if self.if_movie_exist(self.clear_name(dir_element)):
                     object.append(self.add_movie(dir_element, 1))
