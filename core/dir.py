@@ -127,10 +127,15 @@ class AbstractAddViaDir(ABC):
         self.session.add_all(object)
         self.session.commit()
 
+    def if_movie_exist(self,name):
+        Obj = self.session.query(self.movie_model).filter(self.movie_model.name == name).first()
+        if Obj:
+            return False
+        return True
+
     @abstractmethod
     def add_files(self):
         pass
-
 
 class AddSeriesViaDir(AbstractAddViaDir):
 
@@ -159,6 +164,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
             name    =  name,
             sezons  =  self.set_sezons(),
             avatar  =  self.set_avatar(series_avatar_defult),
+            dir     =  self.dir
         ))
 
     def if_star_exist(self,name):
@@ -183,7 +189,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
         series = [self.series]
-       # print('Movie '+str(name)+' has been added')
+        print('Movie '+str(name)+' has been added')
         return self.movie_model(
             name=name,
             src=src,
@@ -193,10 +199,6 @@ class AddSeriesViaDir(AbstractAddViaDir):
         );
 
     def add_files(self):
-        self.scan_movie_dir()
-        self.scan_photo_dir()
-
-    def scan_movie_dir(self):
         object = []
         movie_dir = os.listdir(self.movie_dir)
         for dir_element in movie_dir:
@@ -204,9 +206,11 @@ class AddSeriesViaDir(AbstractAddViaDir):
             if os.path.isdir(nev_dir):
                 nev_dir_loop = os.listdir(nev_dir)
                 for movie in nev_dir_loop:
-                    object.append(self.add_movie(movie,dir_element))
+                    if self.if_movie_exist(self.clear_name(movie)):
+                        object.append(self.add_movie(movie, dir_element))
             else:
-                object.append(self.add_movie(dir_element,1))
+                if self.if_movie_exist(self.clear_name(dir_element)):
+                    object.append(self.add_movie(dir_element, 1))
 
         self.session.add_all(object)
         self.session.commit()
@@ -224,33 +228,66 @@ class AddStarViaDir(AbstractAddViaDir):
         return self.if_exist(name, self.model, self.model(
             name=name,
             avatar = self.set_avatar(stars_avatar_defult),
+            dir=self.dir
         ))
 
-    def scan_movie_dir(self):
+    def add_files(self):
         movie_dir = os.listdir(self.movie_dir)
-        object=[]
+        object = []
 
         for movie in movie_dir:
             name = self.clear_name(movie)
             stars = self.IfStar.faind_stars(movie)
             new_stars = []
             if stars is not None:
-                for star in  stars:
+                for star in stars:
                     new_stars.append(self.if_star_exist(star))
             new_stars.append(self.star)
-            object.append(self.movie_model(
-                name=self.clear_name(movie),
-                stars=new_stars,
-                src=movie
-            ))
-            #print('Movie ' + str(name) + ' has been added')
+            if self.if_movie_exist(self.clear_name(movie)):
+                object.append(self.movie_model(
+                    name=self.clear_name(movie),
+                    stars=new_stars,
+                    src=movie
+                ))
+                print('Movie ' + str(name) + ' has been added')
 
         self.session.add_all(object)
         self.session.commit()
 
+class LoadPhotoFromDirs:
+
+    session=session
+    photo_model = Photos
+
+    def clear_photo(self,object):
+        if object is not None:
+            for item in object.photos:
+               self.session.delete(item)
+               self.session.commit()
+
+    def add_photos(self,dir,model):
+        self.clear_photo(model)
+        object=[]
+        photo_dir_loop = os.listdir(dir)
+        for photo in photo_dir_loop:
+            src=dir + '' + str('/'+photo)
+            object.append(self.photo_model(src=src))
+
+        self.session.add_all(object)
+        self.session.commit()
+
+        for photo_item in object:
+            model.photos.append(photo_item)
+
+    def add_elment(self,Model):
+        all = self.session.query(Model).all()
+
+        for series_item in all:
+            photo_dir = series_item.dir + '' + str('/photo')
+            self.add_photos(photo_dir, series_item)
+
     def add_files(self):
-        self.scan_movie_dir()
-        self.scan_photo_dir()
+        self.add_elment(Series)
 
 class AbstractLoopDir(ABC):
 
