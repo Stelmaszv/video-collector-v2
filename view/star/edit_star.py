@@ -49,6 +49,12 @@ class EditStarView(QWidget):
         self.setGeometry(self.left , self.top, self.width, self.height)
         return True
 
+    def return_date_of_birth(self):
+        valid='Format "rrrr-mm-dd"'
+        if self.data.date_of_birth is None:
+            return valid
+        return str(self.data.date_of_birth)
+
     def form_section(self):
         data_line = [
             self.WindowSize['form_section'][0],
@@ -145,15 +151,61 @@ class EditStarView(QWidget):
                 'data_type': 'data',
                 'DB': 'date_of_birth',
                 'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
-                'place_holder': str(self.data.date_of_birth),
+                'place_holder': self.return_date_of_birth(),
                 'grid_data': [5, 1, 1, 1]
+            },
+
+            {
+                'type': 'label',
+                'name': 'dir_label',
+                'place_holder': 'Dir location',
+                'grid_data': [6, 0, 1, 1]
+            },
+            {
+                'type': 'edit_line',
+                'name': 'dir_edit_line',
+                'data_type': 'data',
+                'DB': 'date_of_birth',
+                'validation': "",
+                'place_holder': str(self.data.dir),
+                'grid_data': [6, 1, 1, 1]
+            },
+            {
+                'type': 'label',
+                'name': 'none_label',
+                'place_holder': 'None avatar',
+                'grid_data': [7, 0, 1, 1]
+            },
+            {
+                'type': 'edit_line',
+                'name': 'none_edit_line',
+                'data_type': 'data',
+                'DB': 'date_of_birth',
+                'validation': "",
+                'place_holder': str(self.data.none),
+                'grid_data': [7, 1, 1, 1]
+            },
+            {
+                'type': 'label',
+                'name': 'singles_edit_line_label',
+                'place_holder': 'Singles avatar',
+                'grid_data': [8, 0, 1, 1]
+            },
+            {
+                'type': 'edit_line',
+                'name': 'singles_edit_line',
+                'data_type': 'data',
+                'DB': 'date_of_birth',
+                'validation': "",
+                'place_holder': str(self.data.singles),
+                'grid_data': [8, 1, 1, 1]
             },
             {
                 'type': 'button',
                 'obj_name': 'add_tags',
                 'name': 'Add Tags',
                 'place_holder': 'Tags',
-                'grid_data': [6, 1, 1, 1],
+                'grid_data': [9, 1, 1, 1],
                 'click': self.add_tag
             },
             {
@@ -161,9 +213,10 @@ class EditStarView(QWidget):
                 'obj_name': 'submit',
                 'name': 'Submit',
                 'place_holder': 'Submit',
-                'grid_data': [7, 1, 1, 1],
+                'grid_data': [10, 1, 1, 1],
                 'click': self.submit_click
             },
+
         ]
         self.FormSection.form_section(data_line, buttons)
     def submit_click(self,values):

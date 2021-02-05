@@ -226,6 +226,7 @@ class AddStarViaDir(AbstractAddViaDir):
             avatar = self.set_avatar(),
             dir=self.dir,
             none = self.set_none(),
+            singles=self.set_singles(),
         ))
 
     def add_files(self):
