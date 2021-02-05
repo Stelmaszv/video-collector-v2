@@ -218,10 +218,8 @@ class EditStarView(QWidget):
         ]
         self.FormSection.form_section(data_line, buttons)
     def submit_click(self,values):
-        for var in values:
-            print(var['value'])
-        #self.Submit.set_data(values)
-        #self.Submit.run()
+        self.Submit.set_data(values)
+        self.Submit.run()
 
     def add_tag(self,values):
         self.close()

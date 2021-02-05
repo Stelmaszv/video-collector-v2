@@ -110,26 +110,20 @@ class Submit:
         error = []
         for item in self.data:
             if item['data-type'] == 'data':
-                print(item['value'].toString())
-
-        """
-        error = []
-        for item in self.data:
-            if item['data-type'] == 'data':
                 ymd = item['value'].split('-')
-                if len(ymd)==3:
+                if len(ymd) == 3:
                     DV = DataValidator()
-                    DV.error=[]
-                    DV.set_data(int(ymd[0]),ymd[1],int(ymd[2]))
+                    DV.error = []
+                    DV.set_data(int(ymd[0]), ymd[1], int(ymd[2]))
                     DV.validate_data()
 
-                    if len(DV.error)==0:
-                        item['value']=datetime(DV.year,DV.mount,DV.day)
+                    if len(DV.error) == 0:
+                        item['value'] = datetime(DV.year, DV.mount, DV.day)
                     else:
                         for error_from_DV in DV.error:
                             error.append(error_from_DV)
                 else:
-                    if len(ymd[0])>0:
+                    if len(ymd[0]) > 0:
                         if len(ymd) == 1 or len(ymd) == 2:
                             error.append('Data is invalid')
 
@@ -137,15 +131,12 @@ class Submit:
             self.add_data_to_model()
 
         if len(error) > 0:
-            data =[
+            data = [
                 'Errors in form',
                 self.form_to_string(error),
                 ''
             ]
             self.Obj.BaseView.Massage.show(data)
-        """
-        #self.add_data_to_model()
-
 
     def form_to_string(self,errors):
 
