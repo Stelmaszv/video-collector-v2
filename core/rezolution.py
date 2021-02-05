@@ -107,7 +107,7 @@ class MenuHalfSmal(MenuType):
                 },
                 "window": {
                     "title_size": [0, 0, 1280, 100],
-                    "form_section": [300, 100, 680, 250]
+                    "form_section": [300, 100, 680, 600]
                 }
             },
 

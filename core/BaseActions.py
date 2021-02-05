@@ -5,6 +5,7 @@ from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
 from app.db.models import Tags
+import calendar as clendar_inport
 
 class ViewBaseAction:
 
@@ -109,6 +110,12 @@ class Submit:
         error = []
         for item in self.data:
             if item['data-type'] == 'data':
+                print(item['value'].toString())
+
+        """
+        error = []
+        for item in self.data:
+            if item['data-type'] == 'data':
                 ymd = item['value'].split('-')
                 if len(ymd)==3:
                     DV = DataValidator()
@@ -136,6 +143,8 @@ class Submit:
                 ''
             ]
             self.Obj.BaseView.Massage.show(data)
+        """
+        #self.add_data_to_model()
 
 
     def form_to_string(self,errors):
@@ -157,6 +166,13 @@ class FormSection:
     def __init__(self,obj):
         self.obj=obj
 
+    def faind_clandar_value(self,buttons):
+        clendar_value=None
+        for item in buttons:
+            if item['type'] == "calendar_value":
+                clendar_value=item
+        return clendar_value
+
     def form_section(self, data, buttons=[]):
         self.widget_edit_section = QtWidgets.QWidget(self.obj)
         self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
@@ -170,6 +186,36 @@ class FormSection:
                 self.button(
                     item,
                     self.edit_section_grid
+                )
+
+            if item['type'] == "calendar_value":
+                self.label(
+                    [item['name'], item['place_holder']],
+                    item['grid_data'],
+                    self.edit_section_grid
+                )
+
+            if item['type'] == "calendar":
+
+                edit_line = self.edit_line2(
+                    item['place_holder'],
+                    [6, 1, 1, 1],
+                    self.edit_section_grid,
+                    item['validation'],
+                )
+
+
+                grid_array.append(
+                    {
+                        'item': item,
+                        'button': edit_line
+                    }
+                )
+
+                self.calendar(
+                    item['grid_data'],
+                    self.edit_section_grid,
+                    edit_line
                 )
 
             if item['type'] == 'label':
@@ -193,12 +239,14 @@ class FormSection:
                     }
                 )
 
+
         submit = self.faind_submit(buttons)
         self.button_submit(
             submit,
             self.edit_section_grid,
             grid_array
         )
+
 
     def button (self,info,grid):
         button = QtWidgets.QPushButton(self.obj)
@@ -227,6 +275,28 @@ class FormSection:
         )
 
         button.clicked.connect(lambda :submit['click'](self.get_values(grid_array)))
+
+    def calendar(self,data,grid,label=False):
+
+        def convert_data(number):
+            if number < 10:
+                return '0'+str(number)
+            return str(number)
+
+        def show_date(date):
+            data= str(date.year())+'-'+convert_data(date.month())+'-'+convert_data(date.day())
+            label.setText(data)
+
+        currentMonth = datetime.now().month
+        currentYear = datetime.now().year
+        currentDay   = datetime.now().day
+
+        calender = QtWidgets.QCalendarWidget(self.obj)
+        calender.setMaximumDate(QtCore.QDate(currentYear,currentMonth,currentDay))
+        date = calender.selectedDate()
+        calender.clicked[QtCore.QDate].connect(show_date)
+        grid.addWidget(calender,data[0], data[1], data[2], data[3])
+        return calender
 
     def label(self,info,data,grid,el=None):
         if el is not None:

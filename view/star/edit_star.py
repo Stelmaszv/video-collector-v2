@@ -146,7 +146,7 @@ class EditStarView(QWidget):
                 'grid_data': [5, 0, 1, 1]
             },
             {
-                'type': 'edit_line',
+                'type': 'calendar',
                 'name': 'date_of_birth',
                 'data_type': 'data',
                 'DB': 'date_of_birth',
@@ -154,7 +154,6 @@ class EditStarView(QWidget):
                 'place_holder': self.return_date_of_birth(),
                 'grid_data': [5, 1, 1, 1]
             },
-
             {
                 'type': 'label',
                 'name': 'dir_label',
@@ -215,13 +214,14 @@ class EditStarView(QWidget):
                 'place_holder': 'Submit',
                 'grid_data': [10, 1, 1, 1],
                 'click': self.submit_click
-            },
-
+            }
         ]
         self.FormSection.form_section(data_line, buttons)
     def submit_click(self,values):
-        self.Submit.set_data(values)
-        self.Submit.run()
+        for var in values:
+            print(var['value'])
+        #self.Submit.set_data(values)
+        #self.Submit.run()
 
     def add_tag(self,values):
         self.close()
