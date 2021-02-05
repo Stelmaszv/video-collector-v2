@@ -39,6 +39,8 @@ class Series(Base):
     name = Column('name',String)
     avatar = Column('avatar', String)
     sezons= Column('sezons',Integer)
+    none = Column('none', String, default='')
+    singles = Column('singles', String, default='')
     dir = Column('dir', String, default='')
 
     stars = relationship(
@@ -111,6 +113,8 @@ class Stars(Base):
     ethnicity = Column('ethnicity', String, default='')
     hair_color =  Column('hair_color', String, default='')
     dir  =  Column('dir', String, default='')
+    none = Column('none', String, default='')
+    singles = Column('singles', String, default='')
     date_of_birth = Column(DateTime)
 
     tags = relationship(

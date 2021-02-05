@@ -132,11 +132,12 @@ class SeriesCreator:
     def create(self):
 
         if len(self.none_list) and self.if_item_item_list('none'):
+            print(self.item.none)
             none = {
                 'id'     : 0,
                 'star'   : self.item,
                 'name'   : 'none',
-                'avatar' : 'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
+                'avatar' : self.item.none,
                 'movies' : self.none_list
             }
             self.create_list.append(none)
@@ -145,9 +146,9 @@ class SeriesCreator:
             singles = {
                 'id': 0,
                 'name'   : 'singles',
-                'star': self.item,
-                'avatar' :'C:/Users/DeadlyComputer/Desktop/photo/otjbibjaAbiifyN9uVaZyL-1200-80.jpg',
-                'movies': self.singles_list
+                'star'   : self.item.name,
+                'avatar' : self.item.singles,
+                'movies' : self.singles_list
             }
             self.create_list.append(singles)
         self.add_series()

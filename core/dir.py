@@ -2,7 +2,7 @@ import re
 from app.db.models import Stars,Movies,Series,Photos
 from app.db.models import session
 from abc import ABC,abstractmethod
-from core.setings import series_avatar_defult,stars_avatar_defult
+from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
 import os
 
 class FaindStar:
@@ -81,17 +81,8 @@ class AbstractAddViaDir(ABC):
     def set_photo_dir(self):
         self.photo_dir = self.dir + '' + str(self.photo_dir)
 
-    def set_avatar(self,avatar_defult):
-        avatar=''
-        photo_dir = os.listdir(self.photo_dir)
-        for photo in  photo_dir:
-            if self.clear_name(photo) == 'avatar':
-                avatar=photo;
-        if avatar:
-            avatar=self.photo_dir + '' + str('/'+avatar)
-        else:
-            avatar=avatar_defult
-        return avatar;
+    def set_avatar(self):
+        return self.set_photo(series_avatar_defult, 'avatar')
 
     def if_exist(self,name,Model,add):
         Obj=self.session.query(Model).filter(Model.name == name).first()
@@ -105,33 +96,29 @@ class AbstractAddViaDir(ABC):
             Obj = self.session.query(Model).filter(Model.name == name).first()
         return Obj
 
-    def clear_photo(self,object):
-        if object is not None:
-            for item in object.photos:
-               self.session.delete(item)
-               self.session.commit()
-
-    def scan_photo_dir(self):
-        photo_dir = os.listdir(self.photo_dir)
-        object = []
-        self.clear_photo(self.star)
-        self.clear_photo(self.series)
-
-        for photo in photo_dir:
-            src=self.photo_dir+ '' + str('/'+photo)
-            if self.star is not None:
-                object.append(self.photo_model(src=src, stars=[self.star]))
-            if self.series is not None:
-                object.append(self.photo_model(src=src, series=[self.series]))
-
-        self.session.add_all(object)
-        self.session.commit()
-
     def if_movie_exist(self,name):
         Obj = self.session.query(self.movie_model).filter(self.movie_model.name == name).first()
         if Obj:
             return False
         return True
+
+    def set_photo(self,defult,serch):
+        photo_avatar=''
+        photo_dir = os.listdir(self.photo_dir)
+        for photo in  photo_dir:
+            if self.clear_name(photo) == serch:
+                photo_avatar=photo;
+        if photo_avatar:
+            photo_avatar=self.photo_dir + '' + str('/'+photo_avatar)
+        else:
+            photo_avatar=defult
+        return photo_avatar;
+
+    def set_none(self):
+        return self.set_photo(none_movies_defult,'none')
+
+    def set_singles(self):
+        return self.set_photo(none_movies_defult,'singles')
 
     @abstractmethod
     def add_files(self):
@@ -167,7 +154,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
         return self.if_exist(name,self.model,self.model(
             name    =  name,
             sezons  =  self.set_sezons(),
-            avatar  =  self.set_avatar(series_avatar_defult),
+            avatar  =  self.set_avatar(),
+            none    =  self.set_none(),
             dir     =  self.dir
         ))
 
@@ -175,7 +163,9 @@ class AddSeriesViaDir(AbstractAddViaDir):
         return self.if_exist(name,Stars,Stars(
             name   = name,
             avatar = stars_avatar_defult,
-            dir    = ''
+            dir    = '',
+            none = self.set_none(),
+            singles= self.set_singles(),
         ))
 
     def add_movie(self,movie,sezon,movie_name_is_star=False):
@@ -233,8 +223,9 @@ class AddStarViaDir(AbstractAddViaDir):
     def if_star_exist(self,name):
         return self.if_exist(name, self.model, self.model(
             name=name,
-            avatar = self.set_avatar(stars_avatar_defult),
-            dir=self.dir
+            avatar = self.set_avatar(),
+            dir=self.dir,
+            none = self.set_none(),
         ))
 
     def add_files(self):
