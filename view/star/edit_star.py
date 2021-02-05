@@ -116,10 +116,11 @@ class EditStarView(QWidget):
                 'grid_data': [3, 0, 1, 1]
             },
             {
-                'type': 'edit_line',
+                'type': 'combo_box',
                 'name': 'ethnicity',
                 'data_type': 'int',
                 'DB': 'ethnicity',
+                'combo_box_list': ['','Black', 'Asian', 'Arab', 'White'],
                 'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
                 'place_holder': str(self.data.ethnicity),
                 'grid_data': [3, 1, 1, 1]
@@ -131,13 +132,14 @@ class EditStarView(QWidget):
                 'grid_data': [4, 0, 1, 1]
             },
             {
-                'type': 'edit_line',
+                'type': 'combo_box',
                 'name': 'hair_color',
                 'data_type': 'string',
                 'DB': 'hair_color',
                 'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
                 'place_holder': str(self.data.hair_color),
-                'grid_data': [4, 1, 1, 1]
+                'grid_data': [4, 1, 1, 1],
+                'combo_box_list':['','Black','Gray','Brown','Blond']
             },
             {
                 'type': 'label',

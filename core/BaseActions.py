@@ -5,7 +5,6 @@ from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
 from app.db.models import Tags
-import calendar as clendar_inport
 
 class ViewBaseAction:
 
@@ -116,16 +115,7 @@ class Submit:
                     DV.error = []
                     DV.set_data(int(ymd[0]), ymd[1], int(ymd[2]))
                     DV.validate_data()
-
-                    if len(DV.error) == 0:
-                        item['value'] = datetime(DV.year, DV.mount, DV.day)
-                    else:
-                        for error_from_DV in DV.error:
-                            error.append(error_from_DV)
-                else:
-                    if len(ymd[0]) > 0:
-                        if len(ymd) == 1 or len(ymd) == 2:
-                            error.append('Data is invalid')
+                    item['value'] = datetime(DV.year, DV.mount, DV.day)
 
         if len(error) == 0:
             self.add_data_to_model()
@@ -179,11 +169,18 @@ class FormSection:
                     self.edit_section_grid
                 )
 
-            if item['type'] == "calendar_value":
-                self.label(
-                    [item['name'], item['place_holder']],
+            if item['type'] == 'combo_box':
+                combo=self.combo_box(
                     item['grid_data'],
-                    self.edit_section_grid
+                    self.edit_section_grid,
+                    item['combo_box_list']
+                )
+                grid_array.append(
+                    {
+                        'item': item,
+                        'value_show' : combo.currentText(),
+                        'button': combo
+                    }
                 )
 
             if item['type'] == "calendar":
@@ -194,11 +191,10 @@ class FormSection:
                     self.edit_section_grid,
                     item['validation'],
                 )
-
-
                 grid_array.append(
                     {
                         'item': item,
+                        'value_show' : edit_line.text(),
                         'button': edit_line
                     }
                 )
@@ -226,6 +222,7 @@ class FormSection:
                 grid_array.append(
                     {
                         'item': item,
+                        'value_show': edit_line.text(),
                         'button': edit_line
                     }
                 )
@@ -237,7 +234,11 @@ class FormSection:
             self.edit_section_grid,
             grid_array
         )
-
+    def combo_box(self,data,grid,combo_list):
+        combo_box = QtWidgets.QComboBox(self.obj)
+        combo_box.addItems(combo_list)
+        grid.addWidget(combo_box,data[0], data[1], data[2], data[3])
+        return combo_box
 
     def button (self,info,grid):
         button = QtWidgets.QPushButton(self.obj)
@@ -313,11 +314,20 @@ class FormSection:
 
     def get_values(self,grid):
         values=[]
+
+        def show_value(data):
+
+            if data['item']['type'] == 'edit_line' or data['item']['type'] == 'calendar':
+                return  data['button'].text()
+
+            if data['item']['type'] == 'combo_box':
+                return  data['button'].currentText()
+
         for item in grid:
             values.append(
                 {
                     'name' :item['item']['place_holder'],
-                    'value':item['button'].text(),
+                    'value':str(show_value(item)),
                     'data-type':item['item']['data_type'],
                     'DB': item['item']['DB']
                 }
