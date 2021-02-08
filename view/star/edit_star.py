@@ -33,10 +33,13 @@ class AddStarModel:
             self.data.dir = data[6]['value']
 
         if data[7]['value']:
-            self.data.none = data[7]['value']
+            self.data.avatar = data[7]['value']
 
-        if data[7]['value']:
-            self.data.singles = data[8]['value']
+        if data[8]['value']:
+            self.data.none = data[8]['value']
+
+        if data[9]['value']:
+            self.data.singles = data[9]['value']
 
 class EditStarView(QWidget):
 

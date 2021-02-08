@@ -70,7 +70,7 @@ class StarsForm:
             'type': 'combo_box',
             'name': 'ethnicity',
             'data_type': 'string',
-            'combo_box_list': ['', 'Black', 'Asian', 'Arab', 'White'],
+            'combo_box_list': [None, 'Black', 'Asian', 'Arab', 'White'],
             'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
             'place_holder': '',
             'grid_data': [3, 1, 1, 1]
@@ -90,7 +90,7 @@ class StarsForm:
             'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
             'place_holder': '',
             'grid_data': [4, 1, 1, 1],
-            'combo_box_list': ['', 'Black', 'Gray', 'Brown', 'Blond']
+            'combo_box_list': [None, 'Black', 'Gray', 'Brown', 'Blond']
         })
 
         self.from_section.append({
@@ -127,21 +127,22 @@ class StarsForm:
 
         self.from_section.append({
             'type': 'button',
-            'obj_name': 'via_dir',
-            'name': 'Dir',
-            'place_holder': 'Via dir',
-            'grid_data': [8, 1, 1, 1],
+            'obj_name': 'submit',
+            'name': 'Add By dir',
+            'place_holder': 'Add',
+            'grid_data': [9, 1, 1, 1],
             'click': self.BaseView.add_via_dir
         })
 
         self.from_section.append({
             'type': 'button',
-            'obj_name': 'via_dir_loop',
-            'name': 'Dir loop',
-            'place_holder': 'Via dir loop',
+            'obj_name': 'submit',
+            'name': 'Add By dir Loop',
+            'place_holder': 'Add',
             'grid_data': [9, 1, 1, 1],
             'click': self.BaseView.add_via_dir_loop
         })
+
 
         self.from_section.append({
             'type': 'button_submit',
@@ -151,6 +152,8 @@ class StarsForm:
             'grid_data': [10, 1, 1, 1],
             'click': self.BaseView.submit_click
         })
+
+
 
     def form_update(self):
         self.from_section=[]
@@ -271,8 +274,8 @@ class StarsForm:
 
         self.from_section.append({
             'type': 'label',
-            'name': 'none_label',
-            'place_holder': 'None avatar',
+            'name': 'none_edit_line_label',
+            'place_holder': 'Avatar',
             'grid_data': [7, 0, 1, 1]
         })
 
@@ -281,8 +284,24 @@ class StarsForm:
             'name': 'none_edit_line',
             'data_type': 'dir',
             'validation': "",
-            'place_holder': self.set_value_if_exist(self.BaseView.data.none,'None dir avator'),
+            'place_holder': self.set_value_if_exist(self.BaseView.data.avatar,'Avator'),
             'grid_data': [7, 1, 1, 1],
+            'combo_box_list': self.get_files_in_dir(self.BaseView.data.avatar)
+        })
+        self.from_section.append({
+            'type': 'label',
+            'name': 'none_edit_line_label',
+            'place_holder': 'None avatar',
+            'grid_data': [8, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'combo_box',
+            'name': 'none_edit_line',
+            'data_type': 'dir',
+            'validation': "",
+            'place_holder': self.set_value_if_exist(self.BaseView.data.none,'None dir avator'),
+            'grid_data': [8, 1, 1, 1],
             'combo_box_list': self.get_files_in_dir(self.BaseView.data.none)
         })
 
@@ -290,7 +309,7 @@ class StarsForm:
             'type': 'label',
             'name': 'singles_edit_line_label',
             'place_holder': 'Singles avatar',
-            'grid_data': [8, 0, 1, 1]
+            'grid_data': [9, 0, 1, 1]
         })
 
         self.from_section.append({
@@ -299,7 +318,7 @@ class StarsForm:
             'data_type': 'dir',
             'validation': "",
             'place_holder': self.set_value_if_exist(self.BaseView.data.singles,'Singles dir avator'),
-            'grid_data': [8, 1, 1, 1],
+            'grid_data': [9, 1, 1, 1],
             'combo_box_list': self.get_files_in_dir(self.BaseView.data.singles)
         })
 
@@ -308,7 +327,7 @@ class StarsForm:
             'obj_name': 'add_tags',
             'name': 'Add Tags',
             'place_holder': 'Tags',
-            'grid_data': [9, 1, 1, 1],
+            'grid_data': [10, 1, 1, 1],
             'click': self.BaseView.add_tag
         })
 
@@ -317,7 +336,7 @@ class StarsForm:
             'obj_name': 'submit',
             'name': 'Submit',
             'place_holder': 'Submit',
-            'grid_data': [10, 1, 1, 1],
+            'grid_data': [11, 1, 1, 1],
             'click': self.BaseView.submit_click
         })
 

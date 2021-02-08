@@ -95,7 +95,6 @@ class AddTag:
         item = self.session.query(self.model).filter(self.model.name == value).first()
         self.Obj.tags.append(item)
 
-
 class Submit:
 
     def __init__(self,Model,Data,Obj):
@@ -139,7 +138,9 @@ class Submit:
     def add_data_to_model(self):
         self.Model.add_data(self.data)
         self.Obj.close()
-        self.Obj.BaseView.load_view('stars', self.Obj.data)
+        if self.Obj.data is not None:
+            self.Obj.BaseView.load_view('stars', self.Obj.data)
+
         return True;
 
 class FormSection:

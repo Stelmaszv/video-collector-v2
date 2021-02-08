@@ -1,9 +1,50 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
-from core.BaseActions import FormSection
 from core.rezolution import SetResolution
 from app.db.models import Stars
 from app.forms import StarsForm
+from core.BaseActions import FormSection,Submit
+from app.db.models import session
+
+class AddStarModel:
+
+    model = Stars
+    session = session
+
+    def __init__(self,data):
+        self.data=data
+
+    def add_data(self,values):
+        if values[5]['value']:
+            star=Stars(
+                name          = values[0]['value'],
+                height        = values[1]['value'],
+                weight        = values[2]['value'],
+                ethnicity     = values[3]['value'],
+                hair_color    = values[4]['value'],
+                date_of_birth = values[5]['value'],
+                dir           = values[6]['value']
+            )
+        else:
+            star=Stars(
+                name          = values[0]['value'],
+                height        = values[1]['value'],
+                weight        = values[2]['value'],
+                ethnicity     = values[3]['value'],
+                hair_color    = values[4]['value'],
+                dir           = values[6]['value']
+            )
+
+        if values[0]['value']:
+            self.session.add_all([star])
+            self.session.commit()
+
+
+
+
+
+
+
 class NewStarView(QWidget):
 
     model= Stars
@@ -52,15 +93,14 @@ class NewStarView(QWidget):
         self.BaseView.title(data, text)
 
     def submit_click(self, values):
-        print(values)
-
-    def add_tag(self, values):
-        print('add tags')
+        self.Submit.set_data(values)
+        self.Submit.run()
 
     def run_window(self):
         self.set_title()
         self.data = None
         self.FormSchema = StarsForm(self)
+        self.Submit = Submit(AddStarModel, self.data, self)
         self.setWindowTitle(self.window_title)
         self.form_section()
         self.show()
