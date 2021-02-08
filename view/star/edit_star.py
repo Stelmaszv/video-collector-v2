@@ -11,19 +11,32 @@ class AddStarModel:
         self.data=data
 
     def add_data(self,data):
-        print(data)
         if data[0]['value']:
             self.data.name           =  data[0]['value']
+
         if data[1]['value']:
             self.data.height         =  data[1]['value']
+
         if data[2]['value']:
             self.data.weight         =  data[2]['value']
+
         if data[3]['value']:
             self.data.ethnicity      =  data[3]['value']
+
         if data[4]['value']:
             self.data.hair_color     =  data[4]['value']
+
         if data[5]['value']:
             self.data.date_of_birth  =  data[5]['value']
+
+        if data[6]['value']:
+            self.data.dir = data[6]['value']
+
+        if data[7]['value']:
+            self.data.none = data[7]['value']
+
+        if data[7]['value']:
+            self.data.singles = data[8]['value']
 
 class EditStarView(QWidget):
 
@@ -43,6 +56,7 @@ class EditStarView(QWidget):
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
+        print(self.data.none)
         self.Submit = Submit(AddStarModel,self.data,self)
         self.FormSchema = StarsForm(self)
         self.set_title();

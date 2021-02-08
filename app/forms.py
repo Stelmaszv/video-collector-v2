@@ -1,3 +1,4 @@
+import os
 class StarsForm:
 
     def __init__(self,BaseView):
@@ -66,7 +67,7 @@ class StarsForm:
             'type': 'combo_box',
             'name': 'ethnicity',
             'data_type': 'string',
-            'combo_box_list': ['', 'Black', 'Asian', 'Arab', 'White'],
+            'combo_box_list': [self.BaseView.data.ethnicity, 'Black', 'Asian', 'Arab', 'White'],
             'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
             'place_holder': '',
             'grid_data': [3, 1, 1, 1]
@@ -86,7 +87,7 @@ class StarsForm:
             'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
             'place_holder': '',
             'grid_data': [4, 1, 1, 1],
-            'combo_box_list': ['', 'Black', 'Gray', 'Brown', 'Blond']
+            'combo_box_list': [self.BaseView.data.hair_color, 'Black', 'Gray', 'Brown', 'Blond']
         })
 
         self.from_section.append({
@@ -129,12 +130,13 @@ class StarsForm:
         })
 
         self.from_section.append({
-            'type': 'edit_line',
+            'type': 'combo_box',
             'name': 'none_edit_line',
             'data_type': 'dir',
             'validation': "",
             'place_holder': self.set_value_if_exist(self.BaseView.data.none,'None dir avator'),
-            'grid_data': [7, 1, 1, 1]
+            'grid_data': [7, 1, 1, 1],
+            'combo_box_list': self.get_files_in_dir(self.BaseView.data.none)
         })
 
         self.from_section.append({
@@ -145,12 +147,13 @@ class StarsForm:
         })
 
         self.from_section.append({
-            'type': 'edit_line',
+            'type': 'combo_box',
             'name': 'singles_edit_line',
             'data_type': 'dir',
             'validation': "",
             'place_holder': self.set_value_if_exist(self.BaseView.data.singles,'Singles dir avator'),
-            'grid_data': [8, 1, 1, 1]
+            'grid_data': [8, 1, 1, 1],
+            'combo_box_list': self.get_files_in_dir(self.BaseView.data.singles)
         })
 
         self.from_section.append({
@@ -171,7 +174,14 @@ class StarsForm:
             'click': self.BaseView.submit_click
         })
 
-
+    def get_files_in_dir(self,defult):
+        dir=self.BaseView.data.dir + '' +str('/photo')
+        dir_loop=[]
+        dir_loop.append(defult)
+        for item in os.listdir(dir):
+            dir_loop_elment=dir + '/' +str(item)
+            dir_loop.append(dir_loop_elment)
+        return dir_loop
 
     def set_value_if_exist(self,value,empty):
         if value is None :
