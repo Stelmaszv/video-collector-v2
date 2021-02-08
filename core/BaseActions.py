@@ -226,14 +226,15 @@ class FormSection:
                         'button': edit_line
                     }
                 )
-
-
         submit = self.faind_submit(buttons)
-        self.button_submit(
-            submit,
-            self.edit_section_grid,
-            grid_array
-        )
+        if submit is not None:
+            submit = self.faind_submit(buttons)
+            self.button_submit(
+                submit,
+                self.edit_section_grid,
+                grid_array
+            )
+
     def combo_box(self,data,grid,combo_list):
         combo_box = QtWidgets.QComboBox(self.obj)
         combo_box.addItems(combo_list)
@@ -328,8 +329,7 @@ class FormSection:
                 {
                     'name' :item['item']['place_holder'],
                     'value':str(show_value(item)),
-                    'data-type':item['item']['data_type'],
-                    'DB': item['item']['DB']
+                    'data-type':item['item']['data_type']
                 }
             )
         return values;
