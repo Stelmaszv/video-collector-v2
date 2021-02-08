@@ -3,9 +3,156 @@ class StarsForm:
 
     def __init__(self,BaseView):
         self.BaseView=BaseView
-        self.set_form()
+        if self.BaseView.data is None:
+            self.form_new()
+        else:
+            self.form_update()
 
-    def set_form(self):
+    def form_new(self):
+        self.from_section = []
+
+        self.from_section.append({
+            'type'        : 'label',
+            'name'        : 'name',
+            'place_holder': 'Name',
+            'grid_data'   : [0, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'name',
+            'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(None,"Format - Full Name"),
+            'grid_data': [0, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'height',
+            'place_holder': 'Height',
+            'grid_data': [1, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'height',
+            'data_type': 'int',
+            'validation': "[0-9][0-9][0-9]",
+            'place_holder': self.set_value_if_exist(None,'value in cm'),
+            'grid_data': [1, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'weight',
+            'place_holder': 'Weight',
+            'grid_data': [2, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'weight',
+            'data_type': 'int',
+            'validation': "[0-9][0-9][0-9]",
+            'place_holder': self.set_value_if_exist(None,'value in kg'),
+            'grid_data': [2, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'ethnicity',
+            'place_holder': 'Ethnicity',
+            'grid_data': [3, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'combo_box',
+            'name': 'ethnicity',
+            'data_type': 'string',
+            'combo_box_list': ['', 'Black', 'Asian', 'Arab', 'White'],
+            'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
+            'place_holder': '',
+            'grid_data': [3, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'hair_color',
+            'place_holder': 'Hair color',
+            'grid_data': [4, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'combo_box',
+            'name': 'hair_color',
+            'data_type': 'string',
+            'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
+            'place_holder': '',
+            'grid_data': [4, 1, 1, 1],
+            'combo_box_list': ['', 'Black', 'Gray', 'Brown', 'Blond']
+        })
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'date_of_birth',
+            'place_holder': 'Date of birth',
+            'grid_data': [5, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'calendar',
+            'name': 'date_of_birth',
+            'data_type': 'data',
+            'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
+            'place_holder':'',
+            'grid_data': [5, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'dir_label',
+            'place_holder': 'Dir location',
+            'grid_data': [6, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'dir_edit_line',
+            'data_type': 'dir',
+            'validation': "",
+            'place_holder': self.set_value_if_exist(None,'Location dir with data'),
+            'grid_data': [6, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'button',
+            'obj_name': 'via_dir',
+            'name': 'Dir',
+            'place_holder': 'Via dir',
+            'grid_data': [8, 1, 1, 1],
+            'click': self.BaseView.add_via_dir
+        })
+
+        self.from_section.append({
+            'type': 'button',
+            'obj_name': 'via_dir_loop',
+            'name': 'Dir loop',
+            'place_holder': 'Via dir loop',
+            'grid_data': [9, 1, 1, 1],
+            'click': self.BaseView.add_via_dir_loop
+        })
+
+        self.from_section.append({
+            'type': 'button_submit',
+            'obj_name': 'submit',
+            'name': 'Submit',
+            'place_holder': 'Submit',
+            'grid_data': [10, 1, 1, 1],
+            'click': self.BaseView.submit_click
+        })
+
+    def form_update(self):
         self.from_section=[]
 
         self.from_section.append({

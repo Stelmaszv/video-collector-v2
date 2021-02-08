@@ -6,6 +6,7 @@ from core.helper import QueryCounter
 from core.rezolution import SetResolution
 from core.setings import data_JSON
 from core.dir import LoadFilesFromJson
+from app.forms import StarsForm
 
 #initSeader().initNow()
 class Menu(QMainWindow):
@@ -105,7 +106,7 @@ class Menu(QMainWindow):
         new_menu_object.triggered.connect(self.new_menu_object_button)
 
         new_star = QAction('new star', self)
-        new_star.triggered.connect(self.load_data)
+        new_star.triggered.connect(self.new_star)
 
         action_menu.addAction(new_movie_menu_item)
         action_menu.addAction(new_menu_object)

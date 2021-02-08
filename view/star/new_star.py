@@ -3,6 +3,7 @@ from core.view import BaseView
 from core.BaseActions import FormSection
 from core.rezolution import SetResolution
 from app.db.models import Stars
+from app.forms import StarsForm
 class NewStarView(QWidget):
 
     model= Stars
@@ -25,132 +26,7 @@ class NewStarView(QWidget):
             self.WindowSize['form_section'][2],
             self.WindowSize['form_section'][3],
         ]
-
-        buttons = [
-            {
-                'type'        : 'label',
-                'name'        : 'name',
-                'place_holder': 'Name',
-                'grid_data'   : [0, 0, 1, 1]
-            },
-            {
-                'type': 'edit_line',
-                'name': 'name',
-                'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
-                'data_type': 'string',
-                'DB': 'name',
-                'place_holder': '',
-                'grid_data': [0, 1, 1, 1]
-            },
-            {
-                'type': 'label',
-                'name': 'height',
-                'place_holder': 'height',
-                'grid_data': [1, 0, 1, 1]
-            },
-            {
-                'type': 'edit_line',
-                'name': 'height',
-                'data_type': 'int',
-                'validation': "[0-9][0-9][0-9]",
-                'DB': 'height',
-                'place_holder': '',
-                'grid_data': [1, 1, 1, 1]
-            },
-            {
-                'type': 'label',
-                'name': 'weight',
-                'place_holder': 'Weight',
-                'grid_data': [2, 0, 1, 1]
-            },
-            {
-                'type': 'edit_line',
-                'name': 'weight',
-                'data_type': 'int',
-                'DB': 'weight',
-                'validation': "[0-9][0-9][0-9]",
-                'place_holder': '',
-                'grid_data': [2, 1, 1, 1]
-            },
-            {
-                'type': 'label',
-                'name': 'ethnicity',
-                'place_holder': 'Ethnicity',
-                'grid_data': [3, 0, 1, 1]
-            },
-            {
-                'type': 'edit_line',
-                'name': 'ethnicity',
-                'data_type': 'int',
-                'DB': 'ethnicity',
-                'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
-                'place_holder': '',
-                'grid_data': [3, 1, 1, 1]
-            },
-            {
-                'type': 'label',
-                'name': 'hair_color',
-                'place_holder': 'Hair color',
-                'grid_data': [4, 0, 1, 1]
-            },
-            {
-                'type': 'edit_line',
-                'name': 'hair_color',
-                'data_type': 'string',
-                'DB': 'hair_color',
-                'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
-                'place_holder': '',
-                'grid_data': [4, 1, 1, 1]
-            },
-            {
-                'type': 'label',
-                'name': 'date_of_birth',
-                'place_holder': 'Date of birth',
-                'grid_data': [5, 0, 1, 1]
-            },
-            {
-                'type': 'edit_line',
-                'name': 'date_of_birth',
-                'data_type': 'data',
-                'DB': 'date_of_birth',
-                'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
-                'place_holder': '',
-                'grid_data': [5, 1, 1, 1]
-            },
-            {
-                'type': 'button',
-                'obj_name': 'add_tags',
-                'name': 'Add Tags',
-                'place_holder': 'Tags',
-                'grid_data': [6, 1, 1, 1],
-                'click': self.add_tag
-            },
-
-            {
-                'type': 'button_submit',
-                'obj_name': 'submit',
-                'name': 'Submit',
-                'place_holder': 'Submit',
-                'grid_data': [7, 1, 1, 1],
-                'click': self.submit_click
-            },
-            {
-                'type': 'button',
-                'obj_name': 'via_dir',
-                'name': 'Dir',
-                'place_holder': 'Via dir',
-                'grid_data': [8, 1, 1, 1],
-                'click': self.add_via_dir
-            },
-            {
-                'type': 'button',
-                'obj_name': 'via_dir_loop',
-                'name': 'Dir loop',
-                'place_holder': 'Via dir loop',
-                'grid_data': [9, 1, 1, 1],
-                'click': self.add_via_dir_loop
-            },
-        ]
+        buttons = self.FormSchema.return_from_section()
         self.FormSection.form_section(data_line, buttons)
 
     def add_via_dir(self, values):
@@ -183,6 +59,8 @@ class NewStarView(QWidget):
 
     def run_window(self):
         self.set_title()
+        self.data = None
+        self.FormSchema = StarsForm(self)
         self.setWindowTitle(self.window_title)
         self.form_section()
         self.show()

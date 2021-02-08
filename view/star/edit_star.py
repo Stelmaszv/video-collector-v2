@@ -56,7 +56,6 @@ class EditStarView(QWidget):
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
-        print(self.data.none)
         self.Submit = Submit(AddStarModel,self.data,self)
         self.FormSchema = StarsForm(self)
         self.set_title();
