@@ -4,42 +4,7 @@ from core.view import BaseView
 from core.BaseActions import FormSection,Submit
 from core.rezolution import SetResolution
 from app.forms import StarsForm
-
-class AddStarModel:
-
-    def __init__(self,data):
-        self.data=data
-
-    def add_data(self,data):
-        if data[0]['value']:
-            self.data.name           =  data[0]['value']
-
-        if data[1]['value']:
-            self.data.height         =  data[1]['value']
-
-        if data[2]['value']:
-            self.data.weight         =  data[2]['value']
-
-        if data[3]['value']:
-            self.data.ethnicity      =  data[3]['value']
-
-        if data[4]['value']:
-            self.data.hair_color     =  data[4]['value']
-
-        if data[5]['value']:
-            self.data.date_of_birth  =  data[5]['value']
-
-        if data[6]['value']:
-            self.data.dir = data[6]['value']
-
-        if data[7]['value']:
-            self.data.avatar = data[7]['value']
-
-        if data[8]['value']:
-            self.data.none = data[8]['value']
-
-        if data[9]['value']:
-            self.data.singles = data[9]['value']
+from app.model_view import StarModelView
 
 class EditStarView(QWidget):
 
@@ -59,7 +24,7 @@ class EditStarView(QWidget):
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
-        self.Submit = Submit(AddStarModel,self.data,self)
+        self.Submit = Submit(StarModelView,self.data,self)
         self.FormSchema = StarsForm(self)
         self.set_title();
         self.setWindowTitle(self.window_title)

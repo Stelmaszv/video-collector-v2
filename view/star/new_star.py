@@ -4,46 +4,8 @@ from core.rezolution import SetResolution
 from app.db.models import Stars
 from app.forms import StarsForm
 from core.BaseActions import FormSection,Submit
+from app.model_view import StarModelView
 from app.db.models import session
-
-class AddStarModel:
-
-    model = Stars
-    session = session
-
-    def __init__(self,data):
-        self.data=data
-
-    def add_data(self,values):
-        if values[5]['value']:
-            star=Stars(
-                name          = values[0]['value'],
-                height        = values[1]['value'],
-                weight        = values[2]['value'],
-                ethnicity     = values[3]['value'],
-                hair_color    = values[4]['value'],
-                date_of_birth = values[5]['value'],
-                dir           = values[6]['value']
-            )
-        else:
-            star=Stars(
-                name          = values[0]['value'],
-                height        = values[1]['value'],
-                weight        = values[2]['value'],
-                ethnicity     = values[3]['value'],
-                hair_color    = values[4]['value'],
-                dir           = values[6]['value']
-            )
-
-        if values[0]['value']:
-            self.session.add_all([star])
-            self.session.commit()
-
-
-
-
-
-
 
 class NewStarView(QWidget):
 
@@ -100,7 +62,7 @@ class NewStarView(QWidget):
         self.set_title()
         self.data = None
         self.FormSchema = StarsForm(self)
-        self.Submit = Submit(AddStarModel, self.data, self)
+        self.Submit = Submit(StarModelView, self.data, self)
         self.setWindowTitle(self.window_title)
         self.form_section()
         self.show()

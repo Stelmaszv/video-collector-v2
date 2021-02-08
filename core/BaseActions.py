@@ -140,8 +140,7 @@ class Submit:
         self.Obj.close()
         if self.Obj.data is not None:
             self.Obj.BaseView.load_view('stars', self.Obj.data)
-
-        return True;
+        return True
 
 class FormSection:
 

@@ -1,7 +1,6 @@
 from core.db.config import Base,engine
 from sqlalchemy import Column,Integer, String,Table,ForeignKey,DateTime,Boolean
 from sqlalchemy.orm import sessionmaker,relationship
-
 association_table = Table('association', Base.metadata,
     Column('stars_id', Integer, ForeignKey('stars.id')),
     Column('movies_id', Integer, ForeignKey('movies.id'))
@@ -101,6 +100,7 @@ class Tags(Base):
 
 class Stars(Base):
     __tablename__ ='stars'
+
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
     avatar = Column('avatar',String)
@@ -140,9 +140,12 @@ class Stars(Base):
         secondary=photos_star,
         back_populates="stars"
     )
+    def set_insstance(self,data):
+        self.insstance = data
 
     def __str__(self):
         return  self.name
+
 
 class Movies(Base):
     __tablename__ ='movies'
