@@ -184,7 +184,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
         series = [self.series]
-        print('Movie '+str(name)+' has been added')
+        #print('Movie '+str(name)+' has been added')
         return self.movie_model(
             name=name,
             src=src,

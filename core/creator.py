@@ -7,10 +7,19 @@ class SeriesCreator:
     def __init__(self, item: object) -> object:
         self.item=item
 
-    def set_singles(self):
-        series= self.item.series
-        faind_star_in_movie_array=[]
+    def add_if_not_exist(self,array,data):
+        stan=False
+        for item in array:
+            if item.id == data.id:
+                stan=True
+        if stan is False:
+            array.append(data)
 
+
+
+    def set_singles(self):
+        series = self.item.series
+        faind_star_in_movie_array = []
         def faind_star_in_movie(stars):
             for star in stars:
                 if star.id == self.item.id:
@@ -29,15 +38,14 @@ class SeriesCreator:
                 if faind_star_in_movie(movie.stars):
                     faind_star_in_movie_array.append({'series':serie,'movie':movie})
 
-
         series_array=self.series_order(faind_star_in_movie_array)
         for serie in series_array:
             if len(serie.movies) < 3:
                 for movie in serie.movies:
                     if if_movie_on_series(movie,self.singles_list):
-                        self.singles_list.append(movie)
+                        self.add_if_not_exist(self.singles_list,movie)
             else:
-                self.series_list.append(serie)
+                self.add_if_not_exist(self.series_list,serie)
 
     def series_order(self,series):
         series_array=[]
@@ -68,9 +76,8 @@ class SeriesCreator:
             if len(movie.series) == 0:
                 for star in movie.stars:
                     if if_movie_on_series(movie,self.none_list):
+                        print(star)
                         self.none_list.append(movie)
-
-
 
     def add_movies_to_series(self, movies_list) -> []:
         movies=[]
@@ -101,9 +108,11 @@ class SeriesCreator:
 
         return stan
 
-    def add_singles_from_series(self, movies_list):
-        for movie in movies_list:
-            self.singles_list.append(movie)
+    def add_singles_from_series(self, item):
+        for movie in item.movies:
+            for star in movie.stars:
+                if star.name == self.item.name:
+                    self.add_if_not_exist(self.singles_list, movie)
 
     def add_series(self):
         for item in self.series_list:
@@ -119,8 +128,8 @@ class SeriesCreator:
                 self.create_list.append(el)
 
             else:
-                pass
-                #self.add_singles_from_series(item.movies)
+                self.add_singles_from_series(item)
+
 
     def if_item_item_list(self,name=False,id=False):
         stan = True
@@ -131,9 +140,8 @@ class SeriesCreator:
         return stan
 
     def create(self):
-
+        self.add_series()
         if len(self.none_list) and self.if_item_item_list('none'):
-            print(self.item.none)
             none = {
                 'id'     : 0,
                 'star'   : self.item,
