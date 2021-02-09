@@ -108,7 +108,8 @@ class BaseView:
         }
 
         classObj = switcher.get(obj_name, "Invalid data");
-        classObj.run(data, data_list,page)
+        section_obj=classObj.run(data, data_list,page)
+        return section_obj
 
     def get_nav(self,data,buttons=[]):
         self.nav_widget = QtWidgets.QWidget(self.obj)
@@ -140,6 +141,7 @@ class BaseView:
         self.avatar_photo.setPixmap(QtGui.QPixmap(src))
         self.avatar_photo.setScaledContents(True)
         self.avatar_photo.setObjectName("avatar")
+        return self.avatar_photo
 
     def info(self,infoData,data,rows,obj=None):
         if obj==None:

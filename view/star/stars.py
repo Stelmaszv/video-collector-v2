@@ -5,24 +5,24 @@ from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
 from core.rezolution import SetResolution
 from core.strings import stringManipupations
-from  core.BaseActions import ViewBaseAction
+from core.BaseActions import ViewBaseAction
+
 
 class StarView(QWidget):
-
-    reset_view = 'stars'
-    model        = Stars
-    window_type  = 'star'
+    model = Stars
+    window_type = 'star'
+    reset_view  = 'stars'
 
     def __init__(self):
         super().__init__()
-        self.BaseView= BaseView([], self)
-        self.BaseActions=ViewBaseAction(self)
+        self.BaseView = BaseView([], self)
+        self.BaseActions = ViewBaseAction(self)
         self.SetResolution = SetResolution()
-        self.left =   self.SetResolution.menu_set['Stars']['position']['left']
-        self.top =    self.SetResolution.menu_set['Stars']['position']['top']
-        self.width =  self.SetResolution.menu_set['Stars']['position']['width']
+        self.left = self.SetResolution.menu_set['Stars']['position']['left']
+        self.top = self.SetResolution.menu_set['Stars']['position']['top']
+        self.width = self.SetResolution.menu_set['Stars']['position']['width']
         self.height = self.SetResolution.menu_set['Stars']['position']['height']
-        self.WindowSize=self.SetResolution.menu_set['Stars']['window']
+        self.WindowSize = self.SetResolution.menu_set['Stars']['window']
 
     def run_window(self):
         self.BaseView.set_data(self.id)
@@ -38,7 +38,7 @@ class StarView(QWidget):
         return True
 
     def closeEvent(self, event):
-        self.list=[]
+        self.list = []
 
     def get_nav(self):
 
@@ -63,7 +63,7 @@ class StarView(QWidget):
                 {
                     "name": "Reset",
                     "item_name": "reset",
-                    "button":self.reset
+                    "button": self.reset
                 },
             ]
         )
@@ -94,15 +94,14 @@ class StarView(QWidget):
                "</span></p></body></html>"
         self.BaseView.title(data, text)
 
-
     def galery(self):
-        data= [
+        data = [
             self.WindowSize['galery_size'][0],
             self.WindowSize['galery_size'][1],
             self.WindowSize['galery_size'][2],
             self.WindowSize['galery_size'][3]
         ]
-        size=[
+        size = [
             self.WindowSize['galery_photo_size'][0],
             self.WindowSize['galery_photo_size'][1]
         ]
@@ -110,19 +109,19 @@ class StarView(QWidget):
 
     def info(self):
 
-        data   = [
+        data = [
             self.WindowSize['info_size'][0],
             self.WindowSize['info_size'][1],
             self.WindowSize['info_size'][2],
             self.WindowSize['info_size'][3]
         ]
 
-        rows = ['itemNmae','itemName2']
-        data_info=[];
+        rows = ['itemNmae', 'itemName2']
+        data_info = [];
         if self.data.date_of_birth:
-            data_info.append( {
-                 "itemNmae"  :  "Date of birth / Age",
-                 "itemName2" : self.Data.show()+' / '+self.Data.get_age()
+            data_info.append({
+                "itemNmae": "Date of birth / Age",
+                "itemName2": self.Data.show() + ' / ' + self.Data.get_age()
             })
 
         if self.data.height and self.data.weight:
@@ -144,56 +143,56 @@ class StarView(QWidget):
             })
 
         data_info.append({
-             "itemNmae"  : "Movies / Series",
-             "itemName2" : self.count_series()+' / '+self.count_movies()
-            })
-
-        data_info.append({
-                "itemNmae": "Views / Likes",
-                "itemName2": str(self.data.views)+ ' / ' +str(self.data.likes)
+            "itemNmae": "Movies / Series",
+            "itemName2": self.count_series() + ' / ' + self.count_movies()
         })
 
         data_info.append({
-                "itemNmae": "Favourite",
-                "itemName2": str(self.data.favourite)
+            "itemNmae": "Views / Likes",
+            "itemName2": str(self.data.views) + ' / ' + str(self.data.likes)
+        })
+
+        data_info.append({
+            "itemNmae": "Favourite",
+            "itemName2": str(self.data.favourite)
         })
 
         data_info.append({
             "itemNmae": "Tags",
-            "itemName2": stringManipupations.array_to_string(self.data.tags)
+            "itemName2": 'Bond, dead, Action'
         })
 
         self.BaseView.info(data_info, data, rows)
-        data=[
+        data = [
             self.WindowSize['description'][0],
             self.WindowSize['description'][1],
             self.WindowSize['description'][2],
             self.WindowSize['description'][3],
         ]
 
-        limit=self.WindowSize['description'][4]
-
-        self.BaseView.description(stringManipupations.short(self.data.description,limit),data);
-
+        limit = self.WindowSize['description'][4]
+        self.BaseView.description(stringManipupations.short(self.data.description, limit), data);
 
     def count_series(self):
         return str(len(self.list))
 
     def count_movies(self):
-        count=0;
+        count = 0;
         for item in self.list:
-            count=count+len(item['movies'])
+            count = count + len(item['movies'])
         return str(count)
 
     def seriesResult(self):
-        self.list=[]
+        self.list = []
         self.list = SeriesCreator(self.data).return_obj()
+
         self.BaseView.listView([
             self.WindowSize['list_view_size'][0],
             self.WindowSize['list_view_size'][1],
             self.WindowSize['list_view_size'][2],
             self.WindowSize['list_view_size'][3]
-        ], self.list , 'Stars',self)
+        ], self.list, 'Stars', self)
+
 
     def avatar(self):
         self.BaseView.avatar([

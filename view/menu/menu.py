@@ -133,7 +133,7 @@ class Menu(QMainWindow):
         M([self.searchIn, self.searchFaze])
 
     def new_star(self):
-        self.BaseView.load_view('new star')
+        self.BaseView.load_view('test')
 
     def new_menu_object_button(self):
         Menu([self.searchIn, self.searchFaze])

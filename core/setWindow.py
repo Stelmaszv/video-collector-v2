@@ -19,7 +19,6 @@ class setWindow():
         from view.star.add_star_via_dir import AddStarViaDirView
         from view.star.add_star_via_dirloop import AddStarViaDirViewLoop
 
-
         switcher = {
             'add_star_via_dirLoop': AddStarViaDirViewLoop(),
             'add_star_via_dir': AddStarViaDirView(),

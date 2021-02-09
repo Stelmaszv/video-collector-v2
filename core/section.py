@@ -150,6 +150,7 @@ class StarsSection(AbstractSection):
         for page_tap in pages:
             self.tabWidget.addTab(page_tap, str(tab_name))
             tab_name=tab_name+1
+        return self.tabWidget
 
 class SeriesSection(AbstractSection):
 
@@ -195,6 +196,7 @@ class SeriesSection(AbstractSection):
                 'movies'
             )
             self.tabWidget.addTab(tab, str(item))
+        return self.tabWidget
 
 
     def faind_movies_with_sezon(self,arry,page):

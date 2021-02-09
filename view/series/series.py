@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from app.db.models import Series
+
 class SerieView(QWidget):
 
     def __init__(self):
@@ -44,6 +45,7 @@ class SerieView(QWidget):
         self.BaseView.galery(data, [100, 100], 3)
 
     def list_view(self):
+        self.setParent(None)
         self.BaseView.listView([500, 100, 1200, 900], self.data.movies, 'Series',self)
 
     def initUI(self):
