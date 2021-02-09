@@ -271,56 +271,57 @@ class StarsForm:
             'place_holder': self.set_value_if_exist(self.BaseView.data.dir,'Location dir with data'),
             'grid_data': [6, 1, 1, 1]
         })
+        if self.BaseView.data.dir:
 
-        self.from_section.append({
-            'type': 'label',
-            'name': 'none_edit_line_label',
-            'place_holder': 'Avatar',
-            'grid_data': [7, 0, 1, 1]
-        })
+            self.from_section.append({
+                'type': 'label',
+                'name': 'avatar_label',
+                'place_holder': 'Avatar',
+                'grid_data': [7, 0, 1, 1]
+            })
 
-        self.from_section.append({
-            'type': 'combo_box',
-            'name': 'none_edit_line',
-            'data_type': 'dir',
-            'validation': "",
-            'place_holder': self.set_value_if_exist(self.BaseView.data.avatar,'Avator'),
-            'grid_data': [7, 1, 1, 1],
-            'combo_box_list': self.get_files_in_dir(self.BaseView.data.avatar)
-        })
-        self.from_section.append({
-            'type': 'label',
-            'name': 'none_edit_line_label',
-            'place_holder': 'None avatar',
-            'grid_data': [8, 0, 1, 1]
-        })
+            self.from_section.append({
+                'type': 'combo_box',
+                'name': 'avatar_edit_line',
+                'data_type': 'dir',
+                'validation': "",
+                'place_holder': self.set_value_if_exist(self.BaseView.data.avatar,'Avator'),
+                'grid_data': [7, 1, 1, 1],
+                'combo_box_list': self.get_files_in_dir(self.BaseView.data.avatar)
+            })
+            self.from_section.append({
+                'type': 'label',
+                'name': 'none_edit_line_label',
+                'place_holder': 'None avatar',
+                'grid_data': [8, 0, 1, 1]
+            })
 
-        self.from_section.append({
-            'type': 'combo_box',
-            'name': 'none_edit_line',
-            'data_type': 'dir',
-            'validation': "",
-            'place_holder': self.set_value_if_exist(self.BaseView.data.none,'None dir avator'),
-            'grid_data': [8, 1, 1, 1],
-            'combo_box_list': self.get_files_in_dir(self.BaseView.data.none)
-        })
+            self.from_section.append({
+                'type': 'combo_box',
+                'name': 'none_edit_line',
+                'data_type': 'dir',
+                'validation': "",
+                'place_holder': self.set_value_if_exist(self.BaseView.data.none,'None dir avator'),
+                'grid_data': [8, 1, 1, 1],
+                'combo_box_list': self.get_files_in_dir(self.BaseView.data.none)
+            })
 
-        self.from_section.append({
-            'type': 'label',
-            'name': 'singles_edit_line_label',
-            'place_holder': 'Singles avatar',
-            'grid_data': [9, 0, 1, 1]
-        })
+            self.from_section.append({
+                'type': 'label',
+                'name': 'singles_edit_line_label',
+                'place_holder': 'Singles avatar',
+                'grid_data': [9, 0, 1, 1]
+            })
 
-        self.from_section.append({
-            'type': 'combo_box',
-            'name': 'singles_edit_line',
-            'data_type': 'dir',
-            'validation': "",
-            'place_holder': self.set_value_if_exist(self.BaseView.data.singles,'Singles dir avator'),
-            'grid_data': [9, 1, 1, 1],
-            'combo_box_list': self.get_files_in_dir(self.BaseView.data.singles)
-        })
+            self.from_section.append({
+                'type': 'combo_box',
+                'name': 'singles_edit_line',
+                'data_type': 'dir',
+                'validation': "",
+                'place_holder': self.set_value_if_exist(self.BaseView.data.singles,'Singles dir avator'),
+                'grid_data': [9, 1, 1, 1],
+                'combo_box_list': self.get_files_in_dir(self.BaseView.data.singles)
+            })
 
         self.from_section.append({
             'type': 'button',
