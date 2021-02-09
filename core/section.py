@@ -117,17 +117,32 @@ class StarsSection(AbstractSection):
                       "</span></body></html>")
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
+    def show_empty_movies(self,data):
+        empty_movies = QtWidgets.QLabel(self.obj)
+        empty_movies.setObjectName("empty_movies")
+        empty_movies.setText("<html><head/><body><span style=\" font-size:25pt; font-weight:1000; \">"
+                      "No Movies found !"
+                      "</span></body></html>")
+        empty_movies.setGeometry(data[0]+350, data[1]-200, data[2], data[3])
+
+
     def run(self, data, data_list, page):
+        if len(data_list)==0:
+            self.show_empty_movies(data)
+        else:
+            self.return_series_list(data,data_list)
+
+    def return_series_list(self, data, data_list):
         self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[3]])
         self.page = self.pagination.tab()
         left = self.OBJ_QWidget.WindowSize['section']['left']
-        top =  self.OBJ_QWidget.WindowSize['section']['top']
+        top = self.OBJ_QWidget.WindowSize['section']['top']
         el = 0;
-        pages=[]
+        pages = []
         pages.append(self.page)
-        self.add_page=self.page
+        self.add_page = self.page
         for item in data_list:
-            el=el+1;
+            el = el + 1;
 
             grid = self.grid(left, top, self.add_page)
             seriesItem = self.seriesItem(grid)
@@ -136,21 +151,20 @@ class StarsSection(AbstractSection):
             self.more(item, left, top, self.add_page)
             left = left + self.OBJ_QWidget.WindowSize['section']['left_add']
 
-            if el  % self.OBJ_QWidget.WindowSize['section']['per_row'] == 0:
+            if el % self.OBJ_QWidget.WindowSize['section']['per_row'] == 0:
                 left = self.OBJ_QWidget.WindowSize['section']['left']
-                top  = top+self.OBJ_QWidget.WindowSize['section']['top_add']
+                top = top + self.OBJ_QWidget.WindowSize['section']['top_add']
 
-            if el % self.OBJ_QWidget.WindowSize['section']['per_page']==0:
-                self.next_page=self.pagination.tab()
+            if el % self.OBJ_QWidget.WindowSize['section']['per_page'] == 0:
+                self.next_page = self.pagination.tab()
                 self.add_page = self.next_page
                 pages.append(self.next_page)
                 top = 0
 
-        tab_name=1
+        tab_name = 1
         for page_tap in pages:
             self.tabWidget.addTab(page_tap, str(tab_name))
-            tab_name=tab_name+1
-        return self.tabWidget
+            tab_name = tab_name + 1
 
 class SeriesSection(AbstractSection):
 
