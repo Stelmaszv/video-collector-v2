@@ -111,7 +111,7 @@ class BaseView:
         section_obj=classObj.run(data, data_list,page)
         return section_obj
 
-    def get_nav(self,data,buttons=[]):
+    def get_nav2(self,data,buttons=[]):
         self.nav_widget = QtWidgets.QWidget(self.obj)
         self.nav_widget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.nav_widget.setObjectName("movie-navbar")
@@ -167,7 +167,7 @@ class BaseView:
 
             row=row+1
 
-    def get_nav_star(self,data,buttons=[]):
+    def get_nav(self,data,buttons=[]):
         self.nav_widget = QtWidgets.QWidget(self.obj)
         self.nav_widget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.nav_widget.setObjectName("movie-navbar")
@@ -178,8 +178,6 @@ class BaseView:
         for button in buttons:
             self.Form.button([button['item_name'], button['name']], [],button['button'], self.nav_grid, [0, row, 2, 2], [100, 0, 10, 16777215])
             row=row+1
-
-
 
     def description(self,text,data,obj=None):
         if obj==None:

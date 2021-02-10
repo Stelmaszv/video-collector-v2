@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QWidget
 from core.rezolution import SetResolution
 from core.strings import stringManipupations
 from core.BaseActions import ViewBaseAction
-
+from app.nav import StarNav
 
 class StarView(QWidget):
     model = Stars
@@ -17,6 +17,7 @@ class StarView(QWidget):
         super().__init__()
         self.BaseView = BaseView([], self)
         self.BaseActions = ViewBaseAction(self)
+        self.Nav = StarNav(self.BaseActions)
         self.SetResolution = SetResolution()
         self.left = self.SetResolution.menu_set['Stars']['position']['left']
         self.top = self.SetResolution.menu_set['Stars']['position']['top']
@@ -41,44 +42,10 @@ class StarView(QWidget):
         self.list = []
 
     def get_nav(self):
-
-        self.BaseView.get_nav_star(
+        self.BaseView.get_nav(
             [650, -145, 480, 400],
-            [
-                {
-                    "name": "Add to favorits",
-                    "item_name": "add_to_favorits",
-                    "button": self.add_favorits
-                },
-                {
-                    "name": "Add like",
-                    "item_name": "add_like",
-                    "button": self.add_like
-                },
-                {
-                    "name": "Edit",
-                    "item_name": "edit",
-                    "button": self.edit
-                },
-                {
-                    "name": "Reset",
-                    "item_name": "reset",
-                    "button": self.reset
-                },
-            ]
+            self.Nav.set_nav()
         )
-
-    def add_favorits(self):
-        self.BaseActions.add_favourite()
-
-    def add_like(self):
-        self.BaseActions.add_like()
-
-    def edit(self):
-        self.BaseActions.edit()
-
-    def reset(self):
-        self.BaseActions.reset()
 
     def title(self):
         data = [
