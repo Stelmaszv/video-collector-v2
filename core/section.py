@@ -215,7 +215,6 @@ class SeriesSection(AbstractSection):
 
     def set_src(self,item):
         for item_in_sezon in self.obj.data.sezons:
-            print(item_in_sezon.name,item)
             if item_in_sezon.name == str(item):
                 return item_in_sezon.src
         return series_avatar_defult
