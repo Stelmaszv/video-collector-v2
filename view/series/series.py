@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from app.db.models import Series
+from core.rezolution import SetResolution
 
 class SerieView(QWidget):
 
@@ -8,6 +9,12 @@ class SerieView(QWidget):
         super().__init__()
         self.model = Series
         self.BaseView= BaseView([], self)
+        self.SetResolution = SetResolution()
+        self.left = self.SetResolution.menu_set['Series']['position']['left']
+        self.top = self.SetResolution.menu_set['Series']['position']['top']
+        self.width = self.SetResolution.menu_set['Series']['position']['width']
+        self.height = self.SetResolution.menu_set['Series']['position']['height']
+        self.WindowSize = self.SetResolution.menu_set['Series']['window']
 
 
     def run_window(self):
@@ -16,10 +23,16 @@ class SerieView(QWidget):
         self.initUI()
         self.show()
         self.setWindowTitle(self.window_title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
     def info(self):
 
-        data   = [150,320,300,200]
+        data   = [
+            self.WindowSize['info_size'][0],
+            self.WindowSize['info_size'][1],
+            self.WindowSize['info_size'][2],
+            self.WindowSize['info_size'][3]
+        ]
 
         rows = ['itemNmae','itemName2']
 
@@ -32,7 +45,12 @@ class SerieView(QWidget):
         self.BaseView.info(inf_data, data, rows)
 
     def title(self):
-        data = [0, 0, 2000 ,100]
+        data = [
+            self.WindowSize['title_size'][0],
+            self.WindowSize['title_size'][1],
+            self.WindowSize['title_size'][2],
+            self.WindowSize['title_size'][3]
+        ]
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
                "<span style=\" font-size:18pt;font-weight:600; " \
@@ -41,18 +59,38 @@ class SerieView(QWidget):
         self.BaseView.title(data, text)
 
     def galery(self):
-        data = [100, 500, 250, 300]
-        self.BaseView.galery(data, [100, 100], 3)
+        data = [
+            self.WindowSize['galery_size'][0],
+            self.WindowSize['galery_size'][1],
+            self.WindowSize['galery_size'][2],
+            self.WindowSize['galery_size'][3]
+        ]
+        data_size = [
+            self.WindowSize['galery_photo_size'][0],
+            self.WindowSize['galery_photo_size'][1]
+        ]
+        self.BaseView.galery(data, data_size, self.WindowSize['galery_item_show'])
 
     def list_view(self):
-        self.setParent(None)
-        self.BaseView.listView([500, 100, 1200, 900], self.data.movies, 'Series',self)
+        data= [
+            self.WindowSize['list_view_size'][0],
+            self.WindowSize['list_view_size'][1],
+            self.WindowSize['list_view_size'][2],
+            self.WindowSize['list_view_size'][3]
+        ]
+        self.BaseView.listView(data, self.data.movies, 'Series',self)
 
     def initUI(self):
         self.info()
         self.title()
         self.galery()
-        self.BaseView.avatar([100, 100, 250, 250], self, self.data.avatar)
+        data = [
+            self.WindowSize['avatar_size'][0],
+            self.WindowSize['avatar_size'][1],
+            self.WindowSize['avatar_size'][2],
+            self.WindowSize['avatar_size'][3]
+        ]
+        self.BaseView.avatar(data, self, self.data.avatar)
         self.window_title=self.data.name
         self.list_view()
 

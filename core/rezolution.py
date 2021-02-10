@@ -75,6 +75,23 @@ class MenuHalfSmall(MenuType):
 
     def show(self):
         return {
+            "Series":{
+                "position": {
+                    "left": 2562 + 400,
+                    "top": 400,
+                    "width": 1280,
+                    "height": 985
+                },
+                "window":{
+                    "title_size": [0, 0, 1280, 100],
+                    "list_view_size": [375,80,871,881],
+                    "avatar_size": [50, 50, 250, 250],
+                    "info_size": [100,300,300,200],
+                    "galery_size": [-50, 400, 300, 300],
+                    "galery_photo_size": [100, 100],
+                    "galery_item_show": 2,
+                }
+            },
             "MovieListView": {
                 "position": {
                     "left"    : 2562+400,

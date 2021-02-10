@@ -12,7 +12,7 @@ from app.forms import StarsForm
 class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
-    searchIn = 'stars'
+    searchIn = 'series'
     page=0
 
     def __init__(self,data=False):
@@ -29,7 +29,7 @@ class Menu(QMainWindow):
 
     def search_box(self):
         data = [0, 150, 200, 50]
-        list = ['stars','movies','series']
+        list = ['series','stars','movies']
         self.search_in_combo_box=self.BaseView.Form.combo_box(data, list)
         data_search_button = [200,150,200,50]
         data_button_info=['serch003','search']
