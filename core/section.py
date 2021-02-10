@@ -231,7 +231,7 @@ class MovieListSection(AbstractSection):
         self.List = List(self.BaseView)
 
     def run(self, data, data_list, page):
-        self.Scroller.run([400, 10, 780, 850],self.obj)
+        self.Scroller.run([data[0], data[1], data[2], data[3]],self.obj)
         self.Scroller.movie_list(
             data_list,
             self,

@@ -9,7 +9,7 @@ class SetResolution:
 
     def set_menu_type(self):
         switcher = {
-            'half-smal': MenuHalfSmal(),
+            'half-smal': MenuHalfSmall(),
             'half-big': MenuHalfbig()
         }
         obj=switcher.get(self.windows_type, "Invalid data");
@@ -71,10 +71,26 @@ class MenuHalfbig(MenuType):
             }
         }
 
-class MenuHalfSmal(MenuType):
+class MenuHalfSmall(MenuType):
 
     def show(self):
         return {
+            "MovieListView": {
+                "position": {
+                    "left"    : 2562+400,
+                    "top"     : 400,
+                    "width"   : 1280,
+                    "height"  : 985
+                },
+                "window":{
+                    "title_size"      : [0, 0, 1280, 100],
+                    "list_view_size"  : [450,80,671,881],
+                    "avatar_size"     : [100, 250, 250, 350],
+                    "button_series"   : [100,600,250,50],
+                    "button_star"     : [100,650,250,50]
+
+                }
+            },
             "Menu": {
                 "position": {
                     "left"             : 2562,

@@ -96,6 +96,16 @@ class BaseView:
     def upadete(self):
         self.avatar_photo.show()
 
+    def button(self,data,button):
+        self.Form.button(
+            [button['item_name'], button['name']],
+            data,
+            button['button'],
+            None,
+            [],
+            []
+        )
+
     def listView(self, data, data_list,obj_name,QWidget=False,page=False):
         from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,TagsListSection
 
