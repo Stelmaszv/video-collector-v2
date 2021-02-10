@@ -1,5 +1,5 @@
 import re
-from app.db.models import Stars,Movies,Series,Photos
+from app.db.models import Stars,Movies,Series,Photos,Sezons
 from app.db.models import session
 from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
@@ -39,6 +39,7 @@ class AbstractAddViaDir(ABC):
 
     movie_model=Movies
     photo_model=Photos
+    sezons_model=Sezons
     movie_dir='/movies'
     photo_dir='/photo'
     star=None
@@ -150,10 +151,28 @@ class AddSeriesViaDir(AbstractAddViaDir):
             return sezons;
         return 1;
 
+    def create_sezons(self,sezons):
+        object=[]
+
+        for sezon in range(1,sezons+1):
+            object.append(
+                self.sezons_model(
+                    name = sezon,
+                    src  = self.set_photo(series_avatar_defult,str(sezon))
+                )
+            )
+
+        self.session.add_all(object)
+        self.session.commit()
+        return object
+
+
     def if_series_exist(self,name):
+        sezons=self.create_sezons(self.set_sezons())
         return self.if_exist(name,self.model,self.model(
             name    =  name,
-            sezons  =  self.set_sezons(),
+            number_of_sezons  =  self.set_sezons(),
+            sezons  =  sezons,
             avatar  =  self.set_avatar(),
             none    =  self.set_none(),
             dir     =  self.dir
@@ -184,7 +203,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
         series = [self.series]
-        #print('Movie '+str(name)+' has been added')
+        print('Movie '+str(name)+' has been added')
         return self.movie_model(
             name=name,
             src=src,

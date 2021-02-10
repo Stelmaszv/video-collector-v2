@@ -42,24 +42,14 @@ class StarView(QWidget):
         self.list = []
 
     def get_nav(self):
-        data = [
-            self.SetResolution.menu_set['Stars']['navbar']['left'],
-            self.SetResolution.menu_set['Stars']['navbar']['top'],
-            self.SetResolution.menu_set['Stars']['navbar']['width'],
-            self.SetResolution.menu_set['Stars']['navbar']['height']
-        ]
+        data = self.WindowSize['navbar']
         self.BaseView.get_nav(
             data,
             self.Nav.set_nav()
         )
 
     def title(self):
-        data = [
-            self.WindowSize['title_size'][0],
-            self.WindowSize['title_size'][1],
-            self.WindowSize['title_size'][2],
-            self.WindowSize['title_size'][3]
-        ]
+        data = self.WindowSize['title_size']
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
                "<span style=\" font-size:18pt;font-weight:600; " \
@@ -68,27 +58,12 @@ class StarView(QWidget):
         self.BaseView.title(data, text)
 
     def galery(self):
-        data = [
-            self.WindowSize['galery_size'][0],
-            self.WindowSize['galery_size'][1],
-            self.WindowSize['galery_size'][2],
-            self.WindowSize['galery_size'][3]
-        ]
-        size = [
-            self.WindowSize['galery_photo_size'][0],
-            self.WindowSize['galery_photo_size'][1]
-        ]
+        data = self.WindowSize['galery_size']
+        size = self.WindowSize['galery_photo_size']
         self.BaseView.galery(data, size, self.WindowSize['galery_item_show'])
 
     def info(self):
-
-        data = [
-            self.WindowSize['info_size'][0],
-            self.WindowSize['info_size'][1],
-            self.WindowSize['info_size'][2],
-            self.WindowSize['info_size'][3]
-        ]
-
+        data =  self.WindowSize['info_size']
         rows = ['itemNmae', 'itemName2']
         data_info = [];
         if self.data.date_of_birth:
@@ -136,14 +111,8 @@ class StarView(QWidget):
         })
 
         self.BaseView.info(data_info, data, rows)
-        data = [
-            self.WindowSize['description'][0],
-            self.WindowSize['description'][1],
-            self.WindowSize['description'][2],
-            self.WindowSize['description'][3],
-        ]
-
-        limit = self.WindowSize['description'][4]
+        data = self.WindowSize['description']
+        limit = self.WindowSize['description_limit']
         self.BaseView.description(stringManipupations.short(self.data.description, limit), data);
 
     def count_series(self):
@@ -159,21 +128,14 @@ class StarView(QWidget):
         self.list = []
         self.list = SeriesCreator(self.data).return_obj()
 
-        self.BaseView.listView([
-            self.WindowSize['list_view_size'][0],
-            self.WindowSize['list_view_size'][1],
-            self.WindowSize['list_view_size'][2],
-            self.WindowSize['list_view_size'][3]
-        ], self.list, 'Stars', self)
+        self.BaseView.listView(
+            self.WindowSize['list_view_size'],
+            self.list, 'Stars', self
+        )
 
 
     def avatar(self):
-        self.BaseView.avatar([
-            self.WindowSize['avatar_size'][0],
-            self.WindowSize['avatar_size'][1],
-            self.WindowSize['avatar_size'][2],
-            self.WindowSize['avatar_size'][3]
-        ])
+        self.BaseView.avatar(self.WindowSize['avatar_size'])
 
     def initUI(self):
         self.avatar();

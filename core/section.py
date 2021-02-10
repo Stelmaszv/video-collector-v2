@@ -4,6 +4,7 @@ from .list import List
 from core.strings import stringManipupations
 from .helper import Pagination, Scroller
 from .view import Form
+from core.setings import series_avatar_defult
 
 class AbstractSection(ABC):
 
@@ -180,7 +181,7 @@ class SeriesSection(AbstractSection):
         self.Pagination = Pagination(self.obj)
 
     def info(self,tab):
-        data   = [100,300,300,200]
+        data   = self.BaseView.obj.WindowSize['section_info']
         rows = ['itemNmae','itemName2']
         info_data=[
             {"itemNmae" : "anser","itemName2" :"anser1"},
@@ -195,15 +196,15 @@ class SeriesSection(AbstractSection):
         return seriesItem
 
     def run(self, data, data_list, page):
-        pages = self.data.sezons
+        pages = self.data.number_of_sezons
         self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
         for item in range(1, pages + 1):
             movies = self.faind_movies_with_sezon(self.data.movies, item)
             tab = self.Pagination.tab()
-            src = 'C:/Users/DeadlyComputer/Desktop/photo/5c8df35745d2a09e00a18c36.jpg'
-            self.BaseView.avatar([50, 50, 250, 250], tab, src)
+            src = self.set_src(item)
+            self.BaseView.avatar(self.BaseView.obj.WindowSize['section_avatar'], tab, src)
             self.info(tab)
-            self.Scroller.run([400, 10, 780, 850], tab)
+            self.Scroller.run(self.BaseView.obj.WindowSize['section_scroller'], tab)
             self.Scroller.movie_list(
                 movies,
                 self,
@@ -211,6 +212,13 @@ class SeriesSection(AbstractSection):
             )
             self.tabWidget.addTab(tab, str(item))
         return self.tabWidget
+
+    def set_src(self,item):
+        for item_in_sezon in self.obj.data.sezons:
+            print(item_in_sezon.name,item)
+            if item_in_sezon.name == str(item):
+                return item_in_sezon.src
+        return series_avatar_defult
 
 
     def faind_movies_with_sezon(self,arry,page):

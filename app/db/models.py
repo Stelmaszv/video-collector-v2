@@ -31,16 +31,38 @@ Stars_Tags = Table('tags_series', Base.metadata,
     Column('stars_id', Integer, ForeignKey('stars.id'))
 )
 
+Series_sezons = Table('series_sezons', Base.metadata,
+    Column('sezons_id', Integer, ForeignKey('sezons.id')),
+    Column('series_id', Integer, ForeignKey('series.id'))
+)
+
+class Sezons(Base):
+    __tablename__ = 'sezons'
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String)
+    src = Column('src', String)
+
+    series = relationship(
+        "Series",
+        secondary=Series_sezons,
+        back_populates="sezons"
+    )
 
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
     avatar = Column('avatar', String)
-    sezons= Column('sezons',Integer)
     none = Column('none', String, default='')
     singles = Column('singles', String, default='')
     dir = Column('dir', String, default='')
+    number_of_sezons = Column('sezons', Integer)
+
+    sezons = relationship(
+        "Sezons",
+        secondary=Series_sezons,
+        back_populates="series"
+    )
 
     stars = relationship(
         "Stars",
@@ -171,4 +193,3 @@ class Movies(Base):
 Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)
 session = Session()
-

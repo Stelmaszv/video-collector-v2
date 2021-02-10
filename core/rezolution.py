@@ -87,9 +87,12 @@ class MenuHalfSmall(MenuType):
                     "list_view_size": [375,80,871,881],
                     "avatar_size": [50, 50, 250, 250],
                     "info_size": [100,300,300,200],
-                    "galery_size": [-50, 400, 300, 300],
+                    "galery_size": [10, 450, 350, 350],
                     "galery_photo_size": [100, 100],
                     "galery_item_show": 2,
+                    "section_scroller":[300, 10, 540,830],
+                    "section_avatar": [20, 50, 250, 250],
+                    "section_info"  : [70, 300, 300, 200]
                 }
             },
             "MovieListView": {
@@ -145,12 +148,6 @@ class MenuHalfSmall(MenuType):
             },
 
             "Stars": {
-                "navbar"  :  {
-                    "left"   : 650,
-                    "top"    : -190,
-                    "width"  : 480,
-                    "height" : 480,
-                },
                 "position":  {
                     "left"              : 2562+400,
                     "top"               : 400,
@@ -158,6 +155,7 @@ class MenuHalfSmall(MenuType):
                     "height"            : 985
                 },
                 "window":{
+                    "navbar"            : [650,-190,480,480],
                     "avatar_size"       : [50, 80, 250, 300],
                     "title_size"        : [400, 0, 300, 100],
                     "info_size"         : [330, 100, 700, 150],
@@ -165,7 +163,8 @@ class MenuHalfSmall(MenuType):
                     "list_view_size"    : [50, 430, 1200, 550],
                     "galery_photo_size" : [150, 150],
                     "galery_item_show"  : 2,
-                    "description"       : [330,200,400,200,500], # 5 String limit
+                    "description"       : [330,200,400,200,500],
+                    "description_limit" : 500,
                     "section": {
                         "left"         : 15,
                         "left_add"     : 250,
