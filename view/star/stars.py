@@ -42,8 +42,14 @@ class StarView(QWidget):
         self.list = []
 
     def get_nav(self):
+        data = [
+            self.SetResolution.menu_set['Stars']['navbar']['left'],
+            self.SetResolution.menu_set['Stars']['navbar']['top'],
+            self.SetResolution.menu_set['Stars']['navbar']['width'],
+            self.SetResolution.menu_set['Stars']['navbar']['height']
+        ]
         self.BaseView.get_nav(
-            [650, -145, 480, 400],
+            data,
             self.Nav.set_nav()
         )
 

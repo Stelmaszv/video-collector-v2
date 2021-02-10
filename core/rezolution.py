@@ -112,6 +112,12 @@ class MenuHalfSmal(MenuType):
             },
 
             "Stars": {
+                "navbar"  :  {
+                    "left"   : 650,
+                    "top"    : -190,
+                    "width"  : 480,
+                    "height" : 480,
+                },
                 "position":  {
                     "left"              : 2562+400,
                     "top"               : 400,
