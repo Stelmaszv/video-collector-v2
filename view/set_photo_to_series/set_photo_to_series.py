@@ -4,16 +4,20 @@ from core.BaseActions import FormSection,Submit
 from core.rezolution import SetResolution
 from app.db.models import Series
 from app.forms import SetPhotoToSeriesForm
+from app.model_view import SetPhotoToSetiesView
+from core.BaseActions import ViewBaseAction
 
 class SetPhotoToSeries(QWidget):
 
     model = Series
+    reset_view = 'series'
 
     def __init__(self):
         super().__init__()
         self.BaseView = BaseView([], self)
         self.SetResolution = SetResolution()
         self.FormSection = FormSection(self)
+        self.BaseActions = ViewBaseAction(self)
         self.left =   self.SetResolution.menu_set['EditSeries']['position']['left']
         self.top =    self.SetResolution.menu_set['EditSeries']['position']['top']
         self.width =  self.SetResolution.menu_set['EditSeries']['position']['width']
@@ -37,7 +41,9 @@ class SetPhotoToSeries(QWidget):
         self.FormSection.form_section(data_line, buttons)
 
     def submit_click(self,values):
-        print(values)
+        SPTSV=SetPhotoToSetiesView(self.data)
+        SPTSV.add_data(values)
+        self.BaseActions.reset()
 
     def run_window(self):
         self.BaseView.set_data(self.id)

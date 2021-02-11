@@ -1,5 +1,20 @@
 from app.db.models import Stars,Series
 from app.db.models import session
+
+class SetPhotoToSetiesView:
+
+    model = Series()
+    session = session
+
+    def __init__(self,data):
+        self.data=data
+
+    def add_data(self, data):
+        item=0
+        for sezon in self.data.sezons:
+            sezon.src=data[item]['value']
+            item=item+1
+
 class SeriesModelView:
     model = Series()
     session = session

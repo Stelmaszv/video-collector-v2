@@ -23,7 +23,6 @@ class ViewBaseAction:
         self.reset()
 
     def edit(self):
-        self.obj.close()
         self.obj.BaseView.load_view(self.obj.edit_view,self.obj.data)
         return True;
 

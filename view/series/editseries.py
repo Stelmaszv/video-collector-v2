@@ -11,6 +11,7 @@ class EditSeries(QWidget):
     model = Series
     submit_view = 'series'
 
+
     def __init__(self):
         super().__init__()
         self.BaseView = BaseView([], self)
