@@ -174,7 +174,6 @@ class AddSeriesViaDir(AbstractAddViaDir):
             number_of_sezons  =  self.set_sezons(),
             sezons  =  sezons,
             avatar  =  self.set_avatar(),
-            none    =  self.set_none(),
             dir     =  self.dir
         ))
 

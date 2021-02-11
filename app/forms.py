@@ -60,7 +60,7 @@ class SeriesForm:
         self.from_section.append({
             'type': 'edit_line',
             'name': 'name',
-            'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
+            'validation': "",
             'data_type': 'string',
             'place_holder': self.set_value_if_exist(self.BaseView.data.name,"Format - Full Name"),
             'grid_data': [0, 1, 1, 1]
@@ -91,7 +91,7 @@ class SeriesForm:
             self.from_section.append({
                 'type': 'combo_box',
                 'name': 'avatar_edit_line',
-                'data_type': 'dir',
+                'data_type': 'combo_box_dir',
                 'validation': "",
                 'place_holder': self.set_value_if_exist(self.BaseView.data.avatar,'Avator'),
                 'grid_data': [7, 1, 1, 1],

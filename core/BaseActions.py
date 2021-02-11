@@ -5,8 +5,7 @@ from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
 from app.db.models import Tags
-
-
+import os
 
 class ViewBaseAction:
 
@@ -117,6 +116,10 @@ class Submit:
                     DV.set_data(int(ymd[0]), ymd[1], int(ymd[2]))
                     DV.validate_data()
                     item['value'] = datetime(DV.year, DV.mount, DV.day)
+            if item['data-type'] == 'dir':
+                if item['value']:
+                    if os.path.isdir(item['value']) is False:
+                        error.append("This is not dir location")
 
         if len(error) == 0:
             self.add_data_to_model()
