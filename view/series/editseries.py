@@ -45,8 +45,7 @@ class EditSeries(QWidget):
         self.Submit.run()
 
     def add_star(self,values):
-        self.close()
-        print('add star')
+        self.BaseView.load_view('add_star_to_model', self.data)
 
     def set_photo_for_series(self,values):
         self.BaseView.load_view('set_photo_to_series', self.data)

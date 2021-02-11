@@ -20,8 +20,10 @@ class setWindow():
         from view.star.add_star_via_dirloop import AddStarViaDirViewLoop
         from view.series.editseries import EditSeries
         from view.set_photo_to_series.set_photo_to_series import SetPhotoToSeries
+        from view.star.add_star_to_model import AddStarToModelView
 
         switcher = {
+            'add_star_to_model' :AddStarToModelView(),
             'set_photo_to_series' : SetPhotoToSeries(),
             'add_star_via_dirLoop': AddStarViaDirViewLoop(),
             'add_star_via_dir': AddStarViaDirView(),

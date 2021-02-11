@@ -4,7 +4,7 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
-from app.db.models import Tags
+from app.db.models import Tags,Stars
 import os
 
 class ViewBaseAction:
@@ -94,6 +94,46 @@ class AddTag:
     def add_tag_from_db(self,value):
         item = self.session.query(self.model).filter(self.model.name == value).first()
         self.Obj.tags.append(item)
+
+class AddStar(AddTag):
+
+    model = Stars
+
+    def __init__(self,data,Obj):
+        self.data=data
+        self.Obj=Obj.data
+        self.session = session
+        self.ViewBaseAction=ViewBaseAction(Obj)
+
+    def add(self):
+        add = False
+
+        for item in self.Obj.stars:
+            if item.name ==  self.data[0]['value']:
+                add = True
+
+        in_db = False
+        query = self.session.query(self.model).filter(self.model.name == self.data[0]['value']).first()
+
+        if query:
+            in_db = True;
+
+        if in_db is False and add is False:
+            self.add_tag_to_db(self.data[0]['value'])
+            self.add_tag_from_db(self.data[0]['value'])
+
+        if in_db is True and add is False:
+            self.add_tag_from_db(self.data[0]['value'])
+
+        self.ViewBaseAction.reset()
+
+    def add_tag_to_db(self,value):
+        self.session.add_all([self.model(name=value)])
+        self.session.commit()
+
+    def add_tag_from_db(self,value):
+        item = self.session.query(self.model).filter(self.model.name == value).first()
+        self.Obj.stars.append(item)
 
 class Submit:
 

@@ -1,5 +1,43 @@
 import os
 
+class AddStarToModelForm:
+    def __init__(self,BaseView):
+        self.BaseView=BaseView
+        self.form_new()
+
+    def form_new(self):
+        self.from_section = []
+        self.from_section.append({
+            'type'        : 'label',
+            'name'        : 'name',
+            'place_holder': 'Name',
+            'grid_data'   : [0, 0, 1, 1]
+        })
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'name',
+            'validation': "",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(None,"Star Name"),
+            'grid_data': [0, 1, 1, 1]
+        })
+        self.from_section.append({
+            'type': 'button_submit',
+            'obj_name': 'submit',
+            'name': 'Submit',
+            'place_holder': 'Submit',
+            'grid_data': [0, 2, 1, 1],
+            'click': self.BaseView.submit_click
+        })
+
+    def set_value_if_exist(self,value,empty):
+        if value is None :
+            return empty
+        return str(value)
+
+    def return_from_section(self):
+        return self.from_section
+
 class SetPhotoToSeriesForm:
     def __init__(self,BaseView):
         self.BaseView=BaseView
