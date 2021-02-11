@@ -1,4 +1,60 @@
 import os
+
+class SetPhotoToSeriesForm:
+    def __init__(self,BaseView):
+        self.BaseView=BaseView
+        self.form_new()
+
+    def form_new(self):
+        self.from_section = []
+        row=0
+        for item in self.BaseView.data.sezons:
+            self.from_section.append({
+                'type': 'label',
+                'name': 'name',
+                'place_holder':  "Sezon name "+str(item.name),
+                'grid_data': [row, 0, 1, 1]
+            })
+
+            self.from_section.append({
+                'type': 'combo_box',
+                'name': 'avatar_edit_line',
+                'data_type': 'combo_box_dir',
+                'validation': "",
+                'place_holder': self.set_value_if_exist(item.src,"Sezon name "+str(item.name)),
+                'grid_data': [row, 1, 1, 1],
+                'combo_box_list': self.get_files_in_dir(item.src)
+            })
+
+            row=row+1
+
+        self.from_section.append({
+            'type': 'button_submit',
+            'obj_name': 'submit',
+            'name': 'Submit',
+            'place_holder': 'Submit',
+            'grid_data': [row+1, 1, 1, 1],
+            'click': self.BaseView.submit_click
+        })
+
+
+    def get_files_in_dir(self,defult):
+        dir=self.BaseView.data.dir + '' +str('/photo')
+        dir_loop=[]
+        dir_loop.append(defult)
+        for item in os.listdir(dir):
+            dir_loop_elment=dir + '/' +str(item)
+            dir_loop.append(dir_loop_elment)
+        return dir_loop
+
+    def set_value_if_exist(self,value,empty):
+        if value is None :
+            return empty
+        return str(value)
+
+    def return_from_section(self):
+        return self.from_section
+
 class TagsForm:
     def __init__(self,BaseView):
         self.BaseView=BaseView
