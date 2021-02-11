@@ -9,7 +9,9 @@ from app.model_view import StarModelView
 class EditStarView(QWidget):
 
     model = Stars
+    submit_view = 'stars'
     FormSchema = []
+
     def __init__(self):
         super().__init__()
         self.BaseView= BaseView([], self)

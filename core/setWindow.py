@@ -18,6 +18,7 @@ class setWindow():
         from view.star.new_star import NewStarView
         from view.star.add_star_via_dir import AddStarViaDirView
         from view.star.add_star_via_dirloop import AddStarViaDirViewLoop
+        from view.series.editseries import EditSeries
 
         switcher = {
             'add_star_via_dirLoop': AddStarViaDirViewLoop(),
@@ -25,6 +26,7 @@ class setWindow():
             'new star' : NewStarView(),
             'add_tags': AddTagView(),
             'stars': StarView(),
+            'edit_series':EditSeries(),
             'edit_star': EditStarView(),
             'movies': MovieView(),
             'series': SerieView(),

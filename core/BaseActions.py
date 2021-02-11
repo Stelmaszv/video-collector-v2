@@ -141,7 +141,7 @@ class Submit:
         self.Model.add_data(self.data)
         self.Obj.close()
         if self.Obj.data is not None:
-            self.Obj.BaseView.load_view('stars', self.Obj.data)
+            self.Obj.BaseView.load_view(self.Obj.submit_view, self.Obj.data)
         return True
 
 class FormSection:

@@ -36,6 +36,11 @@ Series_sezons = Table('series_sezons', Base.metadata,
     Column('series_id', Integer, ForeignKey('series.id'))
 )
 
+Series_Tags = Table('series_tags', Base.metadata,
+    Column('series_id', Integer, ForeignKey('series.id')),
+    Column('tags_id', Integer, ForeignKey('tags.id'))
+)
+
 class Sezons(Base):
     __tablename__ = 'sezons'
     id = Column('id', Integer, primary_key=True)
@@ -56,10 +61,14 @@ class Series(Base):
     favourite = Column('favourite', Boolean, default=False)
     name = Column('name',String)
     avatar = Column('avatar', String)
-    none = Column('none', String, default='')
-    singles = Column('singles', String, default='')
     dir = Column('dir', String, default='')
     number_of_sezons = Column('sezons', Integer)
+
+    tags = relationship(
+        "Tags",
+        secondary=Series_Tags,
+        back_populates="series"
+    )
 
     sezons = relationship(
         "Sezons",
@@ -119,6 +128,12 @@ class Tags(Base):
     stars = relationship(
         "Stars",
         secondary=Stars_Tags,
+        back_populates="tags"
+    )
+
+    series = relationship(
+        "Series",
+        secondary=Series_Tags,
         back_populates="tags"
     )
 

@@ -75,6 +75,18 @@ class MenuHalfSmall(MenuType):
 
     def show(self):
         return {
+            "EditSeries":{
+                "position": {
+                    "left": 2562 + 400,
+                    "top": 400,
+                    "width": 1280,
+                    "height": 985
+                },
+                "window":{
+                    "title_size": [0, 0, 1280, 50],
+                    "form_section": [300, 100, 680, 300]
+                }
+            },
             "Series":{
                 "position": {
                     "left": 2562 + 400,
@@ -84,8 +96,8 @@ class MenuHalfSmall(MenuType):
                 },
                 "window":{
                     "navbar": [450, -190, 480, 480],
-                    "title_size": [0, 0, 1280, 50],
-                    "list_view_size": [375,80,871,881],
+                    "title_size": [0, 0, 1280, 25],
+                    "list_view_size": [375,100,871,881],
                     "avatar_size": [50, 50, 250, 250],
                     "info_size": [100,300,300,200],
                     "galery_size": [10, 450, 350, 350],

@@ -8,7 +8,7 @@ from core.BaseActions import ViewBaseAction
 class SerieView(QWidget):
 
     reset_view = 'series'
-    edit_view = 'edit_star'
+    edit_view = 'edit_series'
 
     def __init__(self):
         super().__init__()

@@ -1,5 +1,14 @@
-from app.db.models import Stars
+from app.db.models import Stars,Series
 from app.db.models import session
+class SeriesModelView:
+    model = Series()
+    session = session
+
+    def __init__(self,data):
+        self.data=data
+
+    def add_data(self,data):
+        print(data)
 
 class StarModelView:
     model = Stars()

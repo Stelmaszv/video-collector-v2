@@ -2,9 +2,10 @@ from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from core.BaseActions import FormSection,AddTag,ViewBaseAction
 from core.rezolution import SetResolution
+from app.forms import TagsForm
 class AddTagView(QWidget):
 
-    reset_view='edit_star'
+    reset_view='add_tags'
 
     def init(self):
         self.model=self.obj.model
@@ -24,6 +25,7 @@ class AddTagView(QWidget):
         self.init()
         self.setGeometry(self.left, self.top, self.width, self.height)
         self.set_title()
+        self.FormSchema = TagsForm(self)
         self.add_tags_form()
         self.tags_list()
         self.show()
@@ -36,47 +38,12 @@ class AddTagView(QWidget):
 
 
     def tags_list(self):
-        self.BaseView.listView([
-            self.WindowSize['list_view_size'][0],
-            self.WindowSize['list_view_size'][1],
-            self.WindowSize['list_view_size'][2],
-            self.WindowSize['list_view_size'][3]
-        ], self.data.tags, 'Tags',False,False)
+        self.BaseView.listView(self.WindowSize['list_view_size'],self.data.tags, 'Tags',False,False)
 
     def add_tags_form(self):
 
-        data_line = [
-            self.WindowSize['form_section'][0],
-            self.WindowSize['form_section'][1],
-            self.WindowSize['form_section'][2],
-            self.WindowSize['form_section'][3]
-        ]
-
-        buttons = [
-            {
-                'type': 'label',
-                'name': 'name',
-                'place_holder': 'Tag Name',
-                'grid_data': [0, 0, 1, 1]
-            },
-            {
-                'type': 'edit_line',
-                'name': 'name',
-                'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
-                'data_type': 'string',
-                'DB': 'name',
-                'place_holder': '',
-                'grid_data': [0, 1, 1, 1]
-            },
-            {
-                'type': 'button_submit',
-                'obj_name': 'submit',
-                'name': 'Submit',
-                'place_holder': 'Submit',
-                'grid_data': [0, 2, 1, 1],
-                'click': self.submit_click
-            },
-        ]
+        data_line = self.WindowSize['form_section']
+        buttons = self.FormSchema.return_from_section()
         self.FormSection.form_section(data_line, buttons)
 
     def submit_click(self,values):
@@ -86,14 +53,7 @@ class AddTagView(QWidget):
     def set_title(self):
         title = 'Add tags to '+self.data.name
         self.window_title = title
-        data = [
-            self.WindowSize['title_size'][0],
-            self.WindowSize['title_size'][1],
-            self.WindowSize['title_size'][2],
-            self.WindowSize['title_size'][3]
-        ]
-
-
+        data = self.WindowSize['title_size']
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
                "<span style=\" font-size:20pt;font-weight:600; " \
