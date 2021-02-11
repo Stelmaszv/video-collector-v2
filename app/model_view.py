@@ -8,14 +8,25 @@ class SeriesModelView:
         self.data=data
 
     def add_data(self,data):
-        print(data)
+
+        if data[0]['value']:
+            self.data.name = data[0]['value']
+
+        if data[1]['value']:
+            self.data.dir = data[1]['value']
+
+        if data[2]['value']:
+            self.data.avatar = data[2]['value']
+
+        self.session.add_all([self.data])
+        self.session.commit()
 
 class StarModelView:
     model = Stars()
     session = session
 
     def __init__(self,data):
-        self.data=data
+        self.data = data
 
     def set_data(self):
         if self.data is None:
