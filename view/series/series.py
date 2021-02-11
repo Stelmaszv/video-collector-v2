@@ -2,13 +2,20 @@ from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from app.db.models import Series
 from core.rezolution import SetResolution
+from app.nav import SeriesNav
+from core.BaseActions import ViewBaseAction
 
 class SerieView(QWidget):
+
+    reset_view = 'series'
+    edit_view = 'edit_star'
 
     def __init__(self):
         super().__init__()
         self.model = Series
         self.BaseView= BaseView([], self)
+        self.BaseActions = ViewBaseAction(self)
+        self.Nav = SeriesNav(self.BaseActions)
         self.SetResolution = SetResolution()
         self.left = self.SetResolution.menu_set['Series']['position']['left']
         self.top = self.SetResolution.menu_set['Series']['position']['top']
@@ -57,7 +64,15 @@ class SerieView(QWidget):
         data= self.WindowSize['list_view_size']
         self.BaseView.listView(data, self.data.movies, 'Series',self)
 
+    def get_nav(self):
+        data = self.WindowSize['navbar']
+        self.BaseView.get_nav(
+            data,
+            self.Nav.set_nav()
+        )
+
     def initUI(self):
+        self.get_nav()
         self.info()
         self.title()
         self.galery()

@@ -6,6 +6,8 @@ from datetime import datetime
 from core.datamanipulation import DataValidator
 from app.db.models import Tags
 
+
+
 class ViewBaseAction:
 
     def __init__(self,obj):
@@ -23,7 +25,7 @@ class ViewBaseAction:
 
     def edit(self):
         self.obj.close()
-        self.obj.BaseView.load_view('edit_star',self.obj.data)
+        self.obj.BaseView.load_view(self.obj.edit_view,self.obj.data)
         return True;
 
     def add_favourite(self):

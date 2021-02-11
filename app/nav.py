@@ -1,5 +1,5 @@
-class StarNav:
 
+class BaseNav:
     def __init__(self,BaseAction):
         self.BaseActions =  BaseAction
 
@@ -38,4 +38,13 @@ class StarNav:
 
     def reset(self):
         self.BaseActions.reset()
+
+class StarNav(BaseNav):
+
+    pass
+
+class SeriesNav(BaseNav):
+
+    pass
+
 

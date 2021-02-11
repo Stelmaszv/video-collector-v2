@@ -9,9 +9,10 @@ from core.BaseActions import ViewBaseAction
 from app.nav import StarNav
 
 class StarView(QWidget):
-    model = Stars
+    model       = Stars
     window_type = 'star'
     reset_view  = 'stars'
+    edit_view   = 'edit_star'
 
     def __init__(self):
         super().__init__()

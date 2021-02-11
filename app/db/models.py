@@ -51,6 +51,9 @@ class Sezons(Base):
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
+    views =      Column('views', Integer,default=0)
+    likes = Column('likes', Integer,default=0)
+    favourite = Column('favourite', Boolean, default=False)
     name = Column('name',String)
     avatar = Column('avatar', String)
     none = Column('none', String, default='')
