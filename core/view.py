@@ -4,6 +4,8 @@ from app.db.models import session
 from core.setWindow import Router
 from core.rezolution import SetResolution
 from core.arraymanipulation import ArrayManipulation
+from core.custum_errors import Error
+from core.db.config import Base as BaseModel
 class Form:
 
     buttons_loop=[]
@@ -261,8 +263,9 @@ class AbstractBaseView:
         self.WindowSize = self.SetResolution.menu_set[self.resolution_index]['window']
 
     def ___set_data(self):
-        self.BaseView.set_data(self.id)
-        self.data = self.BaseView.data
+        if self.model is not None:
+            self.BaseView.set_data(self.id)
+            self.data = self.BaseView.data
 
     def  set_up(self):
         pass
@@ -279,21 +282,33 @@ class AbstractBaseView:
             self.NavObj.set_nav()
         )
 
+    def check_model(self,error):
+        Error.throw_error_is_none(error,self.model)
+
+    def check_nav(self):
+        Error.throw_error_is_none('self.Nav is required for navbar!', self.Nav)
 
     def init(self):
+
         if ArrayManipulation.faind_index_in_array(self.show_elemnts,'Title'):
+            self.check_model('self.model is required for Title Section !')
             self.title()
             self.setWindowTitle(self.window_title)
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Info'):
             self.info()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Galery'):
+            self.check_model('self.model is required for Galery Section !')
             self.galery()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Nav'):
+            self.check_nav()
             self.get_nav()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'List'):
+            self.check_model('self.model is required for List Section !')
             self.def_list_view()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Avatar'):
+            self.check_model('self.model is required for Avatar Section !')
             self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
+
 
     def def_list_view(self):
         data= self.WindowSize['list_view_size']
