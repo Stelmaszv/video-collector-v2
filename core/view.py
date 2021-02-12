@@ -241,6 +241,8 @@ class BaseView:
             if row > inRow:
                 row = 0
                 col = col + 1
+
+
 class AbstractBaseView:
 
     Nav    = None
@@ -263,11 +265,24 @@ class AbstractBaseView:
             self.NavObj = self.Nav(self.BaseActions)
 
     def __set_resolution(self):
+        self.check_rezolution_index()
         self.left = self.SetResolution.menu_set[self.resolution_index]['position']['left']
         self.top = self.SetResolution.menu_set[self.resolution_index]['position']['top']
         self.width = self.SetResolution.menu_set[self.resolution_index]['position']['width']
         self.height = self.SetResolution.menu_set[self.resolution_index]['position']['height']
         self.WindowSize = self.SetResolution.menu_set[self.resolution_index]['window']
+
+    def check_rezolution_index(self):
+        stan=False
+        if len(self.resolution_index)>0:
+            stan=True
+        Error.throw_error_bool('self.resolution_index is required', stan)
+
+        array_stan = True
+        if self.SetResolution.menu_set.get(self.resolution_index, "Invalid data"):
+            array_stan=False
+
+        Error.throw_error_bool('index  in rezolution not exist ', array_stan)
 
     def ___set_data(self):
         if self.model is not None:

@@ -11,7 +11,7 @@ class SerieView(QWidget,AbstractBaseView):
     model              =  Series
     reset_view         = 'series'
     edit_view          = 'edit_series'
-    resolution_index   = 'Series'
+    resolution_index   = 'Serie'
     list_view          = 'Series'
 
 
