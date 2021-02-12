@@ -13,7 +13,7 @@ class Error:
     @staticmethod
     def throw_error_bool(error,value,exit_var=True):
         try:
-            if value:
+            if value is False:
                 raise NameError()
         except NameError:
             print(error)

@@ -6,6 +6,8 @@ from core.rezolution import SetResolution
 from core.arraymanipulation import ArrayManipulation
 from core.custum_errors import Error
 from core.db.config import Base as BaseModel
+from app.nav import BaseNav
+from app.info import BaseInfo
 class Form:
 
     buttons_loop=[]
@@ -242,17 +244,22 @@ class BaseView:
 class AbstractBaseView:
 
     Nav    = None
+    Info   = None
     model  = None
+
     resolution_index=''
     list_view=''
     show_elemnts=[]
 
     def __init__(self):
+        if self.model is not None:
+            Error.throw_error_bool('class self.model is not subclass of BaseModel', issubclass(self.model, BaseModel))
         self.BaseView = BaseView([], self)
         self.BaseActions = ViewBaseAction(self)
         self.SetResolution = SetResolution()
         self.__set_resolution()
         if self.Nav is not None:
+            Error.throw_error_bool('class self.nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
             self.NavObj = self.Nav(self.BaseActions)
 
     def __set_resolution(self):
@@ -288,6 +295,10 @@ class AbstractBaseView:
     def check_nav(self):
         Error.throw_error_is_none('self.Nav is required for navbar!', self.Nav)
 
+    def check_info(self):
+        Error.throw_error_is_none('self.Info is required for info Section!', self.Info)
+        Error.throw_error_bool('class self.nav is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
+
     def init(self):
 
         if ArrayManipulation.faind_index_in_array(self.show_elemnts,'Title'):
@@ -295,6 +306,7 @@ class AbstractBaseView:
             self.title()
             self.setWindowTitle(self.window_title)
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Info'):
+            self.check_info()
             self.info()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Galery'):
             self.check_model('self.model is required for Galery Section !')
@@ -314,19 +326,11 @@ class AbstractBaseView:
         data= self.WindowSize['list_view_size']
         self.BaseView.listView(data, self.data.movies,self.list_view,self)
 
-
     def info(self):
 
         data   = self.WindowSize['info_size']
-
         rows = ['itemNmae','itemName2']
-
-        inf_data=[
-            {"itemNmae" : "anser","itemName2" :"anser1"},
-            {"itemNmae" : "anser2","itemName2" :"anser2"},
-            {"itemNmae": "anser3","itemName2" :"anser2"}
-        ]
-
+        inf_data=self.Info().return_data()
         self.BaseView.info(inf_data, data, rows)
 
     def title(self):

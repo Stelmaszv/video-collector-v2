@@ -1,18 +1,19 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import BaseView,AbstractBaseView
+from core.view import AbstractBaseView
 from app.db.models import Series
-from core.rezolution import SetResolution
 from app.nav import SeriesNav
-from core.BaseActions import ViewBaseAction
+from app.info import InfoSection
 
 class SerieView(QWidget,AbstractBaseView):
 
-    Nav                = SeriesNav
-    model              = Series
+    Info               =  InfoSection
+    Nav                =  SeriesNav
+    model              =  Series
     reset_view         = 'series'
     edit_view          = 'edit_series'
     resolution_index   = 'Series'
-    list_view          ='Series'
+    list_view          = 'Series'
+
 
 
 """
