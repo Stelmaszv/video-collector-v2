@@ -3,6 +3,7 @@ from core.BaseActions import ViewBaseAction
 from app.db.models import session
 from core.setWindow import Router
 from core.rezolution import SetResolution
+from core.arraymanipulation import ArrayManipulation
 class Form:
 
     buttons_loop=[]
@@ -278,14 +279,21 @@ class AbstractBaseView:
             self.NavObj.set_nav()
         )
 
+
     def init(self):
-        self.title()
-        self.setWindowTitle(self.window_title)
-        self.info()
-        self.galery()
-        self.get_nav()
-        self.def_list_view()
-        self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts,'Title'):
+            self.title()
+            self.setWindowTitle(self.window_title)
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Info'):
+            self.info()
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Galery'):
+            self.galery()
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Nav'):
+            self.get_nav()
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'List'):
+            self.def_list_view()
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Avatar'):
+            self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
 
     def def_list_view(self):
         data= self.WindowSize['list_view_size']

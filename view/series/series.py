@@ -13,6 +13,8 @@ class SerieView(QWidget,AbstractBaseView):
     edit_view          = 'edit_series'
     resolution_index   = 'Series'
     list_view          ='Series'
+
+
 """
 class SerieView(QWidget):
 
