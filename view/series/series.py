@@ -1,10 +1,19 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import BaseView
+from core.view import BaseView,AbstractBaseView
 from app.db.models import Series
 from core.rezolution import SetResolution
 from app.nav import SeriesNav
 from core.BaseActions import ViewBaseAction
 
+class SerieView(QWidget,AbstractBaseView):
+
+    Nav                = SeriesNav
+    model              = Series
+    reset_view         = 'series'
+    edit_view          = 'edit_series'
+    resolution_index   = 'Series'
+    list_view          ='Series'
+"""
 class SerieView(QWidget):
 
     reset_view = 'series'
@@ -80,4 +89,5 @@ class SerieView(QWidget):
         self.BaseView.avatar(data, self, self.data.avatar)
         self.window_title=self.data.name
         self.list_view()
+"""
 

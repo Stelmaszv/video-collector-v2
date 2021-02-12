@@ -14,6 +14,7 @@ class Menu(QMainWindow):
     searchFaze = ''
     searchIn = 'series'
     page=0
+    Model = None
 
     def __init__(self,data=False):
         super().__init__()

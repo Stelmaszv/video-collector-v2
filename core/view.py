@@ -1,6 +1,8 @@
 from PyQt5 import QtGui,QtCore, QtWidgets
+from core.BaseActions import ViewBaseAction
 from app.db.models import session
 from core.setWindow import Router
+from core.rezolution import SetResolution
 class Form:
 
     buttons_loop=[]
@@ -234,3 +236,89 @@ class BaseView:
             if row > inRow:
                 row = 0
                 col = col + 1
+class AbstractBaseView:
+
+    Nav    = None
+    model  = None
+    resolution_index=''
+    list_view=''
+    show_elemnts=[]
+
+    def __init__(self):
+        self.BaseView = BaseView([], self)
+        self.BaseActions = ViewBaseAction(self)
+        self.SetResolution = SetResolution()
+        self.__set_resolution()
+        if self.Nav is not None:
+            self.NavObj = self.Nav(self.BaseActions)
+
+    def __set_resolution(self):
+        self.left = self.SetResolution.menu_set[self.resolution_index]['position']['left']
+        self.top = self.SetResolution.menu_set[self.resolution_index]['position']['top']
+        self.width = self.SetResolution.menu_set[self.resolution_index]['position']['width']
+        self.height = self.SetResolution.menu_set[self.resolution_index]['position']['height']
+        self.WindowSize = self.SetResolution.menu_set[self.resolution_index]['window']
+
+    def ___set_data(self):
+        self.BaseView.set_data(self.id)
+        self.data = self.BaseView.data
+
+    def  set_up(self):
+        pass
+
+    def galery(self):
+        data = self.WindowSize['galery_size']
+        data_size = self.WindowSize['galery_photo_size']
+        self.BaseView.galery(data, data_size, self.WindowSize['galery_item_show'])
+
+    def get_nav(self):
+        data = self.WindowSize['navbar']
+        self.BaseView.get_nav(
+            data,
+            self.NavObj.set_nav()
+        )
+
+    def init(self):
+        self.title()
+        self.setWindowTitle(self.window_title)
+        self.info()
+        self.galery()
+        self.get_nav()
+        self.def_list_view()
+        self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
+
+    def def_list_view(self):
+        data= self.WindowSize['list_view_size']
+        self.BaseView.listView(data, self.data.movies,self.list_view,self)
+
+
+    def info(self):
+
+        data   = self.WindowSize['info_size']
+
+        rows = ['itemNmae','itemName2']
+
+        inf_data=[
+            {"itemNmae" : "anser","itemName2" :"anser1"},
+            {"itemNmae" : "anser2","itemName2" :"anser2"},
+            {"itemNmae": "anser3","itemName2" :"anser2"}
+        ]
+
+        self.BaseView.info(inf_data, data, rows)
+
+    def title(self):
+        data = self.WindowSize['title_size']
+        self.window_title=self.data.name
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\" font-size:18pt;font-weight:600; " \
+               "text-decoration: none;\">" + self.data.name + \
+               "</span></p></body></html>"
+        self.BaseView.title(data, text)
+
+    def run_window(self):
+        self.___set_data()
+        self.set_up()
+        self.init()
+        self.show()
+        self.setGeometry(self.left, self.top, self.width, self.height)
