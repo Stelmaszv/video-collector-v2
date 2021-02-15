@@ -136,16 +136,40 @@ class TagsForm(BaseFormSection):
 
 class SeriesForm(BaseFormSection):
     def __init__(self,BaseView):
+        self.BaseView = BaseView
+        if self.BaseView.data is None:
+            print('ok')
+        else:
+            self.form_update()
+
+        """
         self.BaseView=BaseView
         if self.BaseView.data is None:
             self.form_new()
         else:
             self.form_update()
-
+        """
     def form_new(self):
         self.from_section = []
 
     def form_update(self):
+        self.from_section = []
+        self.from_section.append({
+            'type'        : 'label',
+            'name'        : 'name',
+            'place_holder': 'Name',
+            'grid_data'   : [0, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'name',
+            'validation': "",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(self.BaseView.data.name,"Format - Full Name"),
+            'grid_data': [0, 1, 1, 1]
+        })
+        """
         self.from_section = []
         self.from_section.append({
             'type'        : 'label',
@@ -230,6 +254,7 @@ class SeriesForm(BaseFormSection):
             'grid_data': [13, 1, 1, 1],
             'click': self.BaseView.submit_click
         })
+        """
 
     def get_files_in_dir(self,defult):
         dir=self.BaseView.data.dir + '' +str('/photo')

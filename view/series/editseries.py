@@ -10,13 +10,17 @@ from app.info import InfoSection
 
 class EditSeries(QWidget,AbstractBaseView):
 
-    model              =  Series
-    resolution_index   = 'Series'
+    model              = Series
+    ModelView          = SeriesModelView
+    resolution_index   = 'EditSeries'
     show_elemnts       = ['Avatar','Info','Galery','Nav']
-    FormSection        = SeriesForm
+    FormSchema        = SeriesForm
 
     def  set_up(self):
         self.window_title='Editing '+str(self.data.name)
+
+    def submit_click(self,values):
+        print(values)
 
 
 class EditSeriess(QWidget):
@@ -40,7 +44,8 @@ class EditSeriess(QWidget):
         data_line = self.WindowSize['form_section']
 
         buttons = self.FormSchema.return_from_section()
-        self.FormSection.form_section(data_line, buttons)
+
+        #self.FormSection.form_section(data_line, buttons)
 
     def set_title(self):
         title = 'Edit series '+self.data.name
@@ -69,8 +74,8 @@ class EditSeriess(QWidget):
     def run_window(self):
         self.BaseView.set_data(self.id)
         self.data = self.BaseView.data
-        self.Submit = Submit(SeriesModelView,self.data,self)
-        self.FormSchema = SeriesForm(self)
+        #self.Submit = Submit(SeriesModelView,self.data,self)
+        #self.FormSchema = SeriesForm(self)
         self.form_section()
         self.set_title();
         self.setWindowTitle(self.window_title)

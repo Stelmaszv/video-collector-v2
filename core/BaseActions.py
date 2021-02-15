@@ -188,8 +188,8 @@ class Submit:
 
 class FormSection:
 
-    def __init__(self,obj):
-        self.obj=obj
+    def __init__(self, BaseView):
+        self.BaseView=BaseView
 
     def faind_clandar_value(self,buttons):
         clendar_value=None
@@ -199,7 +199,7 @@ class FormSection:
         return clendar_value
 
     def form_section(self, data, buttons=[]):
-        self.widget_edit_section = QtWidgets.QWidget(self.obj)
+        self.widget_edit_section = QtWidgets.QWidget(self.BaseView)
         self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.widget_edit_section.setObjectName("widget_edit_section")
         self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
@@ -280,13 +280,13 @@ class FormSection:
             )
 
     def combo_box(self,data,grid,combo_list):
-        combo_box = QtWidgets.QComboBox(self.obj)
+        combo_box = QtWidgets.QComboBox(self.BaseView)
         combo_box.addItems(combo_list)
         grid.addWidget(combo_box,data[0], data[1], data[2], data[3])
         return combo_box
 
     def button (self,info,grid):
-        button = QtWidgets.QPushButton(self.obj)
+        button = QtWidgets.QPushButton(self.BaseView)
         button.setObjectName(info['obj_name'])
         button.setText(info['name'])
         grid.addWidget(
@@ -299,7 +299,7 @@ class FormSection:
         button.clicked.connect(lambda: info['click']('data'))
 
     def button_submit(self,submit,grid,grid_array):
-        button = QtWidgets.QPushButton(self.obj)
+        button = QtWidgets.QPushButton(self.BaseView)
         button.setObjectName(submit['obj_name'])
         button.setText(submit['name'])
 
@@ -328,7 +328,7 @@ class FormSection:
         currentYear = datetime.now().year
         currentDay   = datetime.now().day
 
-        calender = QtWidgets.QCalendarWidget(self.obj)
+        calender = QtWidgets.QCalendarWidget(self.BaseView)
         calender.setMaximumDate(QtCore.QDate(currentYear,currentMonth,currentDay))
         date = calender.selectedDate()
         calender.clicked[QtCore.QDate].connect(show_date)
@@ -337,7 +337,7 @@ class FormSection:
 
     def label(self,info,data,grid,el=None):
         if el is not None:
-            el=self.obj
+            el=self.BaseView
 
         label = QtWidgets.QLabel(el)
         label.setObjectName(info[0])
@@ -347,7 +347,7 @@ class FormSection:
 
     def edit_line2(self,placeholder,data,grid,validator):
         from PyQt5.QtGui import QIntValidator
-        line = QtWidgets.QLineEdit(self.obj)
+        line = QtWidgets.QLineEdit(self.BaseView)
         line.setPlaceholderText(placeholder)
         if validator:
             reg_ex = QRegExp(validator)

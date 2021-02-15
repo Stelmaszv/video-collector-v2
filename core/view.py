@@ -250,7 +250,8 @@ class AbstractBaseView:
     Nav                = None
     Info               = None
     model              = None
-    FormSection        = None
+    FormSchema         = None
+    ModelView          = None
 
     window_title=''
     resolution_index=''
@@ -261,9 +262,6 @@ class AbstractBaseView:
         if self.model is not None:
             Error.throw_error_bool('class self.model is not subclass of BaseModel', issubclass(self.model, BaseModel))
 
-        if self.FormSection is not None:
-            Error.throw_error_bool('class self.FormSection is not subclass of BaseFormSection', issubclass(self.FormSection, BaseFormSection))
-
         self.BaseView = BaseView([], self)
         self.FormSection = FormSection(self)
         self.BaseActions = ViewBaseAction(self)
@@ -273,6 +271,14 @@ class AbstractBaseView:
         if self.Nav is not None:
             Error.throw_error_bool('class self.Nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
             self.NavObj = self.Nav(self.BaseActions)
+
+    def form_section(self):
+        Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection', issubclass(self.FormSchema, BaseFormSection))
+        self.FormSchemaObj = self.FormSchema(self)
+        data_line = self.WindowSize['form_section']
+        buttons=self.FormSchemaObj.return_from_section()
+        self.FormSection.form_section(data_line,buttons)
+
 
     def __set_resolution(self):
         self.check_rezolution_index()
@@ -348,6 +354,8 @@ class AbstractBaseView:
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Avatar'):
             self.check_model('self.model is required for Avatar Section !')
             self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
+        if self.FormSchema is not None:
+            self.form_section()
 
 
     def def_list_view(self):
