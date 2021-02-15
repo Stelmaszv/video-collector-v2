@@ -249,6 +249,7 @@ class AbstractBaseView:
     Info   = None
     model  = None
 
+    window_title=''
     resolution_index=''
     list_view=''
     show_elemnts=[]
@@ -319,7 +320,7 @@ class AbstractBaseView:
 
     def init(self):
 
-        if ArrayManipulation.faind_index_in_array(self.show_elemnts,'Title'):
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts,'Title') or self.window_title:
             self.check_model('self.model is required for Title Section !')
             self.title()
             self.setWindowTitle(self.window_title)
@@ -352,13 +353,17 @@ class AbstractBaseView:
         self.BaseView.info(inf_data, data, rows)
 
     def title(self):
+        title = self.data.name
+        if len(self.window_title)>0:
+            title=self.window_title
+
         data = self.WindowSize['title_size']
-        self.window_title=self.data.name
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
                "<span style=\" font-size:18pt;font-weight:600; " \
-               "text-decoration: none;\">" + self.data.name + \
+               "text-decoration: none;\">" + title + \
                "</span></p></body></html>"
+
         self.BaseView.title(data, text)
 
     def run_window(self):
