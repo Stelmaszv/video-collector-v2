@@ -27,11 +27,10 @@ class ViewBaseAction:
         return True;
 
     def add_favourite(self):
-
         if self.obj.data.favourite is True:
-            stan=False
+            stan = False
         else:
-            stan=True
+            stan = True
 
         self.obj.data.favourite = stan;
         self.session.commit()
@@ -186,104 +185,26 @@ class Submit:
             self.Obj.BaseView.load_view(self.Obj.submit_view, self.Obj.data)
         return True
 
-class FormSection:
+class Form:
 
     def __init__(self, BaseView):
         self.BaseView=BaseView
 
-    def faind_clandar_value(self,buttons):
-        clendar_value=None
-        for item in buttons:
-            if item['type'] == "calendar_value":
-                clendar_value=item
-        return clendar_value
+    def buttom_genarator(self,list,fuction,id):
+        for button in list.buttons():
+            if button is list.button(id):
+                fuction(list.button(id).data)
 
-    def form_section(self, data, buttons=[]):
-        self.widget_edit_section = QtWidgets.QWidget(self.BaseView)
-        self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        self.widget_edit_section.setObjectName("widget_edit_section")
-        self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
-        self.edit_section_grid.setContentsMargins(0, 0, 0, 0)
-        self.edit_section_grid.setObjectName("edit_section_grid")
-        grid_array = []
-        for item in buttons:
-            if item['type'] == 'button':
-                self.button(
-                    item,
-                    self.edit_section_grid
-                )
-
-            if item['type'] == 'combo_box':
-                combo=self.combo_box(
-                    item['grid_data'],
-                    self.edit_section_grid,
-                    item['combo_box_list']
-                )
-                grid_array.append(
-                    {
-                        'item': item,
-                        'value_show' : combo.currentText(),
-                        'button': combo
-                    }
-                )
-
-            if item['type'] == "calendar":
-
-                edit_line = self.edit_line2(
-                    item['place_holder'],
-                    [6, 1, 1, 1],
-                    self.edit_section_grid,
-                    item['validation'],
-                )
-                grid_array.append(
-                    {
-                        'item': item,
-                        'value_show' : edit_line.text(),
-                        'button': edit_line
-                    }
-                )
-
-                self.calendar(
-                    item['grid_data'],
-                    self.edit_section_grid,
-                    edit_line
-                )
-
-            if item['type'] == 'label':
-                self.label(
-                    [item['name'], item['place_holder']],
-                    item['grid_data'],
-                    self.edit_section_grid
-                )
-
-            if item['type'] == 'edit_line':
-                edit_line = self.edit_line2(
-                    item['place_holder'],
-                    item['grid_data'],
-                    self.edit_section_grid,
-                    item['validation'],
-                )
-                grid_array.append(
-                    {
-                        'item': item,
-                        'value_show': edit_line.text(),
-                        'button': edit_line
-                    }
-                )
-        submit = self.faind_submit(buttons)
-        if submit is not None:
-            submit = self.faind_submit(buttons)
-            self.button_submit(
-                submit,
-                self.edit_section_grid,
-                grid_array
-            )
-
-    def combo_box(self,data,grid,combo_list):
-        combo_box = QtWidgets.QComboBox(self.BaseView)
-        combo_box.addItems(combo_list)
-        grid.addWidget(combo_box,data[0], data[1], data[2], data[3])
-        return combo_box
+    def button_loop(self, el, grid, item, data, info, index):
+        button = QtWidgets.QPushButton(el)
+        button.setMinimumSize(QtCore.QSize(30, 0))
+        button.setMaximumSize(QtCore.QSize(10, 16777215))
+        button.setObjectName("InfoButton")
+        button.setText(info[0])
+        button.data = item
+        grid.addWidget(button, data[0], data[1], data[2], data[3])
+        self.buttons_loop[index]['obejct'].addButton(button)
+        self.buttons_loop[index]['obejct'].buttonClicked[int].connect(self.buttons_loop[index]['button'])
 
     def button (self,info,grid):
         button = QtWidgets.QPushButton(self.BaseView)
@@ -296,22 +217,37 @@ class FormSection:
             info['grid_data'][2],
             info['grid_data'][3]
         )
-        button.clicked.connect(lambda: info['click']('data'))
+        button.clicked.connect(lambda: info['click'](info['arguments']))
 
-    def button_submit(self,submit,grid,grid_array):
-        button = QtWidgets.QPushButton(self.BaseView)
-        button.setObjectName(submit['obj_name'])
-        button.setText(submit['name'])
+    def combo_box(self,data,combo_list,grid=None):
+        combo_box = QtWidgets.QComboBox(self.BaseView)
+        combo_box.addItems(combo_list)
+        if grid is not None:
+            grid.addWidget(combo_box,data[0], data[1], data[2], data[3])
+        return combo_box
 
-        grid.addWidget(
-            button,
-            submit['grid_data'][0],
-            submit['grid_data'][1],
-            submit['grid_data'][2],
-            submit['grid_data'][3]
-        )
+    def label(self,info,data,grid,el=None):
+        if el is not None:
+            el=self.BaseView
 
-        button.clicked.connect(lambda :submit['click'](self.get_values(grid_array)))
+        label = QtWidgets.QLabel(el)
+        label.setObjectName(info[0])
+        label.setText(info[1])
+        grid.addWidget(label, data[0], data[1], data[2], data[3])
+        return label
+
+    def edit_line(self,placeholder,data,grid,validator):
+        from PyQt5.QtGui import QIntValidator
+        line = QtWidgets.QLineEdit(self.BaseView)
+        line.setPlaceholderText(placeholder)
+        if validator:
+            reg_ex = QRegExp(validator)
+            validator_obj = QRegExpValidator(reg_ex, line)
+            line.setValidator(validator_obj)
+
+        grid.addWidget(line,data[0], data[1], data[2], data[3])
+        return line
+
 
     def calendar(self,data,grid,label=False):
 
@@ -335,27 +271,113 @@ class FormSection:
         grid.addWidget(calender,data[0], data[1], data[2], data[3])
         return calender
 
-    def label(self,info,data,grid,el=None):
-        if el is not None:
-            el=self.BaseView
+class FormSection:
 
-        label = QtWidgets.QLabel(el)
-        label.setObjectName(info[0])
-        label.setText(info[1])
-        grid.addWidget(label, data[0], data[1], data[2], data[3])
-        return label
+    def __init__(self, BaseView):
+        self.BaseView=BaseView
+        self.Form=Form(self.BaseView)
 
-    def edit_line2(self,placeholder,data,grid,validator):
-        from PyQt5.QtGui import QIntValidator
-        line = QtWidgets.QLineEdit(self.BaseView)
-        line.setPlaceholderText(placeholder)
-        if validator:
-            reg_ex = QRegExp(validator)
-            validator_obj = QRegExpValidator(reg_ex, line)
-            line.setValidator(validator_obj)
+    def faind_clandar_value(self,buttons):
+        clendar_value=None
+        for item in buttons:
+            if item['type'] == "calendar_value":
+                clendar_value=item
+        return clendar_value
 
-        grid.addWidget(line,data[0], data[1], data[2], data[3])
-        return line
+    def form_section(self, data, buttons=[]):
+        self.widget_edit_section = QtWidgets.QWidget(self.BaseView)
+        self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.widget_edit_section.setObjectName("widget_edit_section")
+        self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
+        self.edit_section_grid.setContentsMargins(0, 0, 0, 0)
+        self.edit_section_grid.setObjectName("edit_section_grid")
+        grid_array = []
+        for item in buttons:
+            if item['type'] == 'button':
+                self.Form.button(
+                    item,
+                    self.edit_section_grid
+                )
+
+            if item['type'] == 'combo_box':
+                combo=self.Form.combo_box(
+                    item['grid_data'],
+                    item['combo_box_list'],
+                    self.edit_section_grid
+                )
+                grid_array.append(
+                    {
+                        'item': item,
+                        'value_show' : combo.currentText(),
+                        'button': combo
+                    }
+                )
+
+            if item['type'] == "calendar":
+
+                edit_line = self.Form.edit_line(
+                    item['place_holder'],
+                    [6, 1, 1, 1],
+                    self.edit_section_grid,
+                    item['validation'],
+                )
+                grid_array.append(
+                    {
+                        'item': item,
+                        'value_show' : edit_line.text(),
+                        'button': edit_line
+                    }
+                )
+
+                self.Form.calendar(
+                    item['grid_data'],
+                    self.edit_section_grid,
+                    edit_line
+                )
+
+            if item['type'] == 'label':
+                self.Form.label(
+                    [item['name'], item['place_holder']],
+                    item['grid_data'],
+                    self.edit_section_grid
+                )
+
+            if item['type'] == 'edit_line':
+                edit_line = self.Form.edit_line(
+                    item['place_holder'],
+                    item['grid_data'],
+                    self.edit_section_grid,
+                    item['validation'],
+                )
+                grid_array.append(
+                    {
+                        'item': item,
+                        'value_show': edit_line.text(),
+                        'button': edit_line
+                    }
+                )
+        submit = self.faind_submit(buttons)
+        if submit is not None:
+            submit = self.faind_submit(buttons)
+            self.button_submit(
+                submit,
+                self.edit_section_grid,
+                grid_array
+            )
+    def button_submit(self,submit,grid,grid_array):
+        button = QtWidgets.QPushButton(self.BaseView)
+        button.setObjectName(submit['obj_name'])
+        button.setText(submit['name'])
+
+        grid.addWidget(
+            button,
+            submit['grid_data'][0],
+            submit['grid_data'][1],
+            submit['grid_data'][2],
+            submit['grid_data'][3]
+        )
+
+        button.clicked.connect(lambda :submit['click'](self.get_values(grid_array)))
 
     def get_values(self,grid):
         values=[]

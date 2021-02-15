@@ -43,6 +43,7 @@ class setFactory:
             'series' : getSeries,
             'stars'  : getStar
         }
+        print(name)
         classObj = switcher.get(name, "Invalid data");
         return classObj(self.obj).getQuery()
 
@@ -67,6 +68,7 @@ class getSeries(AbstractFactory):
     deepSearchMode=False
 
     def getQuery(self) -> session:
+        print('dqwd')
         return self.returnAll()
 
     def deepSearch(self) -> session:

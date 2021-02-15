@@ -130,6 +130,10 @@ class MenuHalfSmall(MenuType):
                     "top"              : 400,
                     "width"            : 400,
                     "height"           : 985
+                },
+                "window": {
+                    "title_size": [0, 0, 400, 50],
+                    "list_view_size": [0, 150, 380, 250],
                 }
             },
 

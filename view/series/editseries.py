@@ -13,7 +13,7 @@ class EditSeries(QWidget,AbstractBaseView):
     model              = Series
     ModelView          = SeriesModelView
     resolution_index   = 'EditSeries'
-    show_elemnts       = ['Avatar','Info','Galery','Nav']
+    show_elemnts       = ['Avatar','Info','Galery','Nav','List']
     FormSchema        = SeriesForm
     submit_view       = 'series'
     methods           = ['add_star','set_photo_for_series','add_tag','submit_click']

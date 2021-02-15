@@ -13,4 +13,10 @@ class SerieView(QWidget,AbstractBaseView):
     edit_view          = 'edit_series'
     resolution_index   = 'Series'
     list_view          = 'Series'
+    show_elemnts      =   []
+
+    def  set_up(self):
+        self.set_list_view_data(self.data.movies)
+
+
 

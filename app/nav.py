@@ -7,36 +7,44 @@ class BaseNav:
           return  [
                 {
                     "name": "Add to favorits",
-                    "item_name": "add_to_favorits",
-                    "button": self.add_favorits
+                    "obj_name": "add_to_favorits",
+                    "grid_data": [0,0,1,1],
+                    "click": self.add_favorits,
+                    'arguments':[],
                 },
                 {
                     "name": "Add like",
-                    "item_name": "add_like",
-                    "button": self.add_like
+                    "obj_name": "add_like",
+                    "grid_data": [0, 1, 1, 1],
+                    "click": self.add_like,
+                    'arguments': [],
                 },
                 {
                     "name": "Edit",
-                    "item_name": "edit",
-                    "button": self.edit
+                    "obj_name": "edit",
+                    "grid_data": [0, 2, 1, 1],
+                    "click": self.edit,
+                    'arguments': [],
                 },
                 {
                     "name": "Reset",
-                    "item_name": "reset",
-                    "button": self.reset
+                    "obj_name": "reset",
+                    "grid_data": [0, 3, 1, 1],
+                    "click": self.reset,
+                    'arguments': [],
                 },
             ]
 
-    def add_favorits(self):
+    def add_favorits(self,argumants):
         self.BaseActions.add_favourite()
 
-    def add_like(self):
+    def add_like(self,argumants):
         self.BaseActions.add_like()
 
-    def edit(self):
+    def edit(self,argumants):
         self.BaseActions.edit()
 
-    def reset(self):
+    def reset(self,argumants):
         self.BaseActions.reset()
 
 class StarNav(BaseNav):

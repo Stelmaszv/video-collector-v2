@@ -9,7 +9,7 @@ from core.custum_errors import Error
 from core.db.config import Base as BaseModel
 from app.nav import BaseNav
 from app.info import BaseInfo
-from core.BaseActions import FormSection,Submit
+from core.BaseActions import FormSection,Submit,Form
 
 class BaseFormShema:
     from_section=[]
@@ -53,7 +53,7 @@ class BaseFormShema:
     def is_method(self, method):
         return callable(getattr(self.BaseView, method, None))
 
-class Form:
+class Form2:
 
     buttons_loop=[]
 
@@ -75,27 +75,6 @@ class Form:
         label.setText(info[1])
         grid.addWidget(label, data[0], data[1], data[2], data[3])
         return label
-
-    def buttom_genarator(self,list,fuction,id):
-        for button in list.buttons():
-            if button is list.button(id):
-                fuction(list.button(id).data)
-
-    def buttom_genarator2(self,list,fuction,id):
-        for button in list.buttons():
-            if button is list.button(id):
-                fuction(list.button(id).data)
-
-    def button_loop(self, el, grid, item, data, info, index):
-        button = QtWidgets.QPushButton(el)
-        button.setMinimumSize(QtCore.QSize(30, 0))
-        button.setMaximumSize(QtCore.QSize(10, 16777215))
-        button.setObjectName("InfoButton")
-        button.setText(info[0])
-        button.data = item
-        grid.addWidget(button, data[0], data[1], data[2], data[3])
-        self.buttons_loop[index]['obejct'].addButton(button)
-        self.buttons_loop[index]['obejct'].buttonClicked[int].connect(self.buttons_loop[index]['button'])
 
     def button(self,info,data=[],click=None,gird=None,grid_pos=[],size=[]):
         button = QtWidgets.QPushButton(self.obj)
@@ -148,16 +127,6 @@ class BaseView:
     def upadete(self):
         self.avatar_photo.show()
 
-    def button(self,data,button):
-        self.Form.button(
-            [button['item_name'], button['name']],
-            data,
-            button['button'],
-            None,
-            [],
-            []
-        )
-
     def listView(self, data, data_list,obj_name,QWidget=False,page=False):
         from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,TagsListSection
 
@@ -172,18 +141,6 @@ class BaseView:
         classObj = switcher.get(obj_name, "Invalid data");
         section_obj=classObj.run(data, data_list,page)
         return section_obj
-
-    def get_nav2(self,data,buttons=[]):
-        self.nav_widget = QtWidgets.QWidget(self.obj)
-        self.nav_widget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        self.nav_widget.setObjectName("movie-navbar")
-        self.nav_grid = QtWidgets.QGridLayout(self.nav_widget)
-        self.nav_grid.setContentsMargins(0, 0, 0, 0)
-        self.nav_grid.setObjectName("movie-grid")
-        self.Form.button(['open', 'Open'], [], buttons[0], self.nav_grid, [0, 0, 2, 2], [100, 0, 10, 16777215])
-        self.Form.button(['favirite', 'Favirite'], [], buttons[1], self.nav_grid, [0, 1, 2, 2], [100, 0, 10, 16777215])
-        self.Form.button(['edit', 'Edit'], [], buttons[2], self.nav_grid, [0, 2, 2, 2], [100, 0, 10, 16777215])
-        self.Form.button(['Delete', 'Delete'], [], buttons[3], self.nav_grid, [0, 3, 2, 2], [100, 0, 10, 16777215])
 
     def title(self,data,text):
         self.title = QtWidgets.QLabel(self.obj)
@@ -228,6 +185,16 @@ class BaseView:
             self.infoGrid.addWidget(col2, row, 1, 2, 2)
 
             row=row+1
+
+    def set_nav(self,data,buttons=[]):
+        self.nav_widget = QtWidgets.QWidget(self.obj)
+        self.nav_widget.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.nav_widget.setObjectName("movie-navbar")
+        self.nav_grid = QtWidgets.QGridLayout(self.nav_widget)
+        self.nav_grid.setContentsMargins(0, 0, 0, 0)
+        self.nav_grid.setObjectName("movie-grid")
+        for button in buttons:
+            self.Form.button(button,self.nav_grid)
 
     def get_nav(self,data,buttons=[]):
         self.nav_widget = QtWidgets.QWidget(self.obj)
@@ -295,7 +262,9 @@ class AbstractBaseView:
     model              = None
     FormSchema         = None
     ModelView          = None
-
+    data               = None
+    list_data          = None
+    list_model_off     = False
     window_title=''
     resolution_index=''
     list_view=''
@@ -362,7 +331,7 @@ class AbstractBaseView:
 
     def get_nav(self):
         data = self.WindowSize['navbar']
-        self.BaseView.get_nav(
+        self.BaseView.set_nav(
             data,
             self.NavObj.set_nav()
         )
@@ -380,7 +349,8 @@ class AbstractBaseView:
     def init(self):
 
         if ArrayManipulation.faind_index_in_array(self.show_elemnts,'Title') or self.window_title:
-            self.check_model('self.model is required for Title Section !')
+            if len(self.window_title)==0:
+                self.check_model('self.model is required for Title Section !')
             self.title()
             self.setWindowTitle(self.window_title)
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Info'):
@@ -393,18 +363,23 @@ class AbstractBaseView:
             self.check_nav()
             self.get_nav()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'List'):
-            self.check_model('self.model is required for List Section !')
-            self.def_list_view()
+            if self.list_model_off is False:
+                self.check_model('self.model is required for List Section !')
+            self.list_view_def()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Avatar'):
             self.check_model('self.model is required for Avatar Section !')
             self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
         if self.FormSchema is not None:
             self.form_section()
 
-    def def_list_view(self):
+    def set_list_view_data(self,data):
+        self.list_data=data
+
+    def list_view_def(self):
         if len(self.list_view):
             data= self.WindowSize['list_view_size']
-            self.BaseView.listView(data, self.data.movies,self.list_view,self)
+            Error.throw_error_is_none("List_data is None 'use method set_list_view_data'", self.list_data)
+            self.BaseView.listView(data, self.list_data,self.list_view,self)
 
     def info(self):
 
@@ -414,10 +389,11 @@ class AbstractBaseView:
         self.BaseView.info(inf_data, data, rows)
 
     def title(self):
-        title = self.data.name
+        title =''
+        if self.data is not None:
+            title = self.data.name
         if len(self.window_title)>0:
             title=self.window_title
-
         data = self.WindowSize['title_size']
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
@@ -426,6 +402,7 @@ class AbstractBaseView:
                "</span></p></body></html>"
 
         self.BaseView.title(data, text)
+
 
     def run_window(self):
         self.___set_data()

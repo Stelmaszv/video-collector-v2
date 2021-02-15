@@ -7,8 +7,28 @@ from core.rezolution import SetResolution
 from core.setings import data_JSON
 from core.dir import LoadFilesFromJson
 from app.forms import StarsForm
+from core.view import BaseView,AbstractBaseView
+from PyQt5.QtWidgets import QWidget
 
 #initSeader().initNow()
+class Menu(QWidget,AbstractBaseView):
+    reset_view         = 'series'
+    resolution_index   = 'Menu'
+    window_title       = 'Manu'
+    list_view          = 'Menu'
+    list_model_off     = True
+    deepSearch = False
+    searchFaze = ''
+    show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
+    searchIn = 'series'
+
+    def  set_up(self):
+        factory = setFactory(self)
+        self.list = factory.getFactory(self.searchIn)
+        self.set_list_view_data(self.list)
+
+
+"""
 class Menu(QMainWindow):
     deepSearch = False
     searchFaze = ''
@@ -34,7 +54,16 @@ class Menu(QMainWindow):
         self.search_in_combo_box=self.BaseView.Form.combo_box(data, list)
         data_search_button = [200,150,200,50]
         data_button_info=['serch003','search']
-        self.BaseView.Form.button(data_button_info, data_search_button, self.click_search)
+
+        data_button_info={
+            'type': 'button_submit',
+            'obj_name': 'submit',
+            'name': 'Submit',
+            'place_holder': 'Submit',
+            'grid_data': [13, 1, 1, 1],
+            'click': self.click_search
+        }
+        self.BaseView.Form.button(data_button_info, data_search_button)
         data_line = [0,100,400,50]
         self.search_button_edit_line=self.BaseView.Form.edit_line(data_line, 'search Faze')
         QC=QueryCounter(self.list,50)
@@ -141,3 +170,4 @@ class Menu(QMainWindow):
 
     def add_new_movie(self):
         self.BaseView.load_view('add_movie')
+"""
