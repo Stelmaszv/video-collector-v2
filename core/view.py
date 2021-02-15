@@ -1,3 +1,4 @@
+import os
 from PyQt5 import QtGui,QtCore, QtWidgets
 from core.BaseActions import ViewBaseAction
 from app.db.models import session
@@ -8,8 +9,50 @@ from core.custum_errors import Error
 from core.db.config import Base as BaseModel
 from app.nav import BaseNav
 from app.info import BaseInfo
-from app.forms import BaseFormSection
 from core.BaseActions import FormSection,Submit
+
+class BaseFormShema:
+    from_section=[]
+    def __init__(self, BaseView,methods=[]):
+        self.BaseView = BaseView
+        self.chcek_nethods(methods)
+        self.methods=methods
+        self.form()
+
+    def chcek_nethods(self,methods):
+        for method in methods:
+            Error.throw_error_bool(str(method)+' not exist in Baseview ',self.is_method(method))
+
+    def form(self):
+        pass
+
+    def get_files_in_dir(self,defult):
+        dir=self.BaseView.data.dir + '' +str('/photo')
+        dir_loop=[]
+        dir_loop.append(defult)
+        for item in os.listdir(dir):
+            dir_loop_elment=dir + '/' +str(item)
+            dir_loop.append(dir_loop_elment)
+        return dir_loop
+
+    def set_value_if_exist(self,value,empty):
+        if value is None :
+            return empty
+        return str(value)
+
+    def return_from_section(self):
+        return self.from_section
+
+    def add_method(self,method,method_str):
+
+        if method_str in self.methods is not True:
+            return  method
+        else:
+            Error.throw_error_bool(str(method_str) + ' not exist in Baseview ', False)
+
+    def is_method(self, method):
+        return callable(getattr(self.BaseView, method, None))
+
 class Form:
 
     buttons_loop=[]
@@ -257,6 +300,7 @@ class AbstractBaseView:
     resolution_index=''
     list_view=''
     show_elemnts=[]
+    methods =  []
 
     def __init__(self):
         if self.model is not None:
@@ -273,12 +317,12 @@ class AbstractBaseView:
             self.NavObj = self.Nav(self.BaseActions)
 
     def form_section(self):
-        Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection', issubclass(self.FormSchema, BaseFormSection))
-        self.FormSchemaObj = self.FormSchema(self)
+        Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection', issubclass(self.FormSchema, BaseFormShema))
+        self.FormSchemaObj = self.FormSchema(self,self.methods)
         data_line = self.WindowSize['form_section']
         buttons=self.FormSchemaObj.return_from_section()
+        self.Submit = Submit(self.ModelView, self.data, self)
         self.FormSection.form_section(data_line,buttons)
-
 
     def __set_resolution(self):
         self.check_rezolution_index()
@@ -356,7 +400,6 @@ class AbstractBaseView:
             self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
         if self.FormSchema is not None:
             self.form_section()
-
 
     def def_list_view(self):
         if len(self.list_view):

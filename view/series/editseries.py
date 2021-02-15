@@ -15,12 +15,24 @@ class EditSeries(QWidget,AbstractBaseView):
     resolution_index   = 'EditSeries'
     show_elemnts       = ['Avatar','Info','Galery','Nav']
     FormSchema        = SeriesForm
+    submit_view       = 'series'
+    methods           = ['add_star','set_photo_for_series','add_tag','submit_click']
 
     def  set_up(self):
         self.window_title='Editing '+str(self.data.name)
 
+    def add_star(self,values):
+        self.BaseView.load_view('add_star_to_model', self.data)
+
+    def set_photo_for_series(self,values):
+        self.BaseView.load_view('set_photo_to_series', self.data)
+
+    def add_tag(self,values):
+        self.BaseView.load_view('add_tags', self.data)
+
     def submit_click(self,values):
-        print(values)
+        self.Submit.set_data(values)
+        self.Submit.run()
 
 
 class EditSeriess(QWidget):

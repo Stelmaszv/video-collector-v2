@@ -1,14 +1,8 @@
-import os
+from core.view import BaseFormShema
 
-class BaseFormSection:
-    pass
+class AddStarToModelForm(BaseFormShema):
 
-class AddStarToModelForm(BaseFormSection):
-    def __init__(self,BaseView):
-        self.BaseView=BaseView
-        self.form_new()
-
-    def form_new(self):
+    def form(self):
         self.from_section = []
         self.from_section.append({
             'type'        : 'label',
@@ -30,23 +24,12 @@ class AddStarToModelForm(BaseFormSection):
             'name': 'Submit',
             'place_holder': 'Submit',
             'grid_data': [0, 2, 1, 1],
-            'click': self.BaseView.submit_click
+            'click': self.add_method(self.BaseView.submit_click)
         })
 
-    def set_value_if_exist(self,value,empty):
-        if value is None :
-            return empty
-        return str(value)
+class SetPhotoToSeriesForm(BaseFormShema):
 
-    def return_from_section(self):
-        return self.from_section
-
-class SetPhotoToSeriesForm(BaseFormSection):
-    def __init__(self,BaseView):
-        self.BaseView=BaseView
-        self.form_new()
-
-    def form_new(self):
+    def form(self):
         self.from_section = []
         row=0
         for item in self.BaseView.data.sezons:
@@ -78,30 +61,9 @@ class SetPhotoToSeriesForm(BaseFormSection):
             'click': self.BaseView.submit_click
         })
 
+class TagsForm(BaseFormShema):
 
-    def get_files_in_dir(self,defult):
-        dir=self.BaseView.data.dir + '' +str('/photo')
-        dir_loop=[]
-        dir_loop.append(defult)
-        for item in os.listdir(dir):
-            dir_loop_elment=dir + '/' +str(item)
-            dir_loop.append(dir_loop_elment)
-        return dir_loop
-
-    def set_value_if_exist(self,value,empty):
-        if value is None :
-            return empty
-        return str(value)
-
-    def return_from_section(self):
-        return self.from_section
-
-class TagsForm(BaseFormSection):
-    def __init__(self,BaseView):
-        self.BaseView=BaseView
-        self.form_new()
-
-    def form_new(self):
+    def form(self):
         self.from_section = []
         self.from_section.append({
             'type'        : 'label',
@@ -126,50 +88,9 @@ class TagsForm(BaseFormSection):
             'click': self.BaseView.submit_click
         })
 
-    def set_value_if_exist(self,value,empty):
-        if value is None :
-            return empty
-        return str(value)
+class SeriesForm(BaseFormShema):
 
-    def return_from_section(self):
-        return self.from_section
-
-class SeriesForm(BaseFormSection):
-    def __init__(self,BaseView):
-        self.BaseView = BaseView
-        if self.BaseView.data is None:
-            print('ok')
-        else:
-            self.form_update()
-
-        """
-        self.BaseView=BaseView
-        if self.BaseView.data is None:
-            self.form_new()
-        else:
-            self.form_update()
-        """
-    def form_new(self):
-        self.from_section = []
-
-    def form_update(self):
-        self.from_section = []
-        self.from_section.append({
-            'type'        : 'label',
-            'name'        : 'name',
-            'place_holder': 'Name',
-            'grid_data'   : [0, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'name',
-            'validation': "",
-            'data_type': 'string',
-            'place_holder': self.set_value_if_exist(self.BaseView.data.name,"Format - Full Name"),
-            'grid_data': [0, 1, 1, 1]
-        })
-        """
+    def form(self):
         self.from_section = []
         self.from_section.append({
             'type'        : 'label',
@@ -252,182 +173,12 @@ class SeriesForm(BaseFormSection):
             'name': 'Submit',
             'place_holder': 'Submit',
             'grid_data': [13, 1, 1, 1],
-            'click': self.BaseView.submit_click
-        })
-        """
-
-    def get_files_in_dir(self,defult):
-        dir=self.BaseView.data.dir + '' +str('/photo')
-        dir_loop=[]
-        dir_loop.append(defult)
-        for item in os.listdir(dir):
-            dir_loop_elment=dir + '/' +str(item)
-            dir_loop.append(dir_loop_elment)
-        return dir_loop
-
-    def set_value_if_exist(self,value,empty):
-        if value is None :
-            return empty
-        return str(value)
-
-    def return_from_section(self):
-        return self.from_section
-
-class StarsForm(BaseFormSection):
-
-    def __init__(self,BaseView):
-        self.BaseView=BaseView
-        if self.BaseView.data is None:
-            self.form_new()
-        else:
-            self.form_update()
-
-    def form_new(self):
-        self.from_section = []
-
-        self.from_section.append({
-            'type'        : 'label',
-            'name'        : 'name',
-            'place_holder': 'Name',
-            'grid_data'   : [0, 0, 1, 1]
+            'click': self.add_method(self.BaseView.submit_click,'submit_click')
         })
 
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'name',
-            'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
-            'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None,"Format - Full Name"),
-            'grid_data': [0, 1, 1, 1]
-        })
+class StarsForm(BaseFormShema):
 
-        self.from_section.append({
-            'type': 'label',
-            'name': 'height',
-            'place_holder': 'Height',
-            'grid_data': [1, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'height',
-            'data_type': 'int',
-            'validation': "[0-9][0-9][0-9]",
-            'place_holder': self.set_value_if_exist(None,'value in cm'),
-            'grid_data': [1, 1, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'label',
-            'name': 'weight',
-            'place_holder': 'Weight',
-            'grid_data': [2, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'weight',
-            'data_type': 'int',
-            'validation': "[0-9][0-9][0-9]",
-            'place_holder': self.set_value_if_exist(None,'value in kg'),
-            'grid_data': [2, 1, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'label',
-            'name': 'ethnicity',
-            'place_holder': 'Ethnicity',
-            'grid_data': [3, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'combo_box',
-            'name': 'ethnicity',
-            'data_type': 'string',
-            'combo_box_list': [None, 'Black', 'Asian', 'Arab', 'White'],
-            'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
-            'place_holder': '',
-            'grid_data': [3, 1, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'label',
-            'name': 'hair_color',
-            'place_holder': 'Hair color',
-            'grid_data': [4, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'combo_box',
-            'name': 'hair_color',
-            'data_type': 'string',
-            'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
-            'place_holder': '',
-            'grid_data': [4, 1, 1, 1],
-            'combo_box_list': [None, 'Black', 'Gray', 'Brown', 'Blond']
-        })
-
-        self.from_section.append({
-            'type': 'label',
-            'name': 'date_of_birth',
-            'place_holder': 'Date of birth',
-            'grid_data': [5, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'calendar',
-            'name': 'date_of_birth',
-            'data_type': 'data',
-            'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
-            'place_holder':'',
-            'grid_data': [5, 1, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'label',
-            'name': 'dir_label',
-            'place_holder': 'Dir location',
-            'grid_data': [6, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'dir_edit_line',
-            'data_type': 'dir',
-            'validation': "",
-            'place_holder': self.set_value_if_exist(None,'Location dir with data'),
-            'grid_data': [6, 1, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'submit',
-            'name': 'Add By dir',
-            'place_holder': 'Add',
-            'grid_data': [9, 1, 1, 1],
-            'click': self.BaseView.add_via_dir
-        })
-
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'submit',
-            'name': 'Add By dir Loop',
-            'place_holder': 'Add',
-            'grid_data': [9, 1, 1, 1],
-            'click': self.BaseView.add_via_dir_loop
-        })
-
-
-        self.from_section.append({
-            'type': 'button_submit',
-            'obj_name': 'submit',
-            'name': 'Submit',
-            'place_holder': 'Submit',
-            'grid_data': [10, 1, 1, 1],
-            'click': self.BaseView.submit_click
-        })
-
-    def form_update(self):
+    def form(self):
         self.from_section=[]
 
         self.from_section.append({
@@ -612,20 +363,3 @@ class StarsForm(BaseFormSection):
             'grid_data': [11, 1, 1, 1],
             'click': self.BaseView.submit_click
         })
-
-    def get_files_in_dir(self,defult):
-        dir=self.BaseView.data.dir + '' +str('/photo')
-        dir_loop=[]
-        dir_loop.append(defult)
-        for item in os.listdir(dir):
-            dir_loop_elment=dir + '/' +str(item)
-            dir_loop.append(dir_loop_elment)
-        return dir_loop
-
-    def set_value_if_exist(self,value,empty):
-        if value is None :
-            return empty
-        return str(value)
-
-    def return_from_section(self):
-        return self.from_section
