@@ -8,6 +8,8 @@ from core.custum_errors import Error
 from core.db.config import Base as BaseModel
 from app.nav import BaseNav
 from app.info import BaseInfo
+from app.forms import BaseFormSection
+from core.BaseActions import FormSection,Submit
 class Form:
 
     buttons_loop=[]
@@ -245,9 +247,10 @@ class BaseView:
 
 class AbstractBaseView:
 
-    Nav    = None
-    Info   = None
-    model  = None
+    Nav                = None
+    Info               = None
+    model              = None
+    FormSection        = None
 
     window_title=''
     resolution_index=''
@@ -257,12 +260,18 @@ class AbstractBaseView:
     def __init__(self):
         if self.model is not None:
             Error.throw_error_bool('class self.model is not subclass of BaseModel', issubclass(self.model, BaseModel))
+
+        if self.FormSection is not None:
+            Error.throw_error_bool('class self.FormSection is not subclass of BaseFormSection', issubclass(self.FormSection, BaseFormSection))
+
         self.BaseView = BaseView([], self)
+        self.FormSection = FormSection(self)
         self.BaseActions = ViewBaseAction(self)
         self.SetResolution = SetResolution()
         self.__set_resolution()
+
         if self.Nav is not None:
-            Error.throw_error_bool('class self.nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
+            Error.throw_error_bool('class self.Nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
             self.NavObj = self.Nav(self.BaseActions)
 
     def __set_resolution(self):
@@ -342,8 +351,9 @@ class AbstractBaseView:
 
 
     def def_list_view(self):
-        data= self.WindowSize['list_view_size']
-        self.BaseView.listView(data, self.data.movies,self.list_view,self)
+        if len(self.list_view):
+            data= self.WindowSize['list_view_size']
+            self.BaseView.listView(data, self.data.movies,self.list_view,self)
 
     def info(self):
 

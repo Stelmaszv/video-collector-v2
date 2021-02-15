@@ -1,6 +1,9 @@
 import os
 
-class AddStarToModelForm:
+class BaseFormSection:
+    pass
+
+class AddStarToModelForm(BaseFormSection):
     def __init__(self,BaseView):
         self.BaseView=BaseView
         self.form_new()
@@ -38,7 +41,7 @@ class AddStarToModelForm:
     def return_from_section(self):
         return self.from_section
 
-class SetPhotoToSeriesForm:
+class SetPhotoToSeriesForm(BaseFormSection):
     def __init__(self,BaseView):
         self.BaseView=BaseView
         self.form_new()
@@ -93,7 +96,7 @@ class SetPhotoToSeriesForm:
     def return_from_section(self):
         return self.from_section
 
-class TagsForm:
+class TagsForm(BaseFormSection):
     def __init__(self,BaseView):
         self.BaseView=BaseView
         self.form_new()
@@ -131,7 +134,7 @@ class TagsForm:
     def return_from_section(self):
         return self.from_section
 
-class SeriesForm:
+class SeriesForm(BaseFormSection):
     def __init__(self,BaseView):
         self.BaseView=BaseView
         if self.BaseView.data is None:
@@ -245,7 +248,7 @@ class SeriesForm:
     def return_from_section(self):
         return self.from_section
 
-class StarsForm:
+class StarsForm(BaseFormSection):
 
     def __init__(self,BaseView):
         self.BaseView=BaseView

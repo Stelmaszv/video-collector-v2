@@ -1,12 +1,25 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import BaseView
+from core.view import BaseView,AbstractBaseView
 from core.BaseActions import FormSection,Submit
 from core.rezolution import SetResolution
 from app.db.models import Series
 from app.forms import SeriesForm
 from app.model_view import StarModelView,SeriesModelView
+from app.nav import SeriesNav
+from app.info import InfoSection
 
-class EditSeries(QWidget):
+class EditSeries(QWidget,AbstractBaseView):
+
+    model              =  Series
+    resolution_index   = 'Series'
+    show_elemnts       = ['Avatar','Info','Galery','Nav']
+    FormSection        = SeriesForm
+
+    def  set_up(self):
+        self.window_title='Editing '+str(self.data.name)
+
+
+class EditSeriess(QWidget):
 
     model = Series
     submit_view = 'series'
