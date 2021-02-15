@@ -274,15 +274,18 @@ class AbstractBaseView:
 
     def check_rezolution_index(self):
         stan=False
+        string=True
+        error_mess='Var "'+str(self.resolution_index)+'" not exist in resolution array'
+
         if len(self.resolution_index)>0:
             stan=True
         Error.throw_error_bool('self.resolution_index is required', stan)
 
-        array_stan = True
-        if self.SetResolution.menu_set.get(self.resolution_index, "Invalid data"):
-            array_stan=False
+        data= self.SetResolution.menu_set.get(self.resolution_index,error_mess)
 
-        Error.throw_error_bool('index  in rezolution not exist ', array_stan)
+        if isinstance(data, str):
+            string=False
+            Error.throw_error_bool(error_mess, string)
 
     def ___set_data(self):
         if self.model is not None:
