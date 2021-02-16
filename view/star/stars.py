@@ -24,8 +24,6 @@ class StarView(QWidget,AbstractBaseView):
         self.list = []
         self.list = SeriesCreator(self.data).return_obj()
         self.set_list_view_data(self.list)
-
-
 """
 class StarView2(QWidget):
     model       = Stars

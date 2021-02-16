@@ -25,7 +25,7 @@ class stringManipupations:
                 if el % 5==0:
                     string = string + str('<br>')
             el=el+1;
-        return string
+        return str(string)
 
     @staticmethod
     def random(length) ->str :

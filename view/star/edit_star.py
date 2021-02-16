@@ -10,7 +10,7 @@ class EditStarView(QWidget,AbstractBaseView):
     submit_view = 'stars'
     FormSchema = StarsForm
     ModelView = StarModelView
-    show_elemnts = ['Info', 'Galery', 'Nav', 'Avatar','List']
+    show_elemnts = ['Info', 'Galery', 'Nav', 'Avatar','List','Description','Tags']
     methods = ['add_tag', 'submit_click']
 
     def add_tag(self,values):

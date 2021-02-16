@@ -11,6 +11,7 @@ from app.nav import BaseNav
 from app.info import BaseInfo
 from core.BaseActions import FormSection,Submit,Form
 from app.model_view import BaseModelViewSet
+from core.strings import stringManipupations
 
 class BaseFormShema:
     from_section=[]
@@ -162,7 +163,18 @@ class BaseView:
             self.Form.button([button['item_name'], button['name']], [],button['button'], self.nav_grid, [0, row, 2, 2], [100, 0, 10, 16777215])
             row=row+1
 
-    def description(self,text,data,obj=None):
+    def description(self,text,data,grid=None,obj=None):
+        if obj==None:
+            obj=self.obj
+        description = QtWidgets.QLabel(self.obj)
+        description.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        description.setText(text)
+        description.setWordWrap(True)
+        if grid is not None:
+            grid.addWidget(description, data[0],data[1], data[2], data[3])
+
+
+        """
         if obj==None:
             obj=self.obj
         self.description = QtWidgets.QWidget(obj)
@@ -175,6 +187,7 @@ class BaseView:
         col2.setText(text)
         col2.setWordWrap(True)
         self.description_Grid.addWidget(col2,0, 0, 2, 2)
+        """
 
     def set_data(self,id):
         if self.model:
@@ -310,7 +323,24 @@ class AbstractBaseView:
         Error.throw_error_is_none('self.Info is required for info Section!', self.Info)
         Error.throw_error_bool('class self.nav is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
 
+    def description(self):
+        data = self.WindowSize['description']
+        limit = self.WindowSize['description_limit']
+        self.BaseView.description(stringManipupations.short(self.data.description, limit), data);
+
+    def tags(self):
+        data = self.WindowSize['tags']
+        limit = self.WindowSize['tags_limit']
+        taqs_list=stringManipupations.array_to_string(self.data.tags)
+        self.BaseView.description(stringManipupations.short(taqs_list, limit), data);
+
     def init(self):
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Tags'):
+            if self.data is not None:
+                self.tags()
+        if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Description'):
+            if self.data is not None:
+                self.description()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts,'Title') or self.window_title:
             if len(self.window_title)==0:
                 self.check_model('self.model is required for Title Section !')
@@ -345,10 +375,9 @@ class AbstractBaseView:
             self.BaseView.listView(data, self.list_data,self.list_view,self)
 
     def info(self):
-
         data   = self.WindowSize['info_size']
         rows = ['itemNmae','itemName2']
-        inf_data=self.Info().return_data()
+        inf_data=self.Info(self).return_data()
         self.BaseView.info(inf_data, data, rows)
 
     def title(self):

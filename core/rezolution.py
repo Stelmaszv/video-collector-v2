@@ -180,7 +180,9 @@ class MenuHalfSmall(MenuType):
                     "list_view_size"    : [50, 430, 1200, 550],
                     "galery_photo_size" : [150, 150],
                     "galery_item_show"  : 2,
-                    "description"       : [330,200,400,200,500],
+                    "tags": [325, 170, 400, 200],
+                    "tags_limit": 500,
+                    "description"       : [325,200,400,200],
                     "description_limit" : 500,
                     "section": {
                         "left"         : 15,

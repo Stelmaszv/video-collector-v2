@@ -8,7 +8,7 @@ from app.db.models import Series,Stars
 class AddTagView(QWidget,AbstractBaseView):
     resolution_index = 'add_tag'
     window_title = 'Add tag'
-    show_elemnts = ['Info','Galery','Nav','Avatar']
+    show_elemnts = ['Info','Galery','Nav','Avatar','Description','Tags']
     model = Series
     reset_view = 'add_tags'
     model_view_off = True
