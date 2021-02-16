@@ -24,7 +24,8 @@ class AddStarToModelForm(BaseFormShema):
             'name': 'Submit',
             'place_holder': 'Submit',
             'grid_data': [0, 2, 1, 1],
-            'click': self.add_method(self.BaseView.submit_click)
+            'click': self.add_method(self.BaseView.submit_click,'submit_click'),
+            'arguments': []
         })
 
 class SetPhotoToSeriesForm(BaseFormShema):
@@ -85,7 +86,7 @@ class TagsForm(BaseFormShema):
             'name': 'Submit',
             'place_holder': 'Submit',
             'grid_data': [0, 2, 1, 1],
-            'click': self.BaseView.submit_click,
+            'click': self.add_method(self.BaseView.submit_click,'submit_click'),
             'arguments': []
         })
 
@@ -157,7 +158,7 @@ class SeriesForm(BaseFormShema):
             'name': 'Set photo for series',
             'place_holder': 'Submit',
             'grid_data': [11, 1, 1, 1],
-            'click': self.BaseView.set_photo_for_series,
+            'click': self.add_method(self.BaseView.set_photo_for_series,'set_photo_for_series'),
             'arguments': []
         })
 
@@ -167,7 +168,7 @@ class SeriesForm(BaseFormShema):
             'name': 'Add Star',
             'place_holder': 'Submit',
             'grid_data': [12, 1, 1, 1],
-            'click': self.BaseView.add_star,
+            'click': self.add_method(self.BaseView.add_star,'add_star'),
             'arguments': []
         })
 

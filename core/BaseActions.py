@@ -75,7 +75,6 @@ class AddTag:
         query=self.session.query(self.model).filter(self.model.name==value).first()
         if query:
             in_db = True;
-        print(query)
 
         if in_db is False and add is False:
             self.add_tag_to_db(value)
@@ -103,6 +102,17 @@ class AddStar(AddTag):
         self.Obj=Obj.data
         self.session = session
         self.ViewBaseAction=ViewBaseAction(Obj)
+
+    def remove_star(self,star):
+        value=star.name
+        add=False
+        for item in self.Obj.stars:
+            if item.name == value:
+                add=True
+
+        if add:
+            self.Obj.stars.remove(star)
+            self.ViewBaseAction.reset()
 
     def add(self):
         add = False
