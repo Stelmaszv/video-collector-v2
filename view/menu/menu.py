@@ -13,15 +13,14 @@ from PyQt5.QtWidgets import QWidget
 
 #initSeader().initNow()
 class Menu(QWidget,AbstractBaseView):
-    reset_view         = 'series'
     resolution_index   = 'Menu'
     window_title       = 'Manu'
     list_view          = 'Menu'
     list_model_off     = True
-    deepSearch = False
-    searchFaze = ''
+    deepSearch         = False
+    searchFaze         = ''
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
-    searchIn = 'series'
+    searchIn           = 'series'
 
     def  set_up(self):
         factory = setFactory(self)

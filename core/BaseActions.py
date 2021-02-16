@@ -51,6 +51,7 @@ class AddTag:
         self.session = session
         self.ViewBaseAction=ViewBaseAction(Obj)
 
+
     def remove_tag(self,tag):
         value=tag.name
         add=False
@@ -66,16 +67,15 @@ class AddTag:
         value = self.data[0]['value']
 
         add=False
-
         for item in self.Obj.tags:
             if item.name == value:
                 add=True
 
         in_db=False
         query=self.session.query(self.model).filter(self.model.name==value).first()
-
         if query:
             in_db = True;
+        print(query)
 
         if in_db is False and add is False:
             self.add_tag_to_db(value)

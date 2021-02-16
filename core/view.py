@@ -54,53 +54,6 @@ class BaseFormShema:
     def is_method(self, method):
         return callable(getattr(self.BaseView, method, None))
 
-class Form2:
-
-    buttons_loop=[]
-
-    def __init__(self,obj):
-        self.obj = obj
-
-    def combo_box(self,data,list):
-        combo_box = QtWidgets.QComboBox(self.obj)
-        combo_box.setGeometry(data[0], data[1], data[2], data[3])
-        combo_box.addItems(list)
-        return combo_box
-
-    def label(self,info,data,grid,el=None):
-        if el is not None:
-            el=self.obj
-
-        label = QtWidgets.QLabel(el)
-        label.setObjectName(info[0])
-        label.setText(info[1])
-        grid.addWidget(label, data[0], data[1], data[2], data[3])
-        return label
-
-    def button(self,info,data=[],click=None,gird=None,grid_pos=[],size=[]):
-        button = QtWidgets.QPushButton(self.obj)
-        button.setObjectName(info[0])
-        button.setText(info[1])
-
-        if len(data):
-            button.setGeometry(data[0], data[1], data[2], data[3])
-
-        if len(size):
-            button.setMinimumSize(QtCore.QSize(size[0], size[1]))
-            button.setMaximumSize(QtCore.QSize(size[2], size[3]))
-
-        if click is not None:
-            button.clicked.connect(click)
-
-        if gird is not None and len(grid_pos):
-            gird.addWidget(button, grid_pos[0], grid_pos[1], grid_pos[2], grid_pos[3])
-
-    def edit_line(self,data,placeholder):
-        line = QtWidgets.QLineEdit(self.obj)
-        line.setPlaceholderText(placeholder)
-        line.setGeometry(data[0], data[1], data[2], data[3])
-        return line
-
 class BaseView:
 
     def __init__(self,data,obj):
@@ -255,7 +208,6 @@ class BaseView:
                 row = 0
                 col = col + 1
 
-
 class AbstractBaseView:
 
     Nav                = None
@@ -266,6 +218,8 @@ class AbstractBaseView:
     data               = None
     list_data          = None
     list_model_off     = False
+    debug_mode         = True
+    model_view_off     = False
     window_title=''
     resolution_index=''
     list_view=''
@@ -288,13 +242,15 @@ class AbstractBaseView:
 
     def form_section(self):
         Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection', issubclass(self.FormSchema, BaseFormShema))
-        Error.throw_error_is_none('self.ModelView is required for form section !', self.ModelView)
-        Error.throw_error_bool('class self.ModelView is not subclass of BaseModelViewSet',
+        if self.model_view_off is False:
+            Error.throw_error_is_none('self.ModelView is required for form section !', self.ModelView)
+            Error.throw_error_bool('class self.ModelView is not subclass of BaseModelViewSet',
                                issubclass(self.ModelView, BaseModelViewSet))
         self.FormSchemaObj = self.FormSchema(self, self.methods)
         data_line = self.WindowSize['form_section']
         buttons = self.FormSchemaObj.return_from_section()
-        self.Submit = Submit(self.ModelView, self.data, self)
+        if self.model_view_off is False:
+            self.Submit = Submit(self.ModelView, self.data, self)
         self.FormSection.form_section(data_line,buttons)
 
 
@@ -326,6 +282,9 @@ class AbstractBaseView:
             self.BaseView.set_data(self.id)
             self.data = self.BaseView.data
 
+    def set_model(self,model):
+        self.model=model
+
     def  set_up(self):
         pass
 
@@ -352,7 +311,6 @@ class AbstractBaseView:
         Error.throw_error_bool('class self.nav is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
 
     def init(self):
-
         if ArrayManipulation.faind_index_in_array(self.show_elemnts,'Title') or self.window_title:
             if len(self.window_title)==0:
                 self.check_model('self.model is required for Title Section !')
