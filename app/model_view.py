@@ -1,7 +1,10 @@
 from app.db.models import Stars,Series
 from app.db.models import session
 
-class SetPhotoToSetiesView:
+class BaseModelViewSet:
+    pass
+
+class SetPhotoToSetiesView(BaseModelViewSet):
 
     model = Series()
     session = session
@@ -15,7 +18,7 @@ class SetPhotoToSetiesView:
             sezon.src=data[item]['value']
             item=item+1
 
-class SeriesModelView:
+class SeriesModelView(BaseModelViewSet):
     model = Series()
     session = session
 
@@ -36,7 +39,7 @@ class SeriesModelView:
         self.session.add_all([self.data])
         self.session.commit()
 
-class StarModelView:
+class StarModelView(BaseModelViewSet):
     model = Stars()
     session = session
 

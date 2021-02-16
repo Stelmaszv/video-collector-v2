@@ -155,7 +155,7 @@ class Submit:
                     DV.validate_data()
                     item['value'] = datetime(DV.year, DV.mount, DV.day)
             if item['data-type'] == 'dir':
-                if item['value']:
+                if len(item['value'])>0:
                     if os.path.isdir(item['value']) is False:
                         error.append("This is not dir location")
 

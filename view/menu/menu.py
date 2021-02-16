@@ -21,7 +21,7 @@ class Menu(QWidget,AbstractBaseView):
     deepSearch = False
     searchFaze = ''
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
-    searchIn = 'stars'
+    searchIn = 'series'
 
     def  set_up(self):
         factory = setFactory(self)

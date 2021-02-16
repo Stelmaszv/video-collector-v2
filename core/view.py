@@ -10,6 +10,7 @@ from core.db.config import Base as BaseModel
 from app.nav import BaseNav
 from app.info import BaseInfo
 from core.BaseActions import FormSection,Submit,Form
+from app.model_view import BaseModelViewSet
 
 class BaseFormShema:
     from_section=[]
@@ -287,11 +288,15 @@ class AbstractBaseView:
 
     def form_section(self):
         Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection', issubclass(self.FormSchema, BaseFormShema))
-        self.FormSchemaObj = self.FormSchema(self,self.methods)
+        Error.throw_error_is_none('self.ModelView is required for form section !', self.ModelView)
+        Error.throw_error_bool('class self.ModelView is not subclass of BaseModelViewSet',
+                               issubclass(self.ModelView, BaseModelViewSet))
+        self.FormSchemaObj = self.FormSchema(self, self.methods)
         data_line = self.WindowSize['form_section']
-        buttons=self.FormSchemaObj.return_from_section()
+        buttons = self.FormSchemaObj.return_from_section()
         self.Submit = Submit(self.ModelView, self.data, self)
         self.FormSection.form_section(data_line,buttons)
+
 
     def __set_resolution(self):
         self.check_rezolution_index()

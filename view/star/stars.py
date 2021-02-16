@@ -9,6 +9,7 @@ from core.BaseActions import ViewBaseAction
 from app.nav import StarNav
 from app.nav import SeriesNav
 from app.info import StarInfoSection
+from app.model_view import StarModelView
 
 class StarView(QWidget,AbstractBaseView):
     model              =  Stars
