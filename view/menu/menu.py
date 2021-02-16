@@ -10,6 +10,7 @@ from app.forms import StarsForm
 from core.view import BaseView,AbstractBaseView
 from PyQt5.QtWidgets import QWidget
 
+
 #initSeader().initNow()
 class Menu(QWidget,AbstractBaseView):
     reset_view         = 'series'
@@ -20,7 +21,7 @@ class Menu(QWidget,AbstractBaseView):
     deepSearch = False
     searchFaze = ''
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
-    searchIn = 'series'
+    searchIn = 'stars'
 
     def  set_up(self):
         factory = setFactory(self)
