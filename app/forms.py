@@ -22,42 +22,40 @@ class MenuFormSchena(BaseFormShema):
         self.from_section.append({
             'type': 'combo_box',
             'obj_name': 'submit',
-            'name': 'Advance',
-            'place_holder': 'Advance',
+            'name': 'search_in',
+            'place_holder': 'search_in',
             'grid_data': [0, 2, 1, 1],
-            'click': self.add_method(self.BaseView.advance,'advance'),
             'combo_box_list': [self.BaseView.searchIn, 'series', 'stars', 'movies'],
             'arguments': []
         })
 
         self.from_section.append({
             'type': 'button',
-            'obj_name': 'submit',
-            'name': 'Reset',
-            'place_holder': 'Reset',
+            'obj_name': 'advance',
+            'name': 'Advance',
+            'place_holder': 'advance',
             'grid_data': [1, 1, 1, 1],
             'click': self.add_method(self.BaseView.advance,'advance'),
             'arguments': []
         })
 
-
         self.from_section.append({
             'type': 'button',
-            'obj_name': 'submit',
+            'obj_name': 'reset',
             'name': 'Reset',
-            'place_holder': 'Reset',
+            'place_holder': 'reset',
             'grid_data': [2, 1, 1, 1],
             'click': self.add_method(self.BaseView.reset,'reset'),
             'arguments': []
         })
 
         self.from_section.append({
-            'type': 'button_submit',
-            'obj_name': 'submit',
+            'type': 'button',
+            'obj_name': 'reset',
             'name': 'Submit',
-            'place_holder': 'Submit',
+            'place_holder': 'reset',
             'grid_data': [3, 1, 1, 1],
-            'click': self.add_method(self.BaseView.submit_click,'submit_click'),
+            'click': self.add_method(self.BaseView.submit_click, 'submit_click'),
             'arguments': []
         })
 

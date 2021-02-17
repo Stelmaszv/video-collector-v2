@@ -25,7 +25,7 @@ class Menu(QWidget,AbstractBaseView):
     reset_view         = 'menu'
     searchFaze         = 'Sean'
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
-    methods = ['submit_click','reset','advance']
+    methods            = ['submit_click','reset','advance']
     searchIn           = 'stars'
 
     def  set_up(self):
@@ -37,7 +37,7 @@ class Menu(QWidget,AbstractBaseView):
         self.BaseActions.reset()
 
     def advance(self,advance):
-        print(advance)
+        self.BaseActions.reset()
 
     def reset(self,value):
         self.BaseActions.reset()
