@@ -1,7 +1,7 @@
 from abc import ABC,abstractmethod
 from PyQt5 import QtWidgets
 from .view import Form
-
+from core.listactions import StarListAsctions
 class AbstractList(ABC):
 
     def __init__(self,BaseView,per_page):

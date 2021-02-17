@@ -197,13 +197,17 @@ class Submit:
 
 class Form:
 
+    run=0
+
     def __init__(self, BaseView):
         self.BaseView=BaseView
 
     def buttom_genarator(self,list,fuction,id):
-        for button in list.buttons():
-            if button is list.button(id):
-                fuction(list.button(id).data)
+        self.run=self.run+1
+        if self.run == 1:
+            for button in list.buttons():
+                if button is list.button(id):
+                    fuction(list.button(id).data)
 
     def button_loop(self, el, grid, item, data, info, index):
         button = QtWidgets.QPushButton(el)

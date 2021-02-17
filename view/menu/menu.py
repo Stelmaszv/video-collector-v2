@@ -27,6 +27,8 @@ class Menu(QWidget,AbstractBaseView):
         self.list = factory.getFactory(self.searchIn)
         self.set_list_view_data(self.list)
 
+    def star_info(self,item):
+        print('item');
 
 """
 class Menu(QMainWindow):
