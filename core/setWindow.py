@@ -19,8 +19,10 @@ class setWindow():
         from view.series.editseries import EditSeries
         from view.set_photo_to_series.set_photo_to_series import SetPhotoToSeries
         from view.star.add_star_to_model import AddStarToModelView
+        from view.menu.menu import Menu
 
         switcher = {
+            'menu'              : Menu(),
             'add_star_to_model' :AddStarToModelView(),
             'set_photo_to_series' : SetPhotoToSeries(),
             'add_tags': AddTagView(),
@@ -44,5 +46,7 @@ class Router:
         self.window = setWindow().returnObj(self.searchIn)
         self.window.Router = self
         self.window.obj = self.base_view
-        self.window.id = item.id
-        self.window.run_window()
+        if item is not None:
+            self.window.id = item.id
+        self.window.run_window(self.base_view)
+

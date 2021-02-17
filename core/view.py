@@ -12,6 +12,7 @@ from app.info import BaseInfo
 from core.BaseActions import FormSection,Submit,Form
 from app.model_view import BaseModelViewSet
 from core.strings import stringManipupations
+from time import sleep
 
 class BaseFormShema:
     from_section=[]
@@ -84,7 +85,6 @@ class BaseView:
 
     def listView(self, data, data_list,obj_name,QWidget=False,page=False):
         from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,TagsListSection
-
         switcher = {
             'Stars'      : StarsSection(self,QWidget),
             'Series'     : SeriesSection(self,QWidget),
@@ -172,22 +172,6 @@ class BaseView:
         description.setWordWrap(True)
         if grid is not None:
             grid.addWidget(description, data[0],data[1], data[2], data[3])
-
-
-        """
-        if obj==None:
-            obj=self.obj
-        self.description = QtWidgets.QWidget(obj)
-        self.description_Grid = QtWidgets.QGridLayout(self.description)
-        self.description_Grid.setContentsMargins(0, 0, 0, 0)
-        self.description_Grid.setObjectName("infoGrid")
-        col2 = QtWidgets.QLabel(self.description)
-        self.description.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        col2.setObjectName("col2")
-        col2.setText(text)
-        col2.setWordWrap(True)
-        self.description_Grid.addWidget(col2,0, 0, 2, 2)
-        """
 
     def set_data(self,id):
         if self.model:
@@ -396,7 +380,7 @@ class AbstractBaseView:
         self.BaseView.title(data, text)
 
 
-    def run_window(self):
+    def run_window(self,menu=None):
         self.___set_data()
         self.set_up()
         self.init()

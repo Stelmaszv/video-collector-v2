@@ -133,7 +133,8 @@ class MenuHalfSmall(MenuType):
                 },
                 "window": {
                     "title_size": [0, 0, 400, 50],
-                    "list_view_size": [0, 150, 380, 250],
+                    "list_view_size": [0, 300, 380, 250],
+                    "form_section" :   [50,40,300,150]
                 }
             },
 

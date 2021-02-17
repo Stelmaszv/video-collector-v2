@@ -9,17 +9,23 @@ from core.dir import LoadFilesFromJson
 from app.forms import StarsForm
 from core.view import BaseView,AbstractBaseView
 from PyQt5.QtWidgets import QWidget
-
-
+import sys
+from PyQt5.QtWidgets import QApplication
+from app.forms import MenuFormSchena
+from time import sleep
 #initSeader().initNow()
 class Menu(QWidget,AbstractBaseView):
+    FormSchema         = MenuFormSchena
     resolution_index   = 'Menu'
     window_title       = 'Manu'
     list_view          = 'Menu'
     list_model_off     = True
+    model_view_off     = True
     deepSearch         = False
-    searchFaze         = ''
+    reset_view         = 'menu'
+    searchFaze         = 'Sean'
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
+    methods = ['submit_click','reset','advance']
     searchIn           = 'stars'
 
     def  set_up(self):
@@ -27,8 +33,15 @@ class Menu(QWidget,AbstractBaseView):
         self.list = factory.getFactory(self.searchIn)
         self.set_list_view_data(self.list)
 
-    def star_info(self,item):
-        print('item');
+    def submit_click(self,values):
+        self.BaseActions.reset()
+
+    def advance(self,advance):
+        print(advance)
+
+    def reset(self,value):
+        self.BaseActions.reset()
+
 
 """
 class Menu(QMainWindow):

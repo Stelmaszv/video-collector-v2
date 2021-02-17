@@ -1,5 +1,66 @@
 from core.view import BaseFormShema
 
+class MenuFormSchena(BaseFormShema):
+
+    def form(self):
+        self.from_section = []
+        self.from_section.append({
+            'type'        : 'label',
+            'name'        : 'name',
+            'place_holder': 'Name',
+            'grid_data'   : [0, 0, 1, 1]
+        })
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'name',
+            'validation': "",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(None,self.BaseView.searchFaze),
+            'grid_data': [0, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'combo_box',
+            'obj_name': 'submit',
+            'name': 'Advance',
+            'place_holder': 'Advance',
+            'grid_data': [0, 2, 1, 1],
+            'click': self.add_method(self.BaseView.advance,'advance'),
+            'combo_box_list': [self.BaseView.searchIn, 'series', 'stars', 'movies'],
+            'arguments': []
+        })
+
+        self.from_section.append({
+            'type': 'button',
+            'obj_name': 'submit',
+            'name': 'Reset',
+            'place_holder': 'Reset',
+            'grid_data': [1, 1, 1, 1],
+            'click': self.add_method(self.BaseView.advance,'advance'),
+            'arguments': []
+        })
+
+
+        self.from_section.append({
+            'type': 'button',
+            'obj_name': 'submit',
+            'name': 'Reset',
+            'place_holder': 'Reset',
+            'grid_data': [2, 1, 1, 1],
+            'click': self.add_method(self.BaseView.reset,'reset'),
+            'arguments': []
+        })
+
+        self.from_section.append({
+            'type': 'button_submit',
+            'obj_name': 'submit',
+            'name': 'Submit',
+            'place_holder': 'Submit',
+            'grid_data': [3, 1, 1, 1],
+            'click': self.add_method(self.BaseView.submit_click,'submit_click'),
+            'arguments': []
+        })
+
 class AddStarToModelForm(BaseFormShema):
 
     def form(self):
