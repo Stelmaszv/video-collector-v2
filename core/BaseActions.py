@@ -390,12 +390,10 @@ class FormSection:
             submit['grid_data'][2],
             submit['grid_data'][3]
         )
-
         button.clicked.connect(lambda :submit['click'](self.get_values(grid_array)))
 
     def get_values(self,grid):
         values=[]
-
         def show_value(data):
 
             if data['item']['type'] == 'edit_line' or data['item']['type'] == 'calendar':

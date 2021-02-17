@@ -1,18 +1,15 @@
 from PyQt5.QtWidgets import QAction,QMainWindow
 from core.view import BaseView
-from core.search import setFactory
 from app.db.seaders import initSeader
 from core.helper import QueryCounter
 from core.rezolution import SetResolution
 from core.setings import data_JSON
 from core.dir import LoadFilesFromJson
 from app.forms import StarsForm
-from core.view import BaseView,AbstractBaseView
+from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
-import sys
-from PyQt5.QtWidgets import QApplication
 from app.forms import MenuFormSchena
-from time import sleep
+from core.search import setFactory
 #initSeader().initNow()
 class Menu(QWidget,AbstractBaseView):
     FormSchema         = MenuFormSchena
@@ -33,8 +30,16 @@ class Menu(QWidget,AbstractBaseView):
         self.list = factory.getFactory(self.searchIn)
         self.set_list_view_data(self.list)
 
+    def set_search(self,values):
+
+        MenuObj = Menu()
+        MenuObj.searchFaze = values[0]['value']
+        MenuObj.searchIn   = values[1]['value']
+        MenuObj.run_window()
+
     def submit_click(self,values):
-        self.BaseActions.reset()
+        self.close()
+        self.set_search(values)
 
     def advance(self,advance):
         self.BaseActions.reset()

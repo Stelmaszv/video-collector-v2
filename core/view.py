@@ -12,7 +12,6 @@ from app.info import BaseInfo
 from core.BaseActions import FormSection,Submit,Form
 from app.model_view import BaseModelViewSet
 from core.strings import stringManipupations
-from time import sleep
 
 class BaseFormShema:
     from_section=[]

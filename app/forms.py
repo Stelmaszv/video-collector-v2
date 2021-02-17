@@ -21,12 +21,13 @@ class MenuFormSchena(BaseFormShema):
 
         self.from_section.append({
             'type': 'combo_box',
-            'obj_name': 'submit',
-            'name': 'search_in',
-            'place_holder': 'search_in',
+            'obj_name': 'sections',
+            'name': 'Sections',
+            'data_type': 'string',
+            'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
+            'place_holder': 'sections',
             'grid_data': [0, 2, 1, 1],
             'combo_box_list': [self.BaseView.searchIn, 'series', 'stars', 'movies'],
-            'arguments': []
         })
 
         self.from_section.append({
@@ -50,12 +51,12 @@ class MenuFormSchena(BaseFormShema):
         })
 
         self.from_section.append({
-            'type': 'button',
-            'obj_name': 'reset',
+            'type': 'button_submit',
+            'obj_name': 'submit',
             'name': 'Submit',
-            'place_holder': 'reset',
+            'place_holder': 'Submit',
             'grid_data': [3, 1, 1, 1],
-            'click': self.add_method(self.BaseView.submit_click, 'submit_click'),
+            'click': self.BaseView.submit_click,
             'arguments': []
         })
 
@@ -83,7 +84,7 @@ class AddStarToModelForm(BaseFormShema):
             'name': 'Submit',
             'place_holder': 'Submit',
             'grid_data': [0, 2, 1, 1],
-            'click': self.add_method(self.BaseView.submit_click,'submit_click'),
+            'click': self.BaseView.submit_click,
             'arguments': []
         })
 
