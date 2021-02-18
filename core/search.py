@@ -4,83 +4,48 @@ from app.db.models import Movies,Series,Stars
 from app.db.models import session
 
 class AbstractFactory(ABC):
+    model=None
 
     def __init__(self,obj):
         self.obj=obj
 
-    @abstractmethod
-    def getQuery(self) -> session:
-        pass
+    def get_query(self) -> session:
+        return self.return_all()
 
-    @abstractmethod
-    def deepSearch(self) -> session:
-        pass
+    def return_all(self) -> session:
+        return self.if_isset_search_faze()
 
-    def returnAll(self) -> session:
-        return self.ifIssearchFaze()
-
-    def ifIssearchFaze(self) -> session:
-        if self.obj.deepSearch and \
-                self.obj.searchFaze is not None \
-                and self.deepSearchMode is True :
-            return self.deepSearch()
-        if self.obj.searchFaze is None:
+    def if_isset_search_faze(self) -> session:
+        if self.obj.search_faze is None:
             return session.query(self.model).all()
         else:
-            return self.searchFazeNormal()
+            return self.search_faze_normal()
 
-    def searchFazeNormal(self):
-        return session.query(self.model).filter(self.model.name.like(str(self.obj.searchFaze)+'%'))
+    def search_faze_normal(self):
+        return session.query(self.model).filter(self.model.name.like(str(self.obj.search_faze)+'%'))
 
-class setFactory:
+class SetFactory:
 
     def __init__(self,obj):
         self.obj=obj
 
-    def getFactory(self,name):
+    def get_factory(self,name):
         switcher = {
-            'movies' : getMovies,
-            'series' : getSeries,
-            'stars'  : getStar
+            'movies' : GetMovies,
+            'series' : GetSeries,
+            'stars'  : GetStar
         }
         classObj = switcher.get(name, "Invalid data");
-        return classObj(self.obj).getQuery()
+        return classObj(self.obj).get_query()
 
-class getMovies(AbstractFactory):
+class GetMovies(AbstractFactory):
     model=Movies
-    deepSearchMode = True
 
-    def getQuery(self) ->  session:
-        return self.returnAll()
-
-    def deepSearch(self) -> session:
-        starAr=[]
-        for item in session.query(self.model).all():
-            if len(session.query(self.model).get(item.id).stars) > 0:
-                for star in session.query(self.model).get(item.id).stars:
-                    if self.obj.searchFaze == star.name:
-                        starAr.append(item)
-        return starAr
-
-class getSeries(AbstractFactory):
+class GetSeries(AbstractFactory):
     model=Series
-    deepSearchMode=False
 
-    def getQuery(self) -> session:
-        return self.returnAll()
-
-    def deepSearch(self) -> session:
-        pass
-
-class getStar(AbstractFactory):
+class GetStar(AbstractFactory):
     model=Stars
-    deepSearchMode=False
-
-    def getQuery(self) -> session:
-        return self.returnAll()
-
-    def deepSearch(self):
-        pass
 
 
 

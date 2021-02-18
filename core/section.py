@@ -278,7 +278,7 @@ class MenuSection(AbstractSection):
         self.Scroller.movie_list(
             data_list[start:end],
             self,
-            self.obj.searchIn
+            self.obj.search_in
         )
 
     def return_start_page(self,page):

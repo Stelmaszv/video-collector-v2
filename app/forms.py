@@ -15,7 +15,7 @@ class MenuFormSchena(BaseFormShema):
             'name': 'name',
             'validation': "",
             'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None,self.BaseView.searchFaze),
+            'place_holder': self.set_value_if_exist(None,self.BaseView.search_faze),
             'grid_data': [0, 1, 1, 1]
         })
 
@@ -27,7 +27,7 @@ class MenuFormSchena(BaseFormShema):
             'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
             'place_holder': 'sections',
             'grid_data': [0, 2, 1, 1],
-            'combo_box_list': [self.BaseView.searchIn, 'series', 'stars', 'movies'],
+            'combo_box_list': [self.BaseView.search_in, 'series', 'stars', 'movies'],
         })
 
         self.from_section.append({
