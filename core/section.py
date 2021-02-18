@@ -8,9 +8,34 @@ from core.setings import series_avatar_defult
 
 class AbstractSection(ABC):
 
+
     @abstractmethod
     def run(self,data,data_list,page):
         pass
+
+class CustomListSection(AbstractSection):
+
+    def __init__(self, BaseView, QWidget):
+        self.BaseView = BaseView
+        self.OBJ_QWidget = QWidget
+        self.obj = BaseView.obj
+
+    def run(self,data,data_list,page):
+
+        self.widget_edit_section = QtWidgets.QWidget(self.obj)
+        self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.widget_edit_section.setObjectName("widget_edit_section")
+        self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
+        self.edit_section_grid.setContentsMargins(0, 0, 0, 0)
+        self.edit_section_grid.setObjectName("edit_section_grid")
+        row = 0
+        for item in data_list:
+            label = QtWidgets.QLabel()
+            label.setObjectName('test')
+            label.setText(item)
+            self.edit_section_grid.addWidget(label, row, 0, 1, 1)
+            row = row + 1
+
 
 class TagsListSection(AbstractSection):
 
@@ -37,7 +62,6 @@ class TagsListSection(AbstractSection):
         self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
         self.edit_section_grid.setContentsMargins(0, 0, 0, 0)
         self.edit_section_grid.setObjectName("edit_section_grid")
-
         row=0
         for item in data_list:
 

@@ -1,0 +1,26 @@
+from core.view import AbstractBaseView
+from PyQt5.QtWidgets import QWidget
+from app.forms import AdvanceSearchForm
+class AdvanceSearch(QWidget,AbstractBaseView):
+    FormSchema = AdvanceSearchForm
+    model_view_off = True
+    show_elemnts = ['Title', 'Info', 'Galery', 'Nav', 'Avatar','List']
+    resolution_index = 'advande_search'
+    window_title = 'Advance Search'
+    reset_view = 'advance_search'
+    methods = ['submit_click','add_tag']
+    tags= []
+    stars= []
+
+    def add_tag(self,values):
+        self.BaseActions.reset()
+        self.tags.append(values[1]['value'])
+
+    def set_up(self):
+        self.custom_title('Tags','tags_name')
+        self.custom_list(self.tags,'tags','Custom_list')
+        self.custom_title('Stars', 'star_name')
+        self.custom_list(self.stars,'stars','Custom_list')
+
+    def submit_click(self,values):
+        print(values)

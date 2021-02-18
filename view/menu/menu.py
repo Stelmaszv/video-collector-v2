@@ -42,7 +42,7 @@ class Menu(QWidget,AbstractBaseView):
         self.set_search(values)
 
     def advance(self,advance):
-        self.BaseActions.reset()
+        self.BaseView.load_view('advance_search')
 
     def reset(self,value):
         self.BaseActions.reset()

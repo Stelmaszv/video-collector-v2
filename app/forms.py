@@ -1,5 +1,61 @@
 from core.view import BaseFormShema
 
+class AdvanceSearchForm(BaseFormShema):
+    def form(self):
+        self.from_section = []
+        self.from_section.append({
+            'type': 'label',
+            'name': 'name',
+            'place_holder': 'Name',
+            'grid_data': [0, 0, 1, 1]
+        })
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'name',
+            'validation': "",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(None,'Hukaj'),
+            'grid_data': [0, 1, 1, 1]
+        })
+        self.from_section.append({
+            'type': 'label',
+            'name': 'name',
+            'place_holder': 'Add Tag',
+            'grid_data': [1, 0, 1, 1]
+        })
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'tag_name',
+            'validation': "",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(None,'Tag'),
+            'grid_data': [1, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'button',
+            'obj_name': 'advance',
+            'name': 'Add Tag',
+            'place_holder': 'advance',
+            'grid_data': [1, 2, 1, 1],
+            'click': self.add_method(self.BaseView.add_tag,'add_tag'),
+            'arguments':[
+                True,
+                'tag_name'
+            ]
+        })
+
+        self.from_section.append({
+            'type': 'button_submit',
+            'obj_name': 'submit',
+            'name': 'Submit',
+            'place_holder': 'Submit',
+            'grid_data': [3, 1, 1, 1],
+            'click': self.BaseView.submit_click,
+            'arguments': []
+        })
+
+
 class MenuFormSchena(BaseFormShema):
 
     def form(self):

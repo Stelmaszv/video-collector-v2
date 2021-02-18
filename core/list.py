@@ -38,8 +38,9 @@ class MoviesList (AbstractList):
     def genrate(self,data,el,grid,col_start):
         row=1
         for item in data:
-            self.Form.label([str(item.id),item.name],[row,col_start,1,1],grid,el)
-            self.Form.button_loop(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
+            print('item')
+            #self.Form.label([str(item.id),item.name],[row,col_start,1,1],grid,el)
+            #self.Form.button_loop(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
             #self.Form.button_loop(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
             row=row+1
 
@@ -87,6 +88,13 @@ class StarList(AbstractList):
             self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
+class CustumList(AbstractList):
+
+    def __init__(self,BaseView,per_page):
+        super(CustumList, self).__init__(BaseView, per_page)
+
+    def genrate(self,data,el,grid,col_start):
+        print('ad')
 
 class List:
 
@@ -98,11 +106,11 @@ class List:
         self.set_per_page(list)
 
         switcher = {
-            'movies' : MoviesList(self.obj,self.per_page),
-            'series' : SeriesList(self.obj,self.per_page),
-            'stars'  : StarList(self.obj,self.per_page)
+            'movies'       : MoviesList(self.obj,self.per_page),
+            'series'       : SeriesList(self.obj,self.per_page),
+            'stars'        : StarList(self.obj,self.per_page),
+            'custum_list'  : CustumList(self.obj,self.per_page)
         }
-
         classObj = switcher.get(place, "Invalid data");
         classObj.genrate(list,el,grid,col)
 

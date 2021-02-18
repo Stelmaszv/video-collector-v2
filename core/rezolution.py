@@ -124,6 +124,23 @@ class MenuHalfSmall(MenuType):
 
                 }
             },
+
+            "advande_search":{
+                "position": {
+                    "left": 2562 + 400,
+                    "top": 400,
+                    "width": 1280,
+                    "height": 985
+                },
+                "window": {
+                    "tags_name" : [400,200,480,50],
+                    "tags"      : [400, 250, 480, 500],
+                    "star_name": [400, 300, 480, 50],
+                    "stars": [400, 350, 480, 50],
+                    "title_size": [0, 0, 1280, 100],
+                    "form_section": [400, 100, 480, 250],
+                }
+            },
             "Menu": {
                 "position": {
                     "left"             : 2562,
@@ -146,6 +163,7 @@ class MenuHalfSmall(MenuType):
                     "height": 985
                 },
                 "window": {
+
                     "title_size"    : [0, 0 ,1280 ,100],
                     "form_section"  : [400, 0 ,480 ,250],
                     "list_view_size": [300, 150, 680, 250],

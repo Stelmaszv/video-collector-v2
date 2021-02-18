@@ -70,37 +70,37 @@ class BaseView:
         self.Scroller=Scroller(self.obj)
 
     def load_view(self,view,item=False):
-        self.menu.searchIn=view
+        self.menu.search_In=view
         self.menu.open(item)
 
     def clear(self):
         self.avatar_photo.clear()
         self.galeryGrid.close()
         self.infoWidget.close()
-        self.title.clear()
+
 
     def upadete(self):
         self.avatar_photo.show()
 
     def listView(self, data, data_list,obj_name,QWidget=False,page=False):
-        from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,TagsListSection
+        from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,TagsListSection,CustomListSection
         switcher = {
             'Stars'      : StarsSection(self,QWidget),
             'Series'     : SeriesSection(self,QWidget),
             'Menu'       : MenuSection(self,QWidget),
             'Movie_List' : MovieListSection(self,QWidget),
-            'Tags'       : TagsListSection(self, QWidget)
+            'Tags'       : TagsListSection(self, QWidget),
+            'Custom_list': CustomListSection(self,QWidget)
         }
-
         classObj = switcher.get(obj_name, "Invalid data");
         section_obj=classObj.run(data, data_list,page)
         return section_obj
 
     def title(self,data,text):
-        self.title = QtWidgets.QLabel(self.obj)
-        self.title.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
-        self.title.setObjectName("title")
-        self.title.setText(text)
+        title = QtWidgets.QLabel(self.obj)
+        title.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        title.setObjectName(text)
+        title.setText(text)
 
     def avatar(self,data,obj=None,src=None):
         if obj == None:
@@ -115,6 +115,7 @@ class BaseView:
         self.avatar_photo.setScaledContents(True)
         self.avatar_photo.setObjectName("avatar")
         return self.avatar_photo
+
 
     def info(self,infoData,data,rows,obj=None):
         if obj==None:
@@ -357,6 +358,20 @@ class AbstractBaseView:
             Error.throw_error_is_none("List_data is None 'use method set_list_view_data'", self.list_data)
             self.BaseView.listView(data, self.list_data,self.list_view,self)
 
+    def custom_title(self,title,rezolution):
+        data = self.WindowSize[rezolution]
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\" font-size:18pt;font-weight:600; " \
+               "text-decoration: none;\">" + title + \
+               "</span></p></body></html>"
+
+        self.BaseView.title(data, text)
+
+    def custom_list(self,list,rezolution,list_item):
+        data = self.WindowSize[rezolution]
+        self.BaseView.listView(data, list, list_item, self)
+
     def info(self):
         data   = self.WindowSize['info_size']
         rows = ['itemNmae','itemName2']
@@ -378,8 +393,7 @@ class AbstractBaseView:
 
         self.BaseView.title(data, text)
 
-
-    def run_window(self,menu=None):
+    def run_window(self):
         self.___set_data()
         self.set_up()
         self.init()

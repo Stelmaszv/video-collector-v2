@@ -5,6 +5,7 @@ from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
 from app.db.models import Tags,Stars
+import json
 import os
 
 class ViewBaseAction:
@@ -145,7 +146,7 @@ class AddStar(AddTag):
 
 class Submit:
 
-    def __init__(self,Model,Data,Obj):
+    def __init__(self,Model=None,Data=[],Obj=None):
         self.Model = Model(Data)
         self.Obj   = Obj
 
@@ -219,7 +220,7 @@ class Form:
         self.buttons_loop[index]['obejct'].addButton(button)
         self.buttons_loop[index]['obejct'].buttonClicked[int].connect(self.buttons_loop[index]['button'])
 
-    def button (self,info,grid):
+    def button (self,info,grid,list=[]):
         button = QtWidgets.QPushButton(self.BaseView)
         button.setObjectName(info['obj_name'])
         button.setText(info['name'])
@@ -230,7 +231,7 @@ class Form:
             info['grid_data'][2],
             info['grid_data'][3]
         )
-        button.clicked.connect(lambda: info['click'](info['arguments']))
+        button.clicked.connect(lambda: info['click'](self.get_values(list)))
 
     def combo_box(self,data,combo_list,grid=None):
         combo_box = QtWidgets.QComboBox(self.BaseView)
@@ -284,6 +285,27 @@ class Form:
         grid.addWidget(calender,data[0], data[1], data[2], data[3])
         return calender
 
+    def get_values(self,grid):
+        values=[]
+        def show_value(data):
+
+            if data['item']['type'] == 'edit_line' or data['item']['type'] == 'calendar':
+                return  data['button'].text()
+
+            if data['item']['type'] == 'combo_box':
+                return  data['button'].currentText()
+
+        for item in grid:
+            values.append(
+                {
+                    'name': item['item']['name'],
+                    'place_holder' :item['item']['place_holder'],
+                    'value':str(show_value(item)),
+                    'data-type':item['item']['data_type']
+                }
+            )
+        return values
+
 class FormSection:
 
     def __init__(self, BaseView):
@@ -310,7 +332,8 @@ class FormSection:
             if item['type'] == 'button':
                 self.Form.button(
                     item,
-                    self.edit_section_grid
+                    self.edit_section_grid,
+                    grid_array
                 )
 
             if item['type'] == 'combo_box':

@@ -20,8 +20,10 @@ class setWindow():
         from view.set_photo_to_series.set_photo_to_series import SetPhotoToSeries
         from view.star.add_star_to_model import AddStarToModelView
         from view.menu.menu import Menu
+        from view.menu.advande_search import AdvanceSearch
 
         switcher = {
+            'advance_search'    : AdvanceSearch(),
             'menu'              : Menu(),
             'add_star_to_model' :AddStarToModelView(),
             'set_photo_to_series' : SetPhotoToSeries(),
@@ -37,16 +39,16 @@ class setWindow():
         }
         return switcher.get(object, "Invalid data");
 class Router:
-    searchIn = 'movies'
+    search_In = 'movies'
 
     def __init__(self, base_view):
         self.base_view = base_view
 
     def open(self, item=False):
-        self.window = setWindow().returnObj(self.searchIn)
+        self.window = setWindow().returnObj(self.search_In)
         self.window.Router = self
         self.window.obj = self.base_view
-        if item is not None:
+        if item:
             self.window.id = item.id
-        self.window.run_window(self.base_view)
+        self.window.run_window()
 
