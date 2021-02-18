@@ -10,6 +10,7 @@ from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
 from app.forms import MenuFormSchena
 from core.search import SetFactory
+from core.setings import search_in_defult,search_faze_defult
 #initSeader().initNow()
 class Menu(QWidget,AbstractBaseView):
     FormSchema         = MenuFormSchena
@@ -18,12 +19,11 @@ class Menu(QWidget,AbstractBaseView):
     list_view          = 'Menu'
     list_model_off     = True
     model_view_off     = True
-    deep_search         = False
     reset_view         = 'menu'
-    search_faze         = 'Sean'
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
     methods            = ['submit_click','reset','advance']
-    search_in           = 'stars'
+    search_in           = search_in_defult
+    search_faze         = search_faze_defult
 
     def  set_up(self):
         factory = SetFactory(self)
