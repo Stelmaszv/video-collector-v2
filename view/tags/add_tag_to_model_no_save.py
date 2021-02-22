@@ -16,8 +16,18 @@ class AddTagToModelNoSave(QWidget,AbstractBaseView):
         print(self.criterions)
 
     def submit_click(self, values):
-        self.close()
-        ATNS = AdvanceSearch()
-        ATNS.criterions = ['new data']
-        print(ATNS.criterions)
-        ATNS.run_window()
+
+        if len(values[0]['value'])>0:
+            self.close()
+            ATNS = AdvanceSearch()
+            self.criterions['Tags'].append(values[0]['value'])
+            ATNS.criterions = self.criterions
+            ATNS.run_window()
+        else:
+            data = [
+                'Errors in form',
+                'Please enter data',
+                ''
+            ]
+            self.BaseView.Massage.show(data)
+

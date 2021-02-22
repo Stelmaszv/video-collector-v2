@@ -11,7 +11,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     methods = ['submit_click','add_tag']
     tags= []
     stars= []
-    criterions = ['dwqd']
+    criterions = {'Tags':[]}
 
     def add_tag(self,values):
         self.close()
@@ -22,7 +22,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
 
     def set_up(self):
         self.custom_title('Tags','tags_name')
-        self.custom_list(self.tags,'tags','Custom_list')
+        self.custom_list(self.criterions['Tags'],'tags','Custom_list')
         self.custom_title('Stars', 'star_name')
         self.custom_list(self.stars,'stars','Custom_list')
 
