@@ -1,9 +1,8 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import BaseView,AbstractBaseView
-from core.BaseActions import FormSection,AddTag,ViewBaseAction
-from core.rezolution import SetResolution
+from core.view import AbstractBaseView
+from core.BaseActions import AddTag
 from app.forms import TagsForm
-from app.db.models import Series,Stars
+from app.db.models import Series
 
 class AddTagView(QWidget,AbstractBaseView):
     resolution_index = 'add_tag'

@@ -11,10 +11,14 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     methods = ['submit_click','add_tag']
     tags= []
     stars= []
+    criterions = ['dwqd']
 
     def add_tag(self,values):
-        self.BaseActions.reset()
-        self.tags.append(values[1]['value'])
+        self.close()
+        from view.tags.add_tag_to_model_no_save import AddTagToModelNoSave
+        A=AddTagToModelNoSave()
+        A.criterions=self.criterions
+        A.run_window()
 
     def set_up(self):
         self.custom_title('Tags','tags_name')
@@ -24,3 +28,4 @@ class AdvanceSearch(QWidget,AbstractBaseView):
 
     def submit_click(self,values):
         print(values)
+

@@ -282,6 +282,9 @@ class AbstractBaseView:
     def set_model(self,model):
         self.model=model
 
+    def set_data(self,data):
+        self.data=data
+
     def  set_up(self):
         pass
 

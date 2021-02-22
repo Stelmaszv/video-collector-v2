@@ -21,8 +21,10 @@ class setWindow():
         from view.star.add_star_to_model import AddStarToModelView
         from view.menu.menu import Menu
         from view.menu.advande_search import AdvanceSearch
+        from view.tags.add_tag_to_model_no_save import AddTagToModelNoSave
 
         switcher = {
+            'add_tag_to_model_no_save' :AddTagToModelNoSave(),
             'advance_search'    : AdvanceSearch(),
             'menu'              : Menu(),
             'add_star_to_model' :AddStarToModelView(),
