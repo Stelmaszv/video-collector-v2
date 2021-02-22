@@ -207,6 +207,7 @@ class BaseView:
 
 class AbstractBaseView:
 
+    session            = session
     Nav                = None
     Info               = None
     model              = None

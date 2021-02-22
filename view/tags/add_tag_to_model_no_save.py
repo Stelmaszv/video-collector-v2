@@ -10,7 +10,7 @@ class AddTagToModelNoSave(QWidget,AbstractBaseView):
     FormSchema = TagsForm
     model_view_off = True
     methods = ['submit_click']
-    criterions=['new data']
+    criterions=[]
 
     def set_up(self):
         print(self.criterions)

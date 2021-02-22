@@ -17,32 +17,25 @@ class AdvanceSearchForm(BaseFormShema):
             'place_holder': self.set_value_if_exist(None,'Hukaj'),
             'grid_data': [0, 1, 1, 1]
         })
-        self.from_section.append({
-            'type': 'label',
-            'name': 'name',
-            'place_holder': 'Add Tag',
-            'grid_data': [1, 0, 1, 1]
-        })
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'tag_name',
-            'validation': "",
-            'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None,'Tag'),
-            'grid_data': [1, 1, 1, 1]
-        })
 
         self.from_section.append({
             'type': 'button',
             'obj_name': 'advance',
             'name': 'Add Tag',
             'place_holder': 'advance',
-            'grid_data': [1, 2, 1, 1],
+            'grid_data': [1, 1, 1, 1],
             'click': self.add_method(self.BaseView.add_tag,'add_tag'),
-            'arguments':[
-                True,
-                'tag_name'
-            ]
+            'arguments':[]
+        })
+
+        self.from_section.append({
+            'type': 'button',
+            'obj_name': 'advance',
+            'name': 'Add Star',
+            'place_holder': 'advance',
+            'grid_data': [2, 1, 1, 1],
+            'click': self.add_method(self.BaseView.add_star,'add_star'),
+            'arguments':[]
         })
 
         self.from_section.append({
@@ -51,7 +44,7 @@ class AdvanceSearchForm(BaseFormShema):
             'name': 'Submit',
             'place_holder': 'Submit',
             'grid_data': [3, 1, 1, 1],
-            'click': self.BaseView.submit_click,
+            'click': self.add_method(self.BaseView.submit_click, 'submit_click'),
             'arguments': []
         })
 
