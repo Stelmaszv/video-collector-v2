@@ -365,7 +365,7 @@ class AbstractBaseView:
         if len(self.list_view):
             data= self.WindowSize['list_view_size']
             Error.throw_error_is_none("List_data is None 'use method set_list_view_data'", self.list_data)
-            #self.BaseView.listView(data, self.list_data,self.list_view,self)
+            self.BaseView.listView(data, self.list_data,self.list_view,self)
 
     def custom_title(self,title,rezolution):
         data = self.WindowSize[rezolution]

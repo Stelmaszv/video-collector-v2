@@ -4,8 +4,11 @@ from app.db.models import session
 from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
 from pathlib import Path
+from core.setings import data_JSON
 import json
 import os
+
+add= False
 
 class FaindStar:
 
@@ -45,8 +48,8 @@ class AbstractAddViaDir(ABC):
     movie_dir='/movies'
     photo_dir='/photo'
     star=None
+    name=''
     series=None
-
 
     def __init__(self, dir):
         self.dir = dir
@@ -121,7 +124,6 @@ class AbstractAddViaDir(ABC):
             if index_exist:
                 if len(data[index])>0:
                     photo=data[index]
-
         return  photo
 
     def set_photo(self,defult,serch):
@@ -129,12 +131,12 @@ class AbstractAddViaDir(ABC):
         photo_dir = os.listdir(self.photo_dir)
         for photo in  photo_dir:
             if self.clear_name(photo) == serch:
-                photo_avatar=photo;
-        if photo_avatar:
-            photo_avatar=self.photo_dir + '' + str('/'+photo_avatar)
-        else:
-            photo_avatar=defult
-        return photo_avatar;
+                    photo_avatar=photo;
+            if photo_avatar:
+                photo_avatar=self.photo_dir + '' + str('/'+photo_avatar)
+            else:
+                photo_avatar=defult
+            return photo_avatar;
 
     def set_none(self):
         return self.set_photo_from_json(none_movies_defult, 'none')
@@ -178,10 +180,30 @@ class AddSeriesViaDir(AbstractAddViaDir):
                     src  = self.set_photo(series_avatar_defult,str(sezon))
                 )
             )
-
         self.session.add_all(object)
         self.session.commit()
         return object
+
+    def set_dir_for_star(self,name):
+        letter=name[0]
+        dir=''
+        if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
+            dir=data_JSON[0]['dir'] + '/A-D/' + name
+        if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
+            dir=data_JSON[0]['dir'] + '/E-H/' + name
+        if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P':
+            dir=data_JSON[0]['dir'] + '/M-P/' + name
+        if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
+            dir=data_JSON[0]['dir']+'/R-U/'+name
+        if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
+            dir=data_JSON[0]['dir'] + '/W-Z/' + name
+
+        if os.path.isdir(dir) is False:
+            os.mkdir(dir)
+            os.mkdir(dir+'/none')
+            os.mkdir(dir+'/photo')
+        return dir
+
 
     def if_series_exist(self,name):
         sezons=self.create_sezons(self.set_sezons())
@@ -198,8 +220,9 @@ class AddSeriesViaDir(AbstractAddViaDir):
         return self.if_exist(name,Stars,Stars(
             name   = name,
             avatar = stars_avatar_defult,
-            none = self.set_none(),
+            none   = self.set_none(),
             singles= self.set_singles(),
+            dir    = self.set_dir_for_star(name)
         ))
 
     def add_movie(self,movie,sezon,movie_name_is_star=False):
@@ -241,7 +264,6 @@ class AddSeriesViaDir(AbstractAddViaDir):
             else:
                 if self.if_movie_exist(self.clear_name(dir_element)):
                     object.append(self.add_movie(dir_element, 1))
-
         self.session.add_all(object)
         self.session.commit()
 
@@ -275,6 +297,7 @@ class AddStarViaDir(AbstractAddViaDir):
 
         for movie in movie_dir:
             name = self.clear_name(movie)
+            print(name)
             stars = self.IfStar.faind_stars(movie)
             new_stars = []
             if stars is not None:
@@ -288,9 +311,8 @@ class AddStarViaDir(AbstractAddViaDir):
                     src=movie
                 ))
                 print('Movie ' + str(name) + ' has been added')
-
-        self.session.add_all(object)
-        self.session.commit()
+        #self.session.add_all(object)
+        #self.session.commit()
 
 class LoadPhotoFromDirs:
 
@@ -312,8 +334,8 @@ class LoadPhotoFromDirs:
                 src=dir + '' + str('/'+photo)
                 object.append(self.photo_model(src=src))
 
-        self.session.add_all(object)
-        self.session.commit()
+        #self.session.add_all(object)
+        #self.session.commit()
 
         for photo_item in object:
             model.photos.append(photo_item)
