@@ -3,6 +3,8 @@ from app.db.models import Stars,Movies,Series,Photos,Sezons
 from app.db.models import session
 from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
+from pathlib import Path
+import json
 import os
 
 class FaindStar:
@@ -45,12 +47,20 @@ class AbstractAddViaDir(ABC):
     star=None
     series=None
 
+
     def __init__(self, dir):
         self.dir = dir
+        self.config = self.dir + '/config.JSON'
+        self.set_config()
         self.session = session
         self.IfStar = IfStar()
         self.set_movie_dir()
         self.set_photo_dir()
+
+    def set_config(self):
+        if Path(self.config).is_file() is False:
+            f = open(self.config, "x")
+            f.close()
 
     def clear_name(self, dir):
         str = ''
@@ -83,7 +93,7 @@ class AbstractAddViaDir(ABC):
         self.photo_dir = self.dir + '' + str(self.photo_dir)
 
     def set_avatar(self):
-        return self.set_photo(series_avatar_defult, 'avatar')
+        return  self.set_photo_from_json(series_avatar_defult,'avatar')
 
     def if_exist(self,name,Model,add):
         Obj=self.session.query(Model).filter(Model.name == name).first()
@@ -103,6 +113,17 @@ class AbstractAddViaDir(ABC):
             return False
         return True
 
+    def set_photo_from_json(self,defult,index):
+        photo=defult
+        with open(self.config) as json_file:
+            data = json.load(json_file)
+            index_exist = index in data
+            if index_exist:
+                if len(data[index])>0:
+                    photo=data[index]
+
+        return  photo
+
     def set_photo(self,defult,serch):
         photo_avatar=''
         photo_dir = os.listdir(self.photo_dir)
@@ -116,10 +137,10 @@ class AbstractAddViaDir(ABC):
         return photo_avatar;
 
     def set_none(self):
-        return self.set_photo(none_movies_defult,'none')
+        return self.set_photo_from_json(none_movies_defult, 'none')
 
     def set_singles(self):
-        return self.set_photo(none_movies_defult,'singles')
+        return self.set_photo_from_json(singles_movies_defult,'singles')
 
     @abstractmethod
     def add_files(self):
@@ -142,11 +163,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         return stop
 
     def set_sezons(self):
-        sezons=0
-        movie_dir = os.listdir(self.movie_dir)
-        for movie in movie_dir:
-            if os.path.isdir(self.movie_dir + '' + '/' + str(movie)):
-                sezons=sezons+1
+        sezons=len(os.listdir(self.movie_dir))
         if sezons>0:
             return sezons;
         return 1;
@@ -166,7 +183,6 @@ class AddSeriesViaDir(AbstractAddViaDir):
         self.session.commit()
         return object
 
-
     def if_series_exist(self,name):
         sezons=self.create_sezons(self.set_sezons())
         return self.if_exist(name,self.model,self.model(
@@ -174,14 +190,14 @@ class AddSeriesViaDir(AbstractAddViaDir):
             number_of_sezons  =  self.set_sezons(),
             sezons  =  sezons,
             avatar  =  self.set_avatar(),
-            dir     =  self.dir
+            dir     =  self.dir,
+            config  =  self.config
         ))
 
     def if_star_exist(self,name):
         return self.if_exist(name,Stars,Stars(
             name   = name,
             avatar = stars_avatar_defult,
-            dir    = '',
             none = self.set_none(),
             singles= self.set_singles(),
         ))
@@ -238,6 +254,11 @@ class AddStarViaDir(AbstractAddViaDir):
         super().__init__(dir)
         self.star=self.if_star_exist(self.set_name())
 
+    def set_config(self):
+        if Path(self.config).is_file() is False:
+            f = open(self.config, "x")
+            f.close()
+
     def if_star_exist(self,name):
         return self.if_exist(name, self.model, self.model(
             name=name,
@@ -245,6 +266,7 @@ class AddStarViaDir(AbstractAddViaDir):
             dir=self.dir,
             none = self.set_none(),
             singles=self.set_singles(),
+            config=self.config
         ))
 
     def add_files(self):
@@ -359,7 +381,7 @@ class LoadFilesFromJson:
     def __init__(self,json_data):
         self.json_data=json_data
         self.object={
-            "stars"  : LoadStarFromJSON,
+            "stars"  :  LoadStarFromJSON,
             "series" :  LoadSeriesFromJSON
         }
 

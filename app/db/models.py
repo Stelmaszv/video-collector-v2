@@ -62,6 +62,7 @@ class Series(Base):
     name = Column('name',String)
     avatar = Column('avatar', String)
     dir = Column('dir', String, default='')
+    config = Column('config', String, default='')
     number_of_sezons = Column('sezons', Integer)
 
     tags = relationship(
@@ -155,6 +156,7 @@ class Stars(Base):
     dir  =  Column('dir', String, default='')
     none = Column('none', String, default='')
     singles = Column('singles', String, default='')
+    config = Column('config', String, default='')
     date_of_birth = Column(DateTime)
 
     tags = relationship(

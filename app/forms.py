@@ -470,7 +470,7 @@ class StarsForm(BaseFormShema):
                 'name': 'Add Tags',
                 'place_holder': 'Tags',
                 'grid_data': [10, 1, 1, 1],
-                'click': self.BaseView.add_tag,
+                'click' : self.add_method(self.BaseView.add_tag,'add_tag'),
                 'arguments': []
             })
                 
@@ -480,7 +480,7 @@ class StarsForm(BaseFormShema):
                 'name': 'Submit',
                 'place_holder': 'Submit',
                 'grid_data': [11, 1, 1, 1],
-                'click': self.BaseView.submit_click,
+                'click': self.add_method(self.BaseView.submit_click,'submit_click'),
                 'arguments': []
             })
 
