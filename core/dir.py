@@ -6,6 +6,7 @@ from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_de
 from pathlib import Path
 from core.setings import data_JSON
 import json
+from time import sleep
 import os
 
 add= False
@@ -63,6 +64,7 @@ class AbstractAddViaDir(ABC):
     def set_config(self):
         if Path(self.config).is_file() is False:
             f = open(self.config, "x")
+            f.write("{}\n")
             f.close()
 
     def clear_name(self, dir):
@@ -202,6 +204,12 @@ class AddSeriesViaDir(AbstractAddViaDir):
             os.mkdir(dir)
             os.mkdir(dir+'/none')
             os.mkdir(dir+'/photo')
+            sleep(1)
+            f = open(dir+'/config.JSON', "x")
+            f.close()
+            my_file = open(dir+'/config.JSON', "w")
+            my_file.write('{}')
+            f.close()
         return dir
 
 
@@ -311,8 +319,8 @@ class AddStarViaDir(AbstractAddViaDir):
                     src=movie
                 ))
                 print('Movie ' + str(name) + ' has been added')
-        #self.session.add_all(object)
-        #self.session.commit()
+        self.session.add_all(object)
+        self.session.commit()
 
 class LoadPhotoFromDirs:
 
@@ -334,8 +342,8 @@ class LoadPhotoFromDirs:
                 src=dir + '' + str('/'+photo)
                 object.append(self.photo_model(src=src))
 
-        #self.session.add_all(object)
-        #self.session.commit()
+        self.session.add_all(object)
+        self.session.commit()
 
         for photo_item in object:
             model.photos.append(photo_item)
