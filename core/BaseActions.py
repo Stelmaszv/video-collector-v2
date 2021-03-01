@@ -5,7 +5,6 @@ from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
 from app.db.models import Tags,Stars
-import json
 import os
 
 class ViewBaseAction:

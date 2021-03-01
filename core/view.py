@@ -223,16 +223,20 @@ class AbstractBaseView:
     list_view=''
     show_elemnts=[]
     methods =  []
+    list=[]
 
     def __init__(self):
         if self.model is not None:
             Error.throw_error_bool('class self.model is not subclass of BaseModel', issubclass(self.model, BaseModel))
-
         self.BaseView = BaseView([], self)
         self.FormSection = FormSection(self)
         self.BaseActions = ViewBaseAction(self)
         self.SetResolution = SetResolution()
         self.__set_resolution()
+
+        if self.Info is not None:
+            Error.throw_error_bool('class self.Info is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
+            self.InfoObj=self.Info(self)
 
         if self.Nav is not None:
             Error.throw_error_bool('class self.Nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
@@ -309,7 +313,7 @@ class AbstractBaseView:
 
     def check_info(self):
         Error.throw_error_is_none('self.Info is required for info Section!', self.Info)
-        Error.throw_error_bool('class self.nav is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
+        Error.throw_error_bool('class self.Info is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
 
     def description(self):
         data = self.WindowSize['description']
@@ -321,6 +325,7 @@ class AbstractBaseView:
         limit = self.WindowSize['tags_limit']
         taqs_list=stringManipupations.array_to_string(self.data.tags)
         self.BaseView.description(stringManipupations.short(taqs_list, limit), data);
+
 
     def init(self):
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Tags'):
@@ -379,8 +384,9 @@ class AbstractBaseView:
     def info(self):
         data   = self.WindowSize['info_size']
         rows = ['itemNmae','itemName2']
-        inf_data=self.Info(self).return_data()
+        inf_data=self.InfoObj.return_data()
         self.BaseView.info(inf_data, data, rows)
+
 
     def title(self):
         title =''

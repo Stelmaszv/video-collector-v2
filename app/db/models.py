@@ -180,9 +180,6 @@ class Stars(Base):
         secondary=photos_star,
         back_populates="stars"
     )
-    def set_insstance(self,data):
-        self.insstance = data
-
     def __str__(self):
         return  self.name
 
