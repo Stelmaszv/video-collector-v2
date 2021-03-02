@@ -177,12 +177,10 @@ class BaseView:
         if self.model:
             self.data = session.query(self.model).get(id)
 
-    def galery(self,data,size,inRow,obj=None,photos=None):
-        if photos == None:
-            photos = self.data.photos
+    def galery(self,data,size,inRow,obj=None):
         if obj == None:
             obj = self.obj
-
+        photos = os.listdir(self.data.dir + '/photo')
         self.galeryGrid = QtWidgets.QWidget(obj)
         self.galeryGrid.setGeometry(QtCore.QRect(data[0],data[1],data[2],data[3]))
         self.galeryGrid.setObjectName("galeryGrid")
@@ -196,7 +194,7 @@ class BaseView:
             item = QtWidgets.QLabel(self.galeryGrid)
             item.setMaximumSize(QtCore.QSize(size[0], size[1]))
             item.setText("")
-            item.setPixmap(QtGui.QPixmap(photo.src))
+            item.setPixmap(QtGui.QPixmap(self.data.dir+'/photo/'+photo))
             item.setScaledContents(True)
             item.setObjectName("galeryItem")
             self.galeryGrid2.addWidget(item, col, row, 1, 1)
