@@ -12,6 +12,7 @@ from app.info import BaseInfo
 from core.BaseActions import FormSection,Submit,Form
 from app.model_view import BaseModelViewSet
 from core.strings import stringManipupations
+import json
 
 class BaseFormShema:
     from_section=[]
@@ -191,17 +192,22 @@ class BaseView:
         row = 0
         col = 0
         for photo in photos:
-            item = QtWidgets.QLabel(self.galeryGrid)
-            item.setMaximumSize(QtCore.QSize(size[0], size[1]))
-            item.setText("")
-            item.setPixmap(QtGui.QPixmap(self.data.dir+'/photo/'+photo))
-            item.setScaledContents(True)
-            item.setObjectName("galeryItem")
-            self.galeryGrid2.addWidget(item, col, row, 1, 1)
-            row = row + 1
-            if row > inRow:
-                row = 0
-                col = col + 1
+            with open(self.data.config) as json_file:
+                json_pars = json.load(json_file)
+                index_exist = 'galery_skip' in json_pars
+                if index_exist:
+                    if self.data.dir+'/photo/'+photo not in json_pars['galery_skip']:
+                        item = QtWidgets.QLabel(self.galeryGrid)
+                        item.setMaximumSize(QtCore.QSize(size[0], size[1]))
+                        item.setText("")
+                        item.setPixmap(QtGui.QPixmap(self.data.dir+'/photo/'+photo))
+                        item.setScaledContents(True)
+                        item.setObjectName("galeryItem")
+                        self.galeryGrid2.addWidget(item, col, row, 1, 1)
+                        row = row + 1
+                        if row > inRow:
+                            row = 0
+                            col = col + 1
 
 class AbstractBaseView:
 
