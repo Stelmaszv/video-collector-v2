@@ -31,6 +31,30 @@ class FaindStar:
         self.starArray = str.split('and')
         return self.starArray
 
+class AbstracConfig(ABC):
+
+    @abstractmethod
+    def set(self):
+        pass
+
+
+class ConfigStars(AbstracConfig):
+
+
+    def __init__(self,dir):
+        print(dir)
+
+    def set(self):
+        print('Stars')
+
+class ConfigSeries(AbstracConfig):
+
+    def __init__(self,dir):
+        print(dir)
+
+    def set(self):
+        print('Series')
+
 class IfStar:
 
     validValue = "[a-zA-Z0-9]+\s+\([a-zA-Z0-9\s]+\)";
@@ -167,7 +191,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         return stop
 
     def set_sezons(self):
-        sezons=1
+        sezons=0
         for dir in os.listdir(self.movie_dir):
             if os.path.isdir(self.movie_dir+'/'+dir):
                 sezons=sezons+1
@@ -175,7 +199,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
 
     def create_sezons(self,sezons):
         object=[]
-        for sezon in range(1,sezons):
+        for sezon in range(1,sezons+1):
             object.append(
                 self.sezons_model(
                     name = sezon,
@@ -369,6 +393,21 @@ class AbstractLoopDir(ABC):
             dir = self.dir + '' + str('/' + item)
             LC = self.LoopClass(dir)
             LC.add_files()
+
+class ConfigLoop:
+
+    def __init__(self, json_data):
+        self.json_data = json_data
+        self.object = {
+            "stars": ConfigStars,
+            "series": ConfigSeries
+        }
+
+    def load(self):
+        for item in self.json_data:
+            LD = self.object[item['type']]
+            LD = LD(item['dir'])
+            LD.set()
 
 class AddStarViaDirLoop(AbstractLoopDir):
 
