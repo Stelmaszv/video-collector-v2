@@ -49,7 +49,7 @@ class StarConfigData(AbstractConfigItem):
 class SeriesConfigData(AbstractConfigItem):
 
     def load(self):
-        print('SeriesConfigData')
+        print(self.dir)
 
 class AbstractConfig(ABC):
 
@@ -63,7 +63,7 @@ class AbstractConfig(ABC):
         for item in loop_dir:
             dir = self.dir + '' + str('/' + item)
             OBJ = self.LoadSetingsClass(dir)
-            OBJ.ItemClass(dir).load()
+            OBJ.load_dir()
 
 class AbstractLoadSetings(ABC):
 
@@ -71,6 +71,13 @@ class AbstractLoadSetings(ABC):
 
     def __init__(self,dir):
         self.dir=dir
+
+    def load_dir(self):
+        loop_dir = os.listdir(self.dir)
+        for item in loop_dir:
+            dir = self.dir + '' + str('/' + item)
+            self.ItemClass(dir).load()
+
 
 class LoadSetingsSeries(AbstractLoadSetings):
 
