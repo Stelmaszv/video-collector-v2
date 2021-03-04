@@ -110,12 +110,22 @@ class SeriesConfigData(AbstractConfigItem):
             if stars:
                 self.add_star_to_seazon(item)
 
+    def set_avatar_for_sezon(self,data):
+        for sezon in self.data.sezons:
+            for sezon_item in data:
+                if sezon.name == str(sezon_item['name']):
+                    sezon.src=sezon_item['avatar']
+                    session.commit()
+
     def load(self):
         with open(self.config) as json_file:
             data = json.load(json_file)
             sezon = "sezons" in data
             if sezon:
                 self.config_sezons(data['sezons'])
+
+            if "avatar" in data:
+                self.set_avatar_for_sezon(data['sezons'])
 
 class AbstractConfig(ABC):
 
