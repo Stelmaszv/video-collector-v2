@@ -167,14 +167,14 @@ class AddSeriesViaDir(AbstractAddViaDir):
         return stop
 
     def set_sezons(self):
-        sezons=len(os.listdir(self.movie_dir))
-        if sezons>0:
-            return sezons;
-        return 1;
+        sezons=1
+        for dir in os.listdir(self.movie_dir):
+            if os.path.isdir(dir):
+                sezons=sezons+1
+        return sezons;
 
     def create_sezons(self,sezons):
         object=[]
-
         for sezon in range(1,sezons+1):
             object.append(
                 self.sezons_model(
@@ -199,7 +199,6 @@ class AddSeriesViaDir(AbstractAddViaDir):
             dir=data_JSON[0]['dir']+'/R-U/'+name
         if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
             dir=data_JSON[0]['dir'] + '/W-Z/' + name
-
         if os.path.isdir(dir) is False:
             os.mkdir(dir)
             os.mkdir(dir+'/none')
@@ -210,7 +209,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
             my_file = open(dir+'/config.JSON', "w")
             my_file.write('{}')
             f.close()
-        return dir
+        return self.dir
 
 
     def if_series_exist(self,name):
