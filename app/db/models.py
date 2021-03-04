@@ -53,6 +53,9 @@ class Sezons(Base):
         back_populates="sezons"
     )
 
+    def __str__(self):
+        return  self.name
+
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)

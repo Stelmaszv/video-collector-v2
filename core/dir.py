@@ -11,6 +11,31 @@ import os
 
 add= False
 
+def set_dir_for_star(name):
+    letter = name[0]
+    dir = ''
+    if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
+        dir = data_JSON[0]['dir'] + '/A-D/' + name
+    if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
+        dir = data_JSON[0]['dir'] + '/E-H/' + name
+    if letter == 'I' or letter == 'J' or letter == 'K' or letter == 'L':
+        dir = data_JSON[0]['dir'] + '/I-L/' + name
+    if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P':
+        dir = data_JSON[0]['dir'] + '/M-P/' + name
+    if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
+        dir = data_JSON[0]['dir'] + '/R-U/' + name
+    if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
+        dir = data_JSON[0]['dir'] + '/W-Z/' + name
+    return dir
+
+def if_star_exist(self,name):
+    return self.if_exist(name, self.model, self.model(
+        name=name,
+        avatar=stars_avatar_defult,
+        none=self.set_none(),
+        singles=self.set_singles(),
+        dir=self.set_dir_for_star(name)
+    ))
 
 def set_name(dir):
     name = dir.split('/')
@@ -37,11 +62,15 @@ class FaindStar:
         self.starArray = str.split('and')
         return self.starArray
 
-
 class AbstractConfigItem(ABC):
+
+    Model= None
 
     def __init__(self,dir):
         self.dir=dir
+        self.name = set_name(dir)
+        self.data = session.query(self.Model).filter(self.Model.name == self.name).first()
+        self.config = self.dir+'/config.JSON'
         self.name=set_name(dir)
 
     @abstractmethod
@@ -50,13 +79,43 @@ class AbstractConfigItem(ABC):
 
 class StarConfigData(AbstractConfigItem):
 
+    Model = Stars
+
     def load(self):
         print('StarConfigData')
 
 class SeriesConfigData(AbstractConfigItem):
 
+    Model = Series
+
+    def add_star_to_seazon(self,item):
+        def add_star_to_movie(Star,name):
+            for movie in self.data.movies:
+                if movie.sezon == int(name):
+                    movie.stars.append(Star)
+
+        def add_star_to_series(Star,Series):
+            Series.stars.append(Star)
+            session.commit()
+
+        sezon_name=item['name']
+        for star in item['stars']:
+            StarObj=if_star_exist(AddStarViaDir(set_dir_for_star(star)),star)
+            add_star_to_movie(StarObj,sezon_name)
+            add_star_to_series(StarObj,self.data)
+
+    def config_sezons(self,sezons):
+        for item in sezons:
+            stars = "stars" in item
+            if stars:
+                self.add_star_to_seazon(item)
+
     def load(self):
-        print(self.name)
+        with open(self.config) as json_file:
+            data = json.load(json_file)
+            sezon = "sezons" in data
+            if sezon:
+                self.config_sezons(data['sezons'])
 
 class AbstractConfig(ABC):
 
@@ -211,6 +270,33 @@ class AbstractAddViaDir(ABC):
                 photo_avatar=defult
             return photo_avatar;
 
+    def set_dir_for_star(self,name):
+        letter=name[0]
+        dir=''
+        if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
+            dir=data_JSON[0]['dir'] + '/A-D/' + name
+        if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
+            dir=data_JSON[0]['dir'] + '/E-H/' + name
+        if letter == 'I' or letter == 'J' or letter == 'K' or letter == 'L':
+            dir = data_JSON[0]['dir'] + '/I-L/' + name
+        if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P':
+            dir=data_JSON[0]['dir'] + '/M-P/' + name
+        if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
+            dir=data_JSON[0]['dir']+'/R-U/'+name
+        if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
+            dir=data_JSON[0]['dir'] + '/W-Z/'+name
+        if os.path.isdir(dir) is False:
+            os.mkdir(dir)
+            os.mkdir(dir+'/none')
+            os.mkdir(dir+'/photo')
+            sleep(1)
+            f = open(dir+'/config.JSON', "x")
+            f.close()
+            my_file = open(dir+'/config.JSON', "w")
+            my_file.write('{}')
+            f.close()
+        return self.dir
+
     def set_none(self):
         return self.set_photo_from_json(none_movies_defult, 'none')
 
@@ -256,31 +342,6 @@ class AddSeriesViaDir(AbstractAddViaDir):
         self.session.add_all(object)
         self.session.commit()
         return object
-
-    def set_dir_for_star(self,name):
-        letter=name[0]
-        dir=''
-        if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
-            dir=data_JSON[0]['dir'] + '/A-D/' + name
-        if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
-            dir=data_JSON[0]['dir'] + '/E-H/' + name
-        if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P':
-            dir=data_JSON[0]['dir'] + '/M-P/' + name
-        if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
-            dir=data_JSON[0]['dir']+'/R-U/'+name
-        if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
-            dir=data_JSON[0]['dir'] + '/W-Z/' + name
-        if os.path.isdir(dir) is False:
-            os.mkdir(dir)
-            os.mkdir(dir+'/none')
-            os.mkdir(dir+'/photo')
-            sleep(1)
-            f = open(dir+'/config.JSON', "x")
-            f.close()
-            my_file = open(dir+'/config.JSON', "w")
-            my_file.write('{}')
-            f.close()
-        return self.dir
 
     def if_series_exist(self,name):
         sezons=self.create_sezons(self.set_sezons())
