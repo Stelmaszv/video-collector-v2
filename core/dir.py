@@ -31,6 +31,26 @@ class FaindStar:
         self.starArray = str.split('and')
         return self.starArray
 
+
+class AbstractConfigItem(ABC):
+
+    def __init__(self,dir):
+        self.dir=dir
+
+    @abstractmethod
+    def load(self):
+        pass
+
+class StarConfigData(AbstractConfigItem):
+
+    def load(self):
+        print('StarConfigData')
+
+class SeriesConfigData(AbstractConfigItem):
+
+    def load(self):
+        print('SeriesConfigData')
+
 class AbstractConfig(ABC):
 
     LoadSetingsClass=None
@@ -43,26 +63,22 @@ class AbstractConfig(ABC):
         for item in loop_dir:
             dir = self.dir + '' + str('/' + item)
             OBJ = self.LoadSetingsClass(dir)
-            OBJ.load()
+            OBJ.ItemClass(dir).load()
 
 class AbstractLoadSetings(ABC):
+
+    ItemClass=None
 
     def __init__(self,dir):
         self.dir=dir
 
-    @abstractmethod
-    def load(self):
-        pass
-
 class LoadSetingsSeries(AbstractLoadSetings):
 
-    def load(self):
-        print(self.dir)
+    ItemClass = SeriesConfigData
 
 class LoadSetingsStars(AbstractLoadSetings):
 
-    def load(self):
-        print(self.dir)
+    ItemClass = StarConfigData
 
 class ConfigStars(AbstractConfig):
 
