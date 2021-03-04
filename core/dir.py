@@ -31,29 +31,46 @@ class FaindStar:
         self.starArray = str.split('and')
         return self.starArray
 
-class AbstracConfig(ABC):
+class AbstractConfig(ABC):
+
+    LoadSetingsClass=None
+
+    def __init__(self,dir):
+        self.dir=dir
+
+    def set(self):
+        loop_dir = os.listdir(self.dir)
+        for item in loop_dir:
+            dir = self.dir + '' + str('/' + item)
+            OBJ = self.LoadSetingsClass(dir)
+            OBJ.load()
+
+class AbstractLoadSetings(ABC):
+
+    def __init__(self,dir):
+        self.dir=dir
 
     @abstractmethod
-    def set(self):
+    def load(self):
         pass
 
+class LoadSetingsSeries(AbstractLoadSetings):
 
-class ConfigStars(AbstracConfig):
+    def load(self):
+        print(self.dir)
 
+class LoadSetingsStars(AbstractLoadSetings):
 
-    def __init__(self,dir):
-        print(dir)
+    def load(self):
+        print(self.dir)
 
-    def set(self):
-        print('Stars')
+class ConfigStars(AbstractConfig):
 
-class ConfigSeries(AbstracConfig):
+    LoadSetingsClass= LoadSetingsStars
 
-    def __init__(self,dir):
-        print(dir)
+class ConfigSeries(AbstractConfig):
 
-    def set(self):
-        print('Series')
+    LoadSetingsClass = LoadSetingsSeries
 
 class IfStar:
 
