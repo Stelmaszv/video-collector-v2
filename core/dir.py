@@ -11,6 +11,12 @@ import os
 
 add= False
 
+
+def set_name(dir):
+    name = dir.split('/')
+    last = len(name) - 1
+    return name[last]
+
 class FaindStar:
 
     str = ''
@@ -36,6 +42,7 @@ class AbstractConfigItem(ABC):
 
     def __init__(self,dir):
         self.dir=dir
+        self.name=set_name(dir)
 
     @abstractmethod
     def load(self):
@@ -49,7 +56,7 @@ class StarConfigData(AbstractConfigItem):
 class SeriesConfigData(AbstractConfigItem):
 
     def load(self):
-        print(self.dir)
+        print(self.name)
 
 class AbstractConfig(ABC):
 
@@ -220,7 +227,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
 
     def __init__(self,dir):
         super().__init__(dir)
-        self.name=self.set_name()
+        self.name=set_name(dir)
         self.series=self.if_series_exist(self.name)
 
     def set_movie_name_is_star_name(self,dir):
@@ -344,7 +351,7 @@ class AddStarViaDir(AbstractAddViaDir):
 
     def __init__(self,dir):
         super().__init__(dir)
-        self.star=self.if_star_exist(self.set_name())
+        self.star=self.if_star_exist(set_name(dir))
 
     def set_config(self):
         if Path(self.config).is_file() is False:
