@@ -169,13 +169,13 @@ class AddSeriesViaDir(AbstractAddViaDir):
     def set_sezons(self):
         sezons=1
         for dir in os.listdir(self.movie_dir):
-            if os.path.isdir(dir):
+            if os.path.isdir(self.movie_dir+'/'+dir):
                 sezons=sezons+1
         return sezons;
 
     def create_sezons(self,sezons):
         object=[]
-        for sezon in range(1,sezons+1):
+        for sezon in range(1,sezons):
             object.append(
                 self.sezons_model(
                     name = sezon,
@@ -210,7 +210,6 @@ class AddSeriesViaDir(AbstractAddViaDir):
             my_file.write('{}')
             f.close()
         return self.dir
-
 
     def if_series_exist(self,name):
         sezons=self.create_sezons(self.set_sezons())
@@ -304,7 +303,6 @@ class AddStarViaDir(AbstractAddViaDir):
 
         for movie in movie_dir:
             name = self.clear_name(movie)
-            print(name)
             stars = self.IfStar.faind_stars(movie)
             new_stars = []
             if stars is not None:
