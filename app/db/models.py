@@ -46,6 +46,7 @@ class Sezons(Base):
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String)
     src = Column('src', String)
+    sezon_name = Column('sezon_name', String)
 
     series = relationship(
         "Series",

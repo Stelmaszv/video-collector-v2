@@ -205,9 +205,13 @@ class SeriesSection(AbstractSection):
         self.Scroller = Scroller(self.obj)
         self.Pagination = Pagination(self.obj)
 
-    def single_title(self,tab,title_name):
+    def single_title(self,tab,item):
         title = QtWidgets.QLabel(tab)
         title.setObjectName("seriesTitle")
+        title_name=''
+        for el in self.obj.data.sezons:
+            if int(el.name)==int(item):
+                title_name = el.sezon_name
 
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
@@ -227,8 +231,9 @@ class SeriesSection(AbstractSection):
     def info(self,tab,info,item,single=False):
         data   = self.BaseView.obj.WindowSize[info]
         rows = ['itemNmae','itemName2']
+
         if single:
-            self.single_title(tab,'test')
+            self.single_title(tab,item)
         info_data=[
             {"itemNmae" : "anser","itemName2" :"anser1"},
             {"itemNmae" : "anser2","itemName2" :"anser2"},

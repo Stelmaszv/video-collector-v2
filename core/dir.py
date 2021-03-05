@@ -110,12 +110,16 @@ class SeriesConfigData(AbstractConfigItem):
             if stars:
                 self.add_star_to_seazon(item)
 
-    def set_avatar_for_sezon(self,data):
+    def set_for_sezon(self,data):
         for sezon in self.data.sezons:
             for sezon_item in data:
                 if "avatar" in sezon_item:
                     if sezon.name == str(sezon_item['name']):
                         sezon.src=sezon_item['avatar']
+                        session.commit()
+                if "sezon_name" in sezon_item:
+                    if sezon.name == str(sezon_item['name']):
+                        sezon.sezon_name=sezon_item['sezon_name']
                         session.commit()
 
     def load(self):
@@ -123,7 +127,7 @@ class SeriesConfigData(AbstractConfigItem):
             data = json.load(json_file)
             if "sezons" in data:
                 self.config_sezons(data['sezons'])
-                self.set_avatar_for_sezon(data['sezons'])
+                self.set_for_sezon(data['sezons'])
 
 
 class AbstractConfig(ABC):
@@ -349,7 +353,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
             object.append(
                 self.sezons_model(
                     name = sezon,
-                    src  = self.set_photo(series_avatar_defult,str(sezon))
+                    src  = self.set_photo(series_avatar_defult,str(sezon)),
+                    sezon_name = 'nowy'
                 )
             )
         self.session.add_all(object)
