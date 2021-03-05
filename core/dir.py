@@ -242,9 +242,9 @@ class AbstractAddViaDir(ABC):
 
     def if_exist(self,name,Model,add):
         Obj=self.session.query(Model).filter(Model.name == name).first()
-        if Obj:
+        if Obj is not None:
             self.star = Obj
-        else:
+        if Obj is None:
             self.session.add_all([
                 add
             ])
@@ -324,7 +324,9 @@ class AddSeriesViaDir(AbstractAddViaDir):
     def __init__(self,dir):
         super().__init__(dir)
         self.name=set_name(dir)
-        self.series=self.if_series_exist(self.name)
+        item=session.query(self.model).filter(self.model.name == self.name).first()
+        if item is None:
+            self.series=self.if_series_exist(self.name)
 
     def set_movie_name_is_star_name(self,dir):
         stop = False
