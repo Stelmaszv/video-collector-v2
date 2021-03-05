@@ -47,6 +47,7 @@ class Sezons(Base):
     name = Column('name', String)
     src = Column('src', String)
     sezon_name = Column('sezon_name', String)
+    year       = Column('year', String)
 
     series = relationship(
         "Series",
@@ -55,7 +56,7 @@ class Sezons(Base):
     )
 
     def __str__(self):
-        return  self.name
+        return  self.sezon_name
 
 class Series(Base):
     __tablename__ ='series'
@@ -68,6 +69,7 @@ class Series(Base):
     dir = Column('dir', String, default='')
     config = Column('config', String, default='')
     number_of_sezons = Column('sezons', Integer)
+    years       = Column('year', String)
 
     tags = relationship(
         "Tags",

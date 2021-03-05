@@ -1,6 +1,7 @@
 from core.datamanipulation import Data as Data
 class BaseInfo:
     data_info=[]
+
     def __init__(self, Obj=None, methods=[]):
         if Obj is not None:
             self.BaseView=Obj.BaseView
@@ -8,19 +9,53 @@ class BaseInfo:
 
 class SingleSectionInfo(BaseInfo):
 
-    def set_obj(self,Obj):
+    def set_obj(self,Obj,item):
         self.Obj=Obj
+        self.item=item
 
     def return_data(self):
-        return  [
-            {"itemNmae" : "Year","itemName2" :"anser1"},
-            {"itemNmae" : "anser2","itemName2" :"anser2"},
-            {"itemNmae": "anser3","itemName2" :"anser2"}
-        ]
+        self.data_info = []
+        info_item=None
+        for el in self.Obj.sezons:
+            if int(el.name)==int(self.item):
+                info_item=el
+
+        if info_item.year:
+            self.data_info.append({
+                "itemNmae": "Year",
+                "itemName2": info_item.year
+            })
+
+            self.data_info.append({
+                "itemNmae": "Movies",
+                "itemName2": self.count_in_seazon(info_item)
+            })
+        return self.data_info
+
+    def count_in_seazon(self,seazon) ->str:
+        count=0
+        for item in self.Obj.movies:
+            if int(seazon.name) == item.sezon:
+                count=count+1
+        return str(count)
 
 class InfoSection(BaseInfo):
+
     def return_data(self):
-        self.data_info.append({})
+        self.data_info=[]
+        if self.BaseView.data.years:
+            self.data_info.append({
+                "itemNmae": "Year",
+                "itemName2": self.BaseView.data.years
+            })
+        self.data_info.append({
+            "itemNmae": "Sezons",
+            "itemName2": str(len(self.BaseView.data.sezons))
+        })
+        self.data_info.append({
+            "itemNmae": "Movies",
+            "itemName2": str(len(self.BaseView.data.movies))
+        })
         return  self.data_info
 
 

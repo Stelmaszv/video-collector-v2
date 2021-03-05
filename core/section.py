@@ -234,7 +234,7 @@ class SeriesSection(AbstractSection):
 
         if single:
             self.single_title(tab,item)
-        self.Section.set_obj(self.obj.data.sezons)
+        self.Section.set_obj(self.obj.data,item)
         info_data=self.Section.return_data()
         self.BaseView.info(info_data,data,rows,tab)
 
