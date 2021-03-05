@@ -1,8 +1,6 @@
 from core.datamanipulation import Data as Data
 class BaseInfo:
     data_info=[]
-    no_show=[]
-
     def __init__(self, Obj=None, methods=[]):
         if Obj is not None:
             self.BaseView=Obj.BaseView
@@ -16,29 +14,70 @@ class SingleSectionInfo(BaseInfo):
 
     def return_data(self):
         self.data_info = []
-        info_item=None
+        info_item = None
         for el in self.Obj.sezons:
             if int(el.name)==int(self.item):
                 info_item=el
-        count=self.count_in_seazon(info_item)
+        count = self.count_in_seazon(info_item)
+        stars_in_seazom= self.stars_to_string(self.count_star(info_item))
+
         if info_item.year:
             self.data_info.append({
                 "itemNmae": "Year",
                 "itemName2": info_item.year
             })
-            if count>1:
+        if count>1:
+            self.data_info.append({
+                "itemNmae": "Movies",
+                "itemName2": str(count)
+            })
+            if info_item.sezon_name:
                 self.data_info.append({
-                    "itemNmae": "Movies",
-                    "itemName2": self.count_in_seazon(info_item)
+                    "itemNmae": "Name",
+                    "itemName2": info_item.sezon_name
                 })
+
+        if stars_in_seazom:
+            self.data_info.append({
+                "itemNmae": "Stars",
+                "itemName2": stars_in_seazom
+            })
         return self.data_info
 
-    def count_in_seazon(self,seazon) ->str:
+    def stars_to_string(self,stars):
+        stars_str=''
+        count=0
+        for el in stars:
+            if count>1:
+                stars_str=stars_str+' , '
+            stars_str=stars_str+str(el.name)
+            count=count+1
+
+        return stars_str
+    def count_star(self,seazon):
+        stars=[]
+        def add_if_not_exist(Star):
+            stan=False
+            for item in stars:
+                if item.id == Star.id:
+                    stan=True
+
+            if stan is False:
+                stars.append(Star)
+
+        for item in self.Obj.movies:
+            if int(seazon.name) == item.sezon:
+                for star in item.stars:
+                    add_if_not_exist(star)
+
+        return stars
+
+    def count_in_seazon(self,seazon):
         count=0
         for item in self.Obj.movies:
             if int(seazon.name) == item.sezon:
                 count=count+1
-        return str(count)
+        return count
 
 class InfoSection(BaseInfo):
 
