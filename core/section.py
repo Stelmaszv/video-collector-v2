@@ -6,9 +6,9 @@ from .helper import Pagination, Scroller
 from .view import Form
 from core.setings import series_avatar_defult
 from core.BaseActions import Form
+from app.info import SingleSectionInfo
 
 class AbstractSection(ABC):
-
 
     @abstractmethod
     def run(self,data,data_list,page):
@@ -36,7 +36,6 @@ class CustomListSection(AbstractSection):
             label.setText(item)
             self.edit_section_grid.addWidget(label, row, 0, 1, 1)
             row = row + 1
-
 
 class TagsListSection(AbstractSection):
 
@@ -204,6 +203,7 @@ class SeriesSection(AbstractSection):
         self.List = List(self.BaseView, self.per_page)
         self.Scroller = Scroller(self.obj)
         self.Pagination = Pagination(self.obj)
+        self.Section=SingleSectionInfo()
 
     def single_title(self,tab,item):
         title = QtWidgets.QLabel(tab)
@@ -234,11 +234,8 @@ class SeriesSection(AbstractSection):
 
         if single:
             self.single_title(tab,item)
-        info_data=[
-            {"itemNmae" : "anser","itemName2" :"anser1"},
-            {"itemNmae" : "anser2","itemName2" :"anser2"},
-            {"itemNmae": "anser3","itemName2" :"anser2"}
-        ]
+        self.Section.set_obj(self.obj.data.sezons)
+        info_data=self.Section.return_data()
         self.BaseView.info(info_data,data,rows,tab)
 
     def seriesItem(self,grid):

@@ -1,18 +1,28 @@
 from core.datamanipulation import Data as Data
 class BaseInfo:
     data_info=[]
-    def __init__(self, Obj, methods=[]):
-        self.BaseView=Obj.BaseView
-        self.list=Obj.list
+    def __init__(self, Obj=None, methods=[]):
+        if Obj is not None:
+            self.BaseView=Obj.BaseView
+            self.list=Obj.list
 
+class SingleSectionInfo(BaseInfo):
 
-class InfoSection(BaseInfo):
+    def set_obj(self,Obj):
+        self.Obj=Obj
+
     def return_data(self):
         return  [
-            {"itemNmae" : "anser","itemName2" :"anser1"},
+            {"itemNmae" : "Year","itemName2" :"anser1"},
             {"itemNmae" : "anser2","itemName2" :"anser2"},
             {"itemNmae": "anser3","itemName2" :"anser2"}
         ]
+
+class InfoSection(BaseInfo):
+    def return_data(self):
+        self.data_info.append({})
+        return  self.data_info
+
 
 class StarInfoSection(BaseInfo):
     def return_data(self):
