@@ -5,6 +5,7 @@ from core.strings import stringManipupations
 from .helper import Pagination, Scroller
 from .view import Form
 from core.setings import series_avatar_defult
+from core.BaseActions import Form
 
 class AbstractSection(ABC):
 
@@ -204,9 +205,30 @@ class SeriesSection(AbstractSection):
         self.Scroller = Scroller(self.obj)
         self.Pagination = Pagination(self.obj)
 
-    def info(self,tab):
-        data   = self.BaseView.obj.WindowSize['section_info']
+    def single_title(self,tab,title_name):
+        title = QtWidgets.QLabel(tab)
+        title.setObjectName("seriesTitle")
+
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\" font-size:28pt;font-weight:800; " \
+               "text-decoration: none;\">" + title_name + \
+               "</span></p></body></html>"
+
+        title.setText(text)
+
+        title.setGeometry(
+            self.BaseView.obj.WindowSize['single_title'][0],
+            self.BaseView.obj.WindowSize['single_title'][1],
+            self.BaseView.obj.WindowSize['single_title'][2],
+            self.BaseView.obj.WindowSize['single_title'][3]
+        )
+
+    def info(self,tab,info,item,single=False):
+        data   = self.BaseView.obj.WindowSize[info]
         rows = ['itemNmae','itemName2']
+        if single:
+            self.single_title(tab,'test')
         info_data=[
             {"itemNmae" : "anser","itemName2" :"anser1"},
             {"itemNmae" : "anser2","itemName2" :"anser2"},
@@ -219,23 +241,52 @@ class SeriesSection(AbstractSection):
         seriesItem.setObjectName("seriesItem")
         return seriesItem
 
+    def click_play(self,movies):
+        self.BaseView.load_view('play', movies[0])
+
+    def click_info(self, movies):
+        self.BaseView.load_view('info', movies[0])
+
+    def show_movie_buttons(self,tab,movies):
+        self.Form = Form(tab)
+        info={
+            "obj_name":'play',
+            "name"    :'Play',
+            "grid_data":self.BaseView.obj.WindowSize['single_play_button'],
+            'click'   :self.click_play
+        }
+        self.Form.button(info,None,movies)
+
+        info={
+            "obj_name":'info',
+            "name"    :'Info',
+            "grid_data":self.BaseView.obj.WindowSize['single_info_button'],
+            'click'   :self.click_info
+        }
+        self.Form.button(info,None,movies)
+
     def run(self, data, data_list, page):
         pages = self.data.number_of_sezons
-        print(pages)
         self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
         for item in range(1, pages + 1):
             movies = self.faind_movies_with_sezon(self.data.movies, item)
             tab = self.Pagination.tab()
             src = self.set_src(item)
-            self.BaseView.avatar(self.BaseView.obj.WindowSize['section_avatar'], tab, src)
-            self.info(tab)
-            self.Scroller.run(self.BaseView.obj.WindowSize['section_scroller'], tab)
-            self.Scroller.movie_list(
-                movies,
-                self,
-                'movies'
-            )
-            self.tabWidget.addTab(tab, str(item))
+            if len(movies)>1:
+                self.BaseView.avatar(self.BaseView.obj.WindowSize['section_avatar'], tab, src)
+                self.info(tab,'section_info',item)
+                self.Scroller.run(self.BaseView.obj.WindowSize['section_scroller'], tab)
+                self.Scroller.movie_list(
+                    movies,
+                    self,
+                    'movies'
+                )
+                self.tabWidget.addTab(tab, str(item))
+            else:
+                self.BaseView.avatar(self.BaseView.obj.WindowSize['section_avatar_single_movie'], tab, src)
+                self.info(tab,'section_info_single_info',item,True)
+                self.show_movie_buttons(tab,movies)
+                self.tabWidget.addTab(tab, str(item))
         return self.tabWidget
 
     def set_src(self,item):

@@ -105,7 +105,12 @@ class MenuHalfSmall(MenuType):
                     "galery_item_show": 2,
                     "section_scroller":[300, 10, 540,830],
                     "section_avatar": [20, 50, 250, 250],
-                    "section_info"  : [70, 300, 300, 200]
+                    "section_avatar_single_movie" :[120, 100, 250, 300],
+                    "section_info"  : [70, 300, 300, 200],
+                    "section_info_single_info"  : [500, 100, 300, 200],
+                    "single_title"  : [0, -50, 300, 200],
+                    "single_play_button":[150,420,250,50],
+                    "single_info_button":[450,420,250,50]
                 }
             },
             "MovieListView": {

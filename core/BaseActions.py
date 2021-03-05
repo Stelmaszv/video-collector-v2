@@ -219,18 +219,21 @@ class Form:
         self.buttons_loop[index]['obejct'].addButton(button)
         self.buttons_loop[index]['obejct'].buttonClicked[int].connect(self.buttons_loop[index]['button'])
 
-    def button (self,info,grid,list=[]):
+    def button (self,info,grid=None,list=[]):
         button = QtWidgets.QPushButton(self.BaseView)
         button.setObjectName(info['obj_name'])
         button.setText(info['name'])
-        grid.addWidget(
-            button,
-            info['grid_data'][0],
-            info['grid_data'][1],
-            info['grid_data'][2],
-            info['grid_data'][3]
-        )
-        button.clicked.connect(lambda: info['click'](self.get_values(list)))
+        if grid is not None:
+            grid.addWidget(
+                button,
+                info['grid_data'][0],
+                info['grid_data'][1],
+                info['grid_data'][2],
+                info['grid_data'][3]
+            )
+        if grid is None:
+            button.setGeometry(info['grid_data'][0],info['grid_data'][1],info['grid_data'][2],info['grid_data'][3])
+        button.clicked.connect(lambda: info['click'](list))
 
     def combo_box(self,data,combo_list,grid=None):
         combo_box = QtWidgets.QComboBox(self.BaseView)
