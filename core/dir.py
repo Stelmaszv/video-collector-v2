@@ -113,19 +113,18 @@ class SeriesConfigData(AbstractConfigItem):
     def set_avatar_for_sezon(self,data):
         for sezon in self.data.sezons:
             for sezon_item in data:
-                if sezon.name == str(sezon_item['name']):
-                    sezon.src=sezon_item['avatar']
-                    session.commit()
+                if "avatar" in sezon_item:
+                    if sezon.name == str(sezon_item['name']):
+                        sezon.src=sezon_item['avatar']
+                        session.commit()
 
     def load(self):
         with open(self.config) as json_file:
             data = json.load(json_file)
-            sezon = "sezons" in data
-            if sezon:
+            if "sezons" in data:
                 self.config_sezons(data['sezons'])
-
-            if "avatar" in data:
                 self.set_avatar_for_sezon(data['sezons'])
+
 
 class AbstractConfig(ABC):
 
@@ -340,6 +339,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
         for dir in os.listdir(self.movie_dir):
             if os.path.isdir(self.movie_dir+'/'+dir):
                 sezons=sezons+1
+        if sezons==0:
+            sezons=1
         return sezons;
 
     def create_sezons(self,sezons):

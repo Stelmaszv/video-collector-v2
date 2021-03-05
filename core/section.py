@@ -221,6 +221,7 @@ class SeriesSection(AbstractSection):
 
     def run(self, data, data_list, page):
         pages = self.data.number_of_sezons
+        print(pages)
         self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
         for item in range(1, pages + 1):
             movies = self.faind_movies_with_sezon(self.data.movies, item)
@@ -249,7 +250,6 @@ class SeriesSection(AbstractSection):
         for movie in arry:
             if movie.sezon == page:
                 movies_in_sezon.append(movie)
-
         return movies_in_sezon
 
 class MovieListSection(AbstractSection):
