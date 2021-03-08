@@ -46,11 +46,13 @@ class Router:
     def __init__(self, base_view):
         self.base_view = base_view
 
-    def open(self, item=False):
+    def open(self, item=False,list=False):
         self.window = setWindow().returnObj(self.search_In)
         self.window.Router = self
         self.window.obj = self.base_view
         if item:
             self.window.id = item.id
+        if list:
+            self.window.list=list
         self.window.run_window()
 

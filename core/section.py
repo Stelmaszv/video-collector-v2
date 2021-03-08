@@ -100,7 +100,7 @@ class StarsSection(AbstractSection):
         self.Form.buttom_genarator(self.button_group_info , self.info_button, id)
 
     def info_button(self,data):
-        self.BaseView.load_view('movie_list', data)
+        self.BaseView.load_view('movie_list',self.BaseView.data,data)
         return True;
 
     def more(self,item,left,top,page):

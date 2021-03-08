@@ -70,9 +70,9 @@ class BaseView:
         self.pagination = Pagination(self.obj)
         self.Scroller=Scroller(self.obj)
 
-    def load_view(self,view,item=False):
+    def load_view(self,view,item=False,list=False):
         self.menu.search_In=view
-        self.menu.open(item)
+        self.menu.open(item,list)
 
     def clear(self):
         self.avatar_photo.clear()
@@ -223,8 +223,8 @@ class AbstractBaseView:
     data               = None
     list_data          = None
     list_model_off     = False
-    debug_mode         = True
     model_view_off     = False
+    debug_mode         = True
     window_title=''
     resolution_index=''
     list_view=''

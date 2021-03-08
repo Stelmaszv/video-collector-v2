@@ -123,6 +123,7 @@ class MenuHalfSmall(MenuType):
                     "height"  : 985
                 },
                 "window":{
+                    "info_size"       : [0,10,10,10],
                     "title_size"      : [0, 0, 1280, 100],
                     "list_view_size"  : [450,80,671,881],
                     "avatar_size"     : [100, 250, 250, 350],
@@ -199,7 +200,7 @@ class MenuHalfSmall(MenuType):
                     "title_size"        : [400, 0, 300, 100],
                     "info_size"         : [330, 80, 375, 220],
                     "galery_size"       : [700, 50, 500, 361],
-                    "list_view_size"    : [50, 430, 1200, 550],
+                    "list_view_size"    : [50, 390, 1200, 550],
                     "galery_photo_size" : [150, 150],
                     "galery_item_show"  : 2,
                     "description"       : [325,200,375,270],
