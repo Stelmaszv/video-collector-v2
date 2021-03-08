@@ -1,5 +1,5 @@
 import re
-from app.db.models import Stars,Movies,Series,Photos,Sezons
+from app.db.models import Stars,Movies,Series,Photos,Sezons,Tags
 from app.db.models import session
 from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
@@ -129,6 +129,15 @@ class SeriesConfigData(AbstractConfigItem):
                         sezon.year=sezon_item['year']
                         session.commit()
 
+    def add_tags(self,tags):
+        for tag in tags:
+            query = session.query(Tags).filter(Tags.name == tag).first()
+            if query is None:
+                TagObj=Tags(name=tag)
+                session.add_all([TagObj])
+                session.commit()
+                self.data.tags.append(TagObj)
+                session.commit()
 
     def load(self):
         with open(self.config) as json_file:
@@ -141,6 +150,9 @@ class SeriesConfigData(AbstractConfigItem):
             if "description" in data:
                 self.data.description = data['description']
                 session.commit()
+
+            if "tags" in data:
+                self.add_tags(data['tags'])
 
             if "country" in data:
                 self.data.country=data['country']
