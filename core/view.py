@@ -249,6 +249,11 @@ class AbstractBaseView:
             Error.throw_error_bool('class self.Nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
             self.NavObj = self.Nav(self.BaseActions)
 
+    def up_date_views(self):
+        if self.data is not None:
+            self.data.views=self.data.views+1
+            session.commit()
+
     def form_section(self):
         Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection', issubclass(self.FormSchema, BaseFormShema))
         if self.model_view_off is False:
@@ -339,6 +344,7 @@ class AbstractBaseView:
 
 
     def init(self):
+        self.up_date_views()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Tags'):
             if self.data is not None:
                 self.tags()

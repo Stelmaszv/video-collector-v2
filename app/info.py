@@ -112,7 +112,7 @@ class InfoSection(BaseInfo):
         })
 
         self.data_info.append({
-            "itemNmae": "Views/Likes",
+            "itemNmae": "Views / Likes",
             "itemName2": str(self.BaseView.data.views)+' / '+str(self.BaseView.data.likes)
         })
 
