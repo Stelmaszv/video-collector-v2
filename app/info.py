@@ -111,6 +111,16 @@ class InfoSection(BaseInfo):
             "itemName2": str(len(self.BaseView.data.movies))
         })
 
+        self.data_info.append({
+            "itemNmae": "Views/Likes",
+            "itemName2": str(self.BaseView.data.views)+' / '+str(self.BaseView.data.likes)
+        })
+
+        self.data_info.append({
+            "itemNmae": "Favourite",
+            "itemName2": str(self.BaseView.data.favourite)
+        })
+
         if len(self.BaseView.data.tags)>0:
             self.data_info.append({
                 "itemNmae": "Tags",

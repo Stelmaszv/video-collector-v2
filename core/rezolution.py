@@ -95,14 +95,14 @@ class MenuHalfSmall(MenuType):
                     "height": 985
                 },
                 "window":{
-                    "description": [30, 650, 325, 200],
+                    "description": [30,675, 325, 200],
                     "description_limit": 500,
                     "navbar": [450, -180, 480, 480],
                     "title_size": [0, 0, 1280,50],
                     "list_view_size": [375,75,871,881],
                     "avatar_size": [50, 50, 250, 250],
                     "info_size": [100,300,300,200],
-                    "galery_size": [30, 500, 300, 200],
+                    "galery_size": [30, 525, 300, 200],
                     "galery_photo_size": [125, 125],
                     "galery_item_show": 2,
                     "section_scroller":[300, 10, 540,830],
