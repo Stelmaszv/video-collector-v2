@@ -133,7 +133,6 @@ class InfoSection(BaseInfo):
 
         return  self.data_info
 
-
 class StarInfoSection(BaseInfo):
     def return_data(self):
         self.data_info=[]
@@ -190,13 +189,10 @@ class StarInfoSection(BaseInfo):
             })
 
     def count_series(self):
-        return str(len(self.list))
+        return str(len(self.BaseView.data.series))
 
     def count_movies(self):
-        count = 0;
-        for item in self.list:
-            count = count + len(item['movies'])
-        return str(count)
+        return str(len(self.BaseView.data.movies))
 
 
 
