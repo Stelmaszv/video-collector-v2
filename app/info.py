@@ -134,16 +134,31 @@ class InfoSection(BaseInfo):
         return  self.data_info
 
 class StarInfoSection(BaseInfo):
+
+    tag_limit=1000
+
     def return_data(self):
         self.data_info=[]
         self.add_date_of_birth()
         self.add_height_and_weight()
-        self.if_data(self.BaseView.data.ethnicity,'Ethnicity')
+        self.if_data(self.BaseView.data.ethnicity, 'Ethnicity')
         self.if_data(self.BaseView.data.hair_color, 'Hair color')
         self.add_series_and_movies()
         self.add_views_and_likes()
         self.if_data(str(self.BaseView.data.favourite), 'Favourite')
+        self.add_tags()
         return  self.data_info
+
+    def add_tags(self):
+        if len(self.BaseView.data.tags) > 0:
+            self.data_info.append({
+                "itemNmae": "Tags",
+                "itemName2": stringManipupations.short(
+                    stringManipupations.array_to_string(
+                        self.BaseView.data.tags
+                    ),
+                    self.tag_limit)
+            })
 
     def add_date_of_birth(self):
         DataObj=None

@@ -6,6 +6,7 @@ from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_de
 from pathlib import Path
 from core.setings import data_JSON
 import json
+from datetime import datetime
 from time import sleep
 import os
 
@@ -73,6 +74,16 @@ class AbstractConfigItem(ABC):
         self.config = self.dir+'/config.JSON'
         self.name=set_name(dir)
 
+    def add_tags(self,tags):
+        for tag in tags:
+            query = session.query(Tags).filter(Tags.name == tag).first()
+            if query is None:
+                TagObj=Tags(name=tag)
+                session.add_all([TagObj])
+                session.commit()
+                self.data.tags.append(TagObj)
+                session.commit()
+
     @abstractmethod
     def load(self):
         pass
@@ -82,7 +93,50 @@ class StarConfigData(AbstractConfigItem):
     Model = Stars
 
     def load(self):
-        print('StarConfigData')
+        with open(self.config) as json_file:
+            data = json.load(json_file)
+
+            if "avatar" in data:
+                self.data.avatar = data['avatar']
+                session.commit()
+
+            if "tags" in data:
+                self.add_tags(data['tags'])
+
+            if "weight" in data:
+                self.data.weight = data['weight']
+                session.commit()
+
+            if "height" in data:
+                self.data.height = data['height']
+                session.commit()
+
+            if "ethnicity" in data:
+                defults=['Black', 'Asian', 'Arab', 'White']
+                if data['ethnicity'] in defults:
+                    self.data.ethnicity = data['ethnicity']
+                    session.commit()
+                else:
+                    print(data['ethnicity'] + ' is unavailable')
+
+            if "hair_color" in data:
+                defults=['Black', 'Gray', 'Brown', 'Blond']
+                if data['hair_color'] in defults:
+                    self.data.hair_color = data['hair_color']
+                    session.commit()
+                else:
+                    print(data['hair_color']+' is unavailable')
+
+            if "date_of_birth" in data:
+                self.data.date_of_birth = datetime(
+                    data['date_of_birth'][0],
+                    data['date_of_birth'][1],
+                    data['date_of_birth'][2])
+                session.commit()
+
+            if "description" in data:
+                self.data.description = data['description']
+                session.commit()
 
 class SeriesConfigData(AbstractConfigItem):
 
@@ -128,16 +182,6 @@ class SeriesConfigData(AbstractConfigItem):
                     if sezon.name == str(sezon_item['name']):
                         sezon.year=sezon_item['year']
                         session.commit()
-
-    def add_tags(self,tags):
-        for tag in tags:
-            query = session.query(Tags).filter(Tags.name == tag).first()
-            if query is None:
-                TagObj=Tags(name=tag)
-                session.add_all([TagObj])
-                session.commit()
-                self.data.tags.append(TagObj)
-                session.commit()
 
     def load(self):
         with open(self.config) as json_file:

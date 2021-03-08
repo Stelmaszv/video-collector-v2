@@ -131,7 +131,6 @@ class MenuHalfSmall(MenuType):
 
                 }
             },
-
             "advande_search":{
                 "position": {
                     "left": 2562 + 400,
@@ -161,7 +160,6 @@ class MenuHalfSmall(MenuType):
                     "form_section" :   [50,40,300,150]
                 }
             },
-
             "add_tag": {
                 "position": {
                     "left": 2562+400,
@@ -176,7 +174,6 @@ class MenuHalfSmall(MenuType):
                     "list_view_size": [300, 150, 680, 250],
                 }
             },
-
             "EditStars": {
                 "position": {
                     "left": 2562 + 400,
@@ -189,7 +186,6 @@ class MenuHalfSmall(MenuType):
                     "form_section": [300, 100, 680, 600]
                 }
             },
-
             "Stars": {
                 "position":  {
                     "left"              : 2562+400,
@@ -201,14 +197,12 @@ class MenuHalfSmall(MenuType):
                     "navbar"            : [650,-190,480,480],
                     "avatar_size"       : [50, 80, 250, 300],
                     "title_size"        : [400, 0, 300, 100],
-                    "info_size"         : [330, 100, 700, 150],
-                    "galery_size"       : [750, 70, 500, 361],
+                    "info_size"         : [330, 80, 375, 220],
+                    "galery_size"       : [700, 50, 500, 361],
                     "list_view_size"    : [50, 430, 1200, 550],
                     "galery_photo_size" : [150, 150],
                     "galery_item_show"  : 2,
-                    "tags": [325, 170, 400, 200],
-                    "tags_limit": 500,
-                    "description"       : [325,200,400,200],
+                    "description"       : [325,200,375,250],
                     "description_limit" : 500,
                     "section": {
                         "left"         : 15,
