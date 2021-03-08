@@ -179,6 +179,13 @@ class BaseView:
             self.data = session.query(self.model).get(id)
 
     def galery(self,data,size,inRow,obj=None):
+        def faind_in_galery_skip(photo):
+            with open(self.data.config) as json_file:
+                json_pars = json.load(json_file)
+                if 'galery_skip' in json_pars:
+                    if photo in json_pars['galery_skip']:
+                        return False
+            return True
         if obj == None:
             obj = self.obj
         photos = os.listdir(self.data.dir + '/photo')
@@ -192,8 +199,7 @@ class BaseView:
         row = 0
         col = 0
         for photo in photos:
-            with open(self.data.config) as json_file:
-                json_pars = json.load(json_file)
+            if faind_in_galery_skip(photo):
                 item = QtWidgets.QLabel(self.galeryGrid)
                 item.setMaximumSize(QtCore.QSize(size[0], size[1]))
                 item.setText("")
