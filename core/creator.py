@@ -1,3 +1,4 @@
+import json
 class SeriesCreator:
     none_list=[]
     singles_list=[]
@@ -114,22 +115,37 @@ class SeriesCreator:
                 if star.name == self.item.name:
                     self.add_if_not_exist(self.singles_list, movie)
 
+    def set_element(self,item,elemnt,defult):
+        new_elemnt=defult
+        with open(self.item.config) as json_file:
+            json_pars = json.load(json_file)
+            if "series" in json_pars:
+                for el in json_pars['series']:
+                    if el['id'] == item.id:
+                        if elemnt in el:
+                            new_elemnt=el[elemnt]
+        return new_elemnt
+
+    def set_avatar(self,item):
+        return self.set_element(item,'avatar',item.avatar)
+
     def add_series(self):
         for item in self.series_list:
-            if self.if_showin_Serie(item.movies) and self.count_items(item.movies)>3 and self.if_item_item_list(item.name) :
+            if self.if_showin_Serie(item.movies) \
+                and self.count_items(item.movies)>3 \
+                and self.if_item_item_list(item.name):
 
                 el = {
                     'id'    :  item.id,
                     'name'  :  item.name,
-                    'star':    self.item,
-                    'avatar':  item.avatar,
+                    'star'  :  self.item,
+                    'avatar':  self.set_avatar(item),
                     'movies': self.add_movies_to_series(item.movies)
                 }
                 self.create_list.append(el)
 
             else:
                 self.add_singles_from_series(item)
-
 
     def if_item_item_list(self,name=False,id=False):
         stan = True
