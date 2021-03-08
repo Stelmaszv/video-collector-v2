@@ -71,6 +71,7 @@ class Series(Base):
     number_of_sezons = Column('sezons', Integer)
     years       = Column('year', String)
     country      = Column('country', String)
+    description  = Column('description', String)
 
     tags = relationship(
         "Tags",

@@ -194,20 +194,17 @@ class BaseView:
         for photo in photos:
             with open(self.data.config) as json_file:
                 json_pars = json.load(json_file)
-                index_exist = 'galery_skip' in json_pars
-                if index_exist:
-                    if self.data.dir+'/photo/'+photo not in json_pars['galery_skip']:
-                        item = QtWidgets.QLabel(self.galeryGrid)
-                        item.setMaximumSize(QtCore.QSize(size[0], size[1]))
-                        item.setText("")
-                        item.setPixmap(QtGui.QPixmap(self.data.dir+'/photo/'+photo))
-                        item.setScaledContents(True)
-                        item.setObjectName("galeryItem")
-                        self.galeryGrid2.addWidget(item, col, row, 1, 1)
-                        row = row + 1
-                        if row > inRow:
-                            row = 0
-                            col = col + 1
+                item = QtWidgets.QLabel(self.galeryGrid)
+                item.setMaximumSize(QtCore.QSize(size[0], size[1]))
+                item.setText("")
+                item.setPixmap(QtGui.QPixmap(self.data.dir+'/photo/'+photo))
+                item.setScaledContents(True)
+                item.setObjectName("galeryItem")
+                self.galeryGrid2.addWidget(item, col, row, 1, 1)
+                row = row + 1
+                if row > inRow:
+                    row = 0
+                    col = col + 1
 
 class AbstractBaseView:
 
@@ -320,15 +317,19 @@ class AbstractBaseView:
         Error.throw_error_bool('class self.Info is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
 
     def description(self):
+        description_stan = 'description' in self.WindowSize and 'description_limit' in self.WindowSize
+        Error.throw_error_bool('description or description_limit not found in WindowSize ', description_stan)
         data = self.WindowSize['description']
         limit = self.WindowSize['description_limit']
         self.BaseView.description(stringManipupations.short(self.data.description, limit), data);
 
     def tags(self):
+        tag_stan='tags' in self.WindowSize and 'tags_limit' in self.WindowSize
+        Error.throw_error_bool('tags or tags_limit not found in WindowSize ', tag_stan)
         data = self.WindowSize['tags']
         limit = self.WindowSize['tags_limit']
-        taqs_list=stringManipupations.array_to_string(self.data.tags)
-        self.BaseView.description(stringManipupations.short(taqs_list, limit), data);
+        tags_list=stringManipupations.array_to_string(self.data.tags)
+        self.BaseView.description(stringManipupations.short(tags_list, limit), data);
 
 
     def init(self):

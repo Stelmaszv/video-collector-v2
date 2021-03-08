@@ -1,4 +1,5 @@
 from core.datamanipulation import Data as Data
+from core.strings import stringManipupations
 class BaseInfo:
     data_info=[]
     def __init__(self, Obj=None, methods=[]):
@@ -81,6 +82,9 @@ class SingleSectionInfo(BaseInfo):
 
 class InfoSection(BaseInfo):
 
+    tag_limit=1000
+    description_limit=30
+
     def return_data(self):
         self.data_info=[]
 
@@ -106,6 +110,17 @@ class InfoSection(BaseInfo):
             "itemNmae": "Movies",
             "itemName2": str(len(self.BaseView.data.movies))
         })
+
+        if len(self.BaseView.data.tags)>0:
+            self.data_info.append({
+                "itemNmae": "Tags",
+                "itemName2": stringManipupations.short(
+                    stringManipupations.array_to_string(
+                        self.BaseView.data.tags
+                    ),
+                    self.tag_limit)
+            })
+
         return  self.data_info
 
 
