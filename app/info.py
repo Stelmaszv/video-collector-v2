@@ -83,16 +83,25 @@ class InfoSection(BaseInfo):
 
     def return_data(self):
         self.data_info=[]
+
         if self.BaseView.data.years:
             self.data_info.append({
                 "itemNmae": "Year",
                 "itemName2": self.BaseView.data.years
             })
+
+        if self.BaseView.data.country:
+            self.data_info.append({
+                "itemNmae": "Country",
+                "itemName2": self.BaseView.data.country
+            })
+
         if len(self.BaseView.data.sezons) != len(self.BaseView.data.movies):
             self.data_info.append({
                 "itemNmae": "Sezons",
                 "itemName2": str(len(self.BaseView.data.sezons))
             })
+
         self.data_info.append({
             "itemNmae": "Movies",
             "itemName2": str(len(self.BaseView.data.movies))

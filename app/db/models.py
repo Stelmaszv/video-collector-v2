@@ -70,6 +70,7 @@ class Series(Base):
     config = Column('config', String, default='')
     number_of_sezons = Column('sezons', Integer)
     years       = Column('year', String)
+    country      = Column('country', String)
 
     tags = relationship(
         "Tags",

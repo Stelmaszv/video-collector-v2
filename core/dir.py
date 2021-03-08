@@ -138,6 +138,10 @@ class SeriesConfigData(AbstractConfigItem):
                 self.data.years=data['year']
                 session.commit()
 
+            if "country" in data:
+                self.data.country=data['country']
+                session.commit()
+
             if "sezons" in data:
                 self.config_sezons(data['sezons'])
                 self.set_for_sezon(data['sezons'])
