@@ -8,7 +8,9 @@ from core.setings import data_JSON
 import json
 from datetime import datetime
 from time import sleep
+from moviepy.editor import VideoFileClip
 import os
+import random
 
 add= False
 
@@ -43,6 +45,34 @@ def set_name(dir):
     last = len(name) - 1
     return name[last]
 
+class PhotoMeaker:
+
+    dir=''
+
+    def __init__(self,Movie,data):
+        self.Movie=Movie
+        self.data=data
+        self.make_dir()
+
+    def make_dir(self):
+        dir_str=self.data+'/'+str(self.Movie.id)
+        dir=os.path.isdir(dir_str)
+        if dir is False:
+            os.mkdir(dir_str)
+        self.dir=dir_str
+
+    def make_photos(self):
+        src=self.Movie.dir+'/'+self.Movie.src
+
+        clip = VideoFileClip(src)
+        print('creating photos for '+self.Movie.name )
+        for frame in range(0,6):
+            clip.save_frame(self.dir+'/'+str(frame)+'.png', t=random.uniform(0, clip.duration))
+            print('creating photos for '+self.Movie.name+' '+str(frame+1)+'/6')
+
+    def make(self):
+        self.make_photos()
+
 class FaindStar:
 
     str = ''
@@ -58,6 +88,7 @@ class FaindStar:
         for i in range(self.start+1,self.end):
             str=str+self.dir[i]
         return str
+
     def create_star_list(self):
         str=self.return_stars_in_string()
         self.starArray = str.split('and')
@@ -281,6 +312,12 @@ class AbstractAddViaDir(ABC):
         self.set_movie_dir()
         self.set_photo_dir()
 
+    def set_dir(self,seazon=''):
+        if seazon:
+            return self.movie_dir+'/'+str(seazon)
+        else:
+            return self.movie_dir
+
     def set_config(self):
         if Path(self.config).is_file() is False:
             f = open(self.config, "x")
@@ -479,7 +516,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
             src=src,
             stars=stars,
             series=series,
-            sezon=sezon
+            sezon=sezon,
+            dir=self.set_dir(sezon)
         );
 
     def add_files(self):
@@ -539,7 +577,8 @@ class AddStarViaDir(AbstractAddViaDir):
                 object.append(self.movie_model(
                     name=self.clear_name(movie),
                     stars=new_stars,
-                    src=movie
+                    src=movie,
+                    dir=self.set_dir()
                 ))
                 print('Movie ' + str(name) + ' has been added')
         self.session.add_all(object)
@@ -607,9 +646,10 @@ class ConfigLoop:
 
     def load(self):
         for item in self.json_data:
-            LD = self.object[item['type']]
-            LD = LD(item['dir'])
-            LD.set()
+            if item['type'] != 'photos':
+                LD = self.object[item['type']]
+                LD = LD(item['dir'])
+                LD.set()
 
 class AddStarViaDirLoop(AbstractLoopDir):
 

@@ -200,6 +200,7 @@ class Movies(Base):
     name = Column('name',String)
     src=   Column('src',String)
     sezon = Column('sezon',Integer)
+    dir   = Column('dir',String,default='')
     stars = relationship(
         "Stars",
         secondary=association_table,
