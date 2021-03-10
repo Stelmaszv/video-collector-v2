@@ -48,9 +48,8 @@ def set_name(dir):
 class PhotoMeaker:
 
     dir=''
-    add=False
     limit = 10
-    procent_limt=98
+    procent_limt=96
 
     def __init__(self,Movie,data):
         self.Movie=Movie

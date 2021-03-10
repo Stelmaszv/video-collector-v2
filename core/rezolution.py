@@ -195,7 +195,12 @@ class MenuHalfSmall(MenuType):
                     "height": 985
                 },
                 "window":{
-
+                    "title_size": [0, -10, 1280, 100],
+                    "info_size": [1280/2-100, 80, 375, 220],
+                    "navbar": [350, 35, 580, 100],
+                    "galery_size": [0, 600, 1280, 361],
+                    "galery_photo_size": [200, 200],
+                    "galery_item_show": 5,
                 }
             },
             "Stars": {

@@ -1,4 +1,3 @@
-
 class BaseNav:
     def __init__(self,BaseAction):
         self.BaseActions =  BaseAction
@@ -46,6 +45,10 @@ class BaseNav:
 
     def reset(self,argumants):
         self.BaseActions.reset()
+
+class MovieNav(BaseNav):
+
+    pass
 
 class StarNav(BaseNav):
 

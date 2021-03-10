@@ -79,7 +79,6 @@ class BaseView:
         self.galeryGrid.close()
         self.infoWidget.close()
 
-
     def upadete(self):
         self.avatar_photo.show()
 
@@ -178,17 +177,20 @@ class BaseView:
         if self.model:
             self.data = session.query(self.model).get(id)
 
-    def galery(self,data,size,inRow,obj=None):
+    def galery(self,data,size,inRow,dir='',obj=None):
         def faind_in_galery_skip(photo):
-            with open(self.data.config) as json_file:
-                json_pars = json.load(json_file)
-                if 'galery_skip' in json_pars:
-                    if photo in json_pars['galery_skip']:
-                        return False
+            if hasattr(self.data, 'config'):
+                with open(self.data.config) as json_file:
+                    json_pars = json.load(json_file)
+                    if 'galery_skip' in json_pars:
+                        if photo in json_pars['galery_skip']:
+                            return False
             return True
+        if len(dir)==0:
+            dir=self.data.dir + '/photo'
         if obj == None:
             obj = self.obj
-        photos = os.listdir(self.data.dir + '/photo')
+        photos = os.listdir(dir)
         self.galeryGrid = QtWidgets.QWidget(obj)
         self.galeryGrid.setGeometry(QtCore.QRect(data[0],data[1],data[2],data[3]))
         self.galeryGrid.setObjectName("galeryGrid")
@@ -203,7 +205,7 @@ class BaseView:
                 item = QtWidgets.QLabel(self.galeryGrid)
                 item.setMaximumSize(QtCore.QSize(size[0], size[1]))
                 item.setText("")
-                item.setPixmap(QtGui.QPixmap(self.data.dir+'/photo/'+photo))
+                item.setPixmap(QtGui.QPixmap(dir+'/'+photo))
                 item.setScaledContents(True)
                 item.setObjectName("galeryItem")
                 self.galeryGrid2.addWidget(item, col, row, 1, 1)
@@ -225,6 +227,7 @@ class AbstractBaseView:
     list_model_off     = False
     model_view_off     = False
     debug_mode         = True
+    custum_galery      = ''
     window_title=''
     resolution_index=''
     list_view=''
@@ -267,7 +270,6 @@ class AbstractBaseView:
             self.Submit = Submit(self.ModelView, self.data, self)
         self.FormSection.form_section(data_line,buttons)
 
-
     def __set_resolution(self):
 
         if self.resolution_index in self.SetResolution.menu_set:
@@ -299,17 +301,39 @@ class AbstractBaseView:
     def  set_up(self):
         pass
 
+    def set_galery(self):
+        pass
+
     def galery(self):
-        data = self.WindowSize['galery_size']
-        data_size = self.WindowSize['galery_photo_size']
-        self.BaseView.galery(data, data_size, self.WindowSize['galery_item_show'])
+        if 'galery_size' in self.WindowSize:
+            if 'galery_photo_size' in self.WindowSize:
+                data = self.WindowSize['galery_size']
+                data_size = self.WindowSize['galery_photo_size']
+                if 'galery_photo_size' in self.WindowSize:
+                    self.set_galery()
+                    if len(self.custum_galery)==0:
+                        self.BaseView.galery(data, data_size, self.WindowSize['galery_item_show'])
+                    else:
+                        if os.path.isdir(self.custum_galery):
+                            self.BaseView.galery(data, data_size, self.WindowSize['galery_item_show'], self.custum_galery)
+                        else:
+                            Error.throw_error('self.custum_galery must be dir ! ')
+                else:
+                    Error.throw_error('galery_item_show not found in resolution index (' + self.resolution_index + ')')
+            else:
+                Error.throw_error('galery_photo_size not found in resolution index (' + self.resolution_index + ')')
+        else:
+            Error.throw_error('galery_size not found in resolution index (' + self.resolution_index + ')')
 
     def get_nav(self):
-        data = self.WindowSize['navbar']
-        self.BaseView.set_nav(
-            data,
-            self.NavObj.set_nav()
-        )
+        if 'navbar' in self.WindowSize:
+            data = self.WindowSize['navbar']
+            self.BaseView.set_nav(
+                data,
+                self.NavObj.set_nav()
+            )
+        else:
+            Error.throw_error('navbar not found in resolution index (' + self.resolution_index + ')')
 
     def check_model(self,error):
         Error.throw_error_is_none(error,self.model)
@@ -335,7 +359,6 @@ class AbstractBaseView:
         limit = self.WindowSize['tags_limit']
         tags_list=stringManipupations.array_to_string(self.data.tags)
         self.BaseView.description(stringManipupations.short(tags_list, limit), data);
-
 
     def init(self):
         self.up_date_views()
@@ -393,26 +416,32 @@ class AbstractBaseView:
         self.BaseView.listView(data, list, list_item, self)
 
     def info(self):
-        data   = self.WindowSize['info_size']
-        rows = ['itemNmae','itemName2']
-        inf_data=self.InfoObj.return_data()
-        self.BaseView.info(inf_data, data, rows)
-
+        if "info_size" in self.WindowSize:
+            data   = self.WindowSize['info_size']
+            rows = ['itemNmae','itemName2']
+            inf_data=self.InfoObj.return_data()
+            self.BaseView.info(inf_data, data, rows)
+        else:
+            Error.throw_error('info_size not found in resolution index (' + self.resolution_index + ')')
 
     def title(self):
         title =''
+
         if self.data is not None:
             title = self.data.name
         if len(self.window_title)>0:
             title=self.window_title
-        data = self.WindowSize['title_size']
-        text = "<html><head/><body>" \
-               "<p align=\"center\">" \
-               "<span style=\" font-size:18pt;font-weight:600; " \
-               "text-decoration: none;\">" + title + \
-               "</span></p></body></html>"
+        if "title_size" in self.WindowSize:
+            data = self.WindowSize['title_size']
+            text = "<html><head/><body>" \
+                   "<p align=\"center\">" \
+                   "<span style=\" font-size:18pt;font-weight:600; " \
+                   "text-decoration: none;\">" + title + \
+                   "</span></p></body></html>"
 
-        self.BaseView.title(data, text)
+            self.BaseView.title(data, text)
+        else:
+            Error.throw_error('title_size not found in resolution index (' + self.resolution_index + ')')
 
     def run_window(self):
         self.___set_data()
