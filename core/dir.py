@@ -54,7 +54,7 @@ class PhotoMeaker:
     def __init__(self,Movie,data):
         self.Movie=Movie
         self.data=data
-        self.make_dir()
+        self.set_dir()
         self.set_limit()
 
     def set_limit(self):
@@ -62,13 +62,9 @@ class PhotoMeaker:
         if photos_in_dir>0:
             self.limit=self.limit-photos_in_dir;
 
-    def make_dir(self):
+    def set_dir(self):
         dir_str=self.data+'/'+str(self.Movie.id)
-        dir=os.path.isdir(dir_str)
-        if dir is False:
-            os.mkdir(dir_str)
         self.dir=dir_str
-
 
     def set_round_number(self,clip):
         duration=int(clip.duration)
@@ -86,6 +82,30 @@ class PhotoMeaker:
             for frame in range(0, self.limit):
                 clip.save_frame(self.dir + '/' + str(frame) + '.png', t=self.set_round_number(clip))
                 print('creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit))
+
+class ConfigMovies:
+
+    Movies=Movies
+
+    def __init__(self,json_data):
+        self.dir=json_data
+
+    def make_dir(self,Movie):
+        dir=self.dir+'/'+str(Movie.id)
+        is_dir=os.path.isdir(self.dir+'/'+str(Movie.id))
+        if is_dir is False:
+            os.mkdir(dir)
+
+    def add_config_json(self):
+        if os.path.isfile(self.dir + '/config.JSON') is False:
+            f = open(self.dir + '/config.JSON', "x")
+            f.write('[]')
+            f.close()
+
+    def load(self):
+        self.add_config_json()
+        for Movie in session.query(Movies).all():
+            self.make_dir(Movie)
 
 class FaindStar:
 
@@ -639,7 +659,7 @@ class ConfigLoop:
     def __init__(self, json_data):
         self.json_data = json_data
         self.object = {
-            "stars": ConfigStars,
+            "stars":  ConfigStars,
             "series": ConfigSeries
         }
 
