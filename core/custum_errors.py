@@ -20,3 +20,12 @@ class Error:
             if exit_var:
                 exit()
 
+    @staticmethod
+    def throw_error(error,exit_var=True):
+        try:
+            raise NameError()
+        except NameError:
+            print(error)
+            if exit_var:
+                exit()
+

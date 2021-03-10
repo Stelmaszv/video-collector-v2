@@ -18,17 +18,17 @@ def set_dir_for_star(name):
     letter = name[0]
     dir = ''
     if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
-        dir = data_JSON[0]['dir'] + '/A-D/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '/A-D/' + name
     if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
-        dir = data_JSON[0]['dir'] + '/E-H/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '/E-H/' + name
     if letter == 'I' or letter == 'J' or letter == 'K' or letter == 'L':
-        dir = data_JSON[0]['dir'] + '/I-L/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '/I-L/' + name
     if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P':
-        dir = data_JSON[0]['dir'] + '/M-P/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '/M-P/' + name
     if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
-        dir = data_JSON[0]['dir'] + '/R-U/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '/R-U/' + name
     if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
-        dir = data_JSON[0]['dir'] + '/W-Z/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '/W-Z/' + name
     return dir
 
 def if_star_exist(self,name):
@@ -50,7 +50,7 @@ class PhotoMeaker:
     dir=''
     add=False
     limit = 10
-    procent_limt=99
+    procent_limt=98
 
     def __init__(self,Movie,data):
         self.Movie=Movie
@@ -252,7 +252,6 @@ class SeriesConfigData(AbstractConfigItem):
                 self.config_sezons(data['sezons'])
                 self.set_for_sezon(data['sezons'])
 
-
 class AbstractConfig(ABC):
 
     LoadSetingsClass=None
@@ -279,7 +278,6 @@ class AbstractLoadSetings(ABC):
         for item in loop_dir:
             dir = self.dir + '' + str('/' + item)
             self.ItemClass(dir).load()
-
 
 class LoadSetingsSeries(AbstractLoadSetings):
 
@@ -413,20 +411,7 @@ class AbstractAddViaDir(ABC):
             return photo_avatar;
 
     def set_dir_for_star(self,name):
-        letter=name[0]
-        dir=''
-        if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
-            dir=data_JSON[0]['dir'] + '/A-D/' + name
-        if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
-            dir=data_JSON[0]['dir'] + '/E-H/' + name
-        if letter == 'I' or letter == 'J' or letter == 'K' or letter == 'L':
-            dir = data_JSON[0]['dir'] + '/I-L/' + name
-        if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P':
-            dir=data_JSON[0]['dir'] + '/M-P/' + name
-        if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
-            dir=data_JSON[0]['dir']+'/R-U/'+name
-        if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
-            dir=data_JSON[0]['dir'] + '/W-Z/'+name
+        dir=set_dir_for_star(name)
         if os.path.isdir(dir) is False:
             os.mkdir(dir)
             os.mkdir(dir+'/none')

@@ -187,6 +187,17 @@ class MenuHalfSmall(MenuType):
                     "form_section": [300, 100, 680, 600]
                 }
             },
+            "Movie": {
+                "position":{
+                    "left": 2562 + 400,
+                    "top": 400,
+                    "width": 1280,
+                    "height": 985
+                },
+                "window":{
+
+                }
+            },
             "Stars": {
                 "position":  {
                     "left"              : 2562+400,

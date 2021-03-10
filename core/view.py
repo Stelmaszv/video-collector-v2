@@ -269,27 +269,21 @@ class AbstractBaseView:
 
 
     def __set_resolution(self):
-        self.check_rezolution_index()
-        self.left = self.SetResolution.menu_set[self.resolution_index]['position']['left']
-        self.top = self.SetResolution.menu_set[self.resolution_index]['position']['top']
-        self.width = self.SetResolution.menu_set[self.resolution_index]['position']['width']
-        self.height = self.SetResolution.menu_set[self.resolution_index]['position']['height']
-        self.WindowSize = self.SetResolution.menu_set[self.resolution_index]['window']
 
-    def check_rezolution_index(self):
-        stan=False
-        string=True
-        error_mess='Var "'+str(self.resolution_index)+'" not exist in resolution array'
-
-        if len(self.resolution_index)>0:
-            stan=True
-        Error.throw_error_bool('self.resolution_index is required', stan)
-
-        data= self.SetResolution.menu_set.get(self.resolution_index,error_mess)
-
-        if isinstance(data, str):
-            string=False
-            Error.throw_error_bool(error_mess, string)
+        if self.resolution_index in self.SetResolution.menu_set:
+            if 'position' in self.SetResolution.menu_set[self.resolution_index]:
+                self.left = self.SetResolution.menu_set[self.resolution_index]['position']['left']
+                self.top = self.SetResolution.menu_set[self.resolution_index]['position']['top']
+                self.width = self.SetResolution.menu_set[self.resolution_index]['position']['width']
+                self.height = self.SetResolution.menu_set[self.resolution_index]['position']['height']
+            else:
+                Error.throw_error('position not found in resolution index ('+self.resolution_index+')')
+            if 'window' in self.SetResolution.menu_set[self.resolution_index]:
+                self.WindowSize = self.SetResolution.menu_set[self.resolution_index]['window']
+            else:
+                Error.throw_error('window not found in resolution index ('+self.resolution_index+')')
+        else:
+            Error.throw_error('Resolution index "' + self.resolution_index + '" menu not found')
 
     def ___set_data(self):
         if self.model is not None:
