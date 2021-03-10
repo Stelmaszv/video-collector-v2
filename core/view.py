@@ -378,7 +378,6 @@ class AbstractBaseView:
             if len(self.window_title)==0:
                 self.check_model('self.model is required for Title Section !')
             self.title()
-            self.setWindowTitle(self.window_title)
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Info'):
             self.check_info()
             self.info()
@@ -444,8 +443,8 @@ class AbstractBaseView:
                    "<span style=\" font-size:18pt;font-weight:600; " \
                    "text-decoration: none;\">" + title + \
                    "</span></p></body></html>"
-
             self.BaseView.title(data, text)
+            self.setWindowTitle(self.window_title)
         else:
             Error.throw_error('title_size not found in resolution index (' + self.resolution_index + ')')
 

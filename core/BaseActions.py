@@ -5,6 +5,7 @@ from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
 from app.db.models import Tags,Stars
+from core.custum_errors import Error
 import os
 
 class ViewBaseAction:
@@ -23,8 +24,11 @@ class ViewBaseAction:
         self.reset()
 
     def edit(self):
-        self.obj.BaseView.load_view(self.obj.edit_view,self.obj.data)
-        return True;
+        if hasattr(self.obj, 'edit_view'):
+            self.obj.BaseView.load_view(self.obj.edit_view,self.obj.data)
+        else:
+            Error.throw_error(self.obj.__class__.__name__+' do not have atter "edit_view" ',False)
+
 
     def add_favourite(self):
         if self.obj.data.favourite is True:
@@ -37,8 +41,11 @@ class ViewBaseAction:
         self.reset()
 
     def reset(self):
-        self.obj.close()
-        self.obj.BaseView.load_view(self.obj.reset_view,self.obj.data)
+        if hasattr(self.obj,'reset_view'):
+            self.obj.close()
+            self.obj.BaseView.load_view(self.obj.reset_view,self.obj.data)
+        else:
+            Error.throw_error(self.obj.__class__.__name__+' do not have atter "reset_view" ',False)
 
 class AddTag:
 

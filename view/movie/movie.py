@@ -12,6 +12,8 @@ class MovieView(QWidget,AbstractBaseView):
     resolution_index='Movie'
     Info = InfoForMovie
     Nav  = MovieNav
+    reset_view = 'movies'
+    edit_view = 'edit_star'
 
     def set_galery(self):
         self.custum_galery=str(data_JSON['movies_photos'])+'\\'+str(self.data.id)
