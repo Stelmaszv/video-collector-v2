@@ -200,6 +200,7 @@ class Movies(Base):
     name = Column('name',String)
     src=   Column('src',String)
     sezon = Column('sezon',Integer)
+    avatar = Column('avatar', String)
     dir   = Column('dir',String,default='')
     likes = Column('likes', Integer,default=0)
     views = Column('views', Integer, default=0)

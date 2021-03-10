@@ -195,6 +195,7 @@ class MenuHalfSmall(MenuType):
                     "height": 985
                 },
                 "window":{
+                    "avatar_size": [50, 100, 250, 300],
                     "title_size": [0, -10, 1280, 100],
                     "info_size": [1280/2-100, 80, 375, 220],
                     "navbar": [350, 35, 580, 100],

@@ -298,7 +298,7 @@ class AbstractBaseView:
     def set_data(self,data):
         self.data=data
 
-    def  set_up(self):
+    def set_up(self):
         pass
 
     def set_galery(self):
@@ -360,6 +360,12 @@ class AbstractBaseView:
         tags_list=stringManipupations.array_to_string(self.data.tags)
         self.BaseView.description(stringManipupations.short(tags_list, limit), data);
 
+    def set_avatar(self):
+        if 'avatar_size' in self.WindowSize:
+            self.BaseView.avatar(self.WindowSize['avatar_size'], self, 'Y:/photos/25/9.png')
+        else:
+            Error.throw_error('avatar_size not found in resolution index (' + self.resolution_index + ')')
+
     def init(self):
         self.up_date_views()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Tags'):
@@ -388,7 +394,7 @@ class AbstractBaseView:
             self.list_view_def()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Avatar'):
             self.check_model('self.model is required for Avatar Section !')
-            self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
+            self.set_avatar()
         if self.FormSchema is not None:
             self.form_section()
 
