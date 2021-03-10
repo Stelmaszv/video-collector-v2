@@ -48,11 +48,20 @@ def set_name(dir):
 class PhotoMeaker:
 
     dir=''
+    add=False
+    limit = 10
+    procent_limt=99
 
     def __init__(self,Movie,data):
         self.Movie=Movie
         self.data=data
         self.make_dir()
+        self.set_limit()
+
+    def set_limit(self):
+        photos_in_dir=len(os.listdir(self.dir))
+        if photos_in_dir>0:
+            self.limit=self.limit-photos_in_dir;
 
     def make_dir(self):
         dir_str=self.data+'/'+str(self.Movie.id)
@@ -61,17 +70,23 @@ class PhotoMeaker:
             os.mkdir(dir_str)
         self.dir=dir_str
 
-    def make_photos(self):
-        src=self.Movie.dir+'/'+self.Movie.src
 
-        clip = VideoFileClip(src)
-        print('creating photos for '+self.Movie.name )
-        for frame in range(0,6):
-            clip.save_frame(self.dir+'/'+str(frame)+'.png', t=random.uniform(0, clip.duration))
-            print('creating photos for '+self.Movie.name+' '+str(frame+1)+'/6')
+    def set_round_number(self,clip):
+        duration=int(clip.duration)
+        round_nomber = random.randint(0, int(clip.duration))
+        procent=int(round_nomber/duration*100)
+        if procent<=self.procent_limt:
+            return round_nomber
+        else:
+            return self.set_round_number(clip)
 
     def make(self):
-        self.make_photos()
+        if self.limit > 0:
+            src = self.Movie.dir + '/' + self.Movie.src
+            clip = VideoFileClip(src)
+            for frame in range(0, self.limit):
+                clip.save_frame(self.dir + '/' + str(frame) + '.png', t=self.set_round_number(clip))
+                print('creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit))
 
 class FaindStar:
 
