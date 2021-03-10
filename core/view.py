@@ -11,6 +11,7 @@ from app.nav import BaseNav
 from app.info import BaseInfo
 from core.BaseActions import FormSection,Submit,Form
 from app.model_view import BaseModelViewSet
+from core.setings import data_JSON
 from core.strings import stringManipupations
 import json
 
