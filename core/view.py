@@ -362,7 +362,7 @@ class AbstractBaseView:
 
     def set_avatar(self):
         if 'avatar_size' in self.WindowSize:
-            self.BaseView.avatar(self.WindowSize['avatar_size'], self, 'Y:/photos/25/9.png')
+            self.BaseView.avatar(self.WindowSize['avatar_size'], self, self.data.avatar)
         else:
             Error.throw_error('avatar_size not found in resolution index (' + self.resolution_index + ')')
 

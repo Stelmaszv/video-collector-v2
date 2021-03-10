@@ -83,29 +83,6 @@ class PhotoMeaker:
                 clip.save_frame(self.dir + '/' + str(frame) + '.png', t=self.set_round_number(clip))
                 print('creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit))
 
-class ConfigMovies:
-
-    Movies=Movies
-
-    def __init__(self,json_data):
-        self.dir=json_data
-
-    def make_dir(self,Movie):
-        dir=self.dir+'/'+str(Movie.id)
-        is_dir=os.path.isdir(self.dir+'/'+str(Movie.id))
-        if is_dir is False:
-            os.mkdir(dir)
-
-    def add_config_json(self):
-        if os.path.isfile(self.dir + '/config.JSON') is False:
-            f = open(self.dir + '/config.JSON', "x")
-            f.write('[]')
-            f.close()
-
-    def load(self):
-        self.add_config_json()
-        for Movie in session.query(Movies).all():
-            self.make_dir(Movie)
 
 class FaindStar:
 
@@ -152,6 +129,41 @@ class AbstractConfigItem(ABC):
     @abstractmethod
     def load(self):
         pass
+
+class ConfigMovies(AbstractConfigItem):
+
+    Movies=Movies
+
+    def __init__(self,json_data):
+        self.dir=json_data
+
+    def config(self,Movie):
+        with open(self.dir + '/config.JSON') as f:
+            data = json.load(f)
+            for el in data:
+                if 'id' in el:
+                    if el['id'] == Movie.id:
+                        if 'avatar' in el:
+                            Movie.avatar=el['avatar']
+                            session.commit()
+
+    def make_dir(self,Movie):
+        dir=self.dir+'/'+str(Movie.id)
+        is_dir=os.path.isdir(self.dir+'/'+str(Movie.id))
+        if is_dir is False:
+            os.mkdir(dir)
+        self.config(Movie)
+
+    def add_config_json(self):
+        if os.path.isfile(self.dir + '/config.JSON') is False:
+            f = open(self.dir + '/config.JSON', "x")
+            f.write('[]')
+            f.close()
+
+    def load(self):
+        self.add_config_json()
+        for Movie in session.query(Movies).all():
+            self.make_dir(Movie)
 
 class StarConfigData(AbstractConfigItem):
 
