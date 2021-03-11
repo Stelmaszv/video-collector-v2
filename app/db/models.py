@@ -218,6 +218,7 @@ class Movies(Base):
     views = Column('views', Integer, default=0)
     favourite = Column('favourite', Boolean,default=False)
     country = Column('country', String, default='')
+    description = Column('description', String, default='')
 
     tags = relationship(
         "Tags",

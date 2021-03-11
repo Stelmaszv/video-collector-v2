@@ -8,7 +8,7 @@ from core.setings import data_JSON
 
 class MovieView(QWidget,AbstractBaseView):
     model = Movies
-    show_elemnts = ['Tags','Description','List']
+    show_elemnts = ['Tags','List']
     resolution_index='Movie'
     Info = InfoForMovie
     Nav  = MovieNav

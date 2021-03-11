@@ -169,6 +169,14 @@ class BaseView:
             obj=self.obj
         description = QtWidgets.QLabel(self.obj)
         description.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\"" \
+               "text-decoration: none;\">" + text + \
+               "</span></p></body></html>"
+
+        print(text)
+
         description.setText(text)
         description.setWordWrap(True)
         if grid is not None:

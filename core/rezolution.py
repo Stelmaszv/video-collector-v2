@@ -195,6 +195,8 @@ class MenuHalfSmall(MenuType):
                     "height": 985
                 },
                 "window":{
+                    "description" :[300,250, 800, 200],
+                    "description_limit": 500,
                     "tags": [600, 200, 375, 220],
                     "tags_limit":1000,
                     "avatar_size": [50, 100, 250, 300],

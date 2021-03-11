@@ -163,6 +163,10 @@ class ConfigMovies(AbstractConfigItem):
                             Movie.country=el['country']
                             session.commit()
 
+                        if 'description' in el:
+                            Movie.description=el['description']
+                            session.commit()
+
                         if "tags" in el:
                             self.add_tags(el['tags'],Movie)
 
