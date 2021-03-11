@@ -184,6 +184,9 @@ class BaseView:
         if self.model:
             self.data = session.query(self.model).get(id)
 
+    def galery_from_array(self,data,size,array):
+        print('ok')
+
     def galery(self,data,size,inRow,dir='',obj=None):
         def faind_in_galery_skip(photo):
             if hasattr(self.data, 'config'):

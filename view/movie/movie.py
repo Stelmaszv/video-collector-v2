@@ -16,6 +16,15 @@ class MovieView(QWidget,AbstractBaseView):
     edit_view = 'edit_star'
 
     def set_galery(self):
+        self.galery_for_stars()
         self.custum_galery=str(data_JSON['movies_photos'])+'\\'+str(self.data.id)
+
+    def galery_for_stars(self):
+        def stars_array():
+            stars=[]
+            for star in self.data.stars:
+                stars.append(star.avatar)
+            return stars
+        self.BaseView.galery_from_array([100,100,100,100],[100,100],stars_array())
 
 
