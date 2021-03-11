@@ -7,6 +7,19 @@ class BaseInfo:
             self.BaseView=Obj.BaseView
             self.list=Obj.list
 
+    def show_stars_in_string(self,stars):
+        stars_str = ''
+        count = 0
+        for el in stars:
+            if count > 0:
+                stars_str = stars_str + ' , '
+            if count %5 == 0:
+                stars_str = stars_str + ' <br> '
+            stars_str = stars_str + str(el.name)
+            count = count + 1
+
+        return stars_str
+
 class SingleSectionInfo(BaseInfo):
 
     def set_obj(self,Obj,item):
@@ -20,7 +33,7 @@ class SingleSectionInfo(BaseInfo):
             if int(el.name)==int(self.item):
                 info_item=el
         count = self.count_in_seazon(info_item)
-        stars_in_seazom= self.stars_to_string(self.count_star(info_item))
+        stars_in_seazom= self.show_stars_in_string(self.count_star(info_item))
 
         if info_item.year:
             self.data_info.append({
@@ -45,16 +58,6 @@ class SingleSectionInfo(BaseInfo):
             })
         return self.data_info
 
-    def stars_to_string(self,stars):
-        stars_str=''
-        count=0
-        for el in stars:
-            if count>1:
-                stars_str=stars_str+' , '
-            stars_str=stars_str+str(el.name)
-            count=count+1
-
-        return stars_str
     def count_star(self,seazon):
         stars=[]
         def add_if_not_exist(Star):
@@ -104,6 +107,12 @@ class InfoForMovie(BaseInfo):
             "itemNmae": "Favourite",
             "itemName2": str(self.BaseView.data.favourite)
         })
+        stars=self.BaseView.data.stars
+        if stars:
+            self.data_info.append({
+                "itemNmae": "Stars",
+                "itemName2": self.show_stars_in_string(stars)
+            })
 
         if self.BaseView.data.country:
             self.data_info.append({
