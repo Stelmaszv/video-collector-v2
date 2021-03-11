@@ -1,11 +1,28 @@
+import os
+
 class BaseNav:
-    def __init__(self,BaseAction):
-        self.BaseActions =  BaseAction
+    def __init__(self,AbstractBaseView):
+        self.BaseActions =  AbstractBaseView.BaseActions
+        self.data        =  AbstractBaseView.data
+        self.AbstractBaseView = AbstractBaseView
+
+    def set_name_for_favorits(self):
+        name= 'Add to favorits'
+        if self.data.favourite:
+            name= 'Remove from favorits'
+        return name
+
+    def set_data(self,data):
+        self.data = data
+        self.set_base_nav()
 
     def set_nav(self):
-          return  [
+        return self.base_nav
+
+    def set_base_nav(self):
+          self.base_nav= [
                 {
-                    "name": "Add to favorits",
+                    "name": self.set_name_for_favorits(),
                     "obj_name": "add_to_favorits",
                     "grid_data": [0,0,1,1],
                     "click": self.add_favorits,
@@ -48,7 +65,20 @@ class BaseNav:
 
 class MovieNav(BaseNav):
 
-    pass
+    def set_nav(self):
+        new={
+            "name": 'Open',
+            "obj_name": "add_to_favorits",
+            "grid_data": [0, 4, 1, 1],
+            "click": self.open,
+            'arguments': [],
+        }
+        self.base_nav.append(new)
+        return self.base_nav
+
+
+    def open(self,argumants):
+        self.AbstractBaseView.BaseView.load_view('play', self.data)
 
 class StarNav(BaseNav):
 

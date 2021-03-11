@@ -175,8 +175,6 @@ class BaseView:
                "text-decoration: none;\">" + text + \
                "</span></p></body></html>"
 
-        print(text)
-
         description.setText(text)
         description.setWordWrap(True)
         if grid is not None:
@@ -259,7 +257,7 @@ class AbstractBaseView:
 
         if self.Nav is not None:
             Error.throw_error_bool('class self.Nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
-            self.NavObj = self.Nav(self.BaseActions)
+            self.NavObj = self.Nav(self)
 
     def up_date_views(self):
         if self.data is not None:
@@ -335,6 +333,7 @@ class AbstractBaseView:
             Error.throw_error('galery_size not found in resolution index (' + self.resolution_index + ')')
 
     def get_nav(self):
+        self.NavObj.set_data(self.data)
         if 'navbar' in self.WindowSize:
             data = self.WindowSize['navbar']
             self.BaseView.set_nav(
