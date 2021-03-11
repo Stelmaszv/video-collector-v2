@@ -184,8 +184,32 @@ class BaseView:
         if self.model:
             self.data = session.query(self.model).get(id)
 
-    def galery_from_array(self,data,size,array):
-        print('ok')
+    def galery_from_array(self,data,size,inRow,array,obj=None):
+        if obj == None:
+            obj = self.obj
+
+        self.galeryGrid = QtWidgets.QWidget(obj)
+        self.galeryGrid.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.galeryGrid.setObjectName("galeryGrid")
+
+        self.galeryGrid2 = QtWidgets.QGridLayout(self.galeryGrid)
+        self.galeryGrid2.setContentsMargins(0, 0, 0, 0)
+        self.galeryGrid2.setObjectName("galeryGrid2")
+        row = 0
+        col = 0
+        for photo in array:
+            item = QtWidgets.QLabel(self.galeryGrid)
+            item.setMaximumSize(QtCore.QSize(size[0], size[1]))
+            item.setText("")
+            item.setPixmap(QtGui.QPixmap(photo))
+            print(photo)
+            item.setScaledContents(True)
+            item.setObjectName("galeryItem")
+            self.galeryGrid2.addWidget(item, col, row, 1, 1)
+            row = row + 1
+            if row > inRow:
+                row = 0
+                col = col + 1
 
     def galery(self,data,size,inRow,dir='',obj=None):
         def faind_in_galery_skip(photo):
@@ -196,6 +220,7 @@ class BaseView:
                         if photo in json_pars['galery_skip']:
                             return False
             return True
+
         if len(dir)==0:
             dir=self.data.dir + '/photo'
         if obj == None:

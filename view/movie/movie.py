@@ -25,6 +25,8 @@ class MovieView(QWidget,AbstractBaseView):
             for star in self.data.stars:
                 stars.append(star.avatar)
             return stars
-        self.BaseView.galery_from_array([100,100,100,100],[100,100],stars_array())
+        self.BaseView.galery_from_array([700,-50,500,500],[150,150],2,stars_array())
+
+
 
 
