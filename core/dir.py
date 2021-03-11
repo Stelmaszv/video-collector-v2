@@ -9,6 +9,7 @@ import json
 from datetime import datetime
 from time import sleep
 from moviepy.editor import VideoFileClip
+from core.strings import stringManipupations
 import os
 import random
 
@@ -48,7 +49,7 @@ def set_name(dir):
 class PhotoMeaker:
 
     dir=''
-    limit = 10
+    limit = 12
     procent_limt=96
 
     def __init__(self,Movie,data):
@@ -59,7 +60,7 @@ class PhotoMeaker:
 
     def set_limit(self):
         photos_in_dir=len(os.listdir(self.dir))
-        if photos_in_dir>0:
+        if photos_in_dir != self.limit:
             self.limit=self.limit-photos_in_dir;
 
     def set_dir(self):
@@ -80,7 +81,7 @@ class PhotoMeaker:
             src = self.Movie.dir + '/' + self.Movie.src
             clip = VideoFileClip(src)
             for frame in range(0, self.limit):
-                clip.save_frame(self.dir + '/' + str(frame) + '.png', t=self.set_round_number(clip))
+                clip.save_frame(self.dir + '/' + str(stringManipupations.random(20)) + '.png', t=self.set_round_number(clip))
                 print('creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit))
 
 
@@ -138,6 +139,7 @@ class ConfigMovies(AbstractConfigItem):
         self.dir=json_data
 
     def config(self,Movie):
+
         with open(self.dir + '/config.JSON') as f:
             data = json.load(f)
             for el in data:
