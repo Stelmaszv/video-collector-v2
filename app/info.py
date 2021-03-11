@@ -105,11 +105,6 @@ class InfoForMovie(BaseInfo):
             "itemName2": str(self.BaseView.data.favourite)
         })
 
-        self.data_info.append({
-            "itemNmae": "Stars",
-            "itemName2": str(len(self.BaseView.data.stars))
-        })
-
         if self.BaseView.data.country:
             self.data_info.append({
                 "itemNmae": "Country",

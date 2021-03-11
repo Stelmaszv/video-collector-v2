@@ -202,7 +202,6 @@ class BaseView:
             item.setMaximumSize(QtCore.QSize(size[0], size[1]))
             item.setText("")
             item.setPixmap(QtGui.QPixmap(photo))
-            print(photo)
             item.setScaledContents(True)
             item.setObjectName("galeryItem")
             self.galeryGrid2.addWidget(item, col, row, 1, 1)

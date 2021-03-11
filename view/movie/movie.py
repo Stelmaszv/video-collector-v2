@@ -26,7 +26,7 @@ class MovieView(QWidget,AbstractBaseView):
             for star in self.data.stars:
                 stars.append(star.avatar)
             return stars
-        self.BaseView.galery_from_array([700,-50,500,500],[150,150],2,stars_array())
+        self.BaseView.galery_from_array([850,0,400,400],[150,150],2,stars_array())
 
     def title_for_stars(self):
         text = "<html><head/><body>" \
