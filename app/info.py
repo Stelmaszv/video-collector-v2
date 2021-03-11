@@ -91,12 +91,49 @@ class MovisWithStar(BaseInfo):
 
 class InfoForMovie(BaseInfo):
 
+    tag_limit=1000
+    
     def return_data(self):
-        return [
-            {"itemNmae": "anser", "itemName2": "anser1"},
-            {"itemNmae": "anser2", "itemName2": "anser2"},
-            {"itemNmae": "anser3", "itemName2": "anser2"}
-        ]
+        self.data_info = []
+        self.data_info.append({
+            "itemNmae": "Views / Likes",
+            "itemName2": str(self.BaseView.data.views) + ' / ' + str(self.BaseView.data.likes)
+        })
+
+        self.data_info.append({
+            "itemNmae": "Favourite",
+            "itemName2": str(self.BaseView.data.favourite)
+        })
+
+        self.data_info.append({
+            "itemNmae": "Stars",
+            "itemName2": str(len(self.BaseView.data.stars))
+        })
+
+        if self.BaseView.data.country:
+            self.data_info.append({
+                "itemNmae": "Country",
+                "itemName2": self.BaseView.data.country
+            })
+
+        if self.BaseView.data.year:
+            self.data_info.append({
+                "itemNmae": "Year",
+                "itemName2":self.BaseView.data.year
+            })
+
+        if len(self.BaseView.data.tags)>0:
+            self.data_info.append({
+                "itemNmae": "Tags",
+                "itemName2": stringManipupations.short(
+                    stringManipupations.array_to_string(
+                        self.BaseView.data.tags
+                    ),
+                    self.tag_limit)
+            })
+
+        return  self.data_info
+
 
 
 class InfoSection(BaseInfo):

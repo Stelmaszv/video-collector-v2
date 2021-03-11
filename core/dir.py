@@ -51,7 +51,7 @@ class PhotoMeaker:
     dir=''
     limit = 12
     procent_limt=96
-
+    add=False
     def __init__(self,Movie,data):
         self.Movie=Movie
         self.data=data
@@ -62,6 +62,7 @@ class PhotoMeaker:
         photos_in_dir=len(os.listdir(self.dir))
         if photos_in_dir != self.limit:
             self.limit=self.limit-photos_in_dir;
+            self.add=True
 
     def set_dir(self):
         dir_str=self.data+'/'+str(self.Movie.id)
@@ -77,7 +78,7 @@ class PhotoMeaker:
             return self.set_round_number(clip)
 
     def make(self):
-        if self.limit > 0:
+        if self.add:
             src = self.Movie.dir + '/' + self.Movie.src
             clip = VideoFileClip(src)
             for frame in range(0, self.limit):
@@ -117,15 +118,19 @@ class AbstractConfigItem(ABC):
         self.config = self.dir+'/config.JSON'
         self.name=set_name(dir)
 
-    def add_tags(self,tags):
+    def add_tags(self,tags,Obj=None):
+        if Obj is not None:
+            self.data=Obj
         for tag in tags:
             query = session.query(Tags).filter(Tags.name == tag).first()
             if query is None:
                 TagObj=Tags(name=tag)
                 session.add_all([TagObj])
                 session.commit()
-                self.data.tags.append(TagObj)
-                session.commit()
+                query=TagObj
+            self.data.tags.append(query)
+            session.commit()
+
 
     @abstractmethod
     def load(self):
@@ -145,9 +150,21 @@ class ConfigMovies(AbstractConfigItem):
             for el in data:
                 if 'id' in el:
                     if el['id'] == Movie.id:
+
                         if 'avatar' in el:
                             Movie.avatar=el['avatar']
                             session.commit()
+
+                        if 'year' in el:
+                            Movie.year=el['year']
+                            session.commit()
+
+                        if 'country' in el:
+                            Movie.country=el['country']
+                            session.commit()
+
+                        if "tags" in el:
+                            self.add_tags(el['tags'],Movie)
 
     def make_dir(self,Movie):
         dir=self.dir+'/'+str(Movie.id)

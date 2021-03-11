@@ -41,6 +41,11 @@ Series_Tags = Table('series_tags', Base.metadata,
     Column('tags_id', Integer, ForeignKey('tags.id'))
 )
 
+Movies_Tags = Table('movies_tags', Base.metadata,
+    Column('movies_id', Integer, ForeignKey('movies.id')),
+    Column('tags_id', Integer, ForeignKey('tags.id'))
+)
+
 class Sezons(Base):
     __tablename__ = 'sezons'
     id = Column('id', Integer, primary_key=True)
@@ -140,6 +145,12 @@ class Tags(Base):
         back_populates="tags"
     )
 
+    movies = relationship(
+        "Movies",
+        secondary=Movies_Tags,
+        back_populates="tags"
+    )
+
     series = relationship(
         "Series",
         secondary=Series_Tags,
@@ -201,10 +212,19 @@ class Movies(Base):
     src=   Column('src',String)
     sezon = Column('sezon',Integer)
     avatar = Column('avatar', String)
+    year  = Column('year', String)
     dir   = Column('dir',String,default='')
     likes = Column('likes', Integer,default=0)
     views = Column('views', Integer, default=0)
     favourite = Column('favourite', Boolean,default=False)
+    country = Column('country', String, default='')
+
+    tags = relationship(
+        "Tags",
+        secondary=Movies_Tags,
+        back_populates="movies"
+    )
+
     stars = relationship(
         "Stars",
         secondary=association_table,

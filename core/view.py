@@ -358,6 +358,7 @@ class AbstractBaseView:
         Error.throw_error_bool('tags or tags_limit not found in WindowSize ', tag_stan)
         data = self.WindowSize['tags']
         limit = self.WindowSize['tags_limit']
+        Error.throw_error_bool('self.data do not have tags ', hasattr(self.data,'tags'))
         tags_list=stringManipupations.array_to_string(self.data.tags)
         self.BaseView.description(stringManipupations.short(tags_list, limit), data);
 
