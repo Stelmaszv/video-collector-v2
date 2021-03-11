@@ -17,6 +17,7 @@ class MovieView(QWidget,AbstractBaseView):
 
     def set_galery(self):
         self.galery_for_stars()
+        self.title_for_stars()
         self.custum_galery=str(data_JSON['movies_photos'])+'\\'+str(self.data.id)
 
     def galery_for_stars(self):
@@ -26,6 +27,13 @@ class MovieView(QWidget,AbstractBaseView):
                 stars.append(star.avatar)
             return stars
         self.BaseView.galery_from_array([700,-50,500,500],[150,150],2,stars_array())
+
+    def title_for_stars(self):
+        text = "<html><head/><body>" \
+               "<p align=\"center\">" \
+               "<span style=\" font-size:18pt;font-weight:600; " \
+               "text-decoration: none;\">Stars</span></p></body></html>"
+        self.BaseView.title([750, 35, 580, 100],text)
 
 
 
