@@ -1,5 +1,42 @@
 from core.view import BaseFormShema
 
+class MovieEditForm(BaseFormShema):
+    def form(self):
+        self.from_section = []
+        self.from_section.append({
+            'type': 'label',
+            'name': 'name',
+            'place_holder': 'Name',
+            'grid_data': [0, 0, 1, 1]
+        })
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'name',
+            'validation': "",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(None,'name'),
+            'grid_data': [0, 1, 1, 1]
+        })
+        self.from_section.append({
+            'type': 'button',
+            'obj_name': 'advance',
+            'name': 'Add Tag',
+            'place_holder': 'advance',
+            'grid_data': [1, 1, 1, 1],
+            'click': self.add_method(self.BaseView.add_tag,'add_tag'),
+            'arguments':[]
+        })
+
+        self.from_section.append({
+            'type': 'button',
+            'obj_name': 'advance',
+            'name': 'Add Star',
+            'place_holder': 'advance',
+            'grid_data': [2, 1, 1, 1],
+            'click': self.add_method(self.BaseView.add_star,'add_star'),
+            'arguments':[]
+        })
+
 class AdvanceSearchForm(BaseFormShema):
     def form(self):
         self.from_section = []

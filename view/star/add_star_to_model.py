@@ -3,7 +3,7 @@ from core.view import BaseView,AbstractBaseView
 from core.BaseActions import FormSection,AddStar,ViewBaseAction
 from core.rezolution import SetResolution
 from app.forms import AddStarToModelForm
-from app.db.models import Series
+from app.db.models import Series,Movies
 
 class AddStarToModelView(QWidget,AbstractBaseView):
     resolution_index = 'add_tag'
@@ -18,7 +18,11 @@ class AddStarToModelView(QWidget,AbstractBaseView):
 
     def  set_up(self):
         self.model=self.obj.model
+        self.BaseView.set_data(self.id)
         self.set_list_view_data(self.data.stars)
+
+    def set_data_on_init(self):
+        self.model=self.obj.model
 
     def submit_click(self,values):
         AT = AddStar(values, self)

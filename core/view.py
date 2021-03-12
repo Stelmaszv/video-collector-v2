@@ -286,6 +286,9 @@ class AbstractBaseView:
             Error.throw_error_bool('class self.Nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
             self.NavObj = self.Nav(self)
 
+    def set_data_on_init(self):
+        pass
+
     def up_date_views(self):
         if self.data is not None:
             self.data.views=self.data.views+1
@@ -325,9 +328,6 @@ class AbstractBaseView:
         if self.model is not None:
             self.BaseView.set_data(self.id)
             self.data = self.BaseView.data
-
-    def set_model(self,model):
-        self.model=model
 
     def set_data(self,data):
         self.data=data
@@ -485,6 +485,7 @@ class AbstractBaseView:
             Error.throw_error('title_size not found in resolution index (' + self.resolution_index + ')')
 
     def run_window(self):
+        self.set_data_on_init()
         self.___set_data()
         self.set_up()
         self.init()

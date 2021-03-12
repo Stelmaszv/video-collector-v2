@@ -13,7 +13,7 @@ class MovieView(QWidget,AbstractBaseView):
     Info = InfoForMovie
     Nav  = MovieNav
     reset_view = 'movies'
-    edit_view = 'edit_star'
+    edit_view = 'edit_movie'
 
     def set_galery(self):
         self.galery_for_stars()
