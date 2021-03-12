@@ -3,6 +3,7 @@ from core.view import BaseFormShema
 class MovieEditForm(BaseFormShema):
     def form(self):
         self.from_section = []
+
         self.from_section.append({
             'type': 'label',
             'name': 'name',
@@ -17,12 +18,79 @@ class MovieEditForm(BaseFormShema):
             'place_holder': self.set_value_if_exist(None,'name'),
             'grid_data': [0, 1, 1, 1]
         })
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'name',
+            'place_holder': 'Country',
+            'grid_data': [1, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'name',
+            'validation': "",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(None,'Country'),
+            'grid_data': [1, 1, 1, 1]
+        })
+
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'name',
+            'place_holder': 'Year',
+            'grid_data': [2, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'name',
+            'validation': "",
+            'data_type': 'string',
+            'place_holder': self.set_value_if_exist(None, 'Year'),
+            'grid_data': [2, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type'        : 'label',
+            'name'        : 'name',
+            'place_holder': 'Dir Location',
+            'grid_data'   : [3, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'edit_line',
+            'name': 'dir_edit_line',
+            'data_type': 'dir',
+            'validation': "",
+            'place_holder': self.set_value_if_exist(self.BaseView.data.dir,'Location dir with data'),
+            'grid_data': [3, 1, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'label',
+            'name': 'avatar_label',
+            'place_holder': 'Avatar',
+            'grid_data': [4, 0, 1, 1]
+        })
+
+        self.from_section.append({
+            'type': 'combo_box',
+            'name': 'avatar_edit_line',
+            'data_type': 'combo_box_dir',
+            'validation': "",
+            'place_holder': self.set_value_if_exist(self.BaseView.data.avatar, 'Avator'),
+            'grid_data': [4, 1, 1, 1],
+            'combo_box_list': self.get_files_in_dir_for_movie(self.BaseView.data.avatar,self.BaseView.data)
+        })
+
         self.from_section.append({
             'type': 'button',
             'obj_name': 'advance',
             'name': 'Add Tag',
             'place_holder': 'advance',
-            'grid_data': [1, 1, 1, 1],
+            'grid_data': [5, 1, 1, 1],
             'click': self.add_method(self.BaseView.add_tag,'add_tag'),
             'arguments':[]
         })
@@ -32,9 +100,19 @@ class MovieEditForm(BaseFormShema):
             'obj_name': 'advance',
             'name': 'Add Star',
             'place_holder': 'advance',
-            'grid_data': [2, 1, 1, 1],
+            'grid_data': [6, 1, 1, 1],
             'click': self.add_method(self.BaseView.add_star,'add_star'),
             'arguments':[]
+        })
+
+        self.from_section.append({
+            'type': 'button_submit',
+            'obj_name': 'submit',
+            'name': 'Submit',
+            'place_holder': 'Submit',
+            'grid_data': [7, 1, 1, 1],
+            'click': self.add_method(self.BaseView.submit_click, 'submit_click'),
+            'arguments': []
         })
 
 class AdvanceSearchForm(BaseFormShema):

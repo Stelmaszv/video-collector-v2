@@ -30,14 +30,20 @@ class BaseFormShema:
     def form(self):
         pass
 
-    def get_files_in_dir(self,defult):
-        dir=self.BaseView.data.dir + '' +str('/photo')
+    def get_files_from_dir(self,defult,dir):
         dir_loop=[]
         dir_loop.append(defult)
         for item in os.listdir(dir):
             dir_loop_elment=dir + '/' +str(item)
             dir_loop.append(dir_loop_elment)
         return dir_loop
+
+    def get_files_in_dir_for_movie(self,defult,Data):
+        return self.get_files_from_dir(defult, Data.dir)
+
+    def get_files_in_dir(self,defult):
+        dir=self.BaseView.data.dir + '' +str('/photo')
+        return self.get_files_from_dir(defult,dir)
 
     def set_value_if_exist(self,value,empty):
         if value is None :

@@ -139,6 +139,7 @@ class AbstractConfigItem(ABC):
 class ConfigMovies(AbstractConfigItem):
 
     Movies=Movies
+    dir_DB=''
 
     def __init__(self,json_data):
         self.dir=json_data
@@ -147,6 +148,8 @@ class ConfigMovies(AbstractConfigItem):
 
         with open(self.dir + '/config.JSON') as f:
             data = json.load(f)
+
+
             for el in data:
                 if 'id' in el:
                     if el['id'] == Movie.id:
@@ -176,6 +179,7 @@ class ConfigMovies(AbstractConfigItem):
         if is_dir is False:
             os.mkdir(dir)
         self.config(Movie)
+        self.dir_DB=dir
 
     def add_config_json(self):
         if os.path.isfile(self.dir + '/config.JSON') is False:
@@ -187,6 +191,8 @@ class ConfigMovies(AbstractConfigItem):
         self.add_config_json()
         for Movie in session.query(Movies).all():
             self.make_dir(Movie)
+            Movie.dir=self.dir_DB
+            session.commit()
 
 class StarConfigData(AbstractConfigItem):
 
