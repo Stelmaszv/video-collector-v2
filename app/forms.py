@@ -242,18 +242,6 @@ class MovieEditForm(BaseFormShema):
             'new_row': True
         })
 
-        """
-        self.from_section.append({
-            'type': 'button_submit',
-            'obj_name': 'submit',
-            'name': 'Submit',
-            'place_holder': 'Submit',
-            'grid_data': [7, 1, 1, 1],
-            'click': self.add_method(self.BaseView.submit_click, 'submit_click'),
-            'arguments': []
-        })
-        """
-
 class AdvanceSearchForm(BaseFormShema):
     def form(self):
         self.from_section = []
