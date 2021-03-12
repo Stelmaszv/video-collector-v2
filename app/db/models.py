@@ -1,6 +1,8 @@
 from core.db.config import Base,engine
 from sqlalchemy import Column,Integer, String,Table,ForeignKey,DateTime,Boolean
 from sqlalchemy.orm import sessionmaker,relationship
+from core.setings import movie_cover_defulut
+
 association_table = Table('association', Base.metadata,
     Column('stars_id', Integer, ForeignKey('stars.id')),
     Column('movies_id', Integer, ForeignKey('movies.id'))
@@ -211,7 +213,7 @@ class Movies(Base):
     name = Column('name',String)
     src=   Column('src',String)
     sezon = Column('sezon',Integer)
-    avatar = Column('avatar', String)
+    avatar = Column('avatar', String,default=movie_cover_defulut)
     year  = Column('year', String)
     dir   = Column('dir',String,default='')
     likes = Column('likes', Integer,default=0)
