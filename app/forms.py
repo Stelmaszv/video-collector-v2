@@ -15,7 +15,7 @@ class MovieEditForm(BaseFormShema):
             'name': 'name',
             'validation': "",
             'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None,'name'),
+            'place_holder': self.set_value_if_exist(self.BaseView.data.name,'name'),
             'grid_data': [0, 1, 1, 1]
         })
 
@@ -31,10 +31,9 @@ class MovieEditForm(BaseFormShema):
             'name': 'name',
             'validation': "",
             'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None,'Country'),
+            'place_holder': self.set_value_if_exist(self.BaseView.data.country,'Country'),
             'grid_data': [1, 1, 1, 1]
         })
-
 
         self.from_section.append({
             'type': 'label',
@@ -48,7 +47,7 @@ class MovieEditForm(BaseFormShema):
             'name': 'name',
             'validation': "",
             'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None, 'Year'),
+            'place_holder': self.set_value_if_exist(self.BaseView.data.year, 'Year'),
             'grid_data': [2, 1, 1, 1]
         })
 
