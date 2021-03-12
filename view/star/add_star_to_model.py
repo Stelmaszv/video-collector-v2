@@ -8,7 +8,7 @@ from app.db.models import Series,Movies
 class AddStarToModelView(QWidget,AbstractBaseView):
     resolution_index = 'add_tag'
     window_title = 'Add tag'
-    show_elemnts = ['Info','Galery','Nav','Avatar']
+    show_elemnts = ['Info','Galery','Nav','Avatar','Tag','Description']
     model = Series
     reset_view = 'add_star_to_model'
     model_view_off = True
@@ -33,3 +33,6 @@ class AddStarToModelView(QWidget,AbstractBaseView):
         AT.remove_star(star)
         self.BaseActions.reset()
         return True
+
+class MovieAddStarToModelView(AddStarToModelView):
+    model = Movies

@@ -2,6 +2,7 @@ from core.media_player import Player
 from core.strings import stringManipupations
 import sys
 from PyQt5.QtWidgets import QApplication
+from core.custum_errors import Error
 
 open_wnidows=[]
 
@@ -15,7 +16,6 @@ class setWindow():
         from view.SeriesMovieListView.MovieListView import MovieListView
         from view.star.edit_star import EditStarView
         from view.tags.add_tags import AddTagView
-
         from view.series.editseries import EditSeries
         from view.set_photo_to_series.set_photo_to_series import SetPhotoToSeries
         from view.star.add_star_to_model import AddStarToModelView
@@ -23,6 +23,7 @@ class setWindow():
         from view.menu.advande_search import AdvanceSearch
         from view.tags.add_tag_to_model_no_save import AddTagToModelNoSave
         from view.movie.edit_movie import EditMovieView
+        from view.star.add_star_to_model import MovieAddStarToModelView
 
         switcher = {
             'add_tag_to_model_no_save' :AddTagToModelNoSave(),
@@ -39,8 +40,13 @@ class setWindow():
             'series': SerieView(),
             'add_movie': AddMovieView(),
             'movie_list' : MovieListView(),
-            'play': Player()
+            'play': Player(),
+            'movie_add_star_to_model_view' :MovieAddStarToModelView()
         }
+
+        get = switcher.get(object, "Invalid data")
+        if get =='Invalid data':
+            Error.throw_error('Viev '+object+' not found')
         return switcher.get(object, "Invalid data");
 class Router:
     search_In = 'movies'
