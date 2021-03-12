@@ -169,10 +169,6 @@ class MenuHalfSmall(MenuType):
                     "height": 985
                 },
                 "window": {
-                    "tags": [600, 200, 375, 220],
-                    "tags_limit": 1000,
-                    "description": [450, 350, 400, 200],
-                    "description_limit": 500,
                     "title_size"    : [0, 0 ,1280 ,100],
                     "form_section"  : [400, 0 ,480 ,250],
                     "list_view_size": [300, 150, 680, 250],

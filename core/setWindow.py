@@ -15,24 +15,23 @@ class setWindow():
         from view.star.stars import StarView
         from view.SeriesMovieListView.MovieListView import MovieListView
         from view.star.edit_star import EditStarView
-        from view.tags.add_tags import AddTagView
+        from view.tags.add_tags import MoviesAddTagView,SeriesAddTagView
         from view.series.editseries import EditSeries
         from view.set_photo_to_series.set_photo_to_series import SetPhotoToSeries
-        from view.star.add_star_to_model import AddStarToModelView
         from view.menu.menu import Menu
         from view.menu.advande_search import AdvanceSearch
         from view.tags.add_tag_to_model_no_save import AddTagToModelNoSave
         from view.movie.edit_movie import EditMovieView
-        from view.star.add_star_to_model import MovieAddStarToModelView
+        from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
 
         switcher = {
+            'movies_add_tag_view': MoviesAddTagView(),
+            'series_add_tag_view': SeriesAddTagView(),
             'add_tag_to_model_no_save' :AddTagToModelNoSave(),
             'advance_search'    : AdvanceSearch(),
             'menu'              : Menu(),
             'edit_movie'        : EditMovieView(),
-            'add_star_to_model' :AddStarToModelView(),
             'set_photo_to_series' : SetPhotoToSeries(),
-            'add_tags': AddTagView(),
             'stars': StarView(),
             'edit_series':EditSeries(),
             'edit_star': EditStarView(),
@@ -41,7 +40,8 @@ class setWindow():
             'add_movie': AddMovieView(),
             'movie_list' : MovieListView(),
             'play': Player(),
-            'movie_add_star_to_model_view' :MovieAddStarToModelView()
+            'movie_add_star_to_model_view'  :MovieAddStarToModelView(),
+            'series_add_star_to_model_view' :SeriesAddStarToModelView()
         }
 
         get = switcher.get(object, "Invalid data")

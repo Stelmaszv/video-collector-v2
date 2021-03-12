@@ -18,13 +18,13 @@ class EditSeries(QWidget,AbstractBaseView):
         self.window_title='Editing '+str(self.data.name)
 
     def add_star(self,values):
-        self.BaseView.load_view('add_star_to_model', self.data)
+        self.BaseView.load_view('series_add_star_to_model_view', self.data)
 
     def set_photo_for_series(self,values):
         self.BaseView.load_view('set_photo_to_series', self.data)
 
     def add_tag(self,values):
-        self.BaseView.load_view('add_tags', self.data)
+        self.BaseView.load_view('series_add_tag_view', self.data)
 
     def submit_click(self,values):
         self.Submit.set_data(values)

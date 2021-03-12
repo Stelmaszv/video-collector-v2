@@ -2,14 +2,12 @@ from PyQt5.QtWidgets import QWidget
 from core.view import AbstractBaseView
 from core.BaseActions import AddTag
 from app.forms import TagsForm
-from app.db.models import Series
+from app.db.models import Series,Movies
 
 class AddTagView(QWidget,AbstractBaseView):
     resolution_index = 'add_tag'
     window_title = 'Add tag'
     show_elemnts = ['Info','Galery','Nav','Avatar','Description','Tags']
-    model = Series
-    reset_view = 'add_tags'
     model_view_off = True
     FormSchema   = TagsForm
     list_view = 'Tags'
@@ -28,3 +26,13 @@ class AddTagView(QWidget,AbstractBaseView):
         AT.remove_tag(tag)
         self.BaseActions.reset()
         return True
+
+class MoviesAddTagView(AddTagView):
+    model = Movies
+    reset_view = 'movies'
+
+class SeriesAddTagView(AddTagView):
+    model = Series
+    reset_view = 'series'
+
+
