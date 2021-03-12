@@ -13,55 +13,8 @@ from core.BaseActions import FormSection,Submit,Form
 from app.model_view import BaseModelViewSet
 from core.setings import data_JSON
 from core.strings import stringManipupations
+from app.forms import BaseFormShema
 import json
-
-class BaseFormShema:
-    from_section=[]
-    def __init__(self, BaseView,methods=[]):
-        self.BaseView = BaseView
-        self.chcek_nethods(methods)
-        self.methods=methods
-        self.form()
-
-    def chcek_nethods(self,methods):
-        for method in methods:
-            Error.throw_error_bool(str(method)+' not exist in Baseview ',self.is_method(method))
-
-    def form(self):
-        pass
-
-    def get_files_from_dir(self,defult,dir):
-        dir_loop=[]
-        dir_loop.append(defult)
-        for item in os.listdir(dir):
-            dir_loop_elment=dir + '/' +str(item)
-            dir_loop.append(dir_loop_elment)
-        return dir_loop
-
-    def get_files_in_dir_for_movie(self,defult,Data):
-        return self.get_files_from_dir(defult, Data.dir)
-
-    def get_files_in_dir(self,defult):
-        dir=self.BaseView.data.dir + '' +str('/photo')
-        return self.get_files_from_dir(defult,dir)
-
-    def set_value_if_exist(self,value,empty):
-        if value is None :
-            return empty
-        return str(value)
-
-    def return_from_section(self):
-        return self.from_section
-
-    def add_method(self,method,method_str):
-
-        if method_str in self.methods is not True:
-            return  method
-        else:
-            Error.throw_error_bool(str(method_str) + ' not exist in Baseview ', False)
-
-    def is_method(self, method):
-        return callable(getattr(self.BaseView, method, None))
 
 class BaseView:
 
