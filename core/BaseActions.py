@@ -152,6 +152,10 @@ class AddStar(AddTag):
 
 class Submit:
 
+    Model = None
+    Obj   = None
+    data  = []
+
     def __init__(self,Model=None,Data=[],Obj=None):
         self.Model = Model(Data)
         self.Obj   = Obj
@@ -162,18 +166,19 @@ class Submit:
     def run(self):
         error = []
         for item in self.data:
-            if item['data-type'] == 'data':
-                ymd = item['value'].split('-')
-                if len(ymd) == 3:
-                    DV = DataValidator()
-                    DV.error = []
-                    DV.set_data(int(ymd[0]), ymd[1], int(ymd[2]))
-                    DV.validate_data()
-                    item['value'] = datetime(DV.year, DV.mount, DV.day)
-            if item['data-type'] == 'dir':
-                if len(item['value'])>0:
-                    if os.path.isdir(item['value']) is False:
-                        error.append("This is not dir location")
+            if 'data-type' in item:
+                if item['data-type'] == 'dir':
+                    if len(item['value']) > 0:
+                        if os.path.isdir(item['value']) is False:
+                            error.append("This is not dir location")
+                if item['data-type'] == 'data':
+                    ymd = item['value'].split('-')
+                    if len(ymd) == 3:
+                        DV = DataValidator()
+                        DV.error = []
+                        DV.set_data(int(ymd[0]), ymd[1], int(ymd[2]))
+                        DV.validate_data()
+                        item['value'] = datetime(DV.year, DV.mount, DV.day)
 
         if len(error) == 0:
             self.add_data_to_model()
@@ -433,16 +438,18 @@ class FormSection:
 
             if data['item']['type'] == 'combo_box':
                 return  data['button'].currentText()
-
         for item in grid:
             values.append(
                 {
-                    'name' :item['item']['place_holder'],
-                    'value':str(show_value(item)),
-                    'data-type':item['item']['data_type']
+                    'name': item['item']['place_holder'],
+                    'value': str(show_value(item)),
+                    'data-type': item['item']['data_type']
                 }
             )
+
         return values;
+
+
 
     def faind_submit(self,buttons):
         for item in buttons:

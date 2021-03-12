@@ -4,8 +4,6 @@ from app.db.models import session
 class BaseModelViewSet:
     pass
 
-
-
 class SetPhotoToSetiesView(BaseModelViewSet):
 
     model = Series()
@@ -28,6 +26,7 @@ class MoviesModelView(BaseModelViewSet):
         self.data=data
 
     def add_data(self, data):
+
         if data[0]['value']:
             self.data.name = data[0]['value']
 

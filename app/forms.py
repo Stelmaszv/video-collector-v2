@@ -34,6 +34,7 @@ class FormConstract:
             'type': 'combo_box',
             'name': details['name'],
             'data_type': 'combo_box_dir',
+            'place_holder': details['place_holder'],
             'combo_box_list': self.BaseFormShema.get_files_in_dir_for_movie(
                 getattr(self.BaseFormShema.BaseView.data,details['name']),
                 self.BaseFormShema.BaseView.data
@@ -44,18 +45,21 @@ class FormConstract:
     def label(self,details):
         self.field_valid(details)
         return {
+            'data_type': "",
             'type': 'label',
             'name': details['name'],
             'place_holder': details['place_holder'],
             'grid_data': self.create_grid(details)
         }
 
-    def button_shema(self,details,name):
+    def button(self,details):
+        name= 'button'
         self.field_valid(details)
-        if 'is_is_submit' in details:
-            name = 'suubmit'
+        if 'is_submit' in details:
+            name = 'button_submit'
         return {
             'type': name,
+            'data_type':"",
             'name': details['place_holder'],
             'obj_name': details['name'],
             'place_holder': details['place_holder'],
@@ -67,16 +71,16 @@ class FormConstract:
             'arguments': []
         }
 
-    def button(self,details):
-        return self.button_shema(details,'button')
-
     def edit_line(self,details):
         self.field_valid(details)
+        data_type = 'data_type'
+        if 'data_type' in details:
+            data_type = details['data_type']
         return {
             'type': 'edit_line',
             'name': details['name'],
             'validation': "",
-            'data_type': 'string',
+            'data_type': data_type,
             'place_holder': self.BaseFormShema.set_value_if_exist(
                 getattr(self.BaseFormShema.BaseView.data,details['name']),details['name']),
             'grid_data': self.create_grid(details)
@@ -190,6 +194,7 @@ class MovieEditForm(BaseFormShema):
         self.add_iten('label', {
             'place_holder': 'Dir Location',
             'name': 'dir',
+            'data_type':'dir',
             "row": True,
             "coll": False,
             'new_row': True
@@ -241,6 +246,7 @@ class MovieEditForm(BaseFormShema):
             "is_submit":True,
             'new_row': True
         })
+
 
 class AdvanceSearchForm(BaseFormShema):
     def form(self):
