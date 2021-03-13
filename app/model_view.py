@@ -80,11 +80,10 @@ class StarModelView(BaseModelViewSet):
 
     def add_data(self,data):
 
-        self.data=self.set_data()
 
         if data[0]['value']:
             self.data.name           =  data[0]['value']
-
+        """
         if data[1]['value']:
             self.data.height         =  data[1]['value']
 
@@ -112,6 +111,7 @@ class StarModelView(BaseModelViewSet):
 
             if data[9]['value']:
                 self.data.singles = data[9]['value']
+        """
 
         self.session.add_all([self.data])
         self.session.commit()

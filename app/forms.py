@@ -27,7 +27,36 @@ class FormConstract:
 
         return  [self.row, self.coll, 1, 1]
 
+    def calendar(self,details):
+        self.field_valid(details)
+        validation=''
+        data_type='string'
+        if 'validation' in details:
+            validation = details['validation']
+        if 'data_type' in details:
+            data_type = details['data_type']
+        return {
+            'data_type': data_type,
+            'type': 'calendar',
+            'name': details['name'],
+            'validation' :validation,
+            'place_holder': details['place_holder'],
+            'grid_data': self.create_grid(details)
+        }
+
     def combo_box(self,details):
+        self.field_valid(details)
+        Error.throw_error_bool('combo_box_list is not exist', 'combo_box_list' in details)
+        return {
+            'type': 'combo_box',
+            'data_type': "",
+            'name': details['name'],
+            'place_holder': details['place_holder'],
+            'combo_box_list' :details['combo_box_list'],
+            'grid_data': self.create_grid(details)
+        }
+
+    def photo(self,details):
         self.field_valid(details)
         return {
             'type': 'combo_box',
@@ -73,18 +102,25 @@ class FormConstract:
 
     def edit_line(self,details):
         self.field_valid(details)
-        data_type = 'data_type'
-        if 'data_type' in details:
-            data_type = details['data_type']
-        return {
-            'type': 'edit_line',
-            'name': details['name'],
-            'validation': "",
-            'data_type': data_type,
-            'place_holder': self.BaseFormShema.set_value_if_exist(
-                getattr(self.BaseFormShema.BaseView.data,details['name']),details['name']),
-            'grid_data': self.create_grid(details)
-        }
+        if hasattr(self.BaseFormShema.BaseView.data,details['name']):
+            data_type = 'data_type'
+            validation= ''
+            if 'data_type' in details:
+                data_type = details['data_type']
+            if 'validation' in details:
+                validation = details['validation']
+
+            return {
+                'type'        : 'edit_line',
+                'name'        : details['name'],
+                'data_type'   : data_type,
+                'validation'  : validation,
+                'place_holder': self.BaseFormShema.set_value_if_exist(
+                    getattr(self.BaseFormShema.BaseView.data,details['name']),details['name']),
+                'grid_data': self.create_grid(details)
+            }
+        else:
+            Error.throw_error(details['name']+' not exist in object '+str(self.BaseFormShema.BaseView.data)  )
 
 class BaseFormShema:
     from_section=[]
@@ -178,7 +214,6 @@ class AbstractBaseFormShema(BaseFormShema):
             "row": False,
             "coll": True
         })
-
         self.add_iten('label', {
             'place_holder': 'Avatar',
             'name': 'avatar',
@@ -187,14 +222,13 @@ class AbstractBaseFormShema(BaseFormShema):
             'new_row': True
         })
 
-        self.add_iten('combo_box', {
+        self.add_iten('photo', {
             'place_holder': 'Avatar',
             'dir_set': self.avatar_dir,
             'name': 'avatar',
             "row": False,
             "coll": True,
         })
-
         self.add_forms()
         self.add_iten('button', {
             'place_holder': 'Submit',
@@ -481,213 +515,135 @@ class SeriesForm(AbstractBaseFormShema):
             "coll": True,
             'new_row': True
         })
-    """
-    def form(self):
-        self.from_section = []
 
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'submit',
-            'name': 'Set photo for series',
-            'place_holder': 'Submit',
-            'grid_data': [11, 1, 1, 1],
-            'click': self.add_method(self.BaseView.set_photo_for_series,'set_photo_for_series'),
-            'arguments': []
-        })
-        """
+class StarsForm(AbstractBaseFormShema):
 
-class StarsForm(BaseFormShema):
+    avatar_dir = '/photo'
 
-    def form(self):
-        self.from_section=[]
-        self.from_section.append({
-            'type'        : 'label',
-            'name'        : 'name',
-            'place_holder': 'Name',
-            'grid_data'   : [0, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'name',
-            'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
-            'data_type': 'string',
-            'place_holder': self.set_value_if_exist(self.BaseView.data.name,"Format - Full Name"),
-            'grid_data': [0, 1, 1, 1]
-        })
-
-
-        self.from_section.append({
-            'type': 'label',
-            'name': 'height',
+    def add_forms(self):
+        self.add_iten('label', {
             'place_holder': 'Height',
-            'grid_data': [1, 0, 1, 1]
+            'name': 'height',
+            "row": True,
+            "coll": False,
+            'new_row': True
         })
 
-        self.from_section.append({
-            'type': 'edit_line',
+        self.add_iten('edit_line', {
+            'place_holder': 'Height',
             'name': 'height',
             'data_type': 'int',
             'validation': "[0-9][0-9][0-9]",
-            'place_holder': self.set_value_if_exist(str(self.BaseView.data.height)+' cm','value in cm'),
-            'grid_data': [1, 1, 1, 1]
+            "row": False,
+            "coll": True
         })
 
-        self.from_section.append({
-            'type': 'label',
-            'name': 'weight',
+        self.add_iten('label', {
             'place_holder': 'Weight',
-            'grid_data': [2, 0, 1, 1]
+            'name': 'weight',
+            "row": True,
+            "coll": False,
+            'new_row': True
         })
 
-        self.from_section.append({
-            'type': 'edit_line',
+        self.add_iten('edit_line', {
+            'place_holder': 'Weight',
             'name': 'weight',
             'data_type': 'int',
             'validation': "[0-9][0-9][0-9]",
-            'place_holder': self.set_value_if_exist(str(self.BaseView.data.weight)+' kg','value in kg'),
-            'grid_data': [2, 1, 1, 1]
+            "row": False,
+            "coll": True
         })
 
-        self.from_section.append({
-            'type': 'label',
-            'name': 'ethnicity',
+        self.add_iten('label', {
             'place_holder': 'Ethnicity',
-            'grid_data': [3, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'combo_box',
             'name': 'ethnicity',
-            'data_type': 'string',
-            'combo_box_list': [self.BaseView.data.ethnicity, 'Black', 'Asian', 'Arab', 'White'],
-            'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
-            'place_holder': '',
-            'grid_data': [3, 1, 1, 1]
+            "row": True,
+            "coll": False,
+            'new_row': True
         })
 
+        self.add_iten('combo_box', {
+            'place_holder': 'Weight',
+            'name': 'ethnicity',
+            'combo_box_list':[self.BaseView.data.ethnicity, 'Black', 'Asian', 'Arab', 'White'],
+            "row": False,
+            "coll": True
+        })
 
-        self.from_section.append({
-            'type': 'label',
-            'name': 'hair_color',
+        self.add_iten('label', {
             'place_holder': 'Hair color',
-            'grid_data': [4, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'combo_box',
             'name': 'hair_color',
-            'data_type': 'string',
-            'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
-            'place_holder': '',
-            'grid_data': [4, 1, 1, 1],
-            'combo_box_list': [self.BaseView.data.hair_color, 'Black', 'Gray', 'Brown', 'Blond']
+            "row": True,
+            "coll": False,
+            'new_row': True
         })
 
-        self.from_section.append({
-            'type': 'label',
-            'name': 'date_of_birth',
+        self.add_iten('combo_box', {
+            'place_holder': 'Hair color',
+            'name': 'hair_color',
+            'combo_box_list': [self.BaseView.data.hair_color, 'Black', 'Gray', 'Brown', 'Blond'],
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
             'place_holder': 'Date of birth',
-            'grid_data': [5, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'calendar',
             'name': 'date_of_birth',
-            'data_type': 'data',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('calendar', {
+            'place_holder': 'Date of birth',
+            'name': 'date_of_birth',
             'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
-            'place_holder':'',
-            'grid_data': [5, 1, 1, 1]
+            "row": False,
+            "coll": True
         })
 
 
-        self.from_section.append({
-            'type': 'label',
-            'name': 'dir_label',
-            'place_holder': 'Dir location',
-            'grid_data': [6, 0, 1, 1]
+        self.add_iten('label', {
+            'place_holder': 'None',
+            'name': 'none',
+            "row": True,
+            "coll": False,
+            'new_row': True
         })
 
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'dir_edit_line',
-            'data_type': 'dir',
-            'validation': "",
-            'place_holder': self.set_value_if_exist(self.BaseView.data.dir,'Location dir with data'),
-            'grid_data': [6, 1, 1, 1]
+        self.add_iten('photo', {
+            'place_holder': 'None',
+            'dir_set': self.avatar_dir,
+            'name': 'none',
+            "row": False,
+            "coll": True,
         })
 
-        if self.BaseView.data.dir:
+        self.add_iten('label', {
+            'place_holder': 'Singles',
+            'name': 'singles',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
 
-            self.from_section.append({
-                'type': 'label',
-                'name': 'avatar_label',
-                'place_holder': 'Avatar',
-                'grid_data': [7, 0, 1, 1]
-            })
+        self.add_iten('photo', {
+            'place_holder': 'Singles',
+            'dir_set': self.avatar_dir,
+            'name': 'singles',
+            "row": False,
+            "coll": True,
+        })
 
-            self.from_section.append({
-                'type': 'combo_box',
-                'name': 'avatar_edit_line',
-                'data_type': 'combo_box_dir',
-                'validation': "",
-                'place_holder': self.set_value_if_exist(self.BaseView.data.avatar,'Avator'),
-                'grid_data': [7, 1, 1, 1],
-                'combo_box_list': self.get_files_in_dir(self.BaseView.data.avatar)
-            })
+        self.add_iten('button', {
+            'place_holder': 'Add tag',
+            'name': 'add_tag',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
 
-            self.from_section.append({
-                'type': 'label',
-                'name': 'none_edit_line_label',
-                'place_holder': 'None avatar',
-                'grid_data': [8, 0, 1, 1]
-            })
-
-            self.from_section.append({
-                'type': 'combo_box',
-                'name': 'none_edit_line',
-                'data_type': 'combo_box_dir',
-                'validation': "",
-                'place_holder': self.set_value_if_exist(self.BaseView.data.none,'None dir avator'),
-                'grid_data': [8, 1, 1, 1],
-                'combo_box_list': self.get_files_in_dir(self.BaseView.data.none)
-            })
-
-            self.from_section.append({
-                'type': 'label',
-                'name': 'singles_edit_line_label',
-                'place_holder': 'Singles avatar',
-                'grid_data': [9, 0, 1, 1]
-            })
-
-            self.from_section.append({
-                'type': 'combo_box',
-                'name': 'singles_edit_line',
-                'data_type': 'combo_box_dir',
-                'validation': "",
-                'place_holder': self.set_value_if_exist(self.BaseView.data.singles,'Singles dir avator'),
-                'grid_data': [9, 1, 1, 1],
-                'combo_box_list': self.get_files_in_dir(self.BaseView.data.singles)
-            })
-            self.from_section.append({
-                'type': 'button',
-                'obj_name': 'add_tags',
-                'name': 'Add Tags',
-                'place_holder': 'Tags',
-                'grid_data': [10, 1, 1, 1],
-                'click' : self.add_method(self.BaseView.add_tag,'add_tag'),
-                'arguments': []
-            })
-                
-            self.from_section.append({
-                'type': 'button_submit',
-                'obj_name': 'submit',
-                'name': 'Submit',
-                'place_holder': 'Submit',
-                'grid_data': [11, 1, 1, 1],
-                'click': self.add_method(self.BaseView.submit_click,'submit_click'),
-                'arguments': []
-            })
 
 
 
