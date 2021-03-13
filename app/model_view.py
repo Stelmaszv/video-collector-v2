@@ -81,8 +81,7 @@ class StarModelView(BaseModelViewSet):
     def add_data(self,data):
 
 
-        if data[0]['value']:
-            self.data.name           =  data[0]['value']
+        print(data)
         """
         if data[1]['value']:
             self.data.height         =  data[1]['value']

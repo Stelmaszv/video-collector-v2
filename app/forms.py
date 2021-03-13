@@ -38,6 +38,7 @@ class FormConstract:
         return {
             'data_type': data_type,
             'type': 'calendar',
+            'DB'  :details['DB'],
             'name': details['name'],
             'validation' :validation,
             'place_holder': details['place_holder'],
@@ -91,7 +92,9 @@ class FormConstract:
 
     def photo(self,details):
         self.field_valid(details)
+        db=self.set_db(details)
         return {
+            'db'  : db,
             'type': 'combo_box',
             'name': details['name'],
             'data_type': 'combo_box_dir',
@@ -140,19 +143,36 @@ class FormConstract:
             'arguments': []
         }
 
-    def edit_line(self,details):
-        self.field_valid(details)
-        place_holder=''
+    def if_model(self,details):
+        if 'model' in details and details['model'] is False:
+            return True
+        return False
+
+    def set_db(self,details):
+        if 'db' in details:
+            if hasattr(self.BaseFormShema.BaseView.data,details['db']):
+                return details['db']
+        return ''
+
+    def set_placeholder(self,details):
+        place_holder = ''
         if  hasattr(self.BaseFormShema.BaseView.data,details['name']):
             place_holder = self.BaseFormShema.set_value_if_exist(
                     getattr(self.BaseFormShema.BaseView.data,details['name']),details['name']
             )
-        if 'model' in details and details['model'] is False and 'custum_name' in details:
-            Error.throw_error_bool(
-                details['custum_name']+' not exist in object '+str(self.BaseFormShema.BaseView.data),
-                'custum_name' in details
-            )
-            place_holder=details['custum_name']
+            if self.if_model(details) and 'custum_name' in details:
+                Error.throw_error_bool(
+                    details['custum_name'] + ' not exist in object ' + str(self.BaseFormShema.BaseView.data),
+                    'custum_name' in details
+                )
+
+                place_holder = details['custum_name']
+        return place_holder
+
+    def edit_line(self,details):
+        self.field_valid(details)
+        db=self.set_db(details)
+
         data_type = 'data_type'
         validation= ''
         if 'data_type' in details:
@@ -162,17 +182,18 @@ class FormConstract:
             validation = details['validation']
 
         return {
+            'db'          : db,
             'type'        : 'edit_line',
             'name'        : details['name'],
             'data_type'   : data_type,
             'validation'  : validation,
-            'place_holder': place_holder,
+            'place_holder': self.set_placeholder(details),
             'grid_data': self.create_grid(details)
         }
 
 class BaseFormShema:
     from_section=[]
-    def __init__(self, BaseView,methods=[]):
+    def __init__(self, BaseView):
         self.BaseView = BaseView
         self.ElmentsShema=FormConstract(self)
         self.form()
@@ -236,6 +257,7 @@ class AbstractBaseFormShema(BaseFormShema):
         self.add_iten('edit_line', {
             'place_holder': 'Name',
             'name': 'name',
+            'db'  : 'name',
             "row": False,
             "coll": True
         })
@@ -252,6 +274,7 @@ class AbstractBaseFormShema(BaseFormShema):
         self.add_iten('edit_line', {
             'place_holder': 'Dir Location',
             'name': 'dir',
+            'db': 'dir',
             "row": False,
             "coll": True
         })
@@ -266,6 +289,7 @@ class AbstractBaseFormShema(BaseFormShema):
         self.add_iten('photo', {
             'place_holder': 'Avatar',
             'dir_set': self.avatar_dir,
+            'db': 'avatar',
             'name': 'avatar',
             "row": False,
             "coll": True,
@@ -388,7 +412,6 @@ class MenuFormSchena(BaseFormShema):
         self.add_iten('edit_line', {
             'place_holder': 'Szukaj',
             'custum_name':'Search in data base',
-            'model':False,
             'name': 'name',
             "row": False,
             "coll": True
@@ -536,6 +559,7 @@ class StarsForm(AbstractBaseFormShema):
     avatar_dir = '/photo'
 
     def add_forms(self):
+        """
         self.add_iten('label', {
             'place_holder': 'Height',
             'name': 'height',
@@ -543,7 +567,6 @@ class StarsForm(AbstractBaseFormShema):
             "coll": False,
             'new_row': True
         })
-
         self.add_iten('edit_line', {
             'place_holder': 'Height',
             'name': 'height',
@@ -560,6 +583,7 @@ class StarsForm(AbstractBaseFormShema):
             "coll": False,
             'new_row': True
         })
+
 
         self.add_iten('edit_line', {
             'place_holder': 'Weight',
@@ -658,6 +682,8 @@ class StarsForm(AbstractBaseFormShema):
             "coll": True,
             'new_row': True
         })
+        """
+        pass
 
 
 

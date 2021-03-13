@@ -259,7 +259,7 @@ class AbstractBaseView:
             Error.throw_error_is_none('self.ModelView is required for form section !', self.ModelView)
             Error.throw_error_bool('class self.ModelView is not subclass of BaseModelViewSet',
                                issubclass(self.ModelView, BaseModelViewSet))
-        self.FormSchemaObj = self.FormSchema(self, self.methods)
+        self.FormSchemaObj = self.FormSchema(self)
         data_line = self.WindowSize['form_section']
         buttons = self.FormSchemaObj.return_from_section()
         if self.model_view_off is False:

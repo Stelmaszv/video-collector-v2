@@ -438,11 +438,15 @@ class FormSection:
             if data['item']['type'] == 'combo_box':
                 return  data['button'].currentText()
         for item in grid:
+            db = ''
+            if 'db' in item:
+                db=item['db']
             values.append(
                 {
                     'name': item['item']['place_holder'],
                     'value': str(show_value(item)),
-                    'data-type': item['item']['data_type']
+                    'data-type': item['item']['data_type'],
+                    'db'       : db
                 }
             )
 
