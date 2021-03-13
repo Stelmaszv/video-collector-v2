@@ -339,49 +339,45 @@ class MovieEditForm(AbstractBaseFormShema):
 class AdvanceSearchForm(BaseFormShema):
     def form(self):
         self.from_section = []
-        self.from_section.append({
-            'type': 'label',
-            'name': 'name',
+        self.add_iten('label', {
             'place_holder': 'Name',
-            'grid_data': [0, 0, 1, 1]
-        })
-        self.from_section.append({
-            'type': 'edit_line',
             'name': 'name',
-            'validation': "",
-            'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None,'Hukaj'),
-            'grid_data': [0, 1, 1, 1]
+            "row": False,
+            "coll": False
         })
 
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'advance',
-            'name': 'Add Tag',
-            'place_holder': 'advance',
-            'grid_data': [1, 1, 1, 1],
-            'click': self.add_method(self.BaseView.add_tag,'add_tag'),
-            'arguments':[]
+        self.add_iten('edit_line', {
+            'place_holder': 'Hukaj',
+            'custum_name':'Hukaj',
+            'model':False,
+            'name': 'name',
+            "row": False,
+            "coll": True
         })
 
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'advance',
-            'name': 'Add Star',
-            'place_holder': 'advance',
-            'grid_data': [2, 1, 1, 1],
-            'click': self.add_method(self.BaseView.add_star,'add_star'),
-            'arguments':[]
+        self.add_iten('button', {
+            'place_holder': 'Add Tag',
+            'name': 'add_tag',
+            "row": True,
+            "coll": True,
+            'new_row': True
         })
 
-        self.from_section.append({
-            'type': 'button_submit',
-            'obj_name': 'submit',
-            'name': 'Submit',
+        self.add_iten('button', {
+            'place_holder': 'Add Tag',
+            'name': 'add_star',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
             'place_holder': 'Submit',
-            'grid_data': [3, 1, 1, 1],
-            'click': self.add_method(self.BaseView.submit_click, 'submit_click'),
-            'arguments': []
+            'name': 'submit_click',
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+            'new_row': True
         })
 
 class MenuFormSchena(BaseFormShema):
@@ -396,8 +392,8 @@ class MenuFormSchena(BaseFormShema):
         })
 
         self.add_iten('edit_line', {
-            'place_holder': 'Name',
-            'custum_name':'Tag name',
+            'place_holder': 'Szukaj',
+            'custum_name':'Search in data base',
             'model':False,
             'name': 'name',
             "row": False,
@@ -436,7 +432,6 @@ class MenuFormSchena(BaseFormShema):
             "is_submit": True,
             'new_row': True
         })
-
 
 class AddStarToModelForm(BaseFormShema):
 
