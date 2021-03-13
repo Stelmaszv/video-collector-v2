@@ -142,15 +142,17 @@ class BaseFormShema:
         else:
             Error.throw_error('Method '+item+' not found !')
 
+class AbstractBaseFormShema(BaseFormShema):
 
+    def add_forms(self):
+        pass
 
-class MovieEditForm(BaseFormShema):
     def form(self):
         self.from_section = []
-        self.add_iten('label',{
-            'place_holder':'Name',
+        self.add_iten('label', {
+            'place_holder': 'Name',
             'name': 'name',
-            "row" : False,
+            "row": False,
             "coll": False
         })
 
@@ -162,39 +164,9 @@ class MovieEditForm(BaseFormShema):
         })
 
         self.add_iten('label', {
-            'place_holder': 'Country',
-            'name': 'country',
-            "row": True,
-            "coll": False,
-            'new_row':True
-        })
-
-        self.add_iten('edit_line', {
-            'place_holder': 'Cuntry',
-            'name': 'country',
-            "row": False,
-            "coll": True
-        })
-
-        self.add_iten('label', {
-            'place_holder': 'Year',
-            'name': 'country',
-            "row": True,
-            "coll": False,
-            'new_row': True
-        })
-
-        self.add_iten('edit_line', {
-            'place_holder': 'Year',
-            'name': 'year',
-            "row": False,
-            "coll": True
-        })
-
-        self.add_iten('label', {
             'place_holder': 'Dir Location',
             'name': 'dir',
-            'data_type':'dir',
+            'data_type': 'dir',
             "row": True,
             "coll": False,
             'new_row': True
@@ -222,6 +194,51 @@ class MovieEditForm(BaseFormShema):
             "coll": True,
         })
 
+        self.add_forms()
+        self.add_iten('button', {
+            'place_holder': 'Submit',
+            'name': 'submit_click',
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+            'new_row': True
+        })
+
+
+class MovieEditForm(AbstractBaseFormShema):
+
+    def add_forms(self):
+
+        self.add_iten('label', {
+            'place_holder': 'Country',
+            'name': 'country',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Cuntry',
+            'name': 'country',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Year',
+            'name': 'country',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Year',
+            'name': 'year',
+            "row": False,
+            "coll": True
+        })
+
         self.add_iten('button', {
             'place_holder': 'Add tag',
             'name': 'add_tag',
@@ -238,14 +255,6 @@ class MovieEditForm(BaseFormShema):
             'new_row': True
         })
 
-        self.add_iten('button', {
-            'place_holder': 'Submit',
-            'name': 'submit_click',
-            "row": True,
-            "coll": True,
-            "is_submit":True,
-            'new_row': True
-        })
 
 
 class AdvanceSearchForm(BaseFormShema):
