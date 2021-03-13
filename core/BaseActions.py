@@ -179,6 +179,7 @@ class Submit:
                         DV.set_data(int(ymd[0]), ymd[1], int(ymd[2]))
                         DV.validate_data()
                         item['value'] = datetime(DV.year, DV.mount, DV.day)
+                        print(item['value'])
 
         if len(error) == 0:
             self.add_data_to_model()

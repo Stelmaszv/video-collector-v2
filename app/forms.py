@@ -30,15 +30,13 @@ class FormConstract:
     def calendar(self,details):
         self.field_valid(details)
         validation=''
-        data_type='string'
+        db = self.set_db(details)
         if 'validation' in details:
             validation = details['validation']
-        if 'data_type' in details:
-            data_type = details['data_type']
         return {
-            'data_type': data_type,
+            'data_type': 'data',
             'type': 'calendar',
-            'DB'  :details['DB'],
+            'db': db,
             'name': details['name'],
             'validation' :validation,
             'place_holder': details['place_holder'],
@@ -48,7 +46,9 @@ class FormConstract:
     def combo_box(self,details):
         self.field_valid(details)
         Error.throw_error_bool('combo_box_list is not exist', 'combo_box_list' in details)
+        db = self.set_db(details)
         return {
+            'db': db,
             'type': 'combo_box',
             'data_type': "",
             'name': details['name'],
@@ -559,7 +559,6 @@ class StarsForm(AbstractBaseFormShema):
     avatar_dir = '/photo'
 
     def add_forms(self):
-        """
         self.add_iten('label', {
             'place_holder': 'Height',
             'name': 'height',
@@ -571,6 +570,7 @@ class StarsForm(AbstractBaseFormShema):
             'place_holder': 'Height',
             'name': 'height',
             'data_type': 'int',
+            'db': 'height',
             'validation': "[0-9][0-9][0-9]",
             "row": False,
             "coll": True
@@ -589,6 +589,7 @@ class StarsForm(AbstractBaseFormShema):
             'place_holder': 'Weight',
             'name': 'weight',
             'data_type': 'int',
+            'db': 'weight',
             'validation': "[0-9][0-9][0-9]",
             "row": False,
             "coll": True
@@ -605,6 +606,7 @@ class StarsForm(AbstractBaseFormShema):
         self.add_iten('combo_box', {
             'place_holder': 'Weight',
             'name': 'ethnicity',
+            'db': 'ethnicity',
             'combo_box_list':[self.BaseView.data.ethnicity, 'Black', 'Asian', 'Arab', 'White'],
             "row": False,
             "coll": True
@@ -621,6 +623,7 @@ class StarsForm(AbstractBaseFormShema):
         self.add_iten('combo_box', {
             'place_holder': 'Hair color',
             'name': 'hair_color',
+            'db': 'hair_color',
             'combo_box_list': [self.BaseView.data.hair_color, 'Black', 'Gray', 'Brown', 'Blond'],
             "row": False,
             "coll": True
@@ -638,10 +641,10 @@ class StarsForm(AbstractBaseFormShema):
             'place_holder': 'Date of birth',
             'name': 'date_of_birth',
             'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
+            'db': 'date_of_birth',
             "row": False,
             "coll": True
         })
-
 
         self.add_iten('label', {
             'place_holder': 'None',
@@ -655,6 +658,7 @@ class StarsForm(AbstractBaseFormShema):
             'place_holder': 'None',
             'dir_set': self.avatar_dir,
             'name': 'none',
+            'db': 'none',
             "row": False,
             "coll": True,
         })
@@ -671,6 +675,7 @@ class StarsForm(AbstractBaseFormShema):
             'place_holder': 'Singles',
             'dir_set': self.avatar_dir,
             'name': 'singles',
+            'db': 'singles',
             "row": False,
             "coll": True,
         })
@@ -682,8 +687,6 @@ class StarsForm(AbstractBaseFormShema):
             "coll": True,
             'new_row': True
         })
-        """
-        pass
 
 
 
