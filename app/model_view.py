@@ -81,38 +81,8 @@ class StarModelView(BaseModelViewSet):
     def add_data(self,data):
 
         for item in data:
-            print(item)
-
-
-        """
-        if data[1]['value']:
-            self.data.height         =  data[1]['value']
-
-        if data[2]['value']:
-            self.data.weight         =  data[2]['value']
-
-        if data[3]['value']:
-            self.data.ethnicity      =  data[3]['value']
-
-        if data[4]['value']:
-            self.data.hair_color     =  data[4]['value']
-
-        if data[5]['value']:
-            self.data.date_of_birth  =  data[5]['value']
-
-        if data[6]['value']:
-            self.data.dir = data[6]['value']
-
-        if len(data)>7:
-            if data[7]['value']:
-                self.data.avatar = data[7]['value']
-
-            if data[8]['value']:
-                self.data.none = data[8]['value']
-
-            if data[9]['value']:
-                self.data.singles = data[9]['value']
-        """
+            if item['value']:
+                setattr(self.data,item['db'],item['value'])
 
         self.session.add_all([self.data])
         self.session.commit()
