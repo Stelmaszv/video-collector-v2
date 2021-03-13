@@ -102,25 +102,35 @@ class FormConstract:
 
     def edit_line(self,details):
         self.field_valid(details)
-        if hasattr(self.BaseFormShema.BaseView.data,details['name']):
-            data_type = 'data_type'
-            validation= ''
-            if 'data_type' in details:
-                data_type = details['data_type']
-            if 'validation' in details:
-                validation = details['validation']
+        place_holder = self.BaseFormShema.set_value_if_exist(
+                getattr(self.BaseFormShema.BaseView.data,details['name']),details['name']
+        )
+        if 'model' in details and details['model'] is False and 'custum_name' in details:
+            Error.throw_error_bool(
+                details['custum_name']+' not exist in object '+str(self.BaseFormShema.BaseView.data),
+                'custum_name' in details
+            )
+            place_holder=details['custum_name']
+            Error.throw_error_bool(
+                details['name']+' not exist in object '+str(self.BaseFormShema.BaseView.data),
+                hasattr(self.BaseFormShema.BaseView.data,details['name'])
+            )
+        data_type = 'data_type'
+        validation= ''
+        if 'data_type' in details:
+            data_type = details['data_type']
 
-            return {
-                'type'        : 'edit_line',
-                'name'        : details['name'],
-                'data_type'   : data_type,
-                'validation'  : validation,
-                'place_holder': self.BaseFormShema.set_value_if_exist(
-                    getattr(self.BaseFormShema.BaseView.data,details['name']),details['name']),
-                'grid_data': self.create_grid(details)
-            }
-        else:
-            Error.throw_error(details['name']+' not exist in object '+str(self.BaseFormShema.BaseView.data)  )
+        if 'validation' in details:
+            validation = details['validation']
+
+        return {
+            'type'        : 'edit_line',
+            'name'        : details['name'],
+            'data_type'   : data_type,
+            'validation'  : validation,
+            'place_holder': place_holder,
+            'grid_data': self.create_grid(details)
+        }
 
 class BaseFormShema:
     from_section=[]
@@ -437,7 +447,7 @@ class SetPhotoToSeriesForm(BaseFormShema):
                 'place_holder':  "Sezon name "+str(item.name),
                 'grid_data': [row, 0, 1, 1]
             })
-
+            """
             self.from_section.append({
                 'type': 'combo_box',
                 'name': 'avatar_edit_line',
@@ -447,7 +457,7 @@ class SetPhotoToSeriesForm(BaseFormShema):
                 'grid_data': [row, 1, 1, 1],
                 'combo_box_list': self.get_files_in_dir(item.src)
             })
-
+            """
             row=row+1
 
         self.from_section.append({
@@ -463,19 +473,20 @@ class TagsForm(BaseFormShema):
 
     def form(self):
         self.from_section = []
-        self.from_section.append({
-            'type'        : 'label',
-            'name'        : 'name',
+        self.add_iten('label', {
             'place_holder': 'Name',
-            'grid_data'   : [0, 0, 1, 1]
-        })
-        self.from_section.append({
-            'type': 'edit_line',
             'name': 'name',
-            'validation': "[A-Z]+.?[a-z]+.?[a-z]+.?[A-Z]+.?[a-z]+.?",
-            'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None,"Format - Full Name"),
-            'grid_data': [0, 1, 1, 1]
+            "row": False,
+            "coll": False
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Name',
+            'custum_name':'Tag name',
+            'model':False,
+            'name': 'name',
+            "row": False,
+            "coll": True
         })
         self.from_section.append({
             'type': 'button_submit',
