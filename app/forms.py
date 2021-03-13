@@ -115,10 +115,20 @@ class FormConstract:
         }
 
     def button(self,details):
+        Error.throw_error_bool(
+            'Object do not have atribut '+details['name'],
+            hasattr(self.BaseFormShema.BaseView.data,details['name']) is False
+        )
+        Error.throw_error_bool(
+            details['name']+' is not method',
+            self.BaseFormShema.is_method(details['name'])
+        )
+
         name= 'button'
         self.field_valid(details)
         if 'is_submit' in details:
             name = 'button_submit'
+
         return {
             'type': name,
             'data_type':"",
@@ -126,10 +136,7 @@ class FormConstract:
             'obj_name': details['name'],
             'place_holder': details['place_holder'],
             'grid_data': self.create_grid(details),
-            'click': self.BaseFormShema.add_method(
-                getattr(self.BaseFormShema.BaseView, details['name']),
-                details['name']
-            ),
+            'click': getattr(self.BaseFormShema.BaseView, details['name']),
             'arguments': []
         }
 
@@ -167,14 +174,8 @@ class BaseFormShema:
     from_section=[]
     def __init__(self, BaseView,methods=[]):
         self.BaseView = BaseView
-        self.chcek_nethods(methods)
-        self.methods=methods
         self.ElmentsShema=FormConstract(self)
         self.form()
-
-    def chcek_nethods(self,methods):
-        for method in methods:
-            Error.throw_error_bool(str(method)+' not exist in Baseview ',self.is_method(method))
 
     def form(self):
         pass
@@ -199,13 +200,6 @@ class BaseFormShema:
 
     def return_from_section(self):
         return self.from_section
-
-    def add_method(self,method,method_str):
-        return method
-        if method_str in self.methods is not True:
-            return  method
-        else:
-            Error.throw_error_bool(str(method_str) + ' not exist in Baseview ', False)
 
     def is_method(self, method):
         return callable(getattr(self.BaseView, method, None))
