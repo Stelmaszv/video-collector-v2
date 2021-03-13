@@ -80,8 +80,10 @@ class StarModelView(BaseModelViewSet):
 
     def add_data(self,data):
 
+        for item in data:
+            print(item)
 
-        print(data)
+
         """
         if data[1]['value']:
             self.data.height         =  data[1]['value']

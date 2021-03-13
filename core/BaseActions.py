@@ -439,8 +439,8 @@ class FormSection:
                 return  data['button'].currentText()
         for item in grid:
             db = ''
-            if 'db' in item:
-                db=item['db']
+            if 'db' in item['item']:
+                db=item['item']['db']
             values.append(
                 {
                     'name': item['item']['place_holder'],
@@ -451,8 +451,6 @@ class FormSection:
             )
 
         return values;
-
-
 
     def faind_submit(self,buttons):
         for item in buttons:
