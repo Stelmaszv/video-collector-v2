@@ -365,10 +365,9 @@ class FormSection:
                 )
 
             if item['type'] == "calendar":
-
                 edit_line = self.Form.edit_line(
                     item['place_holder'],
-                    [6, 1, 1, 1],
+                    item['grid_data'],
                     self.edit_section_grid,
                     item['validation'],
                 )
