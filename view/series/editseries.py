@@ -12,7 +12,6 @@ class EditSeries(QWidget,AbstractBaseView):
     show_elemnts       = ['Avatar','Info','Galery','Nav','List','Tags','Description']
     FormSchema        = SeriesForm
     submit_view       = 'series'
-    methods           = ['add_star','set_photo_for_series','add_tag','submit_click']
 
     def  set_up(self):
         self.window_title='Editing '+str(self.data.name)

@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QWidget
 from core.view import AbstractBaseView
 from core.BaseActions import AddTag
 from app.forms import TagsForm
-from app.db.models import Series,Movies
+from app.db.models import Series,Movies,Stars
 
 class AddTagView(QWidget,AbstractBaseView):
     resolution_index = 'add_tag'
@@ -11,7 +11,6 @@ class AddTagView(QWidget,AbstractBaseView):
     model_view_off = True
     FormSchema   = TagsForm
     list_view = 'Tags'
-    methods = ['submit_click']
 
     def  set_up(self):
         self.model=self.obj.model
@@ -33,6 +32,10 @@ class MoviesAddTagView(AddTagView):
 
 class SeriesAddTagView(AddTagView):
     model = Series
+    reset_view = 'series'
+
+class StarsAddTagView(AddTagView):
+    model = Stars
     reset_view = 'series'
 
 

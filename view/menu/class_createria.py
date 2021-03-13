@@ -9,7 +9,6 @@ class CriterionSearch(QWidget,AbstractBaseView):
     show_elemnts = ['Info','Galery','Nav','Avatar','Description','Tags','List']
     FormSchema = TagsForm
     model_view_off = True
-    methods = ['submit_click']
     criterions=[]
 
     def set_up(self):

@@ -15,7 +15,7 @@ class setWindow():
         from view.star.stars import StarView
         from view.SeriesMovieListView.MovieListView import MovieListView
         from view.star.edit_star import EditStarView
-        from view.tags.add_tags import MoviesAddTagView,SeriesAddTagView
+        from view.tags.add_tags import MoviesAddTagView,SeriesAddTagView,StarsAddTagView
         from view.series.editseries import EditSeries
         from view.set_photo_to_series.set_photo_to_series import SetPhotoToSeries
         from view.menu.menu import Menu
@@ -25,6 +25,7 @@ class setWindow():
         from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
 
         switcher = {
+            'stars_add_tag_view' : StarsAddTagView(),
             'movies_add_tag_view': MoviesAddTagView(),
             'series_add_tag_view': SeriesAddTagView(),
             'add_tag_to_model_no_save' :AddTagToModelNoSave(),

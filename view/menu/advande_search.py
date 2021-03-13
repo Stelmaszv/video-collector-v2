@@ -8,7 +8,6 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     resolution_index = 'advande_search'
     window_title = 'Advance Search'
     reset_view = 'advance_search'
-    methods = ['submit_click','add_tag','add_star']
     tags= []
     stars= []
     criterions = {'Tags':[],'Stars':[]}
