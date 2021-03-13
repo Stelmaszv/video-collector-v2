@@ -56,6 +56,39 @@ class FormConstract:
             'grid_data': self.create_grid(details)
         }
 
+    def photo_loop(self,details):
+
+        def photo_to_loop(el,details):
+           return {
+               "row": True,
+               "coll": True,
+               'type': 'combo_box',
+               'name': el.name,
+               'place_holder': 'place_holder',
+               'data_type': 'combo_box_dir',
+               'combo_box_list': self.BaseFormShema.get_files_from_dir(
+                   getattr(el, details['photo_index']),
+                   self.BaseFormShema.BaseView.data,
+                   details['dir_set']
+               ),
+               'grid_data': [self.row,1,1,1]
+            }
+        photos=[]
+        loop = getattr(self.BaseFormShema.BaseView.data, details['index'])
+        row=0
+        for el in loop:
+            photos.append(self.label({
+                'name': 'name',
+                "row": True,
+                "coll": False,
+                'place_holder': "Sezon name " + str(el.name),
+            }))
+            photos.append(photo_to_loop(el,details))
+            row=row+1
+        return {
+            'loop' :photos
+        }
+
     def photo(self,details):
         self.field_valid(details)
         return {
@@ -170,7 +203,7 @@ class BaseFormShema:
         return self.from_section
 
     def add_method(self,method,method_str):
-
+        return method
         if method_str in self.methods is not True:
             return  method
         else:
@@ -182,7 +215,13 @@ class BaseFormShema:
     def add_iten(self,item,details):
         if hasattr(self.ElmentsShema,item):
             method=getattr(self.ElmentsShema,item)
-            self.from_section.append(method(details))
+            method=method(details)
+            if 'loop' in method:
+                for el in method['loop']:
+                    self.from_section.append(el)
+            else:
+                self.from_section.append(method)
+
         else:
             Error.throw_error('Method '+item+' not found !')
 
@@ -435,38 +474,25 @@ class AddStarToModelForm(BaseFormShema):
             'arguments': []
         })
 
-class SetPhotoToSeriesForm(BaseFormShema):
+class SetPhotoToSeriesForm(AbstractBaseFormShema):
+
+    avatar_dir = '/photo'
 
     def form(self):
         self.from_section = []
-        row=0
-        for item in self.BaseView.data.sezons:
-            self.from_section.append({
-                'type': 'label',
-                'name': 'name',
-                'place_holder':  "Sezon name "+str(item.name),
-                'grid_data': [row, 0, 1, 1]
-            })
-            """
-            self.from_section.append({
-                'type': 'combo_box',
-                'name': 'avatar_edit_line',
-                'data_type': 'combo_box_dir',
-                'validation': "",
-                'place_holder': self.set_value_if_exist(item.src,"Sezon name "+str(item.name)),
-                'grid_data': [row, 1, 1, 1],
-                'combo_box_list': self.get_files_in_dir(item.src)
-            })
-            """
-            row=row+1
+        self.add_iten('photo_loop', {
+            'index'      : 'sezons',
+            'photo_index': 'src',
+            'dir_set'    : self.avatar_dir
+        })
 
-        self.from_section.append({
-            'type': 'button_submit',
-            'obj_name': 'submit',
-            'name': 'Submit',
+        self.add_iten('button', {
             'place_holder': 'Submit',
-            'grid_data': [row+1, 1, 1, 1],
-            'click': self.BaseView.submit_click
+            'name': 'submit_click',
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+            'new_row': True
         })
 
 class TagsForm(BaseFormShema):
@@ -488,14 +514,13 @@ class TagsForm(BaseFormShema):
             "row": False,
             "coll": True
         })
-        self.from_section.append({
-            'type': 'button_submit',
-            'obj_name': 'submit',
-            'name': 'Submit',
+        self.add_iten('button', {
             'place_holder': 'Submit',
-            'grid_data': [0, 2, 1, 1],
-            'click': self.add_method(self.BaseView.submit_click,'submit_click'),
-            'arguments': []
+            'name': 'submit_click',
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+            'new_row': True
         })
 
 class SeriesForm(AbstractBaseFormShema):
