@@ -135,19 +135,17 @@ class FormConstract:
 
     def edit_line(self,details):
         self.field_valid(details)
-        place_holder = self.BaseFormShema.set_value_if_exist(
-                getattr(self.BaseFormShema.BaseView.data,details['name']),details['name']
-        )
+        place_holder=''
+        if  hasattr(self.BaseFormShema.BaseView.data,details['name']):
+            place_holder = self.BaseFormShema.set_value_if_exist(
+                    getattr(self.BaseFormShema.BaseView.data,details['name']),details['name']
+            )
         if 'model' in details and details['model'] is False and 'custum_name' in details:
             Error.throw_error_bool(
                 details['custum_name']+' not exist in object '+str(self.BaseFormShema.BaseView.data),
                 'custum_name' in details
             )
             place_holder=details['custum_name']
-            Error.throw_error_bool(
-                details['name']+' not exist in object '+str(self.BaseFormShema.BaseView.data),
-                hasattr(self.BaseFormShema.BaseView.data,details['name'])
-            )
         data_type = 'data_type'
         validation= ''
         if 'data_type' in details:
@@ -390,61 +388,55 @@ class MenuFormSchena(BaseFormShema):
 
     def form(self):
         self.from_section = []
-        self.from_section.append({
-            'type'        : 'label',
-            'name'        : 'name',
+        self.add_iten('label', {
             'place_holder': 'Name',
-            'grid_data'   : [0, 0, 1, 1]
-        })
-        self.from_section.append({
-            'type': 'edit_line',
             'name': 'name',
-            'validation': "",
-            'data_type': 'string',
-            'place_holder': self.set_value_if_exist(None,self.BaseView.search_faze),
-            'grid_data': [0, 1, 1, 1]
+            "row": False,
+            "coll": False
         })
 
-        self.from_section.append({
-            'type': 'combo_box',
-            'obj_name': 'sections',
-            'name': 'Sections',
-            'data_type': 'string',
-            'validation': "[a-z]+.?[a-z]+.?[A-Z]+.?[A-Z]{,2}",
-            'place_holder': 'sections',
-            'grid_data': [0, 2, 1, 1],
+        self.add_iten('edit_line', {
+            'place_holder': 'Name',
+            'custum_name':'Tag name',
+            'model':False,
+            'name': 'name',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('combo_box', {
+            'place_holder': 'search_in',
+            'name': 'search_in',
             'combo_box_list': [self.BaseView.search_in, 'series', 'stars', 'movies'],
+            "row": False,
+            "coll": True
         })
 
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'advance',
-            'name': 'Advance',
-            'place_holder': 'advance',
-            'grid_data': [1, 1, 1, 1],
-            'click': self.add_method(self.BaseView.advance,'advance'),
-            'arguments': []
+        self.add_iten('button', {
+            'place_holder': 'Advance',
+            'name': 'advance',
+            "row": True,
+            "coll": True,
+            'new_row': True
         })
 
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'reset',
-            'name': 'Reset',
-            'place_holder': 'reset',
-            'grid_data': [2, 1, 1, 1],
-            'click': self.add_method(self.BaseView.reset,'reset'),
-            'arguments': []
+        self.add_iten('button', {
+            'place_holder': 'Reset',
+            'name': 'reset',
+            "row": True,
+            "coll": True,
+            'new_row': True
         })
 
-        self.from_section.append({
-            'type': 'button_submit',
-            'obj_name': 'submit',
-            'name': 'Submit',
+        self.add_iten('button', {
             'place_holder': 'Submit',
-            'grid_data': [3, 1, 1, 1],
-            'click': self.BaseView.submit_click,
-            'arguments': []
+            'name': 'submit_click',
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+            'new_row': True
         })
+
 
 class AddStarToModelForm(BaseFormShema):
 
