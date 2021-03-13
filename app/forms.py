@@ -29,15 +29,15 @@ class FormConstract:
 
     def combo_box(self,details):
         self.field_valid(details)
-
         return {
             'type': 'combo_box',
             'name': details['name'],
             'data_type': 'combo_box_dir',
             'place_holder': details['place_holder'],
-            'combo_box_list': self.BaseFormShema.get_files_in_dir_for_movie(
+            'combo_box_list': self.BaseFormShema.get_files_from_dir(
                 getattr(self.BaseFormShema.BaseView.data,details['name']),
-                self.BaseFormShema.BaseView.data
+                self.BaseFormShema.BaseView.data,
+                details['dir_set']
             ),
             'grid_data': self.create_grid(details)
         }
@@ -102,20 +102,18 @@ class BaseFormShema:
     def form(self):
         pass
 
-    def get_files_from_dir(self,defult,dir):
-        dir_loop=[]
+    def get_files_from_dir(self,defult,Obj,dir_add):
+        dir_loop = []
         dir_loop.append(defult)
+        dir=Obj.dir
+
+        if dir_add:
+            dir=Obj.dir+''+dir_add
+
         for item in os.listdir(dir):
             dir_loop_elment=dir + '/' +str(item)
             dir_loop.append(dir_loop_elment)
         return dir_loop
-
-    def get_files_in_dir_for_movie(self,defult,Data):
-        return self.get_files_from_dir(defult, Data.dir)
-
-    def get_files_in_dir(self,defult):
-        dir=self.BaseView.data.dir + '' +str('/photo')
-        return self.get_files_from_dir(defult,dir)
 
     def set_value_if_exist(self,value,empty):
         if value is None :
@@ -143,6 +141,8 @@ class BaseFormShema:
             Error.throw_error('Method '+item+' not found !')
 
 class AbstractBaseFormShema(BaseFormShema):
+
+    avatar_dir=''
 
     def add_forms(self):
         pass
@@ -189,6 +189,7 @@ class AbstractBaseFormShema(BaseFormShema):
 
         self.add_iten('combo_box', {
             'place_holder': 'Avatar',
+            'dir_set': self.avatar_dir,
             'name': 'avatar',
             "row": False,
             "coll": True,
@@ -203,7 +204,6 @@ class AbstractBaseFormShema(BaseFormShema):
             "is_submit": True,
             'new_row': True
         })
-
 
 class MovieEditForm(AbstractBaseFormShema):
 
@@ -255,8 +255,6 @@ class MovieEditForm(AbstractBaseFormShema):
             'new_row': True
         })
 
-
-
 class AdvanceSearchForm(BaseFormShema):
     def form(self):
         self.from_section = []
@@ -304,7 +302,6 @@ class AdvanceSearchForm(BaseFormShema):
             'click': self.add_method(self.BaseView.submit_click, 'submit_click'),
             'arguments': []
         })
-
 
 class MenuFormSchena(BaseFormShema):
 
@@ -456,67 +453,37 @@ class TagsForm(BaseFormShema):
             'arguments': []
         })
 
-class SeriesForm(BaseFormShema):
+class SeriesForm(AbstractBaseFormShema):
 
+    avatar_dir = '/photo'
+
+    def add_forms(self):
+        self.add_iten('button', {
+            'place_holder': 'Add tag',
+            'name': 'add_tag',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Add Star',
+            'name': 'add_star',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Set photo for series',
+            'name': 'set_photo_for_series',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+    """
     def form(self):
         self.from_section = []
-        self.from_section.append({
-            'type'        : 'label',
-            'name'        : 'name',
-            'place_holder': 'Name',
-            'grid_data'   : [0, 0, 1, 1]
-        })
-
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'name',
-            'validation': "",
-            'data_type': 'string',
-            'place_holder': self.set_value_if_exist(self.BaseView.data.name,"Format - Full Name"),
-            'grid_data': [0, 1, 1, 1]
-        })
-        self.from_section.append({
-            'type'        : 'label',
-            'name'        : 'name',
-            'place_holder': 'Dir Location',
-            'grid_data'   : [1, 0, 1, 1]
-        })
-        self.from_section.append({
-            'type': 'edit_line',
-            'name': 'dir_edit_line',
-            'data_type': 'dir',
-            'validation': "",
-            'place_holder': self.set_value_if_exist(self.BaseView.data.dir,'Location dir with data'),
-            'grid_data': [1, 1, 1, 1]
-        })
-        if self.BaseView.data.dir:
-
-            self.from_section.append({
-                'type': 'label',
-                'name': 'avatar_label',
-                'place_holder': 'Avatar',
-                'grid_data': [7, 0, 1, 1]
-            })
-
-            self.from_section.append({
-                'type': 'combo_box',
-                'name': 'avatar_edit_line',
-                'data_type': 'combo_box_dir',
-                'validation': "",
-                'place_holder': self.set_value_if_exist(self.BaseView.data.avatar,'Avator'),
-                'grid_data': [7, 1, 1, 1],
-                'combo_box_list': self.get_files_in_dir(self.BaseView.data.avatar)
-            })
-
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'submit',
-            'name': 'Add Tag',
-            'place_holder': 'Submit',
-            'grid_data': [10, 1, 1, 1],
-            'click': self.add_method(self.BaseView.add_tag,'add_tag'),
-            'arguments':[]
-        })
 
         self.from_section.append({
             'type': 'button',
@@ -527,26 +494,7 @@ class SeriesForm(BaseFormShema):
             'click': self.add_method(self.BaseView.set_photo_for_series,'set_photo_for_series'),
             'arguments': []
         })
-
-        self.from_section.append({
-            'type': 'button',
-            'obj_name': 'submit',
-            'name': 'Add Star',
-            'place_holder': 'Submit',
-            'grid_data': [12, 1, 1, 1],
-            'click': self.add_method(self.BaseView.add_star,'add_star'),
-            'arguments': []
-        })
-
-        self.from_section.append({
-            'type': 'button_submit',
-            'obj_name': 'submit',
-            'name': 'Submit',
-            'place_holder': 'Submit',
-            'grid_data': [13, 1, 1, 1],
-            'click': self.add_method(self.BaseView.submit_click,'submit_click'),
-            'arguments': []
-        })
+        """
 
 class StarsForm(BaseFormShema):
 
