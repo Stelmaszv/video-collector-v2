@@ -318,6 +318,7 @@ class MovieEditForm(AbstractBaseFormShema):
 
         self.add_iten('edit_line', {
             'place_holder': 'Cuntry',
+            'db'  :'country',
             'name': 'country',
             "row": False,
             "coll": True
@@ -334,6 +335,7 @@ class MovieEditForm(AbstractBaseFormShema):
         self.add_iten('edit_line', {
             'place_holder': 'Year',
             'name': 'year',
+            'db': 'year',
             "row": False,
             "coll": True
         })
