@@ -37,6 +37,12 @@ class AbstractConfigItem(ABC):
 
     def set_data_form_json(self,el,Obj):
         def add_item(item):
+            if 'data' in item:
+                item['value']= datetime(
+                    item['value'][0],
+                    item['value'][1],
+                    item['value'][2]
+                )
             setattr(Obj, item['db'], item['value'])
             session.commit()
 
@@ -131,30 +137,13 @@ class StarConfigData(AbstractConfigItem):
             if 'fields' in data:
                 self.set_data_form_json(data['fields'], self.data)
 
-            """
-            if "ethnicity" in data:
-                defults=['Black', 'Asian', 'Arab', 'White']
-                if data['ethnicity'] in defults:
-                    self.data.ethnicity = data['ethnicity']
-                    session.commit()
-                else:
-                    print(data['ethnicity'] + ' is unavailable')
-
-            if "hair_color" in data:
-                defults=['Black', 'Gray', 'Brown', 'Blond']
-                if data['hair_color'] in defults:
-                    self.data.hair_color = data['hair_color']
-                    session.commit()
-                else:
-                    print(data['hair_color']+' is unavailable')
-
             if "date_of_birth" in data:
                 self.data.date_of_birth = datetime(
                     data['date_of_birth'][0],
                     data['date_of_birth'][1],
                     data['date_of_birth'][2])
                 session.commit()
-            """
+
 
 
 class ConfigMovies(AbstractConfigItem):
