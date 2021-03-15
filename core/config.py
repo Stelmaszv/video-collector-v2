@@ -30,6 +30,11 @@ class AbstractConfigItem(ABC):
             self.data.tags.append(query)
             session.commit()
 
+    def add_stars(self,stars,Obj):
+        for star in stars:
+            StarObj=if_star_exist(AddStarViaDir(set_dir_for_star(star)),star)
+            Obj.stars.append(StarObj)
+
     @abstractmethod
     def load(self):
         pass
@@ -167,9 +172,6 @@ class ConfigMovies(AbstractConfigItem):
                 if hasattr(Obj,item['db']):
                     setattr(Obj,item['db'],item['value'])
                     session.commit()
-
-    def add_stars(self,stars,Obj):
-        print(Obj)
 
     def config(self,Movie):
 
