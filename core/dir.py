@@ -131,7 +131,6 @@ class AbstractConfigItem(ABC):
             self.data.tags.append(query)
             session.commit()
 
-
     @abstractmethod
     def load(self):
         pass
@@ -144,34 +143,25 @@ class ConfigMovies(AbstractConfigItem):
     def __init__(self,json_data):
         self.dir=json_data
 
+    def set_data_form_json(self,el,Obj):
+        for item in el:
+            if 'db' in item and 'value' in item:
+                if hasattr(Obj,item['db']):
+                    setattr(Obj,item['db'],item['value'])
+                    session.commit()
+
     def config(self,Movie):
 
         with open(self.dir + '/config.JSON') as f:
             data = json.load(f)
 
-
             for el in data:
                 if 'id' in el:
-                    if el['id'] == Movie.id:
-
-                        if 'avatar' in el:
-                            Movie.avatar=el['avatar']
-                            session.commit()
-
-                        if 'year' in el:
-                            Movie.year=el['year']
-                            session.commit()
-
-                        if 'country' in el:
-                            Movie.country=el['country']
-                            session.commit()
-
-                        if 'description' in el:
-                            Movie.description=el['description']
-                            session.commit()
-
+                    if el['id']==Movie.id:
+                        if 'fields' in el:
+                            self.set_data_form_json(el['fields'],Movie)
                         if "tags" in el:
-                            self.add_tags(el['tags'],Movie)
+                            self.add_tags(el['tags'], Movie)
 
     def make_dir(self,Movie):
         dir=self.dir+'/'+str(Movie.id)
