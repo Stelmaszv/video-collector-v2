@@ -72,7 +72,6 @@ class SeriesConfigData(AbstractConfigItem):
         def add_star_to_series(Star,Series):
             Series.stars.append(Star)
             session.commit()
-
         sezon_name=item['name']
         for star in item['stars']:
             StarObj=if_star_exist(AddStarViaDir(set_dir_for_star(star)),star)
@@ -88,40 +87,19 @@ class SeriesConfigData(AbstractConfigItem):
     def set_for_sezon(self,data):
         for sezon in self.data.sezons:
             for sezon_item in data:
-
-                if "avatar" in sezon_item:
-                    if sezon.name == str(sezon_item['name']):
-                        sezon.src=sezon_item['avatar']
-                        session.commit()
-
-                if "sezon_name" in sezon_item:
-                    if sezon.name == str(sezon_item['name']):
-                        sezon.sezon_name=sezon_item['sezon_name']
-                        session.commit()
-
-                if "year" in sezon_item:
-                    if sezon.name == str(sezon_item['name']):
-                        sezon.year=sezon_item['year']
-                        session.commit()
+                if sezon.name == str(sezon_item['name']):
+                    if 'fields' in sezon_item:
+                        self.set_data_form_json(sezon_item['fields'], sezon)
 
     def load(self):
         with open(self.config) as json_file:
             data = json.load(json_file)
-
-            if "year" in data:
-                self.data.years=data['year']
-                session.commit()
-
-            if "description" in data:
-                self.data.description = data['description']
-                session.commit()
-
+            if 'fields' in data:
+                self.set_data_form_json(data['fields'], self.data)
             if "tags" in data:
-                self.add_tags(data['tags'])
-
-            if "country" in data:
-                self.data.country=data['country']
-                session.commit()
+                self.add_tags(data['tags'], self.data)
+            if "stars" in data:
+                self.add_stars(data['stars'], self.data)
 
             if "sezons" in data:
                 self.config_sezons(data['sezons'])
@@ -136,14 +114,6 @@ class StarConfigData(AbstractConfigItem):
             data = json.load(json_file)
             if 'fields' in data:
                 self.set_data_form_json(data['fields'], self.data)
-
-            if "date_of_birth" in data:
-                self.data.date_of_birth = datetime(
-                    data['date_of_birth'][0],
-                    data['date_of_birth'][1],
-                    data['date_of_birth'][2])
-                session.commit()
-
 
 
 class ConfigMovies(AbstractConfigItem):
