@@ -35,6 +35,19 @@ class AbstractConfigItem(ABC):
             self.data.tags.append(query)
             session.commit()
 
+    def set_data_form_json(self,el,Obj):
+        def add_item(item):
+            setattr(Obj, item['db'], item['value'])
+            session.commit()
+
+        for item in el:
+            if 'db' in item and 'value' in item:
+                if hasattr(Obj,item['db']):
+                    if 'available' in item:
+                        if item['value'] in item['available']:
+                            add_item(item)
+                    else:
+                        add_item(item)
 
     @abstractmethod
     def load(self):
@@ -115,22 +128,10 @@ class StarConfigData(AbstractConfigItem):
     def load(self):
         with open(self.config) as json_file:
             data = json.load(json_file)
+            if 'fields' in data:
+                self.set_data_form_json(data['fields'], self.data)
 
-            if "avatar" in data:
-                self.data.avatar = data['avatar']
-                session.commit()
-
-            if "tags" in data:
-                self.add_tags(data['tags'])
-
-            if "weight" in data:
-                self.data.weight = data['weight']
-                session.commit()
-
-            if "height" in data:
-                self.data.height = data['height']
-                session.commit()
-
+            """
             if "ethnicity" in data:
                 defults=['Black', 'Asian', 'Arab', 'White']
                 if data['ethnicity'] in defults:
@@ -153,10 +154,7 @@ class StarConfigData(AbstractConfigItem):
                     data['date_of_birth'][1],
                     data['date_of_birth'][2])
                 session.commit()
-
-            if "description" in data:
-                self.data.description = data['description']
-                session.commit()
+            """
 
 
 class ConfigMovies(AbstractConfigItem):
@@ -166,13 +164,6 @@ class ConfigMovies(AbstractConfigItem):
 
     def __init__(self,json_data):
         self.dir=json_data
-
-    def set_data_form_json(self,el,Obj):
-        for item in el:
-            if 'db' in item and 'value' in item:
-                if hasattr(Obj,item['db']):
-                    setattr(Obj,item['db'],item['value'])
-                    session.commit()
 
     def config(self,Movie):
 
