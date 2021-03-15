@@ -358,9 +358,12 @@ class AddStarViaDir(AbstractAddViaDir):
         super().__init__(dir)
         self.star=self.if_star_exist(set_name(dir))
 
+
     def set_config(self):
         if Path(self.config).is_file() is False:
+            os.mkdir(self.dir)
             f = open(self.config, "x")
+            f.write('{}')
             f.close()
 
     def if_star_exist(self,name):

@@ -17,7 +17,12 @@ class AbstractConfigItem(ABC):
         self.config = self.dir+'/config.JSON'
         self.name=set_name(dir)
 
-    def add_tags(self,tags,Obj=None,id=0):
+    def add_stars(self,stars,Obj):
+        for star in stars:
+            StarObj = if_star_exist(AddStarViaDir(set_dir_for_star(star)), star)
+            Obj.stars.append(StarObj)
+
+    def add_tags(self,tags,Obj=None):
         if Obj is not None:
             self.data=Obj
         for tag in tags:
@@ -30,10 +35,6 @@ class AbstractConfigItem(ABC):
             self.data.tags.append(query)
             session.commit()
 
-    def add_stars(self,stars,Obj):
-        for star in stars:
-            StarObj=if_star_exist(AddStarViaDir(set_dir_for_star(star)),star)
-            Obj.stars.append(StarObj)
 
     @abstractmethod
     def load(self):
