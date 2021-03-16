@@ -30,6 +30,13 @@ class Player(QWidget):
         self.setWindowTitle(self.data.name)
         self.mediaPlayer.play()
 
+    def set_star(self,stars,id):
+        Star=None
+        for star_array in stars:
+            if star_array.id == id:
+                Star=star_array
+        return Star
+
     def init_ui(self):
         # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
@@ -76,6 +83,7 @@ class Player(QWidget):
         hboxLayout.addWidget(self.slider)
         hboxLayout.addWidget(self.mute)
         hboxLayout.addWidget(self.movie_info_button)
+
         if self.data.series:
             hboxLayout.addWidget(self.series_info_button)
         hboxLayout.addWidget(self.show_full_screen_button)
@@ -131,10 +139,10 @@ class Player(QWidget):
         ]
 
         index = 0
-        for star in self.data.series:
-            button = QPushButton('next video in series ' + str(star))
+        for series in self.data.series:
+            button = QPushButton('next video in series ' + str(series))
             self.hboxLayout2.addWidget(button)
-            button.data = star
+            button.data = series
             self.button_series[0]['obejct'].addButton(button)
             self.button_series[0]['obejct'].buttonClicked[int].connect(self.button_series[0]['button'])
             index = index + 1
@@ -164,12 +172,13 @@ class Player(QWidget):
         self.mute.setIcon(self.style().standardIcon(icon))
 
     def next_series(self, series):
-        movies_in_series = session.query(self.model).filter(Series.id == series.id).all()
+        movies_in_series = self.data.series[0].movies
         self.close()
         self.base_view.load_view('play', self.faind_item(movies_in_series))
 
     def next_star(self, star):
-        movies_with_star = session.query(self.model).filter(Stars.id == star.id).all()
+        star = self.set_star(self.data.stars,star.id)
+        movies_with_star=star.movies
         self.close()
         self.base_view.load_view('play', self.faind_item(movies_with_star))
 
@@ -182,7 +191,6 @@ class Player(QWidget):
                 elif math_index == len(array) - 1:
                     return 0
                 index_item = index_item + 1
-
         math_index = ''
         index_in_array = 0;
         for item in array:
