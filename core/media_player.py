@@ -24,7 +24,7 @@ class Player(QWidget):
     def run_window(self):
         self.base_view.set_data(self.id)
         self.data = self.base_view.data
-        self.file_name=self.data.series[0].dir+'\\movies\\'+str(self.data.sezon)+'\\'+self.data.src
+        #self.file_name=self.data.series[0].dir+'\\movis\\'+str(self.data.sezon)+'\\'+self.data.src
         self.init_ui()
         self.show()
         self.setWindowTitle(self.data.name)
@@ -33,6 +33,7 @@ class Player(QWidget):
     def init_ui(self):
         # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
+        self.file_name=self.data.dir+'\\'+self.data.src
         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.file_name)))
         # create videowidget object
 
@@ -144,11 +145,12 @@ class Player(QWidget):
 
         index = 0
         for star in self.data.stars:
-            button = QPushButton('next video with star ' + str(star))
-            self.hboxLayout2.addWidget(button)
-            button.data = star
-            self.buttons_star[0]['obejct'].addButton(button)
-            self.buttons_star[0]['obejct'].buttonClicked[int].connect(self.buttons_star[0]['button'])
+            if len(star.movies)>3:
+                button = QPushButton('next video with star ' + str(star))
+                self.hboxLayout2.addWidget(button)
+                button.data = star
+                self.buttons_star[0]['obejct'].addButton(button)
+                self.buttons_star[0]['obejct'].buttonClicked[int].connect(self.buttons_star[0]['button'])
             index = index + 1
 
     def muteClicked(self):

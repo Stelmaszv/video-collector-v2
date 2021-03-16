@@ -19,17 +19,17 @@ def set_dir_for_star(name):
     letter = name[0]
     dir = ''
     if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
-        dir = data_JSON['dirs'][0]['dir'] + '/A-D/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '\\A-D\\' + name
     if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
-        dir = data_JSON['dirs'][0]['dir'] + '/E-H/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '\\E-H\\' + name
     if letter == 'I' or letter == 'J' or letter == 'K' or letter == 'L':
-        dir = data_JSON['dirs'][0]['dir'] + '/I-L/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '\\I-L\\' + name
     if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P':
-        dir = data_JSON['dirs'][0]['dir'] + '/M-P/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '\\M-P\\' + name
     if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
-        dir = data_JSON['dirs'][0]['dir'] + '/R-U/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '\\R-U\\' + name
     if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
-        dir = data_JSON['dirs'][0]['dir'] + '/W-Z/' + name
+        dir = data_JSON['dirs'][0]['dir'] + '\\W-Z\\' + name
     return dir
 
 def if_star_exist(self,name):
@@ -42,8 +42,8 @@ def if_star_exist(self,name):
     ))
 
 def set_name(dir):
-    name = dir.split('/')
-    last = len(name) - 1
+    name = dir.split('\\')
+    last = len(name)-1
     return name[last]
 
 class PhotoMeaker:
@@ -65,7 +65,7 @@ class PhotoMeaker:
             self.add=True
 
     def set_dir(self):
-        dir_str=self.data+'/'+str(self.Movie.id)
+        dir_str=self.data+'\\'+str(self.Movie.id)
         self.dir=dir_str
 
     def set_round_number(self,clip):
@@ -79,10 +79,10 @@ class PhotoMeaker:
 
     def make(self):
         if self.add:
-            src = self.Movie.dir + '/' + self.Movie.src
+            src = self.Movie.dir + '\\' + self.Movie.src
             clip = VideoFileClip(src)
             for frame in range(0, self.limit):
-                clip.save_frame(self.dir + '/' + str(stringManipupations.random(20)) + '.png', t=self.set_round_number(clip))
+                clip.save_frame(self.dir + '\\' + str(stringManipupations.random(20)) + '.png', t=self.set_round_number(clip))
                 print('creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit))
 
 
@@ -122,15 +122,15 @@ class AbstractAddViaDir(ABC):
     movie_model=Movies
     photo_model=Photos
     sezons_model=Sezons
-    movie_dir='/movies'
-    photo_dir='/photo'
+    movie_dir='\\movies'
+    photo_dir='\\photo'
     star=None
     name=''
     series=None
 
     def __init__(self, dir):
         self.dir = dir
-        self.config = self.dir + '/config.JSON'
+        self.config = self.dir + '\\config.JSON'
         self.set_config()
         self.session = session
         self.IfStar = IfStar()
@@ -138,10 +138,10 @@ class AbstractAddViaDir(ABC):
         self.set_photo_dir()
 
     def set_dir(self,seazon=''):
+        dir= self.movie_dir
         if seazon:
-            return self.movie_dir+'/'+str(seazon)
-        else:
-            return self.movie_dir
+            dir = self.movie_dir+'\\'+str(seazon)
+        return dir
 
     def set_config(self):
         if Path(self.config).is_file() is False:
@@ -167,11 +167,6 @@ class AbstractAddViaDir(ABC):
                 str = str + dir[i]
 
         return str
-
-    def set_name(self):
-        name=self.dir.split('/')
-        last=len(name)-1
-        return name[last]
 
     def set_movie_dir(self):
         self.movie_dir=self.dir + '' + str(self.movie_dir)
@@ -226,12 +221,12 @@ class AbstractAddViaDir(ABC):
         dir=set_dir_for_star(name)
         if os.path.isdir(dir) is False:
             os.mkdir(dir)
-            os.mkdir(dir+'/none')
-            os.mkdir(dir+'/photo')
+            os.mkdir(dir+'\\none')
+            os.mkdir(dir+'\\photo')
             sleep(1)
-            f = open(dir+'/config.JSON', "x")
+            f = open(dir+'\\config.JSON', "x")
             f.close()
-            my_file = open(dir+'/config.JSON', "w")
+            my_file = open(dir+'\\config.JSON', "w")
             my_file.write('{}')
             f.close()
         return self.dir
@@ -249,6 +244,7 @@ class AbstractAddViaDir(ABC):
 class AddSeriesViaDir(AbstractAddViaDir):
 
     model=Series
+    name =''
 
     def __init__(self,dir):
         super().__init__(dir)
@@ -267,7 +263,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
     def set_sezons(self):
         sezons=0
         for dir in os.listdir(self.movie_dir):
-            if os.path.isdir(self.movie_dir+'/'+dir):
+            if os.path.isdir(self.movie_dir+'\\'+dir):
                 sezons=sezons+1
         if sezons==0:
             sezons=1
@@ -313,7 +309,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         stars_array = self.IfStar.faind_stars(movie)
         if stars_array is not None:
             for item in stars_array:
-                star_obj = self.if_star_exist(item)
+                star_obj = self.if_star_exist(set_name(item))
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
         else:
@@ -336,7 +332,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         object = []
         movie_dir = os.listdir(self.movie_dir)
         for dir_element in movie_dir:
-            nev_dir = self.movie_dir + '' + '/' + str(dir_element)
+            nev_dir = self.movie_dir + '' + '\\' + str(dir_element)
             if os.path.isdir(nev_dir):
                 nev_dir_loop = os.listdir(nev_dir)
                 stan=self.set_movie_name_is_star_name(dir_element)
@@ -352,7 +348,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
 class AddStarViaDir(AbstractAddViaDir):
 
     model=Stars
-    movie_dir = '/none'
+    movie_dir = '\\none'
 
     def __init__(self,dir):
         super().__init__(dir)
@@ -367,6 +363,8 @@ class AddStarViaDir(AbstractAddViaDir):
             f.close()
 
     def if_star_exist(self,name):
+        name=set_name(name)
+
         return self.if_exist(name, self.model, self.model(
             name=name,
             avatar = self.set_avatar(),
@@ -386,15 +384,19 @@ class AddStarViaDir(AbstractAddViaDir):
             new_stars = []
             if stars is not None:
                 for star in stars:
+                    print(star)
                     new_stars.append(self.if_star_exist(star))
             new_stars.append(self.star)
             if self.if_movie_exist(self.clear_name(movie)):
-                object.append(self.movie_model(
-                    name=self.clear_name(movie),
+                name=self.clear_name(movie)
+                dir= self.set_dir()
+                movie= self.movie_model(
+                    name=name,
                     stars=new_stars,
                     src=movie,
-                    dir=self.set_dir()
-                ))
+                    dir=dir
+                )
+                object.append(movie)
                 print('Movie ' + str(name) + ' has been added')
         self.session.add_all(object)
         self.session.commit()

@@ -14,7 +14,7 @@ class AbstractConfigItem(ABC):
         self.dir=dir
         self.name = set_name(dir)
         self.data = session.query(self.Model).filter(self.Model.name == self.name).first()
-        self.config = self.dir+'/config.JSON'
+        self.config = self.dir+'\\config.JSON'
         self.name=set_name(dir)
 
     def add_stars(self,stars,Obj):
@@ -157,8 +157,6 @@ class ConfigMovies(AbstractConfigItem):
         self.add_config_json()
         for Movie in session.query(Movies).all():
             self.make_dir(Movie)
-            Movie.dir=self.dir_DB
-            session.commit()
 
 class AbstractConfig(ABC):
 
@@ -170,7 +168,7 @@ class AbstractConfig(ABC):
     def set(self):
         loop_dir = os.listdir(self.dir)
         for item in loop_dir:
-            dir = self.dir + '' + str('/' + item)
+            dir = self.dir + '' + str('\\' + item)
             OBJ = self.LoadSetingsClass(dir)
             OBJ.load_dir()
 
@@ -184,7 +182,7 @@ class AbstractLoadSetings(ABC):
     def load_dir(self):
         loop_dir = os.listdir(self.dir)
         for item in loop_dir:
-            dir = self.dir + '' + str('/' + item)
+            dir = self.dir + '' + str('\\' + item)
             self.ItemClass(dir).load()
 
 class LoadSetingsSeries(AbstractLoadSetings):
