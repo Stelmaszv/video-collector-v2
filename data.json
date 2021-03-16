@@ -1,0 +1,13 @@
+{
+  "dirs": [
+    {
+      "type": "stars",
+      "dir": "Y:/Stars"
+    },
+    {
+      "type": "series",
+      "dir": "Y:/Series"
+    }
+  ],
+  "movies_photos": "Y:/movies"
+}
