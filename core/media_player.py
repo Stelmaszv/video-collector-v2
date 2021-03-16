@@ -24,7 +24,7 @@ class Player(QWidget):
     def run_window(self):
         self.base_view.set_data(self.id)
         self.data = self.base_view.data
-        self.file_name = self.data.src
+        self.file_name=self.data.series[0].dir+'\\movies\\'+str(self.data.sezon)+'\\'+self.data.src
         self.init_ui()
         self.show()
         self.setWindowTitle(self.data.name)
@@ -34,7 +34,6 @@ class Player(QWidget):
         # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.file_name)))
-
         # create videowidget object
 
         videowidget = QVideoWidget()
@@ -104,6 +103,9 @@ class Player(QWidget):
         self.mediaPlayer.positionChanged.connect(self.position_changed)
         self.mediaPlayer.durationChanged.connect(self.duration_changed)
 
+    def closeEvent(self, QCloseEvent):
+        self.mediaPlayer.stop()
+
     def series_info(self):
         self.base_view.load_view('series', self.data.series[0])
 
@@ -148,10 +150,6 @@ class Player(QWidget):
             self.buttons_star[0]['obejct'].addButton(button)
             self.buttons_star[0]['obejct'].buttonClicked[int].connect(self.buttons_star[0]['button'])
             index = index + 1
-
-    def closeEvent(self, QCloseEvent):
-        self.mediaPlayer.stop()
-        self.Router.close_window()
 
     def muteClicked(self):
         if self.mediaPlayer.isMuted() is False:

@@ -442,11 +442,10 @@ class AbstractLoopDir(ABC):
 
     def __init__(self,dir):
         self.dir=dir
-
     def add_files(self):
-        loop_dir = os.listdir(self.dir)
+        loop_dir = os.listdir(self.dir+'\\')
         for item in loop_dir:
-            dir = self.dir + '' + str('/' + item)
+            dir = self.dir + '' + str('\\' + item)
             LC = self.LoopClass(dir)
             LC.add_files()
 
@@ -468,7 +467,7 @@ class LoadData(ABC):
     def load(self):
         dir = os.listdir(self.dir)
         for item in dir:
-            new_dir = self.dir + '' + str('/' + item)
+            new_dir = self.dir + '' + str('\\' + item)
             if os.path.isdir(new_dir):
                 LC = self.DirLoopClass(new_dir)
                 LC.add_files()
