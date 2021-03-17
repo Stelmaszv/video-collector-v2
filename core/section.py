@@ -211,7 +211,7 @@ class SeriesSection(AbstractSection):
         title_name = ''
         for el in self.obj.data.sezons:
             if int(el.name) == item:
-                title_name=el.name
+                title_name=el.sezon_name
 
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
