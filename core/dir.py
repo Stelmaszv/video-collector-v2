@@ -65,9 +65,12 @@ class PhotoMeaker:
             self.add=True
 
     def set_dir(self):
-        dir_str=self.data+'\\'+str(self.Movie.id)
-        self.dir=dir_str
-
+        if len(self.Movie.series):
+            self.dir=self.data+'\\series\\'+self.Movie.series[0].name
+            self.dir=self.dir+'\\'+str(self.Movie.sezon)+'\\'+ self.Movie.name
+        else:
+            self.dir=self.data+'\\movies\\'+self.Movie.name
+        return self.dir
     def set_round_number(self,clip):
         duration=int(clip.duration)
         round_nomber = random.randint(0, int(clip.duration))
