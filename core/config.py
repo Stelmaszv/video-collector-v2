@@ -21,6 +21,8 @@ class AbstractConfigItem(ABC):
         for star in stars:
             StarObj = if_star_exist(AddStarViaDir(set_dir_for_star(star)), star)
             Obj.stars.append(StarObj)
+            session.commit()
+
 
     def add_tags(self,tags,Obj=None):
         if Obj is not None:
@@ -124,25 +126,23 @@ class ConfigMovies(AbstractConfigItem):
     def __init__(self,json_data):
         self.dir=json_data
 
-    def config(self,Movie):
-
-        with open(self.dir + '/config.JSON') as f:
+    def config(self,Movie,dir):
+        self.add_config_json(dir)
+        with open(dir + '/config.JSON') as f:
             data = json.load(f)
+            if 'fields' in data:
+                self.set_data_form_json(data['fields'], Movie)
 
-            for el in data:
-                if 'id' in el:
-                    if el['id']==Movie.id:
-                        if 'fields' in el:
-                            self.set_data_form_json(el['fields'],Movie)
-                        if "tags" in el:
-                            self.add_tags(el['tags'], Movie)
-                        if "stars" in el:
-                            self.add_stars(el['stars'],Movie)
+            if "tags" in data:
+                self.add_tags(data['tags'], Movie)
+
+            if "stars" in data:
+                self.add_stars(data['stars'], Movie)
 
     def make_dir(self,Movie):
         if len(Movie.series):
             series = self.dir + '\\series'
-            series_name = series + '\\' + Movie.series[0].name
+            series_name = series + '\\'+Movie.series[0].name
             sezon_dir=series_name+'\\'+str(Movie.sezon)
             movie_dir=sezon_dir+'\\'+Movie.name
 
@@ -161,29 +161,27 @@ class ConfigMovies(AbstractConfigItem):
             if os.path.isdir(movie_dir) is False:
                 os.mkdir(movie_dir)
 
-            self.config(Movie)
-            self.dir_DB = movie_dir
-
         else:
-            movies = self.dir + '\\movies'
+            movies = self.dir+'\\movies'
             if os.path.isdir(movies) is False:
                 os.mkdir(movies)
 
-            movie_dir = movies + '\\' + Movie.name
+            movie_dir = movies+'\\'+Movie.name
             if os.path.isdir(movie_dir) is False:
                 os.mkdir(movie_dir)
 
-            self.config(Movie)
-            self.dir_DB = movie_dir
+        self.config(Movie,movie_dir)
 
-    def add_config_json(self):
-        if os.path.isfile(self.dir + '/config.JSON') is False:
-            f = open(self.dir + '/config.JSON', "x")
-            f.write('[]')
+    def add_config_json(self,dir):
+        dir=dir+'\\config.JSON'
+        print(dir)
+        if os.path.isfile(dir) is False:
+            f = open(dir, "x")
+            f.write('{}')
             f.close()
 
+
     def load(self):
-        self.add_config_json()
         for Movie in session.query(Movies).all():
             self.make_dir(Movie)
 
