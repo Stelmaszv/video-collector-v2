@@ -174,7 +174,6 @@ class ConfigMovies(AbstractConfigItem):
 
     def add_config_json(self,dir):
         dir=dir+'\\config.JSON'
-        print(dir)
         if os.path.isfile(dir) is False:
             f = open(dir, "x")
             f.write('{}')
