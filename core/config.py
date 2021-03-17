@@ -21,6 +21,7 @@ class AbstractConfigItem(ABC):
         for star in stars:
             StarObj = if_star_exist(AddStarViaDir(set_dir_for_star(star)), star)
             Obj.stars.append(StarObj)
+            StarObj.movies.append(self.data)
             session.commit()
 
 
