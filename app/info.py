@@ -45,11 +45,11 @@ class SingleSectionInfo(BaseInfo):
                 "itemNmae": "Movies",
                 "itemName2": str(count)
             })
-            if info_item.sezon_name:
-                self.data_info.append({
-                    "itemNmae": "Name",
-                    "itemName2": info_item.sezon_name
-                })
+        if info_item.sezon_name:
+            self.data_info.append({
+                "itemNmae": "Name",
+                "itemName2": info_item.sezon_name
+        })
 
         if stars_in_seazom:
             self.data_info.append({
