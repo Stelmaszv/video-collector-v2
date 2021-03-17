@@ -164,6 +164,18 @@ class ConfigMovies(AbstractConfigItem):
             self.config(Movie)
             self.dir_DB = movie_dir
 
+        else:
+            movies = self.dir + '\\movies'
+            if os.path.isdir(movies) is False:
+                os.mkdir(movies)
+
+            movie_dir = movies + '\\' + Movie.name
+            if os.path.isdir(movie_dir) is False:
+                os.mkdir(movie_dir)
+
+            self.config(Movie)
+            self.dir_DB = movie_dir
+
     def add_config_json(self):
         if os.path.isfile(self.dir + '/config.JSON') is False:
             f = open(self.dir + '/config.JSON', "x")
