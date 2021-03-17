@@ -140,12 +140,29 @@ class ConfigMovies(AbstractConfigItem):
                             self.add_stars(el['stars'],Movie)
 
     def make_dir(self,Movie):
-        dir=self.dir+'/'+str(Movie.id)
-        is_dir=os.path.isdir(self.dir+'/'+str(Movie.id))
-        if is_dir is False:
-            os.mkdir(dir)
-        self.config(Movie)
-        self.dir_DB=dir
+        if len(Movie.series):
+            series = self.dir + '\\series'
+            series_name = series + '\\' + Movie.series[0].name
+            sezon_dir=series_name+'\\'+str(Movie.sezon)
+            movie_dir=sezon_dir+'\\'+Movie.name
+
+            if os.path.isdir(series) is False:
+                os.mkdir(series)
+
+            if os.path.isdir(series_name) is False:
+                os.mkdir(series_name)
+
+            if os.path.isdir(sezon_dir) is False:
+                os.mkdir(sezon_dir)
+
+            if os.path.isdir(sezon_dir) is False:
+                os.mkdir(sezon_dir)
+
+            if os.path.isdir(movie_dir) is False:
+                os.mkdir(movie_dir)
+
+            self.config(Movie)
+            self.dir_DB = movie_dir
 
     def add_config_json(self):
         if os.path.isfile(self.dir + '/config.JSON') is False:

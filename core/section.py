@@ -324,7 +324,7 @@ class MovieListSection(AbstractSection):
 
 class MenuSection(AbstractSection):
 
-    per_page=50
+    per_page=500
 
     def __init__(self, BaseView,QWidget):
 
