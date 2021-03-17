@@ -220,7 +220,7 @@ class AbstractBaseView:
     list_model_off     = False
     model_view_off     = False
     debug_mode         = True
-    custum_galery      = ''
+    custum_galery      = 'DIR'
     window_title=''
     resolution_index=''
     list_view=''

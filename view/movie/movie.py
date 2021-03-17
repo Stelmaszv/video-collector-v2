@@ -18,7 +18,12 @@ class MovieView(QWidget,AbstractBaseView):
     def set_galery(self):
         self.galery_for_stars()
         self.title_for_stars()
-        self.custum_galery=str(data_JSON['movies_photos'])+'\\'+str(self.data.id)
+        self.custum_galery=self.set_dir()
+
+    def set_dir(self):
+        dir=data_JSON['movies_photos']+'\\series\\'+self.data.series[0].name
+        dir=dir+'\\'+str(self.data.sezon)+'\\'+self.data.name
+        return dir
 
     def galery_for_stars(self):
         def stars_array():

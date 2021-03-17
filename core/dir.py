@@ -165,7 +165,6 @@ class AbstractAddViaDir(ABC):
 
             if stop is False:
                 str = str + dir[i]
-
         return str
 
     def set_movie_dir(self):
