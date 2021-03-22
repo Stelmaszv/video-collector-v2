@@ -26,6 +26,7 @@ class MovieView(QWidget,AbstractBaseView):
             dir=dir+'\\'+str(self.data.sezon)+'\\'+self.data.name
         else:
             dir=data_JSON['movies_photos']+'\\movies\\'+self.data.name
+            print(dir)
         return dir
 
     def galery_for_stars(self):
