@@ -168,13 +168,24 @@ class AbstractAddViaDir(ABC):
 
             if stop is False:
                 str = str + dir[i]
+
+        if str[len(str)-1]==' ':
+            nstr=''
+            for i in range(0, len(str)-1):
+                if i < len(str)-1:
+                    nstr=nstr+str[i]
+            return nstr
         return str
 
     def set_movie_dir(self):
         self.movie_dir=self.dir + '' + str(self.movie_dir)
+        if os.path.isdir(self.movie_dir) is False:
+            os.mkdir(self.movie_dir)
 
     def set_photo_dir(self):
         self.photo_dir = self.dir + '' + str(self.photo_dir)
+        if os.path.isdir(self.photo_dir) is False:
+            os.mkdir(self.photo_dir)
 
     def set_avatar(self):
         return  self.set_photo_from_json(series_avatar_defult,'avatar')
@@ -225,11 +236,8 @@ class AbstractAddViaDir(ABC):
             os.mkdir(dir)
             os.mkdir(dir+'\\none')
             os.mkdir(dir+'\\photo')
-            sleep(1)
             f = open(dir+'\\config.JSON', "x")
-            f.close()
-            my_file = open(dir+'\\config.JSON', "w")
-            my_file.write('{}')
+            f.write('{}')
             f.close()
         return self.dir
 
