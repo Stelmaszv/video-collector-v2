@@ -10,7 +10,7 @@ class SetPhotoToSeries(QWidget, AbstractBaseView):
     FormSchema = SetPhotoToSeriesForm
     reset_view = 'edit_series'
     submit_view = 'edit_series'
-    resolution_index = 'EditSeries'
+    resolution_index = 'SetPhotoToSeries'
     show_elemnts = ['Tags', 'Description', 'Galery', 'Nav','Info','Avatar']
     ModelView = SetPhotoToSetiesView
 
