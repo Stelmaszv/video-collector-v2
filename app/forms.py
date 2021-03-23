@@ -61,12 +61,12 @@ class FormConstract:
 
         def photo_to_loop(el,details,row):
            return {
-               "db" :el.name,
+               "db" :el.id,
                "row": True,
                "coll": True,
                'type': 'combo_box',
-               'name': el.name,
-               'place_holder': 'place_holder',
+               'name': el.id,
+               'place_holder': el.id,
                'data_type': 'combo_box_dir',
                'combo_box_list': self.BaseFormShema.get_files_from_dir(
                    getattr(el, details['photo_index']),
@@ -86,15 +86,15 @@ class FormConstract:
                 'grid_data': [row, 0, 1, 1]
             })
             photos.append({
-                    'db'          : el.name,
+                    'db'          : el.id,
                     'type'        : 'edit_line',
-                    'name'        : el.name,
+                    'name'        : el.id,
                     'data_type'   : 'photo_location',
                     'validation'  : '',
-                    'place_holder': "Sezon name " + str(el.name),
+                    'place_holder': "Custum locataion for photo " + str(el.name),
                     'grid_data': [row, 1, 1, 1]
             })
-            photos.append(photo_to_loop(el, details, row))
+            #photos.append(photo_to_loop(el, details, row))
             row=row+1
         self.row=row
         self.coll=2

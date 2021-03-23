@@ -174,8 +174,8 @@ class Submit:
                         if Path(item['value']).is_file() is False:
                             error.append(item['value']+" is not a file")
                         else:
-                            if item['value'].endswith(('.png', '.jpg', '.jpeg')) is False:
-                                error.append('File '+item['value']+' is not photo (png,jpeg,jpg)')
+                            if item['value'].endswith(('.png', '.jpg', '.jpeg','.jfif')) is False:
+                                error.append('File '+item['value']+' is not photo (png,jpeg,jpg,jfif)')
 
                 if item['data-type'] == 'dir':
                     if len(item['value']) > 0:

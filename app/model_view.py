@@ -25,11 +25,9 @@ class SetPhotoToSetiesView(BaseModelViewSet):
     def add_data(self, data):
         for item in self.data.sezons:
             for el in data:
-                if item.name==el['db']:
-                    if el['data-type'] == 'photo_location' and len(el['value']):
-                        item.src=el['value']
-                    else:
-                        item.src = el['value']
+                if el['db'] == item.id:
+                        if len(el['value']):
+                            item.src = el['value']
 
 class MoviesModelView(BaseModelViewSet):
     model = Series()
