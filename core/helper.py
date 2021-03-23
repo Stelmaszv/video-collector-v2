@@ -18,7 +18,6 @@ class QueryCounter:
 class Message:
 
     def show(self,data):
-        print(data)
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
         msg.setText(data[0])

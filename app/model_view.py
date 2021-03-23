@@ -23,10 +23,14 @@ class SetPhotoToSetiesView(BaseModelViewSet):
     session = session
 
     def add_data(self, data):
-        item=0
-        for sezon in self.data.sezons:
-            sezon.src=data[item]['value']
-            item=item+1
+        for item in self.data.sezons:
+            for el in data:
+                if item.name==el['db']:
+                    if el['data-type'] == 'photo_location' and len(el['value']):
+                        item.src=el['value']
+
+
+
 
 class MoviesModelView(BaseModelViewSet):
     model = Series()

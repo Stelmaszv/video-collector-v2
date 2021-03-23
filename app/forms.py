@@ -59,8 +59,9 @@ class FormConstract:
 
     def photo_loop(self,details):
 
-        def photo_to_loop(el,details):
+        def photo_to_loop(el,details,row):
            return {
+               "db" :el.name,
                "row": True,
                "coll": True,
                'type': 'combo_box',
@@ -72,20 +73,31 @@ class FormConstract:
                    self.BaseFormShema.BaseView.data,
                    details['dir_set']
                ),
-               'grid_data': [self.row,1,1,1]
+               'grid_data': [row,2,1,1]
             }
         photos=[]
         loop = getattr(self.BaseFormShema.BaseView.data, details['index'])
         row=0
         for el in loop:
-            photos.append(self.label({
-                'name': 'name',
-                "row": True,
-                "coll": False,
+            photos.append({
+                'type':"label",
+                'name':el.name+' label',
                 'place_holder': "Sezon name " + str(el.name),
-            }))
-            photos.append(photo_to_loop(el,details))
+                'grid_data': [row, 0, 1, 1]
+            })
+            photos.append({
+                    'db'          : el.name,
+                    'type'        : 'edit_line',
+                    'name'        : el.name,
+                    'data_type'   : 'photo_location',
+                    'validation'  : '',
+                    'place_holder': "Sezon name " + str(el.name),
+                    'grid_data': [row, 1, 1, 1]
+            })
+            photos.append(photo_to_loop(el, details, row))
             row=row+1
+        self.row=row
+        self.coll=2
         return {
             'loop' :photos
         }

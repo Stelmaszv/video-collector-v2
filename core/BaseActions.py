@@ -170,7 +170,7 @@ class Submit:
                 if item['data-type'] == 'dir':
                     if len(item['value']) > 0:
                         if os.path.isdir(item['value']) is False:
-                            error.append("This is not dir location")
+                            error.append("Invalid dir location in <h2>"+item['name']+"</h2>")
                 if item['data-type'] == 'data':
                     ymd = item['value'].split('-')
                     if len(ymd) == 3:
