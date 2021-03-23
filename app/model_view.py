@@ -28,9 +28,8 @@ class SetPhotoToSetiesView(BaseModelViewSet):
                 if item.name==el['db']:
                     if el['data-type'] == 'photo_location' and len(el['value']):
                         item.src=el['value']
-
-
-
+                    else:
+                        item.src = el['value']
 
 class MoviesModelView(BaseModelViewSet):
     model = Series()

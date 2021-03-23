@@ -1,3 +1,4 @@
+import os
 from app.db.models import session
 from PyQt5 import QtGui,QtCore, QtWidgets
 from PyQt5.QtCore import QRegExp
@@ -6,7 +7,7 @@ from datetime import datetime
 from core.datamanipulation import DataValidator
 from app.db.models import Tags,Stars
 from core.custum_errors import Error
-import os
+from pathlib import Path
 
 class ViewBaseAction:
 
@@ -167,6 +168,15 @@ class Submit:
         error = []
         for item in self.data:
             if 'data-type' in item:
+
+                if item['data-type'] == 'photo_location':
+                    if len(item['value']) > 0:
+                        if Path(item['value']).is_file() is False:
+                            error.append(item['value']+" is not a file")
+                        else:
+                            if item['value'].endswith(('.png', '.jpg', '.jpeg')) is False:
+                                error.append('File '+item['value']+' is not photo (png,jpeg,jpg)')
+
                 if item['data-type'] == 'dir':
                     if len(item['value']) > 0:
                         if os.path.isdir(item['value']) is False:
