@@ -203,7 +203,10 @@ class Submit:
         self.Model.add_data(self.data)
         self.Obj.close()
         if self.Obj.data is not None:
-            self.Obj.BaseView.load_view(self.Obj.submit_view, self.Obj.data)
+            if hasattr(self.Obj, 'submit_view'):
+                self.Obj.BaseView.load_view(self.Obj.submit_view, self.Obj.data)
+            else:
+                Error.throw_error(self.Obj.__class__.__name__ + ' do not have atter "submit_view" ')
         return True
 
 class Form:

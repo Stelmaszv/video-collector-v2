@@ -263,22 +263,6 @@ class AbstractBaseFormShema(BaseFormShema):
         })
 
         self.add_iten('label', {
-            'place_holder': 'Dir Location',
-            'name': 'dir',
-            'data_type': 'dir',
-            "row": True,
-            "coll": False,
-            'new_row': True
-        })
-
-        self.add_iten('edit_line', {
-            'place_holder': 'Dir Location',
-            'name': 'dir',
-            'db': 'dir',
-            "row": False,
-            "coll": True
-        })
-        self.add_iten('label', {
             'place_holder': 'Avatar',
             'name': 'avatar',
             "row": True,

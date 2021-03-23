@@ -1,17 +1,15 @@
 import re
+import json
+import os
+import random
 from app.db.models import Stars,Movies,Series,Photos,Sezons,Tags
 from app.db.models import session
 from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
 from pathlib import Path
 from core.setings import data_JSON
-import json
-from datetime import datetime
-from time import sleep
 from moviepy.editor import VideoFileClip
 from core.strings import stringManipupations
-import os
-import random
 
 add= False
 
@@ -85,7 +83,6 @@ class PhotoMeaker:
     procent_limt=96
     add=False
     def __init__(self,Movie,data):
-        print(Movie)
         self.Movie=Movie
         self.data=data
         self.set_limit()
