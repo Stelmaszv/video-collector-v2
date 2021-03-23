@@ -32,6 +32,38 @@ def set_dir_for_star(name):
         dir = data_JSON['dirs'][0]['dir'] + '\\W-Z\\' + name
     return dir
 
+def set_movie_dir(Movie) ->str:
+    if len(Movie.series):
+        series = data_JSON['movies_photos'] + '\\series'
+        series_name = series + '\\' + Movie.series[0].name
+        sezon_dir = series_name + '\\' + str(Movie.sezon)
+        movie_dir = sezon_dir + '\\' + Movie.name
+
+        if os.path.isdir(series) is False:
+            os.mkdir(series)
+
+        if os.path.isdir(series_name) is False:
+            os.mkdir(series_name)
+
+        if os.path.isdir(sezon_dir) is False:
+            os.mkdir(sezon_dir)
+
+        if os.path.isdir(sezon_dir) is False:
+            os.mkdir(sezon_dir)
+
+        if os.path.isdir(movie_dir) is False:
+            os.mkdir(movie_dir)
+
+    else:
+        movies = data_JSON['movies_photos'] + '\\movies'
+        if os.path.isdir(movies) is False:
+            os.mkdir(movies)
+
+        movie_dir = movies + '\\' + Movie.name
+        if os.path.isdir(movie_dir) is False:
+            os.mkdir(movie_dir)
+    return movie_dir
+
 def if_star_exist(self,name):
     return self.if_exist(name, self.model, self.model(
         name=name,
@@ -53,24 +85,17 @@ class PhotoMeaker:
     procent_limt=96
     add=False
     def __init__(self,Movie,data):
+        print(Movie)
         self.Movie=Movie
         self.data=data
-        self.set_dir()
         self.set_limit()
 
     def set_limit(self):
-        photos_in_dir=len(os.listdir(self.dir))
+        photos_in_dir=len(os.listdir(self.Movie.dir))
         if photos_in_dir != self.limit:
             self.limit=self.limit-photos_in_dir;
             self.add=True
 
-    def set_dir(self):
-        if len(self.Movie.series):
-            self.dir=self.data+'\\series\\'+self.Movie.series[0].name
-            self.dir=self.dir+'\\'+str(self.Movie.sezon)+'\\'+ self.Movie.name
-        else:
-            self.dir=self.data+'\\movies\\'+self.Movie.name
-        return self.dir
     def set_round_number(self,clip):
         duration=int(clip.duration)
         round_nomber = random.randint(0, int(clip.duration))
@@ -82,10 +107,9 @@ class PhotoMeaker:
 
     def make(self):
         if self.add:
-            src = self.Movie.dir + '\\' + self.Movie.src
-            clip = VideoFileClip(src)
+            clip = VideoFileClip(self.Movie.src)
             for frame in range(0, self.limit):
-                clip.save_frame(self.dir + '\\' + str(stringManipupations.random(20)) + '.png', t=self.set_round_number(clip))
+                clip.save_frame(self.Movie.dir + '\\' + str(stringManipupations.random(20)) + '.png', t=self.set_round_number(clip))
                 print('creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit))
 
 
@@ -329,14 +353,15 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 stars.append(star_obj)
         series = [self.series]
         print('Movie '+str(name)+' has been added')
-        return self.movie_model(
+        model=self.movie_model(
             name=name,
-            src=src,
+            src=self.movie_dir+'\\'+sezon+'\\'+src,
             stars=stars,
             series=series,
-            sezon=sezon,
-            dir=self.set_dir(sezon)
+            sezon=sezon
         );
+        model.dir=set_movie_dir(model)
+        return model
 
     def add_files(self):
         object = []
@@ -389,23 +414,21 @@ class AddStarViaDir(AbstractAddViaDir):
         object = []
 
         for movie in movie_dir:
-            name = self.clear_name(movie)
             stars = self.IfStar.faind_stars(movie)
             new_stars = []
             if stars is not None:
                 for star in stars:
-                    print(star)
                     new_stars.append(self.if_star_exist(star))
             new_stars.append(self.star)
             if self.if_movie_exist(self.clear_name(movie)):
                 name=self.clear_name(movie)
-                dir= self.set_dir()
+                src = self.movie_dir + '\\' + movie
                 movie= self.movie_model(
                     name=name,
                     stars=new_stars,
-                    src=movie,
-                    dir=dir
                 )
+                movie.src=src
+                movie.dir = set_movie_dir(movie)
                 object.append(movie)
                 print('Movie ' + str(name) + ' has been added')
         self.session.add_all(object)

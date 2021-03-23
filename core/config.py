@@ -141,6 +141,7 @@ class ConfigMovies(AbstractConfigItem):
                 self.add_stars(data['stars'], Movie)
 
     def make_dir(self,Movie):
+        print(Movie)
         if len(Movie.series):
             series = self.dir + '\\series'
             series_name = series + '\\'+Movie.series[0].name
