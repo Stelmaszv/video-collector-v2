@@ -460,7 +460,7 @@ class AddStarToModelForm(BaseFormShema):
         })
         self.add_iten('edit_line', {
             'place_holder': 'Name',
-            'custum_name':'Tag name',
+            'custum_name':'Star name',
             'model':False,
             'name': 'name',
             "row": False,
