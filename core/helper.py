@@ -35,7 +35,6 @@ class Message:
         Error.throw_error_bool('Index cancel not exist in dialog', 'cancel' in data)
         self.rezolution_cancel = data['cancel']
 
-
     def show(self,data):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
@@ -44,11 +43,10 @@ class Message:
         msg.setWindowTitle(data[2])
         msg.exec_()
 
-    def dialog(self,text):
+    def dialog(self,text,btm_accept,btm_cancel=False):
 
         d = QDialog()
         acept =  QtWidgets.QPushButton("Acept", d)
-        cancel = QtWidgets.QPushButton("Cancel", d)
         l  =  QtWidgets.QLabel(text,d)
         d.setGeometry(
             self.rezolution_pos[0],
@@ -58,12 +56,15 @@ class Message:
         )
         l.move(self.rezolution_label[0],self.rezolution_label[1])
         acept.move(self.rezolution_acept[0], self.rezolution_acept[1])
-        cancel.move(self.rezolution_cancel[0], self.rezolution_cancel[1])
+        acept.clicked.connect(btm_accept)
+        if btm_cancel:
+            cancel = QtWidgets.QPushButton("Cancel", d)
+            cancel.move(self.rezolution_cancel[0], self.rezolution_cancel[1])
+            cancel.clicked.connect(btm_cancel)
         d.setWindowTitle("Dialog")
         d.exec_()
 
 class Pagination:
-
 
     def __init__(self,obj):
         self.obj=obj
