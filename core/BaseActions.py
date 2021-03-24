@@ -9,6 +9,7 @@ from core.dir import AddStarViaDir, set_dir_for_star
 from app.db.models import Tags,Stars
 from core.custum_errors import Error
 from pathlib import Path
+from abc import ABC,abstractmethod
 
 
 class ViewBaseAction:
@@ -103,55 +104,93 @@ class AddTag:
         item = self.session.query(self.model).filter(self.model.name == value).first()
         self.Obj.tags.append(item)
 
-class AddStar(AddTag):
+class AbstractAddToModel:
 
-    model = Stars
+    Model = Stars
+    field = ''
+    dialog_mes='Dialog'
 
     def __init__(self,data,Obj):
         self.data=data
         self.Obj=Obj.data
+        Error.throw_error_bool(
+            self.Obj.__class__.__name__+' do not have atter "'+self.field+'" ',
+            hasattr(self.Obj,self.field)
+        )
+        self.field=getattr(self.Obj,self.field)
         self.Obj_var = Obj
         self.session = session
         self.ViewBaseAction=ViewBaseAction(Obj)
 
+    def faind_item(self,var):
+        add = False
+        for item in self.field:
+            if item.name == var:
+                add = True
+        return add
+
     def remove_star(self,star):
-        value=star.name
-        add=False
-        for item in self.Obj.stars:
-            if item.name == value:
-                add=True
+        add=self.faind_item(star.name)
 
         if add:
-            self.Obj.stars.remove(star)
+            self.field.remove(star)
             self.ViewBaseAction.reset()
 
+    def set_dialog_mess(self):
+        pass
+
+    def set_new_dialog(self,mess):
+        if str(mess) and len(mess):
+            return mess
+        else:
+            return self.dialog_mes
+
     def add(self):
-        add = False
-        self.in_db = False
         self.value = self.data[0]['value']
-        for item in self.Obj.stars:
-            if item.name ==  self.data[0]['value']:
-                add = True
-        self.AddObj = self.session.query(self.model).filter(self.model.name == self.value).first()
+        self.dialog_mes=self.set_new_dialog(
+            self.set_dialog_mess()
+        )
+        self.in_db = False
+        add = self.faind_item(self.value)
+        self.AddObj = self.session.query(self.Model).filter(self.Model.name == self.value).first()
+
         if self.AddObj:
-            self.in_db=True
-            
-        if len(self.value)>0:
+            self.in_db = True
+
+        if len(self.value) > 0:
             if self.in_db is False and add is False:
-                self.in_db = False
                 self.Obj_var.BaseView.Massage.set_resolution(self.Obj_var.get_dialog_location())
                 self.Obj_var.BaseView.Massage.dialog(
-                    '<h2>Star "'+self.value+'" no exist in db do you wont to add ?</h2>',
-                    self.add_star
+                    self.dialog_mes,
+                    self.accept,
+                    self.cancel
                 )
             else:
-                self.in_db=True
+                self.in_db = True
 
         if self.in_db is True and add is False:
             self.Obj.stars.append(self.AddObj)
             self.ViewBaseAction.reset()
 
-    def add_star(self):
+    @abstractmethod
+    def cancel(self):
+        pass
+
+    @abstractmethod
+    def accept(self):
+        pass
+
+class AddStar(AbstractAddToModel):
+
+    field='stars'
+
+    def set_dialog_mess(self):
+        return '<h2>Star "' + self.value + '" no exist in db do you wont to add ?</h2>'
+
+    def cancel(self):
+        pass
+
+    def accept(self):
         ASVD=AddStarViaDir(set_dir_for_star(self.value))
         self.AddObj = ASVD.star
         self.in_db = True

@@ -38,4 +38,4 @@ class MovieAddStarToModelView(BaseAddStarToModelView):
 
 class SeriesAddStarToModelView(BaseAddStarToModelView):
     model = Series
-    reset_view = 'edit_series'
+    reset_view = 'series_add_star_to_model_view'

@@ -43,8 +43,10 @@ class Message:
         msg.setWindowTitle(data[2])
         msg.exec_()
 
-    def dialog(self,text,accept,btm_cancel=False):
+    def dialog(self,text,accept,cancel=False):
         def btm_cancel():
+            if cancel:
+                cancel()
             d.close()
         def btm_accept():
             accept()
