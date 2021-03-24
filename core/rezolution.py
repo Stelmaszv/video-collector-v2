@@ -188,9 +188,9 @@ class MenuHalfSmall(MenuType):
                 },
                 "window": {
                     "dialog"        : [77,0,100,100],
-                    "title_size"    : [0, 0 ,1280 ,100],
-                    "form_section"  : [400, 0 ,480 ,250],
-                    "list_view_size": [300, 150, 680, 250],
+                    "title_size"    : [0, 0 ,1280 ,50],
+                    "form_section"  : [400, 0 ,480 ,120],
+                    "list_view_size": [300, 100, 680, 250],
                 }
             },
             "EditStars": {

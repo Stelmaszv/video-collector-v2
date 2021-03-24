@@ -26,9 +26,9 @@ class BaseAddStarToModelView(QWidget,AbstractBaseView):
         AT = AddStar(values, self)
         AT.add()
 
-    def delete(self,star):
+    def delete(self,Star):
         AT=AddStar([],self)
-        AT.remove_star(star)
+        AT.remove(Star)
         self.BaseActions.reset()
         return True
 
