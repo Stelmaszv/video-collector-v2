@@ -43,16 +43,16 @@ class Message:
         msg.setWindowTitle(data[2])
         msg.exec_()
 
-    def dialog(self,text,accept,cancel=False):
+    def dialog(self,text,accept_def,cancel_def=False):
         def btm_cancel():
-            if cancel:
-                cancel()
+            if cancel_def:
+                cancel_def()
             d.close()
         def btm_accept():
-            accept()
+            accept_def()
             d.close()
         d = QDialog()
-        acept =  QtWidgets.QPushButton("Acept", d)
+        accept =  QtWidgets.QPushButton("Acept", d)
         l  =  QtWidgets.QLabel(text,d)
         d.setGeometry(
             self.rezolution_pos[0],
@@ -61,8 +61,8 @@ class Message:
             self.rezolution_pos[3]
         )
         l.move(self.rezolution_label[0],self.rezolution_label[1])
-        acept.move(self.rezolution_acept[0], self.rezolution_acept[1])
-        acept.clicked.connect(btm_accept)
+        accept.move(self.rezolution_acept[0], self.rezolution_acept[1])
+        accept.clicked.connect(btm_accept)
         cancel = QtWidgets.QPushButton("Cancel", d)
         cancel.move(self.rezolution_cancel[0], self.rezolution_cancel[1])
         cancel.clicked.connect(btm_cancel)

@@ -51,64 +51,12 @@ class ViewBaseAction:
         else:
             Error.throw_error(self.obj.__class__.__name__+' do not have atter "reset_view" ',False)
 
-class AddTag:
+class AbstractAddToModel(ABC):
 
-    model=Tags
-
-    def __init__(self,data,Obj):
-        self.data=data
-        self.Obj=Obj.data
-        self.Obj_var=Obj
-        self.session = session
-        self.ViewBaseAction=ViewBaseAction(Obj)
-
-
-    def remove_tag(self,tag):
-        value=tag.name
-        add=False
-        for item in self.Obj.tags:
-            if item.name == value:
-                add=True
-
-        if add:
-            self.Obj.tags.remove(tag)
-            self.ViewBaseAction.reset()
-
-    def add(self):
-        value = self.data[0]['value']
-
-        add=False
-        for item in self.Obj.tags:
-            if item.name == value:
-                add=True
-
-        in_db=False
-        query=self.session.query(self.model).filter(self.model.name==value).first()
-        if query:
-            in_db = True;
-
-        if in_db is False and add is False:
-            self.add_tag_to_db(value)
-            self.add_tag_from_db(value)
-
-        if in_db is True and add is False:
-            self.add_tag_from_db(value)
-
-        self.ViewBaseAction.reset()
-
-    def add_tag_to_db(self,value):
-        self.session.add_all([self.model(name=value)])
-        self.session.commit()
-
-    def add_tag_from_db(self,value):
-        item = self.session.query(self.model).filter(self.model.name == value).first()
-        self.Obj.tags.append(item)
-
-class AbstractAddToModel:
-
-    Model = Stars
+    Model=None
     field = ''
     dialog_mes='Dialog'
+
 
     def __init__(self,data,Obj):
         self.data=data
@@ -129,15 +77,12 @@ class AbstractAddToModel:
                 add = True
         return add
 
-    def remove_star(self,star):
+    def remove(self,star):
         add=self.faind_item(star.name)
 
         if add:
             self.field.remove(star)
             self.ViewBaseAction.reset()
-
-    def set_dialog_mess(self):
-        pass
 
     def set_new_dialog(self,mess):
         if str(mess) and len(mess):
@@ -169,30 +114,55 @@ class AbstractAddToModel:
                 self.in_db = True
 
         if self.in_db is True and add is False:
-            self.Obj.stars.append(self.AddObj)
+            self.add_to_object()
             self.ViewBaseAction.reset()
 
     @abstractmethod
+    def add_to_object(self):
+        pass
+
     def cancel(self):
         pass
 
     @abstractmethod
     def accept(self):
+        pass
+
+    @abstractmethod
+    def set_dialog_mess(self):
         pass
 
 class AddStar(AbstractAddToModel):
 
     field='stars'
+    Model = Stars
+
+    def add_to_object(self):
+        self.Obj.stars.append(self.AddObj)
 
     def set_dialog_mess(self):
         return '<h2>Star "' + self.value + '" no exist in db do you wont to add ?</h2>'
 
-    def cancel(self):
-        pass
-
     def accept(self):
         ASVD=AddStarViaDir(set_dir_for_star(self.value))
         self.AddObj = ASVD.star
+        self.in_db = True
+
+class AddTag(AbstractAddToModel):
+    field = 'tags'
+    Model = Tags
+
+    def add_to_object(self):
+        self.Obj.tags.append(self.AddObj)
+
+    def set_dialog_mess(self):
+        return '<h2>Tag "' + self.value + '" no exist in db do you wont to add ?</h2>'
+
+    def accept(self):
+        Tag=self.Model(name=self.value)
+        self.session.add_all([Tag])
+        self.session.commit()
+        self.AddObj = Tag
         self.in_db = True
 
 class Submit:

@@ -22,7 +22,7 @@ class AddTagView(QWidget,AbstractBaseView):
 
     def delete(self,tag):
         AT=AddTag([],self)
-        AT.remove_tag(tag)
+        AT.remove(tag)
         self.BaseActions.reset()
         return True
 
