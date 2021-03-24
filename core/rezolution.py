@@ -180,7 +180,14 @@ class MenuHalfSmall(MenuType):
                     "width": 1280,
                     "height": 985
                 },
+                'dialog': {
+                    "position" : [2562+600,600,500,100],
+                    "label"    : [50,10],
+                    "acept"    : [50,50],
+                    "cancel"   : [250, 50]
+                },
                 "window": {
+                    "dialog"        : [77,0,100,100],
                     "title_size"    : [0, 0 ,1280 ,100],
                     "form_section"  : [400, 0 ,480 ,250],
                     "list_view_size": [300, 150, 680, 250],

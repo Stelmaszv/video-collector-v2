@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import  QMessageBox,QDialog
 from PyQt5 import QtCore, QtWidgets
+from core.custum_errors import Error
 from sys import exit as sysExit
 from .list import List
 from app.db.models import Movies
@@ -18,10 +19,22 @@ class QueryCounter:
 
 class Message:
 
-    rezolution_index = []
+    rezolution = []
 
     def set_resolution(self,data):
-        self.rezolution_index=data
+
+        Error.throw_error_bool('Index position not exist in dialog','position' in data)
+        self.rezolution_pos=data['position']
+
+        Error.throw_error_bool('Index label not exist in dialog', 'label' in data)
+        self.rezolution_label = data['label']
+
+        Error.throw_error_bool('Index label not exist in dialog', 'acept' in data)
+        self.rezolution_acept = data['acept']
+
+        Error.throw_error_bool('Index cancel not exist in dialog', 'cancel' in data)
+        self.rezolution_cancel = data['cancel']
+
 
     def show(self,data):
         msg = QMessageBox()
@@ -34,11 +47,18 @@ class Message:
     def dialog(self,text):
 
         d = QDialog()
-        b1 =  QtWidgets.QPushButton("ok", d)
+        acept =  QtWidgets.QPushButton("Acept", d)
+        cancel = QtWidgets.QPushButton("Cancel", d)
         l  =  QtWidgets.QLabel(text,d)
-        d.setGeometry(100,100,1000,1000)
-        l.move(0,0)
-        b1.move(50, 50)
+        d.setGeometry(
+            self.rezolution_pos[0],
+            self.rezolution_pos[1],
+            self.rezolution_pos[2],
+            self.rezolution_pos[3]
+        )
+        l.move(self.rezolution_label[0],self.rezolution_label[1])
+        acept.move(self.rezolution_acept[0], self.rezolution_acept[1])
+        cancel.move(self.rezolution_cancel[0], self.rezolution_cancel[1])
         d.setWindowTitle("Dialog")
         d.exec_()
 

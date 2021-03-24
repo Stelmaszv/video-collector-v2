@@ -447,6 +447,12 @@ class AbstractBaseView:
         else:
             Error.throw_error('info_size not found in resolution index (' + self.resolution_index + ')')
 
+    def get_dialog_location(self):
+        Error.throw_error_bool(
+            "Dialog not exist in resolution index "+self.resolution_index,
+            "dialog" in self.SetResolution.menu_set[self.resolution_index]
+        )
+        return self.SetResolution.menu_set[self.resolution_index]['dialog']
     def title(self):
         title =''
 

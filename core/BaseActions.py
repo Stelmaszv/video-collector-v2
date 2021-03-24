@@ -124,9 +124,8 @@ class AddStar(AddTag):
             self.ViewBaseAction.reset()
 
     def add(self):
-
-        self.Obj_var.BaseView.Massage.set_resolution(self.Obj_var.resolution_index)
-        self.Obj_var.BaseView.Massage.dialog('Star no exist in db do you wont to add ?')
+        self.Obj_var.BaseView.Massage.set_resolution(self.Obj_var.get_dialog_location())
+        self.Obj_var.BaseView.Massage.dialog('<h2>Star no exist in db do you wont to add ?</h2>')
         """
         
         add = False
