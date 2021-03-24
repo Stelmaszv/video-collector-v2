@@ -6,12 +6,13 @@ from app.db.models import Series,Movies
 
 class BaseAddStarToModelView(QWidget,AbstractBaseView):
     resolution_index = 'add_tag'
-    window_title = 'Add tag'
+    window_title = 'Add star'
     show_elemnts = ['Info','Galery','Nav','Avatar','Tags','Description']
     model_view_off = True
     FormSchema   = AddStarToModelForm
     list_view = 'Tags'
     methods = ['submit_click']
+    reset_view = 'movies'
 
     def  set_up(self):
         self.model=self.obj.model
@@ -37,4 +38,4 @@ class MovieAddStarToModelView(BaseAddStarToModelView):
 
 class SeriesAddStarToModelView(BaseAddStarToModelView):
     model = Series
-    reset_view = 'series'
+    reset_view = 'edit_series'
