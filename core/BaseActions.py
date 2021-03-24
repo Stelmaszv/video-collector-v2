@@ -5,9 +5,11 @@ from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from datetime import datetime
 from core.datamanipulation import DataValidator
+from core.dir import AddStarViaDir, set_dir_for_star
 from app.db.models import Tags,Stars
 from core.custum_errors import Error
 from pathlib import Path
+
 
 class ViewBaseAction:
 
@@ -124,43 +126,35 @@ class AddStar(AddTag):
             self.ViewBaseAction.reset()
 
     def add(self):
-        self.Obj_var.BaseView.Massage.set_resolution(self.Obj_var.get_dialog_location())
-        self.Obj_var.BaseView.Massage.dialog(
-            '<h2>Star no exist in db do you wont to add ?</h2>',
-            self.add_star
-        )
-    def add_star(self):
-        print('add_item')
-        """
-        
         add = False
+        self.in_db = False
+        self.value = self.data[0]['value']
         for item in self.Obj.stars:
             if item.name ==  self.data[0]['value']:
                 add = True
+        self.AddObj = self.session.query(self.model).filter(self.model.name == self.value).first()
+        if self.AddObj:
+            self.in_db=True
+            
+        if len(self.value)>0:
+            if self.in_db is False and add is False:
+                self.in_db = False
+                self.Obj_var.BaseView.Massage.set_resolution(self.Obj_var.get_dialog_location())
+                self.Obj_var.BaseView.Massage.dialog(
+                    '<h2>Star "'+self.value+'" no exist in db do you wont to add ?</h2>',
+                    self.add_star
+                )
+            else:
+                self.in_db=True
 
-        in_db = False
-        query = self.session.query(self.model).filter(self.model.name == self.data[0]['value']).first()
+        if self.in_db is True and add is False:
+            self.Obj.stars.append(self.AddObj)
+            self.ViewBaseAction.reset()
 
-        if query:
-            in_db = True;
-
-        if in_db is False and add is False:
-            self.add_tag_to_db(self.data[0]['value'])
-            self.add_tag_from_db(self.data[0]['value'])
-
-        if in_db is True and add is False:
-            self.add_tag_from_db(self.data[0]['value'])
-        
-
-        self.ViewBaseAction.reset()
-        """
-    def add_tag_to_db(self,value):
-        self.session.add_all([self.model(name=value)])
-        self.session.commit()
-
-    def add_tag_from_db(self,value):
-        item = self.session.query(self.model).filter(self.model.name == value).first()
-        self.Obj.stars.append(item)
+    def add_star(self):
+        ASVD=AddStarViaDir(set_dir_for_star(self.value))
+        self.AddObj = ASVD.star
+        self.in_db = True
 
 class Submit:
 
