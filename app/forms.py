@@ -517,10 +517,9 @@ class TagsForm(BaseFormShema):
         self.add_iten('button', {
             'place_holder': 'Submit',
             'name': 'submit_click',
-            "row": True,
+            "row": False,
             "coll": True,
             "is_submit": True,
-            'new_row': True
         })
 
 class SeriesForm(AbstractBaseFormShema):
