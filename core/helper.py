@@ -1,5 +1,6 @@
-from PyQt5.QtWidgets import  QMessageBox
+from PyQt5.QtWidgets import  QMessageBox,QDialog
 from PyQt5 import QtCore, QtWidgets
+from sys import exit as sysExit
 from .list import List
 from app.db.models import Movies
 
@@ -17,6 +18,11 @@ class QueryCounter:
 
 class Message:
 
+    rezolution_index = []
+
+    def set_resolution(self,data):
+        self.rezolution_index=data
+
     def show(self,data):
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Critical)
@@ -24,6 +30,17 @@ class Message:
         msg.setInformativeText(data[1])
         msg.setWindowTitle(data[2])
         msg.exec_()
+
+    def dialog(self,text):
+
+        d = QDialog()
+        b1 =  QtWidgets.QPushButton("ok", d)
+        l  =  QtWidgets.QLabel(text,d)
+        d.setGeometry(100,100,1000,1000)
+        l.move(0,0)
+        b1.move(50, 50)
+        d.setWindowTitle("Dialog")
+        d.exec_()
 
 class Pagination:
 

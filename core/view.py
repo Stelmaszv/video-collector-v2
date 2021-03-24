@@ -17,6 +17,7 @@ from app.forms import BaseFormShema
 import json
 
 class BaseView:
+    rezolution = []
 
     def __init__(self,data,obj):
         from .helper import Message, Pagination, Scroller

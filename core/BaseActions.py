@@ -55,6 +55,7 @@ class AddTag:
     def __init__(self,data,Obj):
         self.data=data
         self.Obj=Obj.data
+        self.Obj_var=Obj
         self.session = session
         self.ViewBaseAction=ViewBaseAction(Obj)
 
@@ -107,6 +108,7 @@ class AddStar(AddTag):
     def __init__(self,data,Obj):
         self.data=data
         self.Obj=Obj.data
+        self.Obj_var = Obj
         self.session = session
         self.ViewBaseAction=ViewBaseAction(Obj)
 
@@ -122,8 +124,12 @@ class AddStar(AddTag):
             self.ViewBaseAction.reset()
 
     def add(self):
-        add = False
 
+        self.Obj_var.BaseView.Massage.set_resolution(self.Obj_var.resolution_index)
+        self.Obj_var.BaseView.Massage.dialog('Star no exist in db do you wont to add ?')
+        """
+        
+        add = False
         for item in self.Obj.stars:
             if item.name ==  self.data[0]['value']:
                 add = True
@@ -140,9 +146,10 @@ class AddStar(AddTag):
 
         if in_db is True and add is False:
             self.add_tag_from_db(self.data[0]['value'])
+        
 
         self.ViewBaseAction.reset()
-
+        """
     def add_tag_to_db(self,value):
         self.session.add_all([self.model(name=value)])
         self.session.commit()
