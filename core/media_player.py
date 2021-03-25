@@ -125,7 +125,7 @@ class Player(QWidget):
         self.base_view.load_view('series', self.data.series[0])
 
     def movie_info(self):
-        self.base_view.load_view('movies', self.data.series[0])
+        self.base_view.load_view('movies', self.data)
 
     def buttom_genarator(self, list, fuction, id):
         for button in list.buttons():
