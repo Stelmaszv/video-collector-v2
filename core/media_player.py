@@ -8,8 +8,10 @@ from app.db.models import Movies, Stars, Series
 from app.db.models import session
 
 class Player(QWidget):
-    playerMuted = False
+    muted = False
     model = Movies
+    auto_play=True
+    full_screen=False
     session = session
 
     def __init__(self):
@@ -24,11 +26,9 @@ class Player(QWidget):
     def run_window(self):
         self.base_view.set_data(self.id)
         self.data = self.base_view.data
-        #self.file_name=self.data.series[0].dir+'\\movis\\'+str(self.data.sezon)+'\\'+self.data.src
         self.init_ui()
         self.show()
         self.setWindowTitle(self.data.name)
-        self.mediaPlayer.play()
 
     def set_star(self,stars,id):
         Star=None
@@ -37,17 +37,23 @@ class Player(QWidget):
                 Star=star_array
         return Star
 
+    def set_player(self):
+        if self.muted:
+            self.mute_clicked()
+        if self.auto_play:
+            self.play_video()
+        if self.full_screen:
+            self.full_screen_switch()
+
     def init_ui(self):
         # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        self.file_name=self.data.dir+'\\'+self.data.src
-        self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.file_name)))
+        self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.data.src)))
         # create videowidget object
 
         videowidget = QVideoWidget()
 
         self.playBtn = QPushButton()
-        self.playBtn.setEnabled(False)
         self.playBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
         self.playBtn.clicked.connect(self.play_video)
 
@@ -65,10 +71,9 @@ class Player(QWidget):
             self.series_info_button = QPushButton('Series')
             self.series_info_button.clicked.connect(self.series_info)
 
-
         self.mute = QPushButton()
         self.mute.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
-        self.mute.clicked.connect(self.muteClicked)
+        self.mute.clicked.connect(self.mute_clicked)
 
         # create label
         self.label = QLabel()
@@ -87,6 +92,7 @@ class Player(QWidget):
         if self.data.series:
             hboxLayout.addWidget(self.series_info_button)
         hboxLayout.addWidget(self.show_full_screen_button)
+        self.set_player()
 
         self.hboxLayout2 = QHBoxLayout()
         self.hboxLayout2.setContentsMargins(10, 10, 10, 10)
@@ -120,7 +126,6 @@ class Player(QWidget):
 
     def movie_info(self):
         self.base_view.load_view('movies', self.data.series[0])
-
 
     def buttom_genarator(self, list, fuction, id):
         for button in list.buttons():
@@ -161,7 +166,7 @@ class Player(QWidget):
                 self.buttons_star[0]['obejct'].buttonClicked[int].connect(self.buttons_star[0]['button'])
             index = index + 1
 
-    def muteClicked(self):
+    def mute_clicked(self):
         if self.mediaPlayer.isMuted() is False:
             icon = QStyle.SP_MediaVolumeMuted
             self.mediaPlayer.setMuted(True)
@@ -208,19 +213,11 @@ class Player(QWidget):
             self.showNormal()
 
     def mute_switch(self):
-        self.changeMuting.emit(not self.playerMuted)
-
-    def open_file(self):
-        filename, _ = QFileDialog.getOpenFileName(self, "Open Video")
-
-        if filename != '':
-            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(filename)))
-            self.playBtn.setEnabled(True)
+        self.changeMuting.emit(not self.muted)
 
     def play_video(self):
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.mediaPlayer.pause()
-
         else:
             self.mediaPlayer.play()
 

@@ -170,7 +170,7 @@ class MenuHalfSmall(MenuType):
                 "window": {
                     "title_size": [0, 0, 400, 50],
                     "list_view_size": [20, 200, 560, 750],
-                    "form_section" :   [50,40,300,150]
+                    "form_section" :   [50,40,500,150]
                 }
             },
             "add_tag": {
