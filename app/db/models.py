@@ -239,6 +239,37 @@ class Movies(Base):
         secondary=movies_Series,
         back_populates="movies"
     )
+    def _get_stars(self):
+        if len(self.stars) == 1:
+            return self.stars[0].name
+        if len(self.stars) == 2:
+            return self.stars[0].name + ', ' + self.stars[1].name
+        if len(self.stars) > 2:
+            return self.stars[0].name + ', ' + self.stars[1].name + ' and others ' + str(len(self.stars) - 2)
+        return ''
+
+    def return_stars(self):
+        stars=self._get_stars()
+        if len(stars)>30:
+            return '<i>'+self.stars[0].name+'</i>'
+        return '<li>'+stars+'</i>'
+
+    def return_full_name(self):
+        name=self.set_full_name()
+        if len(name)>70:
+            name='<b>'+self.name+'</b>'
+        return name
+
+    def set_full_name(self):
+        def get_year(year):
+            if year is None:
+                return ''
+            return year+' '
+        def get_series(series):
+            if len(series):
+                return series[0].name+' '
+            return ''
+        return get_year(self.year)+''+get_series(self.series)+'<b>'+self.name+'</b>'
 
     def __str__(self):
         return  self.name

@@ -26,7 +26,7 @@ def set_dir_for_star(name):
         dir = data_JSON['dirs'][0]['dir'] + '\\M-P\\' + name
     if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
         dir = data_JSON['dirs'][0]['dir'] + '\\R-U\\' + name
-    if letter == 'W' or letter == 'X' or letter == 'Y' or letter == 'Z':
+    if letter == 'W' or letter == 'V' or letter == 'X' or letter == 'Y' or letter == 'Z':
         dir = data_JSON['dirs'][0]['dir'] + '\\W-Z\\' + name
     return dir
 

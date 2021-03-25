@@ -164,12 +164,12 @@ class MenuHalfSmall(MenuType):
                 "position": {
                     "left"             : 2562,
                     "top"              : 400,
-                    "width"            : 400,
+                    "width"            : 600,
                     "height"           : 985
                 },
                 "window": {
                     "title_size": [0, 0, 400, 50],
-                    "list_view_size": [0, 300, 380, 250],
+                    "list_view_size": [20, 200, 560, 750],
                     "form_section" :   [50,40,300,150]
                 }
             },
