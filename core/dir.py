@@ -88,6 +88,13 @@ class PhotoMeaker:
         self.set_limit()
 
     def set_limit(self):
+        skip=0
+        with open(self.Movie.dir + '/config.JSON') as f:
+            data = json.load(f)
+            if 'galery_skip' in data:
+                skip=len(data['galery_skip'])
+
+        self.limit=self.limit+1+skip
         photos_in_dir=len(os.listdir(self.Movie.dir))
         if photos_in_dir != self.limit:
             self.limit=self.limit-photos_in_dir;
