@@ -53,6 +53,7 @@ none_movies_defult   ='D:/project/video-collector-v2/data/none.png'
 singles_movies_defult   ='D:/project/video-collector-v2/data/none.png'
 movie_cover_defulut = 'D:/project/video-collector-v2/data/none.png'
 search_in_defult= 'movies';
+photo_ext= ('.png', '.jpg', '.jpeg','.jfif')
 search_faze_defult = ''
 #player
 muted=False

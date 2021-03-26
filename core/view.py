@@ -44,14 +44,16 @@ class BaseView:
         self.avatar_photo.show()
 
     def listView(self, data, data_list,obj_name,QWidget=False,page=False):
-        from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,TagsListSection,CustomListSection
+        from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,\
+            TagsListSection,CustomListSection,EditGalerySection
         switcher = {
             'Stars'      : StarsSection(self,QWidget),
             'Series'     : SeriesSection(self,QWidget),
             'Menu'       : MenuSection(self,QWidget),
             'Movie_List' : MovieListSection(self,QWidget),
             'Tags'       : TagsListSection(self, QWidget),
-            'Custom_list': CustomListSection(self,QWidget)
+            'Custom_list': CustomListSection(self,QWidget),
+            'EditGalery' : EditGalerySection(self,QWidget)
         }
         classObj = switcher.get(obj_name, "Invalid data");
         section_obj=classObj.run(data, data_list,page)

@@ -7,6 +7,8 @@ from .view import Form
 from core.setings import series_avatar_defult
 from core.BaseActions import Form
 from app.info import SingleSectionInfo
+from core.setings import photo_ext
+import os
 
 class AbstractSection(ABC):
 
@@ -36,6 +38,62 @@ class CustomListSection(AbstractSection):
             label.setText(item)
             self.edit_section_grid.addWidget(label, row, 0, 1, 1)
             row = row + 1
+
+class EditGalerySection(AbstractSection):
+
+    def __init__(self, BaseView, QWidget):
+        self.BaseView = BaseView
+        self.OBJ_QWidget = QWidget
+        self.obj = BaseView.obj
+        self.buttons = QtWidgets.QButtonGroup()
+        self.Form = Form(self.BaseView.obj)
+        self.Form.buttons_loop= [
+            {'button': self.on_info_button, 'obejct': self.buttons}
+        ]
+
+    def on_info_button(self, id):
+        self.Form.buttom_genarator(self.buttons, self.info_button, id)
+
+    def info_button(self,photo):
+        os.remove(self.galery_url+'/'+photo)
+        self.obj.BaseActions.reset()
+
+    def run(self,data,data_list,page):
+        self.galery_url=data_list;
+        galery_loop = os.listdir(data_list)
+        self.widget_edit_section = QtWidgets.QWidget(self.obj)
+        self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
+        self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
+
+        row = 0
+        col = 0
+        for photo in galery_loop:
+            if photo.endswith(photo_ext):
+
+                item = QtWidgets.QLabel(self.obj)
+                item.setMaximumSize(QtCore.QSize(150, 150))
+                item.setText("")
+                item.setPixmap(QtGui.QPixmap(data_list + '/' + photo))
+                item.setScaledContents(True)
+                item.setObjectName("galeryItem")
+                self.edit_section_grid.addWidget(item, row,col, 1, 1)
+
+                label = QtWidgets.QLabel()
+                label.setObjectName(photo)
+                label.setText(photo)
+                self.edit_section_grid.addWidget(label, row, col+1, 1, 1)
+
+                button = QtWidgets.QPushButton(self.obj)
+                button.setObjectName('obj_name')
+                button.setText('Remowe')
+                button.data = photo
+
+                self.edit_section_grid.addWidget(button, row,col+2, 1, 1)
+
+                self.Form.buttons_loop[0]['obejct'].addButton(button)
+                self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
+                col=0
+                row = row + 1
 
 class TagsListSection(AbstractSection):
 

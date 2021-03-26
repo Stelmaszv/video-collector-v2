@@ -10,6 +10,7 @@ from app.db.models import Tags,Stars
 from core.custum_errors import Error
 from pathlib import Path
 from abc import ABC,abstractmethod
+from core.setings import photo_ext
 
 
 class ViewBaseAction:
@@ -188,8 +189,8 @@ class Submit:
                         if Path(item['value']).is_file() is False:
                             error.append(item['value']+" is not a file")
                         else:
-                            if item['value'].endswith(('.png', '.jpg', '.jpeg','.jfif')) is False:
-                                error.append('File '+item['value']+' is not photo (png,jpeg,jpg,jfif)')
+                            if item['value'].endswith(photo_ext) is False:
+                                error.append('File '+item['value']+' is not photo '+str(photo_ext))
 
                 if item['data-type'] == 'dir':
                     if len(item['value']) > 0:
