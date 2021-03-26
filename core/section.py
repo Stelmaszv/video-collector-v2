@@ -45,17 +45,26 @@ class EditGalerySection(AbstractSection):
         self.BaseView = BaseView
         self.OBJ_QWidget = QWidget
         self.obj = BaseView.obj
-        self.buttons = QtWidgets.QButtonGroup()
+        self.remove_buttons = QtWidgets.QButtonGroup()
+        self.skip_buttons = QtWidgets.QButtonGroup()
         self.Form = Form(self.BaseView.obj)
         self.Form.buttons_loop= [
-            {'button': self.on_info_button, 'obejct': self.buttons}
+            {'button': self.on_remove_button, 'obejct': self.remove_buttons},
+            {'button': self.on_marks_as_skip, 'obejct': self.skip_buttons}
         ]
 
-    def on_info_button(self, id):
-        self.Form.buttom_genarator(self.buttons, self.info_button, id)
+    def on_remove_button(self, id):
+        self.Form.buttom_genarator(self.remove_buttons, self.info_button, id)
+
+    def on_marks_as_skip(self, id):
+        self.Form.buttom_genarator(self.skip_buttons, self.marks_as_skip, id)
 
     def info_button(self,photo):
         os.remove(self.galery_url+'/'+photo)
+        self.obj.BaseActions.reset()
+
+    def marks_as_skip(self,photo):
+        print('mark')
         self.obj.BaseActions.reset()
 
     def run(self,data,data_list,page):
@@ -83,15 +92,26 @@ class EditGalerySection(AbstractSection):
                 label.setText(photo)
                 self.edit_section_grid.addWidget(label, row, col+1, 1, 1)
 
-                button = QtWidgets.QPushButton(self.obj)
-                button.setObjectName('obj_name')
-                button.setText('Remowe')
-                button.data = photo
+                remove = QtWidgets.QPushButton(self.obj)
+                remove.setObjectName('obj_name')
+                remove.setText('Remowe')
+                remove.data = photo
 
-                self.edit_section_grid.addWidget(button, row,col+2, 1, 1)
+                self.edit_section_grid.addWidget(remove, row,col + 2, 1, 1)
 
-                self.Form.buttons_loop[0]['obejct'].addButton(button)
+                self.Form.buttons_loop[0]['obejct'].addButton(remove)
                 self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
+
+                skip_button = QtWidgets.QPushButton(self.obj)
+                skip_button.setObjectName('obj_name')
+                skip_button.setText('skip')
+                skip_button.data = photo
+
+                self.edit_section_grid.addWidget(skip_button, row, col + 3, 1, 1)
+
+                self.Form.buttons_loop[1]['obejct'].addButton(skip_button)
+                self.Form.buttons_loop[1]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[1]['button'])
+
                 col=0
                 row = row + 1
 
@@ -137,6 +157,7 @@ class TagsListSection(AbstractSection):
 
             self.Form.buttons_loop[0]['obejct'].addButton(button)
             self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
+
             row=row+1
 
 class StarsSection(AbstractSection):
