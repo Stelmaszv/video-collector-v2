@@ -20,5 +20,8 @@ class EditMovieView(QWidget,AbstractBaseView):
         self.Submit.set_data(values)
         self.Submit.run()
 
+    def edit_galery(self,value):
+        self.BaseView.load_view('edit_galery', self.data)
+
     def add_star(self,values):
         self.BaseView.load_view('movie_add_star_to_model_view', self.data)

@@ -344,6 +344,15 @@ class MovieEditForm(AbstractBaseFormShema):
             'new_row': True
         })
 
+
+        self.add_iten('button', {
+            'place_holder': 'Edit Galery',
+            'name': 'edit_galery',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
         self.add_iten('button', {
             'place_holder': 'Add Star',
             'name': 'add_star',

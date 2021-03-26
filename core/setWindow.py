@@ -23,6 +23,7 @@ class setWindow():
         from view.tags.add_tag_to_model_no_save import AddTagToModelNoSave
         from view.movie.edit_movie import EditMovieView
         from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
+        from view.galery.edit_galery import EditGaleryView
 
         switcher = {
             'stars_add_tag_view' : StarsAddTagView(),
@@ -41,6 +42,7 @@ class setWindow():
             'add_movie': AddMovieView(),
             'movie_list' : MovieListView(),
             'play': Player(),
+            'edit_galery':EditGaleryView(),
             'movie_add_star_to_model_view'  :MovieAddStarToModelView(),
             'series_add_star_to_model_view' :SeriesAddStarToModelView()
         }
