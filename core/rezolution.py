@@ -75,6 +75,20 @@ class MenuHalfSmall(MenuType):
 
     def show(self):
         return {
+            "EditGalery":{
+                 "position": {
+                    "left": 2562 + 400,
+                    "top": 400,
+                    "width": 1280,
+                    "height": 985
+                },
+                "window": {
+                    "navbar": [0, -10, 1280, 100],
+                    "list_view_size": [20, 200, 560, 750],
+                    "title_size": [300, 35, 580, 100],
+                    "form_section": [150, 100, 1050, 300]
+                }
+            },
             "SetPhotoToSeries": {
                 "position": {
                     "left": 2562 + 400,

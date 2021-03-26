@@ -80,6 +80,10 @@ class MovieNav(BaseNav):
     def open(self,argumants):
         self.AbstractBaseView.BaseView.load_view('play', self.data)
 
+class MovieGaleryNav(BaseNav):
+
+    pass
+
 class StarNav(BaseNav):
 
     pass
