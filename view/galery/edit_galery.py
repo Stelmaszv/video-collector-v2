@@ -12,3 +12,10 @@ class EditGaleryView(QWidget,AbstractBaseView):
     def set_up(self):
         self.window_title='Editing galery for '+str(self.data.name)
         self.set_list_view_data(self.data.dir)
+
+class EditGaleryMovieView(EditGaleryView):
+    show_elemnts = ['Info', 'Galery', 'Avatar', 'Description', 'Tags']
+    list_view    = 'EditGalery'
+    resolution_index = 'EditMovieGalery'
+    Nav          = MovieGaleryNav
+
