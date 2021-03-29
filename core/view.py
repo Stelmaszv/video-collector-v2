@@ -14,6 +14,7 @@ from app.model_view import BaseModelViewSet
 from core.setings import data_JSON
 from core.strings import stringManipupations
 from app.forms import BaseFormShema
+from core.setings import photo_ext
 import json
 
 class BaseView:
@@ -173,41 +174,26 @@ class BaseView:
                 col = col + 1
 
     def galery(self,data,size,inRow,dir='',obj=None):
-        def set_photo_dir():
-            if hasattr(self.data, 'config') == False:
-                if len(obj.data.series):
-                    dir = data_JSON['movies_photos'] + '\\series\\' + obj.data.series[0].name
-                    dir = dir=dir+'\\' + str(obj.data.sezon) + '\\' + obj.data.name
-                else:
-                    dir = data_JSON['movies_photos'] + '\\movies\\' + obj.data.name
-            else:
-                dir=self.data.config
-            return dir
-
-        def if_img(photo):
-            if photo.endswith('.JSON')==False:
-                return True
-            return False
-
         def faind_in_galery_skip(photo):
-            dir=set_photo_dir()
-            photo_dir=dir+'\\config.JSON'
-            if os.path.isfile(photo_dir):
-                with open(photo_dir) as f:
-                    json_pars = json.load(f)
-                    if 'galery_skip' in json_pars:
-                        if photo in json_pars['galery_skip']:
-                            return False
-            return True
+            stan=True
+            skip_galery=self.data.dir+'\\skip_galery.JSON'
+            if os.path.isfile(skip_galery):
+                with open(skip_galery) as sg:
+                    json_pars = json.load(sg)
+                    for photo_item in json_pars:
+                        if photo == photo_item:
+                            stan=False
+            return stan
+
+        if len(dir) == 0:
+            dir = self.data.dir + '/photo'
+        row = 0
+        col = 0
 
         if obj == None:
             obj = self.obj
 
-        if len(dir)==0:
-            dir=self.data.dir + '/photo'
-
         photos = os.listdir(dir)
-
         self.galeryGrid = QtWidgets.QWidget(obj)
         self.galeryGrid.setGeometry(QtCore.QRect(data[0],data[1],data[2],data[3]))
         self.galeryGrid.setObjectName("galeryGrid")
@@ -215,22 +201,20 @@ class BaseView:
         self.galeryGrid2 = QtWidgets.QGridLayout(self.galeryGrid)
         self.galeryGrid2.setContentsMargins(0, 0, 0, 0)
         self.galeryGrid2.setObjectName("galeryGrid2")
-        row = 0
-        col = 0
         for photo in photos:
-            if faind_in_galery_skip(photo):
-                if if_img(photo):
-                    item = QtWidgets.QLabel(self.galeryGrid)
-                    item.setMaximumSize(QtCore.QSize(size[0], size[1]))
-                    item.setText("")
-                    item.setPixmap(QtGui.QPixmap(dir+'/'+photo))
-                    item.setScaledContents(True)
-                    item.setObjectName("galeryItem")
-                    self.galeryGrid2.addWidget(item, col, row, 1, 1)
-                    row = row + 1
-                    if row > inRow:
-                        row = 0
-                        col = col + 1
+            if photo.endswith(photo_ext) and faind_in_galery_skip(photo):
+                item = QtWidgets.QLabel(self.galeryGrid)
+                item.setMaximumSize(QtCore.QSize(size[0], size[1]))
+                item.setText("")
+                item.setPixmap(QtGui.QPixmap(dir + '/' + photo))
+                item.setScaledContents(True)
+                item.setObjectName("galeryItem")
+                self.galeryGrid2.addWidget(item, col, row, 1, 1)
+                row = row + 1
+                if row > inRow:
+                    row = 0
+                    col = col + 1
+
 
 class AbstractBaseView:
 
