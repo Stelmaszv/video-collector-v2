@@ -78,6 +78,14 @@ class EditGalerySection(AbstractSection):
         f.close()
         self.obj.BaseActions.reset()
 
+    def galery_action_name(self,photo):
+        galery=self.BaseView.data.dir+'\\skip_galery.JSON'
+        with open(galery) as sg:
+            json_pars = json.load(sg)
+            if photo in json_pars:
+                return True
+        return False
+
     def run(self,data,data_list,page):
         self.galery_url=data_list;
         galery_loop = os.listdir(data_list)
@@ -115,7 +123,10 @@ class EditGalerySection(AbstractSection):
 
                 skip_button = QtWidgets.QPushButton(self.obj)
                 skip_button.setObjectName('obj_name')
-                skip_button.setText('skip')
+                show='Do not show in galery'
+                if self.galery_action_name(photo):
+                    show='Show in galery'
+                skip_button.setText(show)
                 skip_button.data = photo
 
                 self.edit_section_grid.addWidget(skip_button, row, col + 3, 1, 1)
