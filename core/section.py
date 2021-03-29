@@ -66,16 +66,27 @@ class EditGalerySection(AbstractSection):
         self.obj.BaseActions.reset()
 
     def marks_as_skip(self,photo):
-        galery=self.BaseView.data.dir+'\\skip_galery.JSON'
-        with open(galery) as sg:
-            json_pars = json.load(sg)
-            galery_skip=json_pars
-        galery_skip.append(photo)
-        os.remove(galery)
-        string=str(galery_skip).replace("'",'"')
-        f = open(galery, "x")
-        f.write(""+str(string)+"\n")
-        f.close()
+        def update():
+            os.remove(galery)
+            string=str(galery_skip).replace("'",'"')
+            f = open(galery, "x")
+            f.write(""+str(string)+"\n")
+            f.close()
+
+        galery = self.BaseView.data.dir + '\\skip_galery.JSON'
+        if self.galery_action_name(photo) is False:
+            with open(galery) as sg:
+                json_pars = json.load(sg)
+                galery_skip=json_pars
+            galery_skip.append(photo)
+        else:
+            with open(galery) as sg:
+                json_pars = json.load(sg)
+                galery_skip = json_pars
+                for item in galery_skip:
+                    if item == photo:
+                        galery_skip.remove(item)
+        update()
         self.obj.BaseActions.reset()
 
     def galery_action_name(self,photo):
