@@ -16,7 +16,7 @@ class EditGaleryView(QWidget,AbstractBaseView):
 class EditGaleryMovieView(EditGaleryView):
     show_elemnts = ['Info', 'Galery', 'Avatar', 'Description', 'Tags']
     reset_view = 'edit_galery_movie_view'
-    list_view    = 'EditGalery'
+    list_view    = 'EditGaleryMovies'
     resolution_index = 'EditMovieGalery'
     Nav          = MovieGaleryNav
 
