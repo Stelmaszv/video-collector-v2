@@ -10,7 +10,7 @@ from app.db.models import Tags,Stars
 from core.custum_errors import Error
 from pathlib import Path
 from abc import ABC,abstractmethod
-from core.setings import photo_ext
+from core.setings import photo_ext,with_size_defult,height_size_defult
 
 
 class ViewBaseAction:
@@ -250,8 +250,8 @@ class Form:
 
     def button_loop(self, el, grid, item, data, info, index,size=[]):
         button = QtWidgets.QPushButton(el)
-        with_size=20
-        height_size=20
+        with_size=with_size_defult
+        height_size=height_size_defult
         if size:
             with_size =size[0]
             height_size  =size[1]

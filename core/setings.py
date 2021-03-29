@@ -44,6 +44,11 @@ class ConfiGData:
 with open('data.json') as f:
   data = json.load(f)
 
+
+#form button
+with_size_defult = 25
+height_size_defult = 25
+
 data_JSON = data
 ConfiGData(data_JSON)
 window_type="half-smal" # half-smal, half-big
