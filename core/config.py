@@ -175,10 +175,17 @@ class ConfigMovies(AbstractConfigItem):
         self.config(Movie,movie_dir)
 
     def add_config_json(self,dir):
-        dir=dir+'\\config.JSON'
-        if os.path.isfile(dir) is False:
-            f = open(dir, "x")
+        config=dir+'\\config.JSON'
+        galery=dir+'\\skip_galery.JSON'
+
+        if os.path.isfile(config) is False:
+            f = open(config, "x")
             f.write('{}')
+            f.close()
+
+        if os.path.isfile(galery) is False:
+            f = open(galery, "x")
+            f.write('[]')
             f.close()
 
 

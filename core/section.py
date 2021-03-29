@@ -8,7 +8,9 @@ from core.setings import series_avatar_defult
 from core.BaseActions import Form
 from app.info import SingleSectionInfo
 from core.setings import photo_ext
+from pathlib import Path
 import os
+import json
 
 class AbstractSection(ABC):
 

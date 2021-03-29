@@ -162,6 +162,7 @@ class AbstractAddViaDir(ABC):
     def __init__(self, dir):
         self.dir = dir
         self.config = self.dir + '\\config.JSON'
+        self.skip_galery = self.dir + '\\skip_galery.JSON'
         self.set_config()
         self.session = session
         self.IfStar = IfStar()
@@ -178,6 +179,11 @@ class AbstractAddViaDir(ABC):
         if Path(self.config).is_file() is False:
             f = open(self.config, "x")
             f.write("{}\n")
+            f.close()
+
+        if Path(self.skip_galery).is_file() is False:
+            f = open(self.skip_galery, "x")
+            f.write("[]\n")
             f.close()
 
     def clear_name(self, dir):
@@ -392,13 +398,6 @@ class AddStarViaDir(AbstractAddViaDir):
     def __init__(self,dir):
         super().__init__(dir)
         self.star=self.if_star_exist(set_name(dir))
-
-    def set_config(self):
-        if Path(self.config).is_file() is False:
-            os.mkdir(self.dir)
-            f = open(self.config, "x")
-            f.write('{}')
-            f.close()
 
     def if_star_exist(self,name):
         name=set_name(name)
