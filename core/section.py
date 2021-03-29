@@ -98,28 +98,29 @@ class EditGalerySection(AbstractSection):
                 return True
         return False
 
-    def run(self,data,data_list,page):
-        def return_show(photo):
-            show = 'Do not show in galery'
-            if self.galery_action_name(photo):
-                show = 'Show in galery'
-            return show
+    def return_show(self,photo):
+        show = 'Do not show in galery'
+        if self.galery_action_name(photo):
+            show = 'Show in galery'
+        return show
+
+    def set_run(self,data,data_list):
         self.galery_url=data_list;
         self.galery_loop = os.listdir(data_list)
         self.widget_edit_section = QtWidgets.QWidget(self.obj)
         self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)
 
+    def run(self,data,data_list,page):
+        self.set_run(data,data_list)
         row = 0
         col = 0
         for photo in self.galery_loop:
             if photo.endswith(photo_ext):
-
                 self.Form.photo([row, col, 1, 1],self.edit_section_grid,data_list + '/' + photo,[150,150],self.obj)
                 self.Form.label(['', photo], [row, col+1, 1, 1], self.edit_section_grid, self.obj)
-                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col+2, 1, 1], ['remowe'], 0,[50,50])
-                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col + 3, 1, 1], [return_show(photo)], 1,[50,50])
-
+                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col+2, 1, 1], ['remove'], 0,[50,50])
+                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col + 3, 1, 1], [self.return_show(photo)], 1,[50,50])
                 col=0
                 row = row + 1
 
@@ -135,6 +136,23 @@ class EditGaleryMoviesSection(EditGalerySection):
     def replece(self,photo):
         print(photo)
         self.obj.BaseActions.reset()
+
+    def run(self,data,data_list,page):
+        self.set_run(data,data_list)
+        row = 0
+        col = 0
+        for photo in self.galery_loop:
+            if photo.endswith(photo_ext):
+                self.Form.photo([row, col, 1, 1],self.edit_section_grid,data_list + '/' + photo,[150,150],self.obj)
+                self.Form.label(['', photo], [row, col+1, 1, 1], self.edit_section_grid, self.obj)
+                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col+2, 1, 1],
+                                      ['remove'], 0,[50,50])
+                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col + 3, 1, 1],
+                                      [self.return_show(photo)], 1,[50,50])
+                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col + 4, 1, 1],
+                                      ['replace'], 2, [50, 50])
+                col=0
+                row = row + 1
 
 class TagsListSection(AbstractSection):
 
