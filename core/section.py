@@ -53,8 +53,7 @@ class EditGalerySection(AbstractSection):
         self.Form = Form(self.BaseView.obj)
         self.Form.buttons_loop= [
             {'button': self.on_remove_button, 'obejct': self.remove_buttons},
-            {'button': self.on_marks_as_skip, 'obejct': self.skip_buttons},
-            {'button': self.replece_buttons_generator, 'obejct': self.replece_buttons}
+            {'button': self.on_marks_as_skip, 'obejct': self.skip_buttons}
         ]
 
     def on_remove_button(self, id):
@@ -62,9 +61,6 @@ class EditGalerySection(AbstractSection):
 
     def on_marks_as_skip(self, id):
         self.Form.buttom_genarator(self.skip_buttons, self.marks_as_skip, id)
-
-    def replece_buttons_generator(self, id):
-        self.Form.buttom_genarator(self.replece_buttons, self.replece, id)
 
     def info_button(self,photo):
         os.remove(self.galery_url+'/'+photo)
@@ -119,22 +115,22 @@ class EditGalerySection(AbstractSection):
         for photo in self.galery_loop:
             if photo.endswith(photo_ext):
 
-                item = QtWidgets.QLabel(self.obj)
-                item.setMaximumSize(QtCore.QSize(150, 150))
-                item.setText("")
-                item.setPixmap(QtGui.QPixmap(data_list + '/' + photo))
-                item.setScaledContents(True)
-                item.setObjectName("galeryItem")
-                self.edit_section_grid.addWidget(item, row,col, 1, 1)
-
+                self.Form.photo([row, col, 1, 1],self.edit_section_grid,data_list + '/' + photo,[150,150],self.obj)
                 self.Form.label(['', photo], [row, col+1, 1, 1], self.edit_section_grid, self.obj)
-                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col+2, 1, 1], ['remowe'], 0)
-                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col + 3, 1, 1], [return_show(photo)], 1)
+                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col+2, 1, 1], ['remowe'], 0,[50,50])
+                self.Form.button_loop(self.obj, self.edit_section_grid, photo, [row, col + 3, 1, 1], [return_show(photo)], 1,[50,50])
 
                 col=0
                 row = row + 1
 
 class EditGaleryMoviesSection(EditGalerySection):
+
+    def __init__(self, BaseView, QWidget):
+        super().__init__(BaseView, QWidget)
+        self.Form.buttons_loop.append({'button': self.replece_buttons_generator, 'obejct': self.replece_buttons})
+
+    def replece_buttons_generator(self, id):
+        self.Form.buttom_genarator(self.replece_buttons, self.replece, id)
 
     def replece(self,photo):
         print(photo)

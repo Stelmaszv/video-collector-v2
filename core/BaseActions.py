@@ -248,10 +248,14 @@ class Form:
                 if button is list.button(id):
                     fuction(list.button(id).data)
 
-    def button_loop(self, el, grid, item, data, info, index):
+    def button_loop(self, el, grid, item, data, info, index,size=[]):
         button = QtWidgets.QPushButton(el)
-        button.setMinimumSize(QtCore.QSize(30, 0))
-        button.setMaximumSize(QtCore.QSize(10, 16777215))
+        with_size=20
+        height_size=20
+        if size:
+            with_size =size[0]
+            height_size  =size[1]
+        button.setMinimumSize(QtCore.QSize(with_size, height_size))
         button.setObjectName("InfoButton")
         button.setText(info[0])
         button.data = item
@@ -281,6 +285,17 @@ class Form:
         if grid is not None:
             grid.addWidget(combo_box,data[0], data[1], data[2], data[3])
         return combo_box
+
+    def photo(self,data,grid,photo_url,size,el=None):
+        if el is not None:
+            el=self.BaseView
+        item = QtWidgets.QLabel(el)
+        item.setMaximumSize(QtCore.QSize(size[0],size[1]))
+        item.setText("")
+        item.setPixmap(QtGui.QPixmap(photo_url))
+        item.setScaledContents(True)
+        item.setObjectName("galeryItem")
+        grid.addWidget(item, data[0], data[1], data[2], data[3])
 
     def label(self,info,data,grid,el=None):
         if el is not None:
