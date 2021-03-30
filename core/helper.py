@@ -22,17 +22,16 @@ class Message:
     rezolution = []
 
     def set_resolution(self,data):
-
-        Error.throw_error_bool('Index position not exist in dialog','position' in data)
+        Error.throw_error_bool('Index position not exist in dialog ('+str(data)+')','position' in data)
         self.rezolution_pos=data['position']
 
-        Error.throw_error_bool('Index label not exist in dialog', 'label' in data)
+        Error.throw_error_bool('Index label not exist in dialog ('+str(data)+')', 'label' in data)
         self.rezolution_label = data['label']
 
-        Error.throw_error_bool('Index label not exist in dialog', 'acept' in data)
+        Error.throw_error_bool('Index label not exist in dialog ('+str(data)+')', 'acept' in data)
         self.rezolution_acept = data['acept']
 
-        Error.throw_error_bool('Index cancel not exist in dialog', 'cancel' in data)
+        Error.throw_error_bool('Index cancel not exist in dialog ('+str(data)+')', 'cancel' in data)
         self.rezolution_cancel = data['cancel']
 
     def show(self,data):
@@ -42,6 +41,15 @@ class Message:
         msg.setInformativeText(data[1])
         msg.setWindowTitle(data[2])
         msg.exec_()
+
+    def info_dialog(self,text):
+        d = QDialog()
+        l = QtWidgets.QLabel(text, d)
+        l.move(self.rezolution_label[0], self.rezolution_label[1])
+        d.setWindowTitle("Dialog")
+        d.exec_()
+
+        d.close()
 
     def dialog(self,text,accept_def,cancel_def=False):
         def btm_cancel():

@@ -10,6 +10,7 @@ from pathlib import Path
 from core.setings import data_JSON
 from moviepy.editor import VideoFileClip
 from core.strings import stringManipupations
+from time import sleep
 
 add= False
 
@@ -82,7 +83,8 @@ class PhotoMeaker:
     limit = 12
     procent_limt=96
     add=False
-    def __init__(self,Movie,data):
+    def __init__(self,Movie,data,AbstractBaseView=None):
+        self.AbstractBaseView=AbstractBaseView
         self.Movie=Movie
         self.data=data
         self.set_limit()
@@ -111,12 +113,12 @@ class PhotoMeaker:
 
     def make(self):
         if self.add:
-            print("Dir "+self.Movie.src+" is scaning !")
+            star_mes="Dir "+self.Movie.src+" is scaning !"
+            print(star_mes)
             clip = VideoFileClip(self.Movie.src)
             for frame in range(0, self.limit):
                 clip.save_frame(self.Movie.dir + '\\' + str(stringManipupations.random(20)) + '.png', t=self.set_round_number(clip))
                 print('creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit))
-
 
 class FaindStar:
 

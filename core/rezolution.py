@@ -75,12 +75,30 @@ class MenuHalfSmall(MenuType):
 
     def show(self):
         return {
+            "Loading"        :{
+                "position": {
+                    "left": 2562 + 400,
+                    "top": 400,
+                    "width": 250,
+                    "height": 250
+                },
+                "window": {
+                    "title_size": [0, 0, 250, 250],
+                }
+            },
+
             "EditMovieGalery":{
                 "position": {
                     "left": 2562 + 400,
                     "top": 400,
                     "width": 1280,
                     "height": 985
+                },
+                'dialog': {
+                    "position": [2562 + 600, 600, 500, 100],
+                    "label": [50, 10],
+                    "acept": [50, 50],
+                    "cancel": [250, 50]
                 },
                 "window": {
                     "navbar": [0, 10, 1280, 100],

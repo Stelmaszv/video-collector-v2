@@ -263,6 +263,14 @@ class AbstractBaseView:
             self.data.views=self.data.views+1
             session.commit()
 
+    @property
+    def return_mesage_obj(self):
+        Error.throw_error_bool(
+            'Dialog not exist in '+self.resolution_index,
+            'dialog' in self.SetResolution.menu_set[self.resolution_index])
+        self.BaseView.Massage.set_resolution(self.SetResolution.menu_set[self.resolution_index]['dialog'])
+        return self.BaseView.Massage
+
     def form_section(self):
         Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection', issubclass(self.FormSchema, BaseFormShema))
         if self.model_view_off is False:
