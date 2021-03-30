@@ -22,7 +22,6 @@ class setWindow():
         from view.menu.advande_search import AdvanceSearch
         from view.tags.add_tag_to_model_no_save import AddTagToModelNoSave
         from view.movie.edit_movie import EditMovieView
-        from view.galery.loading import LoadingView
         from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
         from view.galery.edit_galery import EditGaleryView,EditGaleryMovieView
 
@@ -46,8 +45,7 @@ class setWindow():
             'edit_galery':EditGaleryView(),
             'movie_add_star_to_model_view'  :MovieAddStarToModelView(),
             'series_add_star_to_model_view' :SeriesAddStarToModelView(),
-            'edit_galery_movie_view' : EditGaleryMovieView(),
-            'loading_view'           : LoadingView()
+            'edit_galery_movie_view' : EditGaleryMovieView()
         }
 
         get = switcher.get(object, "Invalid data")

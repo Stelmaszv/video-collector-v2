@@ -76,8 +76,6 @@ def set_name(dir):
     last = len(name)-1
     return name[last]
 
-
-
 class PhotoMeaker:
 
     dir=''

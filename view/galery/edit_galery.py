@@ -25,12 +25,6 @@ class EditGaleryMovieView(EditGaleryView):
     list_view    = 'EditGaleryMovies'
     resolution_index = 'EditMovieGalery'
     Nav          = MovieGaleryNav
-    procent_limt = 96
-    array         = []
-
-    def set_up(self):
-        super().set_up()
-        self.window_title='Editing galery for '+str(self.data.name)
 
     def remove_all_photos_create_new(self,values):
         for dir in os.listdir(self.data.dir):
