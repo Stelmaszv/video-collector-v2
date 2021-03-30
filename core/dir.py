@@ -82,7 +82,7 @@ class PhotoMeaker:
     limit = 12
     procent_limt=96
     add=False
-    def __init__(self,Movie,data,AbstractBaseView):
+    def __init__(self,Movie,data,AbstractBaseView=None):
         self.Movie=Movie
         self.data=data
         self.set_limit()
@@ -109,6 +109,10 @@ class PhotoMeaker:
             return round_nomber
         else:
             return self.set_round_number(clip)
+
+    def replace(self,photo):
+        os.remove(self.Movie.dir+'\\'+photo)
+        self.make()
 
     def make(self):
         if self.add:

@@ -7,8 +7,9 @@ from .view import Form
 from core.setings import series_avatar_defult
 from core.BaseActions import Form
 from app.info import SingleSectionInfo
-from core.setings import photo_ext
+from core.setings import photo_ext,data_JSON
 from pathlib import Path
+from core.dir import PhotoMeaker
 import os
 import json
 
@@ -133,7 +134,8 @@ class EditGaleryMoviesSection(EditGalerySection):
         self.Form.buttom_genarator(self.replece_buttons, self.replece, id)
 
     def replece(self,photo):
-        print(photo)
+        PM=PhotoMeaker(self.BaseView.data,data_JSON['movies_photos'],self.obj)
+        PM.replace(photo)
         self.obj.BaseActions.reset()
 
     def run(self,data,data_list,page):
