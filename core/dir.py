@@ -111,6 +111,7 @@ class PhotoMeaker:
 
     def make(self):
         if self.add:
+            print("Dir "+self.Movie.src+" is scaning !")
             clip = VideoFileClip(self.Movie.src)
             for frame in range(0, self.limit):
                 clip.save_frame(self.Movie.dir + '\\' + str(stringManipupations.random(20)) + '.png', t=self.set_round_number(clip))

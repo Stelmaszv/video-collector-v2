@@ -1,7 +1,11 @@
+import os
 from PyQt5.QtWidgets import QWidget
 from app.db.models import Movies
 from core.view import AbstractBaseView
 from app.nav import MovieGaleryNav
+from core.setings import photo_ext,data_JSON
+from app.db.models import session
+from core.dir import PhotoMeaker
 class EditGaleryView(QWidget,AbstractBaseView):
     show_elemnts = ['Info', 'Galery', 'Avatar', 'Description', 'Tags','Nav']
     resolution_index = 'EditGalery'
@@ -21,8 +25,14 @@ class EditGaleryMovieView(EditGaleryView):
     Nav          = MovieGaleryNav
 
     def remove_all_photos_create_new(self,values):
-        print('ok')
+        for dir in os.listdir(self.data.dir):
+            if dir.endswith(photo_ext):
+                os.remove(self.data.dir+'\\'+dir)
+        self.create_missing_photos(values)
 
     def create_missing_photos(self,values):
-        print('ok')
+        Movie = session.query(Movies).filter(Movies.id == self.data.id).first()
+        PM = PhotoMeaker(Movie, data_JSON['movies_photos'])
+        PM.make()
+        self.BaseActions.reset()
 
