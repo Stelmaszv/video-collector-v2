@@ -1,12 +1,13 @@
 import os
+import random
 from PyQt5.QtWidgets import QWidget
 from app.db.models import Movies
 from core.view import AbstractBaseView
 from app.nav import MovieGaleryNav
-from view.galery.loading import LoadingView
 from core.setings import photo_ext,data_JSON
 from app.db.models import session
 from core.dir import PhotoMeaker
+
 class EditGaleryView(QWidget,AbstractBaseView):
     show_elemnts = ['Info', 'Galery', 'Avatar', 'Description', 'Tags','Nav']
     resolution_index = 'EditGalery'
@@ -24,6 +25,12 @@ class EditGaleryMovieView(EditGaleryView):
     list_view    = 'EditGaleryMovies'
     resolution_index = 'EditMovieGalery'
     Nav          = MovieGaleryNav
+    procent_limt = 96
+    array         = []
+
+    def set_up(self):
+        super().set_up()
+        self.window_title='Editing galery for '+str(self.data.name)
 
     def remove_all_photos_create_new(self,values):
         for dir in os.listdir(self.data.dir):
@@ -32,17 +39,7 @@ class EditGaleryMovieView(EditGaleryView):
         self.create_missing_photos(values)
 
     def create_missing_photos(self,values):
-        load=LoadingView()
-        load.text.append('fajny')
-        load.run_window()
-        load.close()
-        load.text.append('faf')
-        load.run_window()
-        #self.BaseView.load_view('loading_view', self.data)
-        """
         Movie = session.query(Movies).filter(Movies.id == self.data.id).first()
         PM = PhotoMeaker(Movie, data_JSON['movies_photos'],self)
         PM.make()
         self.BaseActions.reset()
-        """
-

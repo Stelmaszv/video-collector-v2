@@ -10,7 +10,6 @@ from pathlib import Path
 from core.setings import data_JSON
 from moviepy.editor import VideoFileClip
 from core.strings import stringManipupations
-from time import sleep
 
 add= False
 
@@ -77,17 +76,19 @@ def set_name(dir):
     last = len(name)-1
     return name[last]
 
+
+
 class PhotoMeaker:
 
     dir=''
     limit = 12
     procent_limt=96
     add=False
-    def __init__(self,Movie,data,AbstractBaseView=None):
-        self.AbstractBaseView=AbstractBaseView
+    def __init__(self,Movie,data,AbstractBaseView):
         self.Movie=Movie
         self.data=data
         self.set_limit()
+        self.AbstractBaseView=AbstractBaseView
 
     def set_limit(self):
         skip=0
@@ -114,11 +115,33 @@ class PhotoMeaker:
     def make(self):
         if self.add:
             star_mes="Dir "+self.Movie.src+" is scaning !"
-            print(star_mes)
+            if self.AbstractBaseView:
+                self.AbstractBaseView.setWindowTitle(star_mes)
+                self.AbstractBaseView.update()
+            else:
+                print(star_mes)
+
             clip = VideoFileClip(self.Movie.src)
             for frame in range(0, self.limit):
                 clip.save_frame(self.Movie.dir + '\\' + str(stringManipupations.random(20)) + '.png', t=self.set_round_number(clip))
-                print('creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit))
+                mess='creating photos for ' + self.Movie.name + ' ' + str(frame + 1) + '/' + str(self.limit)
+                if self.AbstractBaseView:
+                    self.AbstractBaseView.setWindowTitle(mess)
+                    self.AbstractBaseView.update()
+                else:
+                    print(mess)
+
+class PhotoMeakerViaView(PhotoMeaker):
+
+    def __init__(self,Movie,data,array):
+        super().__init__(Movie,data)
+        self.array=array
+
+    def make(self):
+        if VideoFileClip(self.Movie.src):
+            star_mes = "Dir " + self.Movie.src + " is scaning !"
+            self.array.append(star_mes)
+            print()
 
 class FaindStar:
 
