@@ -9,6 +9,11 @@ class QueryCounter:
         self.per_page=per_page
         self.page_count=query.count()
 
+    def if_previous_page_exist(self,page):
+        if page>0:
+            return True
+        return False
+
     def if_page_exist(self,page):
         if page in range(0,int(self.page_count/self.per_page)):
             return True

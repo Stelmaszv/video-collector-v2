@@ -17,20 +17,28 @@ class Menu(QWidget,AbstractBaseView):
     search_faze         = search_faze_defult
     page = 0
 
+    def __init__(self,page=0):
+        super().__init__()
+        self.page=page
+
     def  set_up(self):
         factory = SetFactory(self)
         self.list = factory.get_factory(self.search_in)
         self.set_list_view_data(self.list)
         QC = QueryCounter(self.list, menu_per_page)
-        self.previous=False
+        self.previous=QC.if_previous_page_exist(self.page)
         self.next=QC.if_page_exist(self.page)
         self.custum_form(MenuPaginationForm,'pagination_form')
 
     def previous_page(self,value):
-        print(value)
+        self.close()
+        M=Menu(self.page-1)
+        M.run_window()
 
     def next_page(self, value):
-        print(value)
+        self.close()
+        M=Menu(self.page+1)
+        M.run_window()
 
     def set_search(self,values):
 
