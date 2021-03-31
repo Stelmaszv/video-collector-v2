@@ -67,3 +67,4 @@ auto_play=True
 full_screen=True
 #run_setings
 scan_photos=False
+run_start_view=True

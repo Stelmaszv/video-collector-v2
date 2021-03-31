@@ -4,12 +4,13 @@ from PyQt5.QtWidgets import QApplication
 from app.db.models import session, Movies
 from core.config import ConfigLoop, ConfigMovies
 from core.dir import LoadFilesFromJson, PhotoMeaker
-from core.setings import data_JSON,scan_photos
+from core.setings import data_JSON,scan_photos,run_start_view
 from view.menu.menu import Menu
 
 class Run:
 
     scan_photos=scan_photos
+    run_start_view=run_start_view
 
     def __init__(self,StartView):
         self.StartView=StartView
@@ -30,7 +31,10 @@ class Run:
                 PM.make()
 
     def show_start_view(self):
-        self.StartView.run_window()
+        if self.run_start_view:
+            self.StartView.run_window()
+        else:
+            exit()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
