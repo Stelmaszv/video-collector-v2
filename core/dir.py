@@ -7,7 +7,7 @@ from app.db.models import session
 from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
 from pathlib import Path
-from core.setings import data_JSON
+from core.setings import data_JSON,photo_ext
 from moviepy.editor import VideoFileClip
 from core.strings import stringManipupations
 
@@ -82,6 +82,7 @@ class PhotoMeaker:
     limit = 12
     procent_limt=96
     add=False
+
     def __init__(self,Movie,data,AbstractBaseView=None):
         self.Movie=Movie
         self.data=data
@@ -89,16 +90,14 @@ class PhotoMeaker:
         self.AbstractBaseView=AbstractBaseView
 
     def set_limit(self):
-        skip=0
-        with open(self.Movie.dir + '/config.JSON') as f:
-            data = json.load(f)
-            if 'galery_skip' in data:
-                skip=len(data['galery_skip'])
+        count=0
 
-        self.limit=self.limit+1+skip
-        photos_in_dir=len(os.listdir(self.Movie.dir))
-        if photos_in_dir != self.limit:
-            self.limit=self.limit-photos_in_dir;
+        for item in os.listdir(self.Movie.dir):
+            if item.endswith(photo_ext):
+                count=count+1
+
+        if count<self.limit:
+            self.limit=self.limit-count;
             self.add=True
 
     def set_round_number(self,clip):
