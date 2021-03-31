@@ -139,14 +139,20 @@ class FormConstract:
             self.BaseFormShema.is_method(details['name'])
         )
 
+        def set_disabled(details):
+            if 'disabled' in details:
+                return details['disabled']
+            return True
+
         name= 'button'
         self.field_valid(details)
         if 'is_submit' in details:
             name = 'button_submit'
 
         return {
+            'disabled':set_disabled(details),
             'type': name,
-            'data_type':"",
+            'data_type':"string",
             'name': details['place_holder'],
             'obj_name': details['name'],
             'place_holder': details['place_holder'],
@@ -367,12 +373,14 @@ class MenuPaginationForm(BaseFormShema):
         self.add_iten('button', {
             'place_holder': 'Previous Page',
             'name': 'previous_page',
-            "row": True,
-            "coll": True
+            "disabled" : self.BaseView.previous,
+            "row"      : True,
+            "coll"     : True
         })
         self.add_iten('button', {
             'place_holder': 'Next Page',
             'name': 'next_page',
+            "disabled": self.BaseView.next,
             "row": False,
             "coll": True,
         })

@@ -267,6 +267,7 @@ class Form:
         button = QtWidgets.QPushButton(self.BaseView)
         button.setObjectName(info['obj_name'])
         button.setText(info['name'])
+        button.setEnabled(info['disabled'])
         if grid is not None:
             grid.addWidget(
                 button,
@@ -479,14 +480,15 @@ class FormSection:
 
             if data['item']['type'] == 'combo_box':
                 return  data['button'].currentText()
+
         for item in grid:
             db = ''
             if 'db' in item['item']:
                 db=item['item']['db']
             values.append(
                 {
-                    'name': item['item']['place_holder'],
-                    'value': str(show_value(item)),
+                    'name'     : item['item']['place_holder'],
+                    'value'    : str(show_value(item)),
                     'data-type': item['item']['data_type'],
                     'db'       : db
                 }

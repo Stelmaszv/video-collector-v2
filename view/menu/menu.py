@@ -21,8 +21,9 @@ class Menu(QWidget,AbstractBaseView):
         factory = SetFactory(self)
         self.list = factory.get_factory(self.search_in)
         self.set_list_view_data(self.list)
-        QC=QueryCounter(self.list,menu_per_page)
-        print(QC.if_page_exist(self.page))
+        QC = QueryCounter(self.list, menu_per_page)
+        self.previous=False
+        self.next=QC.if_page_exist(self.page)
         self.custum_form(MenuPaginationForm,'pagination_form')
 
     def previous_page(self,value):
