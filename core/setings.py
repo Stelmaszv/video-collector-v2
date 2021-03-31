@@ -66,4 +66,4 @@ muted=False
 auto_play=True
 full_screen=True
 #run_setings
-scan_photos=True
+scan_photos=False

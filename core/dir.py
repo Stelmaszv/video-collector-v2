@@ -96,6 +96,11 @@ class PhotoMeaker:
             if item.endswith(photo_ext):
                 count=count+1
 
+        with open(self.Movie.dir+'\\skip_galery.JSON') as sg:
+            json_pars = json.load(sg)
+            in_skip_galeruy=len(json_pars)
+
+        count=count-in_skip_galeruy
         if count<self.limit:
             self.limit=self.limit-count;
             self.add=True
