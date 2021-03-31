@@ -377,7 +377,6 @@ class FormSection:
         return clendar_value
 
     def form_section(self, data, buttons=[]):
-
         self.widget_edit_section = QtWidgets.QWidget(self.BaseView)
         self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.widget_edit_section.setObjectName("widget_edit_section")

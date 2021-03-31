@@ -275,6 +275,17 @@ class AbstractBaseView:
         self.BaseView.Massage.set_resolution(self.SetResolution.menu_set[self.resolution_index]['dialog'])
         return self.BaseView.Massage
 
+    def custum_form(self,FormSchema,index,ModelView=None):
+        Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection',
+                               issubclass(FormSchema, BaseFormShema))
+        FormSchemaObj = FormSchema(self)
+        buttons = FormSchemaObj.return_from_section()
+        Error.throw_error_bool('Index '+index+' not found in '+self.resolution_index,index in self.WindowSize)
+        data_line = self.WindowSize[index]
+        if ModelView:
+            self.Submit = Submit(ModelView, self.data, self)
+        self.FormSection.form_section(data_line, buttons)
+
     def form_section(self):
         Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection', issubclass(self.FormSchema, BaseFormShema))
         if self.model_view_off is False:
@@ -282,6 +293,7 @@ class AbstractBaseView:
             Error.throw_error_bool('class self.ModelView is not subclass of BaseModelViewSet',
                                issubclass(self.ModelView, BaseModelViewSet))
         self.FormSchemaObj = self.FormSchema(self)
+        Error.throw_error_bool('Index form_section not found in ' + self.resolution_index,'form_section' in self.WindowSize)
         data_line = self.WindowSize['form_section']
         buttons = self.FormSchemaObj.return_from_section()
         if self.model_view_off is False:

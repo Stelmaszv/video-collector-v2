@@ -1,6 +1,6 @@
 from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
-from app.forms import MenuFormSchena
+from app.forms import MenuFormSchena,MenuPaginationForm
 from core.search import SetFactory
 from core.setings import search_in_defult,search_faze_defult,menu_per_page
 from core.helper import QueryCounter
@@ -15,7 +15,7 @@ class Menu(QWidget,AbstractBaseView):
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
     search_in           = search_in_defult
     search_faze         = search_faze_defult
-    page = 1
+    page = 0
 
     def  set_up(self):
         factory = SetFactory(self)
@@ -23,6 +23,13 @@ class Menu(QWidget,AbstractBaseView):
         self.set_list_view_data(self.list)
         QC=QueryCounter(self.list,menu_per_page)
         print(QC.if_page_exist(self.page))
+        self.custum_form(MenuPaginationForm,'pagination_form')
+
+    def previous_page(self,value):
+        print(value)
+
+    def next_page(self, value):
+        print(value)
 
     def set_search(self,values):
 

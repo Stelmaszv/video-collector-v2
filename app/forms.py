@@ -361,6 +361,22 @@ class MovieEditForm(AbstractBaseFormShema):
             'new_row': True
         })
 
+class MenuPaginationForm(BaseFormShema):
+    def form(self):
+        self.from_section = []
+        self.add_iten('button', {
+            'place_holder': 'Previous Page',
+            'name': 'previous_page',
+            "row": True,
+            "coll": True
+        })
+        self.add_iten('button', {
+            'place_holder': 'Next Page',
+            'name': 'next_page',
+            "row": False,
+            "coll": True,
+        })
+
 class AdvanceSearchForm(BaseFormShema):
     def form(self):
         self.from_section = []
