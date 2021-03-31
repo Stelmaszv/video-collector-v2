@@ -1,9 +1,6 @@
 from PyQt5.QtWidgets import  QMessageBox,QDialog
 from PyQt5 import QtCore, QtWidgets
 from core.custum_errors import Error
-from sys import exit as sysExit
-from .list import List
-from app.db.models import Movies
 
 class QueryCounter:
 

@@ -1,16 +1,9 @@
-from PyQt5.QtWidgets import QAction,QMainWindow
-from core.view import BaseView
-from app.db.seaders import initSeader
-from core.helper import QueryCounter
-from core.rezolution import SetResolution
-from core.setings import data_JSON
-from core.dir import LoadFilesFromJson
-from app.forms import StarsForm
 from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
 from app.forms import MenuFormSchena
 from core.search import SetFactory
-from core.setings import search_in_defult,search_faze_defult
+from core.setings import search_in_defult,search_faze_defult,menu_per_page
+from core.helper import QueryCounter
 class Menu(QWidget,AbstractBaseView):
     FormSchema         = MenuFormSchena
     resolution_index   = 'Menu'
@@ -22,11 +15,14 @@ class Menu(QWidget,AbstractBaseView):
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
     search_in           = search_in_defult
     search_faze         = search_faze_defult
+    page = 1
 
     def  set_up(self):
         factory = SetFactory(self)
         self.list = factory.get_factory(self.search_in)
         self.set_list_view_data(self.list)
+        QC=QueryCounter(self.list,menu_per_page)
+        print(QC.if_page_exist(self.page))
 
     def set_search(self,values):
 

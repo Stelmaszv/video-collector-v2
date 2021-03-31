@@ -471,6 +471,7 @@ class MenuSection(AbstractSection):
         start = self.return_start_page(page)
         end = self.return_end_page(start,page)
         self.Scroller.run([data[0], data[1], data[2], data[3]], self.obj)
+        print(start,end)
         self.Scroller.movie_list(
             data_list[start:end],
             self,
@@ -481,7 +482,7 @@ class MenuSection(AbstractSection):
         if page<0:
             return 0
         else:
-            return page*25
+            return page*menu_per_page
 
     def return_end_page(self,start,page):
         if page>0:

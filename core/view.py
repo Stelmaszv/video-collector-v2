@@ -44,9 +44,13 @@ class BaseView:
     def upadete(self):
         self.avatar_photo.show()
 
-    def listView(self, data, data_list,obj_name,QWidget=False,page=False):
+    def listView(self, data, data_list,obj_name,QWidget=None):
         from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,\
             TagsListSection,CustomListSection,EditGalerySection,EditGaleryMoviesSection
+        page=False
+        if QWidget:
+            if hasattr(QWidget,'page'):
+                page = QWidget.page
         switcher = {
             'Stars'      : StarsSection(self,QWidget),
             'Series'     : SeriesSection(self,QWidget),

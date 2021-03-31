@@ -49,7 +49,7 @@ with open('data.json') as f:
 with_size_defult = 25
 height_size_defult = 25
 
-menu_per_page = 5
+menu_per_page = 50
 data_JSON = data
 ConfiGData(data_JSON)
 window_type="half-smal" # half-smal, half-big
