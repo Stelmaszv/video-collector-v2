@@ -34,6 +34,7 @@ class BaseNav:
        self.coll = self.coll + 1
        return {
             "name": data['name'],
+            "disabled" :True,
             "obj_name": data['obj_name'],
             "grid_data": [0, self.coll, 1, 1],
             "click": self.click(data['click']),
