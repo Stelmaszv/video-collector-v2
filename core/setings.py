@@ -65,5 +65,5 @@ search_faze_defult = ''
 muted=False
 auto_play=True
 full_screen=True
-#setings
-scan_photos=False
+#run_setings
+scan_photos=True

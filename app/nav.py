@@ -1,4 +1,3 @@
-import os
 from core.custum_errors import Error
 
 class BaseNav:
