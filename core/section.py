@@ -7,7 +7,7 @@ from .view import Form
 from core.setings import series_avatar_defult
 from core.BaseActions import Form
 from app.info import SingleSectionInfo
-from core.setings import photo_ext,data_JSON
+from core.setings import photo_ext,data_JSON,menu_per_page
 from pathlib import Path
 from core.dir import PhotoMeaker
 import os
@@ -443,7 +443,7 @@ class MovieListSection(AbstractSection):
 
 class MenuSection(AbstractSection):
 
-    per_page=500
+    per_page=menu_per_page
 
     def __init__(self, BaseView,QWidget):
 
