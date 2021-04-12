@@ -29,6 +29,10 @@ class SetPhotoToSetiesView(BaseModelViewSet):
                         if len(el['value']):
                             item.src = el['value']
 
+class ConfigAddDataModel(BaseModelViewSet):
+    def add_data(self,data):
+        pass
+
 class MoviesModelView(BaseModelViewSet):
     model = Series()
     session = session

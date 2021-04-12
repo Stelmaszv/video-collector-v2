@@ -190,9 +190,14 @@ class FormConstract:
     def edit_line(self,details):
         self.field_valid(details)
         db=self.set_db(details)
+        required= False
 
         data_type = 'data_type'
         validation= ''
+
+        if 'required' in details:
+            required = details['required']
+
         if 'data_type' in details:
             data_type = details['data_type']
 
@@ -201,6 +206,7 @@ class FormConstract:
 
         return {
             'db'          : db,
+            'required'    : required,
             'type'        : 'edit_line',
             'name'        : details['name'],
             'data_type'   : data_type,
@@ -528,6 +534,74 @@ class SetPhotoToSeriesForm(AbstractBaseFormShema):
             'new_row': True
         })
 
+class JSONDataConfigForm(AbstractBaseFormShema):
+    def form(self):
+        self.from_section = []
+        self.add_iten('label', {
+            'place_holder': 'Stars dir',
+            'name': 'stars_dir',
+            "row": False,
+            "coll": False
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Stars dir edit label',
+            'custum_name':'Stars dir edit label',
+            'required' : True,
+            'data_type':'dir',
+            'model':False,
+            'name': 'stars_edit',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Series dir',
+            'name': 'series_label',
+            'new_row': True,
+            "row": True,
+            "coll": False
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Series dir edit label',
+            'custum_name':'Stars dir edit label',
+            'required': True,
+            'data_type': 'dir',
+            'model':False,
+            'name': 'series_edit',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Movies Photos',
+            'name': 'movies_photos_label',
+            'new_row': True,
+            "row": True,
+            "coll": False
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Series dir edit label',
+            'custum_name':'Stars dir edit label',
+            'required': True,
+            'data_type': 'dir',
+            'model':False,
+            'name': 'movies_photos_edit',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Submit',
+            'name': 'submit_click',
+            'new_row': True,
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+        })
+
 class TagsForm(BaseFormShema):
 
     def form(self):
@@ -613,7 +687,6 @@ class StarsForm(AbstractBaseFormShema):
             "coll": False,
             'new_row': True
         })
-
 
         self.add_iten('edit_line', {
             'place_holder': 'Weight',

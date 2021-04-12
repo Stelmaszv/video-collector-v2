@@ -5,7 +5,7 @@ from core.search import SetFactory
 from core.setings import search_in_defult,search_faze_defult,menu_per_page
 from core.helper import QueryCounter
 class Menu(QWidget,AbstractBaseView):
-    FormSchema         = MenuFormSchena
+    FormSchema         =  MenuFormSchena
     resolution_index   = 'Menu'
     window_title       = 'Manu'
     list_view          = 'Menu'

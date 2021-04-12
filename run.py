@@ -6,14 +6,17 @@ from core.config import ConfigLoop, ConfigMovies
 from core.dir import LoadFilesFromJson, PhotoMeaker
 from core.setings import data_JSON,scan_photos,run_start_view
 from view.menu.menu import Menu
+from view.config.config_data_json import JSONConfigView
 
 class Run:
 
     scan_photos=scan_photos
     run_start_view=run_start_view
+    config=True
 
-    def __init__(self,StartView):
+    def __init__(self,StartView,JSONConfigView):
         self.StartView=StartView
+        self.JSONConfigView = JSONConfigView
 
     def start(self):
         if Path('data.json').is_file():
@@ -32,7 +35,8 @@ class Run:
                     PM = PhotoMeaker(Movie, data_JSON['movies_photos'])
                     PM.make()
         else:
-            print('fwf')
+            self.config=False
+            self.JSONConfigView.run_window()
 
     def show_start_view(self):
         if self.run_start_view:
@@ -42,7 +46,8 @@ class Run:
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    Run=Run(Menu())
+    Run=Run(Menu(),JSONConfigView())
     Run.start()
-    Run.show_start_view()
+    if Run.config:
+        Run.show_start_view()
     sys.exit(app.exec_())

@@ -182,8 +182,11 @@ class Submit:
     def run(self):
         error = []
         for item in self.data:
+            if 'required' in item:
+                print(item)
+                if len(item['value']) == 0:
+                    error.append("<b>" + item['error'] + "</b> is required !")
             if 'data-type' in item:
-
                 if item['data-type'] == 'photo_location':
                     if len(item['value']) > 0:
                         if Path(item['value']).is_file() is False:
@@ -195,7 +198,8 @@ class Submit:
                 if item['data-type'] == 'dir':
                     if len(item['value']) > 0:
                         if os.path.isdir(item['value']) is False:
-                            error.append("Invalid dir location in <h2>"+item['name']+"</h2>")
+                            error.append("Invalid dir location in <b>"+item['error']+"</b>")
+
                 if item['data-type'] == 'data':
                     ymd = item['value'].split('-')
                     if len(ymd) == 3:
@@ -481,13 +485,21 @@ class FormSection:
             if data['item']['type'] == 'combo_box':
                 return  data['button'].currentText()
 
+        def set_requierd(item):
+            if 'required' in item['item']:
+                return item['item']['required']
+            return False
+
         for item in grid:
             db = ''
             if 'db' in item['item']:
                 db=item['item']['db']
+
             values.append(
                 {
+                    'required' : set_requierd(item),
                     'name'     : item['item']['place_holder'],
+                    'error'    : item['item']['name'],
                     'value'    : str(show_value(item)),
                     'data-type': item['item']['data_type'],
                     'db'       : db
