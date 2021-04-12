@@ -184,7 +184,7 @@ class Submit:
         self.error = []
         for item in self.data:
             if 'required' in item:
-                if len(item['value']) == 0:
+                if len(item['value']) == 0 and item['required'] is True:
                     self.error.append("<b>" + item['error'] + "</b> is required !")
 
             if 'data-type' in item:
@@ -490,7 +490,7 @@ class FormSection:
         def set_requierd(item):
             if 'required' in item['item']:
                 return item['item']['required']
-            return False
+            return None
 
         for item in grid:
             db = ''
