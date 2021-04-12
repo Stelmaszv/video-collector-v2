@@ -1,10 +1,12 @@
 from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QMainWindow,qApp,QAction
+from PyQt5.QtGui import QIcon
 from app.forms import MenuFormSchena,MenuPaginationForm
 from core.search import SetFactory
 from core.setings import search_in_defult,search_faze_defult,menu_per_page
 from core.helper import QueryCounter
-class Menu(QWidget,AbstractBaseView):
+class Menu(QMainWindow,QWidget,AbstractBaseView):
     FormSchema         =  MenuFormSchena
     resolution_index   = 'Menu'
     window_title       = 'Manu'
@@ -21,7 +23,29 @@ class Menu(QWidget,AbstractBaseView):
         super().__init__()
         self.page=page
 
+    def json_config(self):
+        self.BaseView.load_view('JSONCONFIG')
+
     def  set_up(self):
+
+        exitAct = QAction(QIcon('exit.png'), '&Exit', self)
+        exitAct.setShortcut('ESC')
+        exitAct.setStatusTip('Exit application')
+
+        jsonConfig =  QAction(QIcon('exit.png'), '&Exit', self)
+        jsonConfig.setShortcut('Ctrl+C')
+        jsonConfig.setStatusTip('Json')
+        jsonConfig.triggered.connect(self.json_config)
+
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&JSON')
+        fileMenu.addAction(jsonConfig)
+
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction(exitAct)
+
+        exitAct.triggered.connect(qApp.quit)
         factory = SetFactory(self)
         self.list = factory.get_factory(self.search_in)
         self.set_list_view_data(self.list)

@@ -24,8 +24,10 @@ class setWindow():
         from view.movie.edit_movie import EditMovieView
         from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
         from view.galery.edit_galery import EditGaleryView,EditGaleryMovieView
+        from view.config.config_data_json import JSONConfigView
 
         switcher = {
+            'JSONCONFIG': JSONConfigView(),
             'stars_add_tag_view' : StarsAddTagView(),
             'movies_add_tag_view': MoviesAddTagView(),
             'series_add_tag_view': SeriesAddTagView(),
