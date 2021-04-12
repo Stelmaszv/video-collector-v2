@@ -170,6 +170,7 @@ class Submit:
 
     Model = None
     Obj   = None
+    auto_model =True
     data  = []
 
     def __init__(self,Model=None,Data=[],Obj=None):
@@ -180,25 +181,25 @@ class Submit:
         self.data=values
 
     def run(self):
-        error = []
+        self.error = []
         for item in self.data:
             if 'required' in item:
-                print(item)
                 if len(item['value']) == 0:
-                    error.append("<b>" + item['error'] + "</b> is required !")
+                    self.error.append("<b>" + item['error'] + "</b> is required !")
+
             if 'data-type' in item:
                 if item['data-type'] == 'photo_location':
                     if len(item['value']) > 0:
                         if Path(item['value']).is_file() is False:
-                            error.append(item['value']+" is not a file")
+                            self.error.append(item['value']+" is not a file")
                         else:
                             if item['value'].endswith(photo_ext) is False:
-                                error.append('File '+item['value']+' is not photo '+str(photo_ext))
+                                self.error.append('File '+item['value']+' is not photo '+str(photo_ext))
 
                 if item['data-type'] == 'dir':
                     if len(item['value']) > 0:
                         if os.path.isdir(item['value']) is False:
-                            error.append("Invalid dir location in <b>"+item['error']+"</b>")
+                            self.error.append("Invalid dir location in <b>"+item['error']+"</b>")
 
                 if item['data-type'] == 'data':
                     ymd = item['value'].split('-')
@@ -209,13 +210,14 @@ class Submit:
                         DV.validate_data()
                         item['value'] = datetime(DV.year, DV.mount, DV.day)
 
-        if len(error) == 0:
-            self.add_data_to_model()
+        if len(self.error) == 0:
+            if self.auto_model:
+                self.add_data_to_model()
 
-        if len(error) > 0:
+        if len(self.error) > 0:
             data = [
                 'Errors in form',
-                self.form_to_string(error),
+                self.form_to_string(self.error),
                 ''
             ]
             self.Obj.BaseView.Massage.show(data)
