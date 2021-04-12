@@ -1,6 +1,7 @@
 import json
 import os
 from core.custum_errors import Error
+from pathlib import Path
 
 class ConfiGData:
 
@@ -40,18 +41,18 @@ class ConfiGData:
 
     if os.path.isdir(dir+'\\W-Z') is False:
       os.mkdir(dir+'\\W-Z')
-
-with open('data.json') as f:
-  data = json.load(f)
-
+data_JSON={}
+if Path('data.json').is_file():
+  with open('data.json') as f:
+    data = json.load(f)
+  data_JSON = data
+  ConfiGData(data_JSON)
 
 #form button
 with_size_defult = 25
 height_size_defult = 25
 
 menu_per_page = 50
-data_JSON = data
-ConfiGData(data_JSON)
 window_type="half-smal" # half-smal, half-big
 series_avatar_defult ='D:/project/video-collector-v2/data/avatar.png'
 stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'

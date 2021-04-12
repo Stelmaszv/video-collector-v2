@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication
-
+from pathlib import Path
 from app.db.models import session, Movies
 from core.config import ConfigLoop, ConfigMovies
 from core.dir import LoadFilesFromJson, PhotoMeaker
@@ -16,19 +16,23 @@ class Run:
         self.StartView=StartView
 
     def start(self):
-        JSON = LoadFilesFromJson(data_JSON['dirs'])
-        JSON.add_files()
+        if Path('data.json').is_file():
 
-        Config = ConfigLoop(data_JSON['dirs'])
-        Config.load()
+            JSON = LoadFilesFromJson(data_JSON['dirs'])
+            JSON.add_files()
 
-        Config = ConfigMovies(data_JSON['movies_photos'])
-        Config.load()
+            Config = ConfigLoop(data_JSON['dirs'])
+            Config.load()
 
-        if self.scan_photos:
-            for Movie in session.query(Movies).all():
-                PM = PhotoMeaker(Movie, data_JSON['movies_photos'])
-                PM.make()
+            Config = ConfigMovies(data_JSON['movies_photos'])
+            Config.load()
+
+            if self.scan_photos:
+                for Movie in session.query(Movies).all():
+                    PM = PhotoMeaker(Movie, data_JSON['movies_photos'])
+                    PM.make()
+        else:
+            print('fwf')
 
     def show_start_view(self):
         if self.run_start_view:

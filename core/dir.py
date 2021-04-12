@@ -147,7 +147,6 @@ class PhotoMeakerViaView(PhotoMeaker):
         if VideoFileClip(self.Movie.src):
             star_mes = "Dir " + self.Movie.src + " is scaning !"
             self.array.append(star_mes)
-            print()
 
 class FaindStar:
 
