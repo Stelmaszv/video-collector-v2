@@ -15,12 +15,18 @@ class AbstractFactory(ABC):
 
     def add_tags(self,query):
         if len(self.Menu.tags):
-            query = query.filter(or_(self.model.tags.any(Tags.name.in_(self.Menu.tags))))
+            query = query.filter(self.model.tags.any(Tags.name.in_(self.Menu.tags)))
+        return query
+
+    def add_stars(self,query):
+        if len(self.Menu.stars):
+            query = query.filter(self.model.stars.any(Stars.name.in_(self.Menu.stars)))
         return query
 
     def return_all(self) -> session:
         query=session.query(self.model)
         query=self.add_tags(query)
+        query=self.add_stars(query)
         return query.order_by(desc(self.Menu.order_by)).all()
 
 
