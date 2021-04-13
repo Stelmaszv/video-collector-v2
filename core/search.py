@@ -28,12 +28,22 @@ class AbstractFactory(ABC):
             query=query.filter(self.model.favourite == self.Menu.favourite)
         return query
 
+    def set_query(self):
+        if self.Menu.search_faze:
+            return session.query(self.model).filter(self.model.name.like(str(self.Menu.search_faze) + '%'))
+        return session.query(self.model)
+
+    def add_year(self,query):
+        if self.Menu.year:
+            query=query.filter(self.model.year == self.Menu.year)
+        return query
 
     def return_all(self) -> session:
-        query=session.query(self.model)
+        query=self.set_query()
         query=self.add_tags(query)
         query=self.add_stars(query)
         query=self.add_favourite(query)
+        query=self.add_year(query)
         return query.order_by(desc(self.Menu.order_by)).all()
 
 

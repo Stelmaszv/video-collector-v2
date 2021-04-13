@@ -15,6 +15,7 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     model_view_off     = True
     order_by           = 'views'
     favourite          = None
+    year               = 1962
     tags               = ('')
     stars              = ('')
     reset_view         = 'menu'
