@@ -23,10 +23,17 @@ class AbstractFactory(ABC):
             query = query.filter(self.model.stars.any(Stars.name.in_(self.Menu.stars)))
         return query
 
+    def add_favourite(self,query):
+        if self.Menu.favourite is not None:
+            query=query.filter(self.model.favourite == self.Menu.favourite)
+        return query
+
+
     def return_all(self) -> session:
         query=session.query(self.model)
         query=self.add_tags(query)
         query=self.add_stars(query)
+        query=self.add_favourite(query)
         return query.order_by(desc(self.Menu.order_by)).all()
 
 

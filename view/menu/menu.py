@@ -14,6 +14,7 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     list_model_off     = True
     model_view_off     = True
     order_by           = 'views'
+    favourite          = None
     tags               = ('')
     stars              = ('')
     reset_view         = 'menu'
@@ -60,11 +61,13 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     def previous_page(self,value):
         self.close()
         M=Menu(self.page-1)
+        M.search_in =self.search_in
         M.run_window()
 
     def next_page(self, value):
         self.close()
         M=Menu(self.page+1)
+        M.search_in = self.search_in
         M.run_window()
 
     def set_search(self,values):
