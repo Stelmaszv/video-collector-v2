@@ -14,8 +14,8 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     list_model_off     = True
     model_view_off     = True
     order_by           = 'views'
-    tags               = ('','Kotek')
-    stars              = ('','Kat')
+    tags               = ('')
+    stars              = ('')
     reset_view         = 'menu'
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
     search_in           = search_in_defult

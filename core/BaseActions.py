@@ -78,12 +78,11 @@ class AbstractAddToModel(ABC):
                 add = True
         return add
 
-    def remove(self,star):
-        add=self.faind_item(star.name)
+    def remove(self, Star):
+        add=self.faind_item(Star.name)
 
         if add:
-            self.field.remove(star)
-            self.ViewBaseAction.reset()
+            self.field.remove(Star)
 
     def set_new_dialog(self,mess):
         if str(mess) and len(mess):

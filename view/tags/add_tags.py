@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import AbstractBaseView
-from core.BaseActions import AddTag
+from core.BaseActions import AddTag,AddStar
 from app.forms import TagsForm
 from app.db.models import Series,Movies,Stars
 
