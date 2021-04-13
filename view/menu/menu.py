@@ -13,6 +13,8 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     list_view          = 'Menu'
     list_model_off     = True
     model_view_off     = True
+    order_by           = 'views'
+    tags               = ('')
     reset_view         = 'menu'
     show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
     search_in           = search_in_defult

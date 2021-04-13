@@ -1,28 +1,37 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
-from app.db.models import Movies,Series,Stars
+from app.db.models import Movies,Series,Stars,Movies_Tags,Tags
 from app.db.models import session
-
+from sqlalchemy import desc
+from sqlalchemy import or_
 class AbstractFactory(ABC):
     model=None
 
-    def __init__(self,obj):
-        self.obj=obj
+    def __init__(self,Menu):
+        self.Menu=Menu
 
     def get_query(self) -> session:
         return self.return_all()
 
+    def add_tags(self,query):
+        if len(self.Menu.tags):
+            query = query.filter(or_(self.model.tags.any(Tags.name.in_(self.Menu.tags))))
+        return query
+
     def return_all(self) -> session:
-        return self.if_isset_search_faze()
+        query=session.query(self.model)
+        query=self.add_tags(query)
+        return query.order_by(desc(self.Menu.order_by)).all()
+
 
     def if_isset_search_faze(self) -> session:
-        if self.obj.search_faze is None:
+        if self.Menu.search_faze is None:
             return session.query(self.model).all()
         else:
             return self.search_faze_normal()
 
     def search_faze_normal(self):
-        return session.query(self.model).filter(self.model.name.like(str(self.obj.search_faze)+'%'))
+        return session.query(self.model).filter(self.model.name.like(str(self.Menu.search_faze) + '%'))
 
 class SetFactory:
 

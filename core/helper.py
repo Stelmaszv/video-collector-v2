@@ -7,7 +7,7 @@ class QueryCounter:
     def __init__(self,query,per_page):
         self.query=query;
         self.per_page=per_page
-        self.page_count=query.count()
+        self.page_count=len(query)
 
     def if_previous_page_exist(self,page):
         if page>0:
