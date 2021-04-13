@@ -24,7 +24,6 @@ class SerieView(QWidget,AbstractBaseView):
                 .filter(Movies.series.any(Series.id.in_(("",self.data.id))))\
                 .order_by(desc('year'))\
                 .all()
-        print(return_Movies_in_series())
         self.set_list_view_data(return_Movies_in_series())
 
 

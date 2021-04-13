@@ -335,7 +335,7 @@ class SeriesSection(AbstractSection):
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
                "<span style=\" font-size:28pt;font-weight:800; " \
-               "text-decoration: none;\">" + title_name + \
+               "text-decoration: none;\">" + title_name+ \
                "</span></p></body></html>"
 
         title.setText(text)
@@ -348,11 +348,10 @@ class SeriesSection(AbstractSection):
         )
 
     def info(self,tab,info,item,single=False):
-        data   = self.BaseView.obj.WindowSize[info]
-        rows = ['itemNmae','itemName2']
+        data = self.BaseView.obj.WindowSize[info]
+        rows = ['itemNmae', 'itemName2']
         if single:
-            self.single_title(tab,item)
-
+            self.single_title(tab, item)
         self.Section.set_obj(self.obj.data,item)
         info_data=self.Section.return_data()
         self.BaseView.info(info_data,data,rows,tab)
@@ -372,15 +371,16 @@ class SeriesSection(AbstractSection):
         self.Form = Form(tab)
         info={
             "obj_name":'play',
+            "disabled" : True,
             "name"    :'Play',
             "grid_data":self.BaseView.obj.WindowSize['single_play_button'],
             'click'   :self.click_play
         }
         self.Form.button(info,None,movies)
-
         info={
             "obj_name":'info',
             "name"    :'Info',
+            "disabled": True,
             "grid_data":self.BaseView.obj.WindowSize['single_info_button'],
             'click'   :self.click_info
         }
@@ -405,8 +405,8 @@ class SeriesSection(AbstractSection):
                 self.tabWidget.addTab(tab, str(item))
             else:
                 self.BaseView.avatar(self.BaseView.obj.WindowSize['section_avatar_single_movie'], tab, src)
-                self.info(tab,'section_info_single_info',item,True)
-                self.show_movie_buttons(tab,movies)
+                self.info(tab, 'section_info_single_info', item, True)
+                self.show_movie_buttons(tab, movies)
                 self.tabWidget.addTab(tab, str(item))
         return self.tabWidget
 

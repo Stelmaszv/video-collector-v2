@@ -53,7 +53,7 @@ class Sezons(Base):
     id = Column('id', Integer, primary_key=True)
     name = Column('name', String)
     src = Column('src', String)
-    sezon_name = Column('sezon_name', String)
+    sezon_name = Column('sezon_name', String, default='')
     year       = Column('year', String)
 
     series = relationship(

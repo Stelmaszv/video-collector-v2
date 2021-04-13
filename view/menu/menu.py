@@ -14,7 +14,7 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     list_model_off     = True
     model_view_off     = True
     order_by           = 'year'
-    favourite          = False
+    favourite          = None
     year               = None
     tags               = ('')
     stars              = ('')
