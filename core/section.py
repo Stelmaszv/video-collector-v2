@@ -390,7 +390,7 @@ class SeriesSection(AbstractSection):
         pages = self.data.number_of_sezons
         self.tabWidget = self.Pagination.tabs([data[0], data[1], data[2], data[3]])
         for item in range(1, pages + 1):
-            movies = self.faind_movies_with_sezon(self.data.movies, item)
+            movies = self.faind_movies_with_sezon(data_list, item)
             tab = self.Pagination.tab()
             src = self.set_src(item)
             if len(movies)>1:

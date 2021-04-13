@@ -269,7 +269,7 @@ class Movies(Base):
             if len(series):
                 return series[0].name+' '
             return ''
-        return get_year(self.year)+''+get_series(self.series)+'<b>'+self.name+'</b>'
+        return get_series(self.series)+'<b>'+get_year(self.year)+' '+self.name+'</b>'
 
     def __str__(self):
         return  self.name
