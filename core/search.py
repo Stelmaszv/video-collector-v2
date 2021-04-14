@@ -43,7 +43,9 @@ class AbstractFactory(ABC):
         query=self.add_stars(query)
         query=self.add_favourite(query)
         query=self.add_year(query)
-        return query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by)).all()
+        if self.Menu.AdvandeSearchCriteria.order_by:
+            query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
+        return query.all()
 
 
     def if_isset_search_faze(self) -> session:

@@ -1,11 +1,11 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import AbstractBaseView
 from app.forms import TagsForm
-from app.db.models import Tags
+from app.db.models import Tags,Stars
 class AbstractAdd(AbstractBaseView):
 
     resolution_index = 'add_tag'
-    window_title = 'Add tag advance search view'
+    window_title = ''
     show_elemnts = ['Info','Galery','Nav','Avatar','Description','Tags']
     FormSchema   = TagsForm
     list_view = 'Tags'
@@ -57,6 +57,7 @@ class AbstractAdd(AbstractBaseView):
 
 class AddTagAdvnaceSearchView(QWidget,AbstractAdd):
 
+    window_title = 'Add tag advance search view'
     errr =  'Tag'
     AddModel =  Tags
 
@@ -69,4 +70,21 @@ class AddTagAdvnaceSearchView(QWidget,AbstractAdd):
         from .advande_search import AdvanceSearch
         AS=AdvanceSearch()
         AS.criterions['Tags']=self.data_array
+        AS.run_window()
+
+class AddStarsAdvnaceSearchView(QWidget,AbstractAdd):
+
+    window_title = 'Add star advance search view'
+    errr =  'Star'
+    AddModel =  Stars
+
+    def reset(self):
+        ATASV = AddStarsAdvnaceSearchView()
+        ATASV.data_array = self.data_array
+        ATASV.run_window()
+
+    def closeEvent(self, QCloseEvent):
+        from .advande_search import AdvanceSearch
+        AS=AdvanceSearch()
+        AS.criterions['Star']=self.data_array
         AS.run_window()
