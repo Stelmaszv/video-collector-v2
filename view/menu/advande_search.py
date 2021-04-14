@@ -9,9 +9,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     resolution_index = 'advande_search'
     window_title = 'Advance Search'
     reset_view = 'advance_search'
-    tags= []
-    stars= []
-    criterions = {'Tags':[],'Stars':[]}
+    criterions = {'Tags':['','Bond','Action','Fantasy'],'Stars':['','Sean Connery']}
 
     def add_star(self,values):
         self.close()
@@ -38,5 +36,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         M = Menu(0)
         M.search_in = 'movies'
         M.AdvandeSearchCriteria.favourite=True
+        M.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
+        M.AdvandeSearchCriteria.tags=tuple(self.criterions['Tags'])
         M.run_window()
 
