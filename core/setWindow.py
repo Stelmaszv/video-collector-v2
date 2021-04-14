@@ -20,7 +20,6 @@ class setWindow():
         from view.set_photo_to_series.set_photo_to_series import SetPhotoToSeries
         from view.menu.menu import Menu
         from view.menu.advande_search import AdvanceSearch
-        from view.tags.add_tag_to_model_no_save import AddTagToModelNoSave
         from view.movie.edit_movie import EditMovieView
         from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
         from view.galery.edit_galery import EditGaleryView,EditGaleryMovieView
@@ -31,7 +30,6 @@ class setWindow():
             'stars_add_tag_view' : StarsAddTagView(),
             'movies_add_tag_view': MoviesAddTagView(),
             'series_add_tag_view': SeriesAddTagView(),
-            'add_tag_to_model_no_save' :AddTagToModelNoSave(),
             'advance_search'    : AdvanceSearch(),
             'menu'              : Menu(),
             'edit_movie'        : EditMovieView(),
