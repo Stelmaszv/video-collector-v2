@@ -1,6 +1,5 @@
 from core.view import AbstractBaseView
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import QMainWindow,qApp,QAction
+from PyQt5.QtWidgets import QWidget,QMainWindow,qApp,QAction
 from PyQt5.QtGui import QIcon
 from app.forms import MenuFormSchena,MenuPaginationForm
 from core.search import SetFactory

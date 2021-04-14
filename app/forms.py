@@ -419,7 +419,7 @@ class AdvanceSearchForm(BaseFormShema):
         })
 
         self.add_iten('button', {
-            'place_holder': 'Add Tag',
+            'place_holder': 'Add Star',
             'name': 'add_star',
             "row": True,
             "coll": True,

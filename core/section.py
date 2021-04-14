@@ -185,7 +185,10 @@ class TagsListSection(AbstractSection):
 
             label = QtWidgets.QLabel()
             label.setObjectName('test')
-            label.setText(item.name)
+            if hasattr(item,'name'):
+                label.setText(item.name)
+            else:
+                label.setText(item)
             self.edit_section_grid.addWidget(label, row, 0, 1, 1)
 
             button = QtWidgets.QPushButton(self.obj)

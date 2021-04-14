@@ -2,6 +2,7 @@ from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
 from app.forms import AdvanceSearchForm
 from view.menu.menu import Menu
+from  .add_tag_advance_search import AddTagAdvnaceSearchView
 class AdvanceSearch(QWidget,AbstractBaseView):
     FormSchema = AdvanceSearchForm
     model_view_off = True
@@ -12,18 +13,13 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     criterions = {'Tags':['','Bond','Action','Fantasy'],'Stars':['','Sean Connery']}
 
     def add_star(self,values):
-        self.close()
-        from view.star.add_star_to_model_no_save import AddStarToModelNoSave
-        A = AddStarToModelNoSave()
-        A.criterions = self.criterions
-        A.run_window()
+        print('star')
 
     def add_tag(self,values):
         self.close()
-        from view.tags.add_tag_to_model_no_save import AddTagToModelNoSave
-        A=AddTagToModelNoSave()
-        A.criterions=self.criterions
-        A.run_window()
+        ATASV=AddTagAdvnaceSearchView()
+        ATASV.tags=self.criterions['Tags']
+        ATASV.run_window()
 
     def set_up(self):
         self.custom_title('Tags','tags_name')
