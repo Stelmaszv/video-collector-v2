@@ -1,13 +1,13 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import AbstractBaseView
-from app.forms import TagsForm
+from app.forms import TagsFormAddToSearch
 from app.db.models import Tags,Stars
 class AbstractAdd(AbstractBaseView):
 
     resolution_index = 'add_tag'
     window_title = ''
     show_elemnts = ['Info','Galery','Nav','Avatar','Description','Tags']
-    FormSchema   = TagsForm
+    FormSchema   = TagsFormAddToSearch
     list_view = 'Tags'
     reset_view ='add_tag_advnace_search_view'
     data_array      = []
@@ -15,6 +15,14 @@ class AbstractAdd(AbstractBaseView):
     model_view_off = True
     errr =  ''
     AddModel =  None
+    index=''
+
+    def save_click(self,values):
+        from .advande_search import AdvanceSearch
+        self.close()
+        AS = AdvanceSearch()
+        AS.criterions[self.index] = self.data_array
+        AS.run_window()
 
     def delete(self,Tag):
         self.data_array.remove(Tag)
@@ -60,6 +68,7 @@ class AddTagAdvnaceSearchView(QWidget,AbstractAdd):
     window_title = 'Add tag advance search view'
     errr =  'Tag'
     AddModel =  Tags
+    index = 'Tags'
 
     def reset(self):
         self.close()
@@ -67,26 +76,15 @@ class AddTagAdvnaceSearchView(QWidget,AbstractAdd):
         ATASV.data_array = self.data_array
         ATASV.run_window()
 
-    def closeEvent(self, QCloseEvent):
-        from .advande_search import AdvanceSearch
-        AS=AdvanceSearch()
-        AS.criterions['Tags']=self.data_array
-        AS.run_window()
-
 class AddStarsAdvnaceSearchView(QWidget,AbstractAdd):
 
     window_title = 'Add star advance search view'
     errr =  'Star'
     AddModel =  Stars
+    index='Star'
 
     def reset(self):
         self.close()
         ATASV = AddStarsAdvnaceSearchView()
         ATASV.data_array = self.data_array
         ATASV.run_window()
-
-    def closeEvent(self, QCloseEvent):
-        from .advande_search import AdvanceSearch
-        AS=AdvanceSearch()
-        AS.criterions['Star']=self.data_array
-        AS.run_window()

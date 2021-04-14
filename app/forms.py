@@ -629,6 +629,16 @@ class TagsForm(BaseFormShema):
             "is_submit": True,
         })
 
+class TagsFormAddToSearch(TagsForm):
+    def form(self):
+        super().form()
+        self.add_iten('button', {
+            'place_holder': 'save',
+            'name': 'save_click',
+            "row": False,
+            "coll": True,
+        })
+
 class SeriesForm(AbstractBaseFormShema):
 
     avatar_dir = '/photo'
