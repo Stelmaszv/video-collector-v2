@@ -70,3 +70,9 @@ full_screen=True
 scan_photos=False
 run_start_view=True
 clean_db=False
+#AdvanceSearchCriteria
+tags_defult                       = ('')
+stars_defult                      = ('')
+order_by_defult                   = 'year'
+favourite_defult                  = None
+year_defult                       = None

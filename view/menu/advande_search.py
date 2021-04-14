@@ -1,6 +1,7 @@
 from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
 from app.forms import AdvanceSearchForm
+from view.menu.menu import Menu
 class AdvanceSearch(QWidget,AbstractBaseView):
     FormSchema = AdvanceSearchForm
     model_view_off = True
@@ -33,5 +34,9 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         self.custom_list(self.criterions['Stars'],'stars','Custom_list')
 
     def submit_click(self,values):
-        print(values)
+        self.close()
+        M = Menu(0)
+        M.search_in = 'movies'
+        M.AdvandeSearchCriteria.favourite=True
+        M.run_window()
 
