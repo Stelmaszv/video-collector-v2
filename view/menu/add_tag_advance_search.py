@@ -21,7 +21,7 @@ class AbstractAdd(AbstractBaseView):
         self.reset()
 
     def set_up(self):
-        self.set_list_view_data(self.data_array[1:])
+        self.set_list_view_data(self.data_array)
 
     def base_reset(self,Obj):
         ATASV = Obj()
@@ -62,6 +62,7 @@ class AddTagAdvnaceSearchView(QWidget,AbstractAdd):
     AddModel =  Tags
 
     def reset(self):
+        self.close()
         ATASV = AddTagAdvnaceSearchView()
         ATASV.data_array = self.data_array
         ATASV.run_window()
@@ -79,6 +80,7 @@ class AddStarsAdvnaceSearchView(QWidget,AbstractAdd):
     AddModel =  Stars
 
     def reset(self):
+        self.close()
         ATASV = AddStarsAdvnaceSearchView()
         ATASV.data_array = self.data_array
         ATASV.run_window()
