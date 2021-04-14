@@ -144,7 +144,7 @@ class AddStar(AbstractAddToModel):
         return '<h2>Star "' + self.value + '" no exist in db do you wont to add ?</h2>'
 
     def accept(self):
-        ASVD=AddStarViaDir(set_dir_for_star(self.value))
+        ASVD = AddStarViaDir(set_dir_for_star(self.value))
         self.AddObj = ASVD.star
         self.in_db = True
 

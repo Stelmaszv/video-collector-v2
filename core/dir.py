@@ -28,6 +28,8 @@ def set_dir_for_star(name):
         dir = data_JSON['dirs'][0]['dir'] + '\\R-U\\' + name
     if letter == 'W' or letter == 'V' or letter == 'X' or letter == 'Y' or letter == 'Z':
         dir = data_JSON['dirs'][0]['dir'] + '\\W-Z\\' + name
+    if os.path.exists(dir) is False:
+        os.mkdir(dir)
     return dir
 
 def set_movie_dir(Movie) ->str:
@@ -207,6 +209,7 @@ class AbstractAddViaDir(ABC):
         return dir
 
     def set_config(self):
+
         if Path(self.config).is_file() is False:
             f = open(self.config, "x")
             f.write("{}\n")
