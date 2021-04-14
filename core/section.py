@@ -312,7 +312,7 @@ class StarsSection(AbstractSection):
 
 class SeriesSection(AbstractSection):
 
-    per_page = 25
+    per_page = 5
 
     def __init__(self, BaseView,QWidget):
         self.obj = BaseView.obj

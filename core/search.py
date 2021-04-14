@@ -1,9 +1,8 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from app.db.models import Movies,Series,Stars,Movies_Tags,Tags
+from abc import ABC
+from app.db.models import Movies,Series,Stars,Tags
 from app.db.models import session
 from sqlalchemy import desc
-from sqlalchemy import or_
 class AbstractFactory(ABC):
     model=None
 
@@ -14,18 +13,18 @@ class AbstractFactory(ABC):
         return self.return_all()
 
     def add_tags(self,query):
-        if len(self.Menu.tags):
-            query = query.filter(self.model.tags.any(Tags.name.in_(self.Menu.tags)))
+        if len(self.Menu.AdvandeSearchCriteria.tags):
+            query = query.filter(self.model.tags.any(Tags.name.in_(self.Menu.AdvandeSearchCriteria.tags)))
         return query
 
     def add_stars(self,query):
-        if len(self.Menu.stars):
-            query = query.filter(self.model.stars.any(Stars.name.in_(self.Menu.stars)))
+        if len(self.Menu.AdvandeSearchCriteria.stars):
+            query = query.filter(self.model.stars.any(Stars.name.in_(self.Menu.AdvandeSearchCriteria.stars)))
         return query
 
     def add_favourite(self,query):
-        if self.Menu.favourite is not None:
-            query=query.filter(self.model.favourite == self.Menu.favourite)
+        if self.Menu.AdvandeSearchCriteria.favourite is not None:
+            query=query.filter(self.model.favourite == self.Menu.AdvandeSearchCriteria.favourite)
         return query
 
     def set_query(self):
@@ -34,8 +33,8 @@ class AbstractFactory(ABC):
         return session.query(self.model)
 
     def add_year(self,query):
-        if self.Menu.year:
-            query=query.filter(self.model.year == self.Menu.year)
+        if self.Menu.AdvandeSearchCriteria.year:
+            query=query.filter(self.model.AdvandeSearchCriteria.year == self.Menu.AdvandeSearchCriteriayear)
         return query
 
     def return_all(self) -> session:
@@ -44,7 +43,7 @@ class AbstractFactory(ABC):
         query=self.add_stars(query)
         query=self.add_favourite(query)
         query=self.add_year(query)
-        return query.order_by(desc(self.Menu.order_by)).all()
+        return query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by)).all()
 
 
     def if_isset_search_faze(self) -> session:

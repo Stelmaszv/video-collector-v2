@@ -6,22 +6,19 @@ from app.forms import MenuFormSchena,MenuPaginationForm
 from core.search import SetFactory
 from core.setings import search_in_defult,search_faze_defult,menu_per_page
 from core.helper import QueryCounter
+from .AdvanceSearchCriteria import AdvanceSearchCriteria
 class Menu(QMainWindow,QWidget,AbstractBaseView):
-    FormSchema         =  MenuFormSchena
-    resolution_index   = 'Menu'
-    window_title       = 'Manu'
-    list_view          = 'Menu'
-    list_model_off     = True
-    model_view_off     = True
-    order_by           = 'year'
-    favourite          = None
-    year               = None
-    tags               = ('')
-    stars              = ('')
-    reset_view         = 'menu'
-    show_elemnts       = ['Title','Info','Galery','Nav','Avatar']
-    search_in           = search_in_defult
-    search_faze         = search_faze_defult
+    FormSchema                 =  MenuFormSchena
+    resolution_index           = 'Menu'
+    window_title               = 'Manu'
+    list_view                  = 'Menu'
+    list_model_off             = True
+    model_view_off             = True
+    AdvandeSearchCriteria      = AdvanceSearchCriteria()
+    reset_view                 = 'menu'
+    show_elemnts               = ['Title','Info','Galery','Nav','Avatar']
+    search_in                  = search_in_defult
+    search_faze                = search_faze_defult
     page = 0
 
     def __init__(self,page=0):
@@ -86,4 +83,7 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
         self.BaseView.load_view('advance_search')
 
     def reset(self,value):
-        self.BaseActions.reset()
+        self.close()
+        M = Menu(self.page)
+        M.search_in = self.search_in
+        M.run_window()
