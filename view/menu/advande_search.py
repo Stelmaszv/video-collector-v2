@@ -18,7 +18,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     def add_tag(self,values):
         self.close()
         ATASV=AddTagAdvnaceSearchView()
-        ATASV.tags=self.criterions['Tags']
+        ATASV.data_array=self.criterions['Tags']
         ATASV.run_window()
 
     def set_up(self):
