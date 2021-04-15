@@ -23,7 +23,7 @@ class AbstractFactory(ABC):
         return query
 
     def add_favourite(self,query):
-        if self.Menu.AdvandeSearchCriteria.favourite is not None:
+        if self.Menu.AdvandeSearchCriteria.favourite:
             query=query.filter(self.model.favourite == self.Menu.AdvandeSearchCriteria.favourite)
         return query
 
@@ -44,7 +44,7 @@ class AbstractFactory(ABC):
         query=self.add_favourite(query)
         query=self.add_year(query)
         if self.Menu.AdvandeSearchCriteria.order_by:
-            query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
+            query=query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
         return query.all()
 
 

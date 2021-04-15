@@ -395,6 +395,72 @@ class AdvanceSearchForm(BaseFormShema):
     def form(self):
         self.from_section = []
         self.add_iten('label', {
+            'place_holder': 'Serch fraze',
+            'name': 'name',
+            "row": False,
+            "coll": False
+        })
+        self.add_iten('edit_line', {
+            'place_holder': 'Hukaj',
+            'custum_name':'Hukaj',
+            'model':False,
+            'name': 'name',
+            "row": False,
+            "coll": True
+        })
+        self.add_iten('label', {
+            'place_holder': 'Serch in',
+            'name': 'name',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+        self.add_iten('combo_box', {
+            'place_holder': 'search_in',
+            'name': 'search_in',
+            'combo_box_list': ['','series', 'stars', 'movies'],
+            "row": False,
+            "coll": True
+        })
+        self.add_iten('label', {
+            'place_holder': 'Favarite',
+            'name': 'name',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+        self.add_iten('combo_box', {
+            'place_holder': 'search_in',
+            'name': 'search_in',
+            'combo_box_list': ['','True','False'],
+            "row": False,
+            "coll": True
+        })
+        self.add_iten('label', {
+            'place_holder': 'Order by',
+            'name': 'name',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+        self.add_iten('combo_box', {
+            'place_holder': 'Order by',
+            'name': 'search_in',
+            'combo_box_list': ['','year','likes','views'],
+            "row": False,
+            "coll": True
+        })
+        self.add_iten('button', {
+            'place_holder': 'Submit',
+            'name': 'submit_click',
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+            'new_row': True
+        })
+
+        """
+        self.add_iten('label', {
             'place_holder': 'Name',
             'name': 'name',
             "row": False,
@@ -434,6 +500,7 @@ class AdvanceSearchForm(BaseFormShema):
             "is_submit": True,
             'new_row': True
         })
+        """
 
 class MenuFormSchena(BaseFormShema):
 
