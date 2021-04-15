@@ -496,6 +496,21 @@ class AdvanceSearchForm(BaseFormShema):
             "coll": True,
             'new_row': True
         })
+        self.add_iten('label', {
+            'place_holder': 'series',
+            'name': 'name',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+        self.add_iten('edit_line', {
+            'place_holder': 'series_var',
+            'custum_name':'Hukaj',
+            'model':False,
+            'name': 'name',
+            "row": False,
+            "coll": True
+        })
         self.add_iten('button', {
             'place_holder': 'Submit',
             'name': 'submit_click',

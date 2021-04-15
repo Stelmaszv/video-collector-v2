@@ -2,6 +2,7 @@ from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
 from app.forms import AdvanceSearchForm
 from view.menu.menu import Menu
+from app.db.models import Series
 from  .add_tag_advance_search import AddTagAdvnaceSearchView,AddStarsAdvnaceSearchView
 class AdvanceSearch(QWidget,AbstractBaseView):
     FormSchema = AdvanceSearchForm
@@ -35,6 +36,8 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         print('set up')
 
     def submit_click(self,values):
+        error=True
+        series=None
         def convert_to_bool(value):
             if len(value):
                 if value == 'True':
@@ -43,16 +46,37 @@ class AdvanceSearch(QWidget,AbstractBaseView):
                     value = 0
                 return value
             return ''
-        self.close()
-        self.Menu.close()
-        self.Menu.search_in = 'movies'
-        self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
-        self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
-        if len(values[4]['value']) and len(values[5]['value']):
-            self.Menu.AdvandeSearchCriteria.min = [values[4]['value'],int(values[5]['value'])]
-        if len(values[6]['value']) and len(values[7]['value']):
-            self.Menu.AdvandeSearchCriteria.max = [values[6]['value'], int(values[7]['value'])]
-        self.Menu.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
-        self.Menu.AdvandeSearchCriteria.tags=tuple(self.criterions['Tags'])
-        self.Menu.run_window()
+        def valid_series(value):
+            data = self.session.query(Series).filter(Series.name == value).first()
+            if data==None:
+                data = [
+                    "Not Found series "+value+" !",
+                    '',
+                    ''
+                ]
+                self.BaseView.Massage.show(data)
+                return False
+            return True
+
+        if len(values[8]['value']):
+            error=valid_series(values[8]['value'])
+            if error:
+                series=[values[8]['value']]
+        if error:
+            self.close()
+            self.Menu.close()
+            self.Menu.search_in = 'movies'
+            self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
+            self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
+            self.Menu.AdvandeSearchCriteria.series=series
+
+            if len(values[4]['value']) and len(values[5]['value']):
+                self.Menu.AdvandeSearchCriteria.min = [values[4]['value'],int(values[5]['value'])]
+
+            if len(values[6]['value']) and len(values[7]['value']):
+                self.Menu.AdvandeSearchCriteria.max = [values[6]['value'], int(values[7]['value'])]
+
+            self.Menu.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
+            self.Menu.AdvandeSearchCriteria.tags=tuple(self.criterions['Tags'])
+            self.Menu.run_window()
 

@@ -49,6 +49,11 @@ class AbstractFactory(ABC):
             query = query.filter(var <= self.Menu.AdvandeSearchCriteria.max[1])
         return query
 
+    def add_series(self,query):
+        if self.Menu.AdvandeSearchCriteria.series:
+            query = query.filter(self.model.series.any(Series.name.in_(self.Menu.AdvandeSearchCriteria.series)))
+        return query
+
     def return_all(self) -> session:
         query=self.set_query()
         query=self.add_tags(query)
@@ -57,6 +62,7 @@ class AbstractFactory(ABC):
         query=self.add_year(query)
         query=self.add_min(query)
         query = self.add_max(query)
+        query =self.add_series(query)
         if self.Menu.AdvandeSearchCriteria.order_by:
             query=query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
         return query.all()
