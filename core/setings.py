@@ -76,3 +76,5 @@ stars_defult                      = ('')
 order_by_defult                   = ''
 favourite_defult                  = None
 year_defult                       = None
+max_defult                        = ['views',0]
+min_defult                        = ['views',0]

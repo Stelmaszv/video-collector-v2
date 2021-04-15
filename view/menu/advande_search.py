@@ -48,6 +48,10 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         self.Menu.search_in = 'movies'
         self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
         self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
+        if len(values[4]['value']) and len(values[5]['value']):
+            self.Menu.AdvandeSearchCriteria.min = [values[4]['value'],int(values[5]['value'])]
+        if len(values[6]['value']) and len(values[7]['value']):
+            self.Menu.AdvandeSearchCriteria.max = [values[6]['value'], int(values[7]['value'])]
         self.Menu.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
         self.Menu.AdvandeSearchCriteria.tags=tuple(self.criterions['Tags'])
         self.Menu.run_window()

@@ -450,6 +450,52 @@ class AdvanceSearchForm(BaseFormShema):
             "row": False,
             "coll": True
         })
+        self.add_iten('label', {
+            'place_holder': 'min',
+            'name': 'name',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+        self.add_iten('combo_box', {
+            'place_holder': 'Order by',
+            'name': 'search_in',
+            'combo_box_list': ['','year','likes','views'],
+            "row": False,
+            "coll": True
+        })
+        self.add_iten('edit_line', {
+            'place_holder': 'mini',
+            'custum_name':'mini',
+            'model':False,
+            'name': 'name',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+        self.add_iten('label', {
+            'place_holder': 'max',
+            'name': 'name',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+        self.add_iten('combo_box', {
+            'place_holder': 'max_place',
+            'name': 'search_in',
+            'combo_box_list': ['','year','likes','views'],
+            "row": False,
+            "coll": True
+        })
+        self.add_iten('edit_line', {
+            'place_holder': 'max_place_var',
+            'custum_name':'mini',
+            'model':False,
+            'name': 'name',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
         self.add_iten('button', {
             'place_holder': 'Submit',
             'name': 'submit_click',
