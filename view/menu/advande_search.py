@@ -11,7 +11,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     resolution_index = 'advande_search'
     window_title = 'Advance Search'
     reset_view = 'advance_search'
-    criterions = {'Tags':[],'Stars':[]}
+    criterions = {'Tags':["dqowdhoqw","ffejweo","iwbfiwebf","dqdwqd","qe"],'Stars':[]}
     Menu=Menu(0)
 
     def add_star(self,values):
@@ -27,15 +27,32 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         ATASV.run_window()
 
     def set_up(self):
+        def set_rage(array, limit):
+            if len(array) > limit:
+                return limit
+            else:
+                return len(array)
+        def array_list(array):
+
+            string=''
+            counter=0
+            range_var=set_rage(array,3)
+
+            for item in range(0,range_var):
+                string=string+array[counter]
+                print(counter)
+                if counter>-1 and counter<range_var-1:
+                    string=string+', '
+                counter=counter+1
+
+            if range_var < len(array):
+                string = string+' and others '+str(len(array)-range_var)
+            return string
+
+        tags=array_list(self.criterions['Tags'])
         self.custom_title('Tags', 'tags_name')
-        self.custom_title('Stars', 'star_name')
-        """
-        self.custom_title('Tags','tags_name')
-        self.custom_list(self.criterions['Tags'],'tags','Custom_list')
-        self.custom_title('Stars', 'star_name')
-        self.custom_list(self.criterions['Stars'],'stars','Custom_list')
-        """
-        print('set up')
+        text ="< html > < head / > < body > < p align =\"left\">"+str(tags)+"</body></html>"
+        self.custum_description('tags','tags_limlit',text)
 
     def submit_click(self,values):
         error=True

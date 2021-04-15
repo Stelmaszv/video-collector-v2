@@ -380,6 +380,13 @@ class AbstractBaseView:
         limit = self.WindowSize['description_limit']
         self.BaseView.description(stringManipupations.short(self.data.description, limit), data);
 
+    def custum_description(self,index,limit_index,text):
+        description_stan = index in self.WindowSize and limit_index in self.WindowSize
+        Error.throw_error_bool(index+" or "+limit_index+" not found in WindowSize ", description_stan)
+        data = self.WindowSize[index]
+        limit = self.WindowSize[limit_index]
+        self.BaseView.description(stringManipupations.short(text, limit), data);
+
     def tags(self):
         tag_stan='tags' in self.WindowSize and 'tags_limit' in self.WindowSize
         Error.throw_error_bool('tags or tags_limit not found in WindowSize ', tag_stan)
