@@ -27,6 +27,8 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         ATASV.run_window()
 
     def set_up(self):
+        self.custom_title('Tags', 'tags_name')
+        self.custom_title('Stars', 'star_name')
         """
         self.custom_title('Tags','tags_name')
         self.custom_list(self.criterions['Tags'],'tags','Custom_list')

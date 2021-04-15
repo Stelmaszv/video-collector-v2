@@ -198,12 +198,12 @@ class MenuHalfSmall(MenuType):
                     "height": 985
                 },
                 "window": {
-                    "tags_name" : [400,200,480,50],
-                    "tags"      : [400, 250, 480, 500],
-                    "star_name": [400, 300, 480, 50],
+                    "tags_name" : [400,800,50,50],
+                    "tags"      : [400, 800, 480, 500],
+                    "star_name": [400, 1000, 0, 0],
                     "stars": [400, 350, 480, 50],
                     "title_size": [0, 0, 1280, 100],
-                    "form_section": [400, 100, 480, 250],
+                    "form_section": [400, 100, 480, 400],
                 }
             },
             "Menu": {
