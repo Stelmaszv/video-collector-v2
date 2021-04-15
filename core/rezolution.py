@@ -198,11 +198,12 @@ class MenuHalfSmall(MenuType):
                     "height": 985
                 },
                 "window": {
-                    "tags_name" : [350,500,100,50],
-                    "tags"      : [250,550,350, 50],
-                    "tags_limlit" :1000,
-                    "star_name": [400, 1000, 0, 0],
-                    "stars": [400, 350, 480, 50],
+                    "tags_name" : [450,500,100,50],
+                    "tags"      : [350,550,350, 50],
+                    "tags_limit" :1000,
+                    "star_name": [800, 500,100,50],
+                    "stars_limit": 1000,
+                    "stars": [750,550,350, 50],
                     "title_size": [0, 0, 1280, 100],
                     "form_section": [400, 100, 480, 400],
                 }

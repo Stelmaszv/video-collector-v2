@@ -11,8 +11,9 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     resolution_index = 'advande_search'
     window_title = 'Advance Search'
     reset_view = 'advance_search'
-    criterions = {'Tags':["dqowdhoqw","ffejweo","iwbfiwebf","dqdwqd","qe"],'Stars':[]}
+    criterions = {'Tags':[],'Stars':[]}
     Menu=Menu(0)
+    limit=5
 
     def add_star(self,values):
         self.close()
@@ -36,11 +37,10 @@ class AdvanceSearch(QWidget,AbstractBaseView):
 
             string=''
             counter=0
-            range_var=set_rage(array,3)
+            range_var=set_rage(array,self.limit)
 
             for item in range(0,range_var):
                 string=string+array[counter]
-                print(counter)
                 if counter>-1 and counter<range_var-1:
                     string=string+', '
                 counter=counter+1
@@ -52,7 +52,12 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         tags=array_list(self.criterions['Tags'])
         self.custom_title('Tags', 'tags_name')
         text ="< html > < head / > < body > < p align =\"left\">"+str(tags)+"</body></html>"
-        self.custum_description('tags','tags_limlit',text)
+        self.custum_description('tags','tags_limit',text)
+
+        self.custom_title('Stars', 'star_name')
+        stars = array_list(self.criterions['Stars'])
+        text = "< html > < head / > < body > < p align =\"left\">" + str(stars) + "</body></html>"
+        self.custum_description('stars', 'stars_limit', text)
 
     def submit_click(self,values):
         error=True
