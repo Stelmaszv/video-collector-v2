@@ -29,11 +29,11 @@ class AddTagView(QWidget,AbstractBaseView):
 
 class MoviesAddTagView(AddTagView):
     model = Movies
-    reset_view = 'movies'
+    reset_view = 'movies_add_tag_view'
 
 class SeriesAddTagView(AddTagView):
     model = Series
-    reset_view = 'series'
+    reset_view = 'series_add_tag_view'
 
 class StarsAddTagView(AddTagView):
     model = Stars

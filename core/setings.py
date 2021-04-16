@@ -73,7 +73,7 @@ clean_db=False
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')
-order_by_defult                   = 'year'
+order_by_defult                   = ''
 favourite_defult                  = None
 year_defult                       = None
 max_defult                        = ['views',0]

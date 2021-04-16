@@ -100,6 +100,11 @@ class GetStar(AbstractFactory):
 
     model=Stars
 
+    def add_favourite(self, query):
+        if self.Menu.AdvandeSearchCriteria.favourite:
+            query = query.filter(self.model.favourite == self.Menu.AdvandeSearchCriteria.favourite)
+        return query
+
     def order_by(self,query):
         if self.Menu.AdvandeSearchCriteria.order_by:
             if self.Menu.AdvandeSearchCriteria.order_by == 'year':

@@ -70,6 +70,11 @@ class AdvanceSearch(QWidget,AbstractBaseView):
                     value = 0
                 return value
             return ''
+
+        def set_serch_in(value):
+            if value:
+                return value
+            return self.Menu.search_in
         def valid_series(value):
             data = self.session.query(Series).filter(Series.name == value).first()
             if data==None:
@@ -89,7 +94,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         if error:
             self.close()
             self.Menu.close()
-            self.Menu.search_in = values[1]['value']
+            self.Menu.search_in = set_serch_in(values[1]['value'])
             self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
             self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
             self.Menu.AdvandeSearchCriteria.series=series
@@ -101,6 +106,6 @@ class AdvanceSearch(QWidget,AbstractBaseView):
                 self.Menu.AdvandeSearchCriteria.max = [values[6]['value'], int(values[7]['value'])]
 
             self.Menu.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
-            self.Menu.AdvandeSearchCriteria.tags=tuple(self.criterions['Tags'])
+            self.Menu.AdvandeSearchCriteria.tags  =tuple(self.criterions['Tags'])
             self.Menu.run_window()
 
