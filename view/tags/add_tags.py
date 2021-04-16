@@ -12,6 +12,7 @@ class AddTagView(QWidget,AbstractBaseView):
     FormSchema   = TagsForm
     list_view = 'Tags'
 
+
     def  set_up(self):
         self.model=self.obj.model
         self.set_list_view_data(self.data.tags)
@@ -36,6 +37,6 @@ class SeriesAddTagView(AddTagView):
 
 class StarsAddTagView(AddTagView):
     model = Stars
-    reset_view = 'series'
+    reset_view = 'stars_add_tag_view'
 
 
