@@ -7,6 +7,7 @@ from core.setings import search_in_defult,search_faze_defult,menu_per_page
 from core.helper import QueryCounter
 from .AdvanceSearchCriteria import AdvanceSearchCriteria
 class Menu(QMainWindow,QWidget,AbstractBaseView):
+
     FormSchema                 =  MenuFormSchena
     resolution_index           = 'Menu'
     window_title               = 'Manu'
@@ -67,18 +68,21 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
         M.run_window()
 
     def set_search(self,values):
-
-        MenuObj = Menu()
-        MenuObj.search_faze = values[0]['value']
-        MenuObj.search_in   = values[1]['value']
-        MenuObj.run_window()
+        self.close()
+        self.search_faze = values[0]['value']
+        self.search_in   = values[1]['value']
+        self.run_window()
 
     def submit_click(self,values):
         self.close()
         self.set_search(values)
 
     def advance(self,advance):
-        self.BaseView.load_view('advance_search')
+        from .advande_search import AdvanceSearch
+        #self.BaseView.load_view('advance_search')
+        AS=AdvanceSearch()
+        AS.Menu=self
+        AS.run_window()
 
     def reset(self,value):
         self.close()

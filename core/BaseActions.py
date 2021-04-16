@@ -315,7 +315,6 @@ class Form:
 
     def edit_line(self,placeholder,data,grid,validator):
         from PyQt5.QtGui import QIntValidator
-        print(placeholder)
         line = QtWidgets.QLineEdit(self.BaseView)
         line.setPlaceholderText(placeholder)
         if validator:
@@ -442,7 +441,6 @@ class FormSection:
                 )
 
             if item['type'] == 'edit_line':
-                print(item)
                 edit_line = self.Form.edit_line(
                     item['place_holder'],
                     item['grid_data'],

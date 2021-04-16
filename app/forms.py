@@ -240,6 +240,13 @@ class BaseFormShema:
             dir_loop.append(dir_loop_elment)
         return dir_loop
 
+    def check_if_value_exist(self,args,defult):
+        if hasattr(args[0],args[1]):
+            new_value=getattr(args[0],args[1])
+            if new_value:
+                return new_value
+        return defult
+
     def set_value_if_exist(self,value,empty):
         if value is None :
             return empty
@@ -405,7 +412,7 @@ class AdvanceSearchForm(BaseFormShema):
         })
         self.add_iten('edit_line', {
             'place_holder': 'Hukaj',
-            'custum_name': 'Hukaj',
+            'custum_name': self.check_if_value_exist([self.BaseView.Menu,'search_faze'],'Hukaj'),
             'model' : False,
             'name': 'name',
             "row": False,
@@ -421,7 +428,7 @@ class AdvanceSearchForm(BaseFormShema):
         self.add_iten('combo_box', {
             'place_holder': 'search_in',
             'name': 'search_in',
-            'combo_box_list': ['','series', 'stars', 'movies'],
+            'combo_box_list': [self.BaseView.Menu.search_in,'series', 'stars', 'movies'],
             "row": False,
             "coll": True
         })
@@ -551,7 +558,7 @@ class MenuFormSchena(BaseFormShema):
 
         self.add_iten('edit_line', {
             'place_holder': 'Szukaj',
-            'custum_name':'Search in data base',
+            'custum_name':self.check_if_value_exist([self.BaseView,'search_faze'],'Hukaj'),
             'name': 'name',
             "row": False,
             "coll": True
