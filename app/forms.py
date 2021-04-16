@@ -185,6 +185,8 @@ class FormConstract:
                 )
 
                 place_holder = details['custum_name']
+        else:
+            place_holder = details['custum_name']
         return place_holder
 
     def edit_line(self,details):
@@ -397,13 +399,14 @@ class AdvanceSearchForm(BaseFormShema):
         self.add_iten('label', {
             'place_holder': 'Serch fraze',
             'name': 'name',
+
             "row": False,
             "coll": False
         })
         self.add_iten('edit_line', {
             'place_holder': 'Hukaj',
-            'custum_name':'Hukaj',
-            'model':False,
+            'custum_name': 'Hukaj',
+            'model' : False,
             'name': 'name',
             "row": False,
             "coll": True
@@ -451,22 +454,22 @@ class AdvanceSearchForm(BaseFormShema):
             "coll": True
         })
         self.add_iten('label', {
-            'place_holder': 'min',
+            'place_holder': 'Mini',
             'name': 'name',
             "row": True,
             "coll": False,
             'new_row': True
         })
         self.add_iten('combo_box', {
-            'place_holder': 'Order by',
-            'name': 'search_in',
+            'place_holder': 'min Order by',
+            'name': 'min_order_by',
             'combo_box_list': ['','year','likes','views'],
             "row": False,
             "coll": True
         })
         self.add_iten('edit_line', {
             'place_holder': 'mini',
-            'custum_name':'mini',
+            'custum_name':'Mini Var',
             'model':False,
             'name': 'name',
             "row": True,
@@ -474,7 +477,7 @@ class AdvanceSearchForm(BaseFormShema):
             'new_row': True
         })
         self.add_iten('label', {
-            'place_holder': 'max',
+            'place_holder': 'Max',
             'name': 'name',
             "row": True,
             "coll": False,
@@ -489,7 +492,7 @@ class AdvanceSearchForm(BaseFormShema):
         })
         self.add_iten('edit_line', {
             'place_holder': 'max_place_var',
-            'custum_name':'mini',
+            'custum_name':'Max Value',
             'model':False,
             'name': 'name',
             "row": True,
@@ -497,7 +500,7 @@ class AdvanceSearchForm(BaseFormShema):
             'new_row': True
         })
         self.add_iten('label', {
-            'place_holder': 'series',
+            'place_holder': 'Series',
             'name': 'name',
             "row": True,
             "coll": False,
@@ -505,7 +508,7 @@ class AdvanceSearchForm(BaseFormShema):
         })
         self.add_iten('edit_line', {
             'place_holder': 'series_var',
-            'custum_name':'Hukaj',
+            'custum_name':'Series name',
             'model':False,
             'name': 'name',
             "row": False,
@@ -534,49 +537,6 @@ class AdvanceSearchForm(BaseFormShema):
             "is_submit": True,
             'new_row': True
         })
-
-        """
-        self.add_iten('label', {
-            'place_holder': 'Name',
-            'name': 'name',
-            "row": False,
-            "coll": False
-        })
-
-        self.add_iten('edit_line', {
-            'place_holder': 'Hukaj',
-            'custum_name':'Hukaj',
-            'model':False,
-            'name': 'name',
-            "row": False,
-            "coll": True
-        })
-
-        self.add_iten('button', {
-            'place_holder': 'Add Tag',
-            'name': 'add_tag',
-            "row": True,
-            "coll": True,
-            'new_row': True
-        })
-
-        self.add_iten('button', {
-            'place_holder': 'Add Star',
-            'name': 'add_star',
-            "row": True,
-            "coll": True,
-            'new_row': True
-        })
-
-        self.add_iten('button', {
-            'place_holder': 'Submit',
-            'name': 'submit_click',
-            "row": True,
-            "coll": True,
-            "is_submit": True,
-            'new_row': True
-        })
-        """
 
 class MenuFormSchena(BaseFormShema):
 
