@@ -23,17 +23,11 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     def __init__(self,page=0):
         super().__init__()
         self.page=page
-
-    def json_config(self):
-        self.BaseView.load_view('JSONCONFIG')
-
-    def  set_up(self):
-
         exitAct = QAction(QIcon('exit.png'), '&Exit', self)
         exitAct.setShortcut('ESC')
         exitAct.setStatusTip('Exit application')
 
-        jsonConfig =  QAction(QIcon('exit.png'), '&Exit', self)
+        jsonConfig = QAction(QIcon('exit.png'), '&Exit', self)
         jsonConfig.setShortcut('Ctrl+C')
         jsonConfig.setStatusTip('Json')
         jsonConfig.triggered.connect(self.json_config)
@@ -45,8 +39,13 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&File')
         fileMenu.addAction(exitAct)
-
         exitAct.triggered.connect(qApp.quit)
+
+    def json_config(self):
+        self.BaseView.load_view('JSONCONFIG')
+
+    def  set_up(self):
+
         factory = SetFactory(self)
         self.list = factory.get_factory(self.search_in)
         self.set_list_view_data(self.list)
