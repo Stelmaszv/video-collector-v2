@@ -4,6 +4,7 @@ from app.db.models import Movies,Series,Stars,Tags
 from app.db.models import session
 from sqlalchemy import desc
 class AbstractFactory(ABC):
+
     model=None
 
     def __init__(self,Menu):
@@ -54,6 +55,11 @@ class AbstractFactory(ABC):
             query = query.filter(self.model.series.any(Series.name.in_(self.Menu.AdvandeSearchCriteria.series)))
         return query
 
+    def order_by(self,query):
+        if self.Menu.AdvandeSearchCriteria.order_by:
+            query=query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
+        return query
+
     def return_all(self) -> session:
         query=self.set_query()
         query=self.add_tags(query)
@@ -63,16 +69,8 @@ class AbstractFactory(ABC):
         query=self.add_min(query)
         query = self.add_max(query)
         query =self.add_series(query)
-        if self.Menu.AdvandeSearchCriteria.order_by:
-            query=query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
+        query = self.order_by(query)
         return query.all()
-
-
-    def if_isset_search_faze(self) -> session:
-        if self.Menu.search_faze is None:
-            return session.query(self.model).all()
-        else:
-            return self.search_faze_normal()
 
     def search_faze_normal(self):
         return session.query(self.model).filter(self.model.name.like(str(self.Menu.search_faze) + '%'))
@@ -89,16 +87,32 @@ class SetFactory:
             'stars'  : GetStar
         }
         classObj = switcher.get(name, "Invalid data");
-        return classObj(self.obj).get_query()
+        return classObj(self.obj).return_all()
 
 class GetMovies(AbstractFactory):
+
     model=Movies
 
 class GetSeries(AbstractFactory):
+
     model=Series
 
 class GetStar(AbstractFactory):
+
     model=Stars
+
+    def return_all(self) -> session:
+        query = self.set_query()
+        query = self.add_tags(query)
+        query = self.add_favourite(query)
+        query = self.add_year(query)
+        query = self.add_min(query)
+        query = self.add_max(query)
+        query = self.add_series(query)
+        query = self.order_by(query)
+        return query.all()
+
+
 
 
 

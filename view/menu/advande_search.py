@@ -89,7 +89,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         if error:
             self.close()
             self.Menu.close()
-            self.Menu.search_in = 'movies'
+            self.Menu.search_in = values[1]['value']
             self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
             self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
             self.Menu.AdvandeSearchCriteria.series=series

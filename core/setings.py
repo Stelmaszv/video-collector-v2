@@ -72,7 +72,7 @@ run_start_view=True
 clean_db=False
 #AdvanceSearchCriteria
 tags_defult                       = ('')
-stars_defult                      = ('')
+stars_defult                      = ('','Kat')
 order_by_defult                   = ''
 favourite_defult                  = None
 year_defult                       = None
