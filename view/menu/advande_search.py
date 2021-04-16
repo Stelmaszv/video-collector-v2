@@ -68,7 +68,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
                     value = True
                 elif value == 'False':
                     value = False
-                elif value == '':
+                elif value == '' or value == 'None':
                     value = None
                 return value
             return None

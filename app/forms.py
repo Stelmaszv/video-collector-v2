@@ -241,10 +241,12 @@ class BaseFormShema:
         return dir_loop
 
     def check_if_value_exist(self,args,defult):
-        if hasattr(args[0],args[1]):
+        hasattr_var = hasattr(args[0], args[1])
+        if hasattr_var:
             new_value=getattr(args[0],args[1])
             if new_value:
-                return new_value
+                if type(0):
+                    return new_value[0]
         return defult
 
     def set_value_if_exist(self,value,empty):
@@ -456,7 +458,7 @@ class AdvanceSearchForm(BaseFormShema):
         self.add_iten('combo_box', {
             'place_holder': 'Order by',
             'name': 'search_in',
-            'combo_box_list': ['','year','likes','views'],
+            'combo_box_list': [str(self.BaseView.Menu.AdvandeSearchCriteria.order_by),'year','likes','views'],
             "row": False,
             "coll": True
         })
@@ -515,7 +517,7 @@ class AdvanceSearchForm(BaseFormShema):
         })
         self.add_iten('edit_line', {
             'place_holder': 'series_var',
-            'custum_name':'Series name',
+            'custum_name':self.check_if_value_exist([self.BaseView.Menu.AdvandeSearchCriteria,'series'],'Series Name'),
             'model':False,
             'name': 'name',
             "row": False,
