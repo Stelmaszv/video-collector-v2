@@ -2,16 +2,15 @@ from __future__ import annotations
 from abc import ABC
 from app.db.models import Movies,Series,Stars,Tags
 from app.db.models import session
-from sqlalchemy import desc
+from sqlalchemy import desc,func
+from datetime import date
+
 class AbstractFactory(ABC):
 
     model=None
 
     def __init__(self,Menu):
         self.Menu=Menu
-
-    def get_query(self) -> session:
-        return self.return_all()
 
     def add_tags(self,query):
         if len(self.Menu.AdvandeSearchCriteria.tags):
@@ -101,6 +100,16 @@ class GetStar(AbstractFactory):
 
     model=Stars
 
+    def order_by(self,query):
+        if self.Menu.AdvandeSearchCriteria.order_by:
+            if self.Menu.AdvandeSearchCriteria.order_by == 'year':
+                query= query.filter(
+                    func.DATE(self.model.date_of_birth) <
+                    date.today()).order_by('date_of_birth')
+            else:
+                query=query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
+        return query
+
     def return_all(self) -> session:
         query = self.set_query()
         query = self.add_tags(query)
@@ -110,6 +119,7 @@ class GetStar(AbstractFactory):
         query = self.add_max(query)
         query = self.add_series(query)
         query = self.order_by(query)
+
         return query.all()
 
 

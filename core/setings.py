@@ -59,7 +59,7 @@ stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'
 none_movies_defult   ='D:/project/video-collector-v2/data/none.png'
 singles_movies_defult   ='D:/project/video-collector-v2/data/none.png'
 movie_cover_defulut = 'D:/project/video-collector-v2/data/none.png'
-search_in_defult= 'movies';
+search_in_defult= 'stars';
 photo_ext= ('.png', '.jpg', '.jpeg','.jfif')
 search_faze_defult = ''
 #player
@@ -72,8 +72,8 @@ run_start_view=True
 clean_db=False
 #AdvanceSearchCriteria
 tags_defult                       = ('')
-stars_defult                      = ('','Kat')
-order_by_defult                   = ''
+stars_defult                      = ('')
+order_by_defult                   = 'year'
 favourite_defult                  = None
 year_defult                       = None
 max_defult                        = ['views',0]
