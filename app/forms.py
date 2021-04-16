@@ -440,9 +440,9 @@ class AdvanceSearchForm(BaseFormShema):
             'new_row': True
         })
         self.add_iten('combo_box', {
-            'place_holder': 'search_in',
+            'place_holder': 'Favaraite_var',
             'name': 'search_in',
-            'combo_box_list': ['','True','False'],
+            'combo_box_list': [str(self.BaseView.Menu.AdvandeSearchCriteria.favourite),'','True','False'],
             "row": False,
             "coll": True
         })

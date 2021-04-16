@@ -65,12 +65,13 @@ class AdvanceSearch(QWidget,AbstractBaseView):
         def convert_to_bool(value):
             if len(value):
                 if value == 'True':
-                    value = 1
-                else:
-                    value = 0
-                print(value)
+                    value = True
+                elif value == 'False':
+                    value = False
+                elif value == '':
+                    value = None
                 return value
-            return ''
+            return None
 
         def set_serch_in(value):
             if value:
