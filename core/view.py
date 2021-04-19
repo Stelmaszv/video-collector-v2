@@ -11,14 +11,15 @@ from app.nav import BaseNav
 from app.info import BaseInfo
 from core.BaseActions import FormSection,Submit,Form
 from app.model_view import BaseModelViewSet
-from core.setings import data_JSON
 from core.strings import stringManipupations
 from app.forms import BaseFormShema
-from core.setings import photo_ext
+from core.setings import photo_ext,show_list_defult
 import json
 
 class BaseView:
+
     rezolution = []
+    list_view_type=''
 
     def __init__(self,data,obj):
         from .helper import Message, Pagination, Scroller
@@ -235,6 +236,7 @@ class AbstractBaseView:
     model_view_off     = False
     debug_mode         = True
     custum_galery      = ''
+    show_list          = show_list_defult
     window_title=''
     resolution_index=''
     list_view=''
@@ -246,6 +248,7 @@ class AbstractBaseView:
         if self.model is not None:
             Error.throw_error_bool('class self.model is not subclass of BaseModel', issubclass(self.model, BaseModel))
         self.BaseView = BaseView([], self)
+        self.BaseView.list_view_type=self.show_list
         self.FormSection = FormSection(self)
         self.BaseActions = ViewBaseAction(self)
         self.SetResolution = SetResolution()

@@ -216,8 +216,10 @@ class MenuHalfSmall(MenuType):
                     "height"           : 985
                 },
                 "window": {
-                    "title_size"       :  [0, 0, 400, 50],
-                    "list_view_size"   :   [20, 200, 560, 750],
+                    "Counter"          :   [0,900,50,50],
+                    "Counter_limit"    :   400,
+                    "title_size"       :   [0, 0, 400, 50],
+                    "list_view_size"   :   [20, 200, 560, 700],
                     "form_section"     :   [50,40,500,150],
                     "pagination_form"  :   [0,940,600,50]
                 }

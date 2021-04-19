@@ -51,8 +51,9 @@ if Path('data.json').is_file():
 #form button
 with_size_defult = 25
 height_size_defult = 25
-
+#menu
 menu_per_page = 50
+
 window_type="half-smal" # half-smal, half-big
 series_avatar_defult ='D:/project/video-collector-v2/data/avatar.png'
 stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'
@@ -71,11 +72,13 @@ scan_photos=False
 run_start_view=True
 clean_db=False
 #AdvanceSearchCriteria
-tags_defult                       = ('','Bond','Monster')
+tags_defult                       = ('')
 stars_defult                      = ('')
 order_by_defult                   = ''
-favourite_defult                  = True
+favourite_defult                  = None
 year_defult                       = None
 max_defult                        = ['views',0]
 min_defult                        = ['views',0]
 series_defult                     = ''
+#list
+show_list_defult                  = 'full'

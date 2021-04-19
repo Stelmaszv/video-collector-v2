@@ -50,9 +50,10 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
         factory = SetFactory(self)
         self.list = factory.get_factory(self.search_in)
         self.set_list_view_data(self.list)
-        QC = QueryCounter(self.list, menu_per_page)
-        self.previous=QC.if_previous_page_exist(self.page)
-        self.next=QC.if_page_exist(self.page)
+        self.QC = QueryCounter(self.list, menu_per_page)
+        self.previous=self.QC.if_previous_page_exist(self.page)
+        self.next=self.QC.if_page_exist(self.page)
+        self.cunter=self.QC.counter
         self.custum_form(MenuPaginationForm,'pagination_form')
 
     def previous_page(self,value):
@@ -80,6 +81,7 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     def advance(self,advance):
         from .advande_search import AdvanceSearch
         #self.BaseView.load_view('advance_search')
+        self.run_window()
         AS=AdvanceSearch()
         AS.Menu=self
         AS.run_window()

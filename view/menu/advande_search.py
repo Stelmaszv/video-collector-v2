@@ -109,5 +109,6 @@ class AdvanceSearch(QWidget,AbstractBaseView):
 
             self.Menu.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
             self.Menu.AdvandeSearchCriteria.tags  =tuple(self.criterions['Tags'])
+            self.Menu.custum_description('Counter', 'Counter_limit', '')
             self.Menu.run_window()
 

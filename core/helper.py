@@ -14,6 +14,10 @@ class QueryCounter:
             return True
         return False
 
+    @property
+    def counter(self):
+        return self.page_count
+
     def if_page_exist(self,page):
         if page in range(0,int(self.page_count/self.per_page)):
             return True

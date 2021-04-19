@@ -1,8 +1,6 @@
 from abc import ABC,abstractmethod
 from PyQt5 import QtWidgets
 from .view import Form
-from core.strings import stringManipupations
-from core.listactions import StarListAsctions
 class AbstractList(ABC):
 
     def __init__(self,BaseView,per_page):
@@ -39,11 +37,17 @@ class MoviesList (AbstractList):
     def genrate(self,data,el,grid,col_start):
         row=1
         for item in data:
-            self.Form.label(
-                [str(item.id),item.return_full_name()],
-                [row,col_start,1,1],grid,el
-            )
-            self.Form.label([str(item.id), item.return_stars()], [row, col_start+1, 1, 1], grid, el)
+            if self.BaseView.list_view_type=='full':
+                self.Form.label(
+                    [str(item.id),item.return_full_name()],
+                    [row,col_start,1,1],grid,el
+                )
+                self.Form.label([str(item.id), item.return_stars()], [row, col_start + 1, 1, 1], grid, el)
+            if self.BaseView.list_view_type=='normal':
+                self.Form.label(
+                    [str(item.id),item.name],
+                    [row,col_start,1,1],grid,el
+                )
             self.Form.button_loop(el, grid, item, [row, col_start+ 2, 1, 1],['info'],0)
             self.Form.button_loop(el, grid, item, [row, col_start +3, 1, 1],['play'],1)
             row=row+1
