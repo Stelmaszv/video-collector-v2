@@ -1,7 +1,24 @@
 import json
 import os
+import sys
 from core.custum_errors import Error
 from pathlib import Path
+from PyQt5 import QtWidgets
+
+class GetRezolution:
+
+  def __init__(self):
+    app = QtWidgets.QApplication(sys.argv)
+    screen = app.primaryScreen()
+    self.size = screen.size()
+
+  @property
+  def set_width(self):
+    return self.size.width()
+
+  @property
+  def set_height(self):
+    return self.size.height()
 
 class ConfiGData:
 
@@ -41,6 +58,10 @@ class ConfiGData:
 
     if os.path.isdir(dir+'\\W-Z') is False:
       os.mkdir(dir+'\\W-Z')
+GR=GetRezolution()
+#Screen
+screen_width=GR.set_width
+screen_height=GR.set_height
 data_JSON={}
 if Path('data.json').is_file():
   with open('data.json') as f:
@@ -54,7 +75,7 @@ height_size_defult = 25
 #menu
 menu_per_page = 50
 
-window_type="half-smal" # half-smal, half-big
+window_type="half-smal"
 series_avatar_defult ='D:/project/video-collector-v2/data/avatar.png'
 stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'
 none_movies_defult   ='D:/project/video-collector-v2/data/none.png'

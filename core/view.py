@@ -251,8 +251,8 @@ class AbstractBaseView:
         self.BaseView.list_view_type=self.show_list
         self.FormSection = FormSection(self)
         self.BaseActions = ViewBaseAction(self)
-        self.SetResolution = SetResolution()
-        self.__set_resolution()
+        self.SetResolution = SetResolution(self)
+        self.set_resolution()
 
         if self.Info is not None:
             Error.throw_error_bool('class self.Info is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
@@ -303,7 +303,7 @@ class AbstractBaseView:
             self.Submit = Submit(self.ModelView, self.data, self)
         self.FormSection.form_section(data_line,buttons)
 
-    def __set_resolution(self):
+    def set_resolution(self):
 
         if self.resolution_index in self.SetResolution.menu_set:
             if 'position' in self.SetResolution.menu_set[self.resolution_index]:

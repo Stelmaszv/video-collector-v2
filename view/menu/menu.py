@@ -45,8 +45,10 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     def json_config(self):
         self.BaseView.load_view('JSONCONFIG')
 
-    def  set_up(self):
+    def resizeEvent(self, event):
+        self.set_resolution()
 
+    def  set_up(self):
         factory = SetFactory(self)
         self.list = factory.get_factory(self.search_in)
         self.set_list_view_data(self.list)
