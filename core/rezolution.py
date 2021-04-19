@@ -3,21 +3,27 @@ class SetResolution:
 
     def __init__(self,AbstractBaseView):
         self.AbstractBaseView = AbstractBaseView
-        self.menu_set=self.set_menu_type()
+        self.menu_set=self.return_abstrat_view()
 
-    def set_menu_type(self):
+    def return_abstrat_view(self):
         return GetResolutionData(self.AbstractBaseView).show()
 
 class GetResolutionData:
 
     def __init__(self, AbstractBaseView):
         self.AbstractBaseView = AbstractBaseView
+        self.width    = screen_width
+        self.height   = screen_height
 
-    def get_rezolution(self):
-        print(screen_width,screen_height)
+    def set_rezulution(self,procent,var_type):
+        if var_type=='with':
+            new_procent = int(procent * self.width /100)
+        else:
+            new_procent  = int(procent * self.height / 100)
+        return new_procent
 
     def show(self):
-        self.get_rezolution()
+
         return {
             "Loading"        :{
                 "position": {
@@ -153,18 +159,36 @@ class GetResolutionData:
             },
             "Menu": {
                 "position": {
-                    "left"             : 2562,
-                    "top"              : 400,
-                    "width"            : 600,
-                    "height"           : 985
+                    "left"             : self.set_rezulution(0,'with'),
+                    "top"              : self.set_rezulution(2,'height'),
+                    "width"            : self.set_rezulution(25,'with'),
+                    "height"           : self.set_rezulution(100,'height')
                 },
                 "window": {
-                    "Counter"          :   [0,900,50,50],
-                    "Counter_limit"    :   400,
-                    "title_size"       :   [0, 0, 400, 50],
-                    "list_view_size"   :   [20, 200, 560, 700],
-                    "form_section"     :   [50,40,500,150],
-                    "pagination_form"  :   [0,940,600,50]
+                    "title_size"       :   [
+                        self.set_rezulution(0, 'with'),
+                        self.set_rezulution(2, 'height'),
+                        self.set_rezulution(21, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
+                    "form_section": [
+                        self.set_rezulution(2, 'with'),
+                        self.set_rezulution(7, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "list_view_size"   :   [
+                        self.set_rezulution(2, 'with'),
+                        self.set_rezulution(20, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(65, 'height')
+                    ],
+                    "pagination_form"  :   [
+                        self.set_rezulution(2, 'with'),
+                        self.set_rezulution(85, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ]
                 }
             },
             "add_tag": {
