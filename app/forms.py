@@ -240,13 +240,15 @@ class BaseFormShema:
             dir_loop.append(dir_loop_elment)
         return dir_loop
 
-    def check_if_value_exist(self,args,defult):
+    def check_if_value_exist(self,args,defult,arry=False):
         hasattr_var = hasattr(args[0], args[1])
         if hasattr_var:
             new_value=getattr(args[0],args[1])
             if new_value:
-                if type(0):
+                if arry:
                     return new_value[0]
+                else:
+                    return new_value
         return defult
 
     def set_value_if_exist(self,value,empty):
@@ -531,7 +533,7 @@ class AdvanceSearchForm(BaseFormShema):
         })
         self.add_iten('edit_line', {
             'place_holder': 'series_var',
-            'custum_name':self.check_if_value_exist([self.BaseView.Menu.AdvandeSearchCriteria,'series'],'Series Name'),
+            'custum_name':self.check_if_value_exist([self.BaseView.Menu.AdvandeSearchCriteria,'series'],'Series Name',True),
             'model':False,
             'name': 'name',
             "row": False,
