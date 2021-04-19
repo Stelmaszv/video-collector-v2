@@ -79,3 +79,4 @@ year_defult                       = None
 max_defult                        = ['views',0]
 min_defult                        = ['views',0]
 series_defult                     = ''
+deep_search_defult                = False
