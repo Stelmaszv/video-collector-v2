@@ -89,28 +89,25 @@ class AdvanceSearch(QWidget,AbstractBaseView):
                 return False
             return True
 
-        if len(values[9]['value']):
-            error=valid_series(values[9]['value'])
+        if len(values[8]['value']):
+            error=valid_series(values[8]['value'])
             if error:
-                series=[values[9]['value']]
+                series=[values[8]['value']]
         if error:
             self.close()
             self.Menu.close()
-            self.Menu.search_faze = values[0]['value']
-            self.Menu.AdvandeSearchCriteria.deep_search=values[1]['value']
-            self.Menu.search_in = set_serch_in(values[2]['value'])
-            self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[3]['value'])
-            self.Menu.AdvandeSearchCriteria.order_by = values[4]['value']
+            self.Menu.search_in = set_serch_in(values[1]['value'])
+            self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
+            self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
             self.Menu.AdvandeSearchCriteria.series=series
 
-            if len(values[5]['value']) and len(values[6]['value']):
-                self.Menu.AdvandeSearchCriteria.min = [values[5]['value'],int(values[6]['value'])]
+            if len(values[4]['value']) and len(values[5]['value']):
+                self.Menu.AdvandeSearchCriteria.min = [values[4]['value'],int(values[5]['value'])]
 
-            if len(values[7]['value']) and len(values[8]['value']):
-                self.Menu.AdvandeSearchCriteria.max = [values[7]['value'], int(values[8]['value'])]
+            if len(values[6]['value']) and len(values[7]['value']):
+                self.Menu.AdvandeSearchCriteria.max = [values[6]['value'], int(values[7]['value'])]
 
             self.Menu.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
             self.Menu.AdvandeSearchCriteria.tags  =tuple(self.criterions['Tags'])
-            print(self.Menu.search_faze)
             self.Menu.run_window()
 

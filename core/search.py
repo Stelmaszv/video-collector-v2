@@ -61,15 +61,6 @@ class AbstractFactory(ABC):
 
     def return_all(self) -> session:
         query = self.set_query()
-        if self.Menu.AdvandeSearchCriteria.deep_search:
-            return self.deep_search(query)
-        return self.return_normal(query)
-
-    def deep_search(self,query):
-        query = self.add_tags(query)
-        return query.all()
-
-    def return_normal(self,query):
         query=self.add_tags(query)
         query=self.add_stars(query)
         query=self.add_favourite(query)

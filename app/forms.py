@@ -423,20 +423,6 @@ class AdvanceSearchForm(BaseFormShema):
             "coll": True
         })
         self.add_iten('label', {
-            'place_holder': 'Deep search',
-            'name': 'name',
-            "row": True,
-            "coll": False,
-            'new_row': True
-        })
-        self.add_iten('combo_box', {
-            'place_holder': 'search_in',
-            'name': 'search_in',
-            'combo_box_list': [str(self.BaseView.Menu.AdvandeSearchCriteria.deep_search),'True', 'False'],
-            "row": False,
-            "coll": True
-        })
-        self.add_iten('label', {
             'place_holder': 'Serch in',
             'name': 'name',
             "row": True,

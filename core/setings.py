@@ -71,12 +71,11 @@ scan_photos=False
 run_start_view=True
 clean_db=False
 #AdvanceSearchCriteria
-tags_defult                       = ('')
+tags_defult                       = ('','Bond','Monster')
 stars_defult                      = ('')
 order_by_defult                   = ''
-favourite_defult                  = None
+favourite_defult                  = True
 year_defult                       = None
 max_defult                        = ['views',0]
 min_defult                        = ['views',0]
 series_defult                     = ''
-deep_search_defult                = False

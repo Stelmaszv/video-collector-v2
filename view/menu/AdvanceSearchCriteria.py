@@ -6,8 +6,7 @@ from core.setings import \
     year_defult,\
     max_defult,\
     min_defult,\
-    series_defult,\
-    deep_search_defult
+    series_defult
 class AdvanceSearchCriteria:
     tags                       = tags_defult
     stars                      = stars_defult
@@ -17,4 +16,3 @@ class AdvanceSearchCriteria:
     max                        = max_defult
     min                        = min_defult
     series                     = series_defult
-    deep_search                = deep_search_defult
