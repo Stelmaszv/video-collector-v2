@@ -446,7 +446,7 @@ class AbstractBaseView:
             self.BaseView.listView(data, self.list_data,self.list_view,self)
 
     def custom_title(self,title,rezolution):
-        Error.throw_error_bool(rezolution+' do not have tags ',rezolution in self.WindowSize )
+        Error.throw_error_bool(rezolution+' do not have tags ',rezolution in self.WindowSize)
         data = self.WindowSize[rezolution]
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
@@ -455,6 +455,18 @@ class AbstractBaseView:
                "</span></p></body></html>"
 
         self.BaseView.title(data, text)
+
+    def galery_from_array(self,array,index,index_size,row):
+        Error.throw_error_bool('Index "'+index+'" not found!', index in self.WindowSize)
+        Error.throw_error_bool('Index "'+index_size+'" not found!', index_size in self.WindowSize)
+        Error.throw_error_bool('Index "' + row + '" not found!', row in self.WindowSize)
+        def stars_array():
+            new_code = []
+            for star in array:
+                new_code.append(star.avatar)
+            return new_code
+
+        self.BaseView.galery_from_array(self.WindowSize[index], self.WindowSize[index_size], self.WindowSize[row], stars_array())
 
     def custom_list(self,list,rezolution,list_item):
         data = self.WindowSize[rezolution]
