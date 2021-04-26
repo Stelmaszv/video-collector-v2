@@ -8,36 +8,57 @@ class SetResolution:
     def return_abstrat_view(self):
         return GetResolutionData(self.AbstractBaseView).show()
 
+class Base:
+
+    def __init__(self,GetResolutionData):
+        self.width    = screen_width
+        self.height   = screen_height
+        self.GetResolutionData=GetResolutionData
+
+    def base_menu(self):
+        return {
+            "left": self.GetResolutionData.set_rezulution(0, 'with'),
+            "top": self.GetResolutionData.set_rezulution(2, 'height'),
+            "width": self.GetResolutionData.set_rezulution(25, 'with'),
+            "height": self.GetResolutionData.set_rezulution(100, 'height')
+        }
+
+    def base_navbar(self):
+        return [
+            self.GetResolutionData.set_rezulution(0, 'with'),
+            self.GetResolutionData.set_rezulution(0, 'height'),
+            self.GetResolutionData.set_rezulution(80, 'with'),
+            self.GetResolutionData.set_rezulution(5, 'height')
+        ]
+
+    def base_window(self):
+        return {
+                "left":   self.GetResolutionData.set_rezulution(25, 'with'),
+                "top":    self.GetResolutionData.set_rezulution(2, 'height'),
+                "width":  self.GetResolutionData.set_rezulution(75, 'with'),
+                "height": self.GetResolutionData.set_rezulution(100, 'height')
+        }
+
 class GetResolutionData:
 
     def __init__(self, AbstractBaseView):
         self.AbstractBaseView = AbstractBaseView
-        self.width    = screen_width
-        self.height   = screen_height
+        self.Base=Base(self)
 
-    def base_var(self,index,item_index):
-        data = {
-            "menu" :{
-                "left"             : self.set_rezulution(0,'with'),
-                "top"              : self.set_rezulution(2,'height'),
-                "width"            : self.set_rezulution(25,'with'),
-                "height"           : self.set_rezulution(100,'height')
-            },
+    def base_menu(self):
+        return self.Base.base_menu()
 
-            "window":{
-                "left":   self.set_rezulution(25, 'with'),
-                "top":    self.set_rezulution(2, 'height'),
-                "width":  self.set_rezulution(75, 'with'),
-                "height": self.set_rezulution(100, 'height')
-            }
-        }
-        return data[index][item_index]
+    def base_navbar(self):
+        return self.Base.base_navbar()
 
-    def set_rezulution(self,procent,var_type):
-        if var_type=='with':
-            new_procent = int(procent * self.width /100)
+    def base_window(self):
+        return self.Base.base_window()
+
+    def set_rezulution(self, procent, var_type):
+        if var_type == 'with':
+            new_procent = int(procent * self.Base.width / 100)
         else:
-            new_procent  = int(procent * self.height / 100)
+            new_procent = int(procent * self.Base.height / 100)
         return new_procent
 
     def show(self):
@@ -157,12 +178,7 @@ class GetResolutionData:
                 }
             },
             "advande_search":{
-                "position": {
-                    "left"             : self.base_var('window','left'),
-                    "top"              : self.base_var('window','top'),
-                    "width"            : self.base_var('window','width'),
-                    "height"           : self.base_var('window','height')
-                },
+                "position": self.base_window(),
                 "window": {
                     "tags_name" : [
                         self.set_rezulution(10, 'with'),
@@ -205,12 +221,7 @@ class GetResolutionData:
                 }
             },
             "Menu": {
-                "position": {
-                    "left"             : self.base_var('menu','left'),
-                    "top"              : self.base_var('menu','top'),
-                    "width"            : self.base_var('menu','width'),
-                    "height"           : self.base_var('menu','height')
-                },
+                "position": self.base_menu(),
                 "window": {
                     "title_size"       :   [
                         self.set_rezulution(0, 'with'),
@@ -239,12 +250,7 @@ class GetResolutionData:
                 }
             },
             "add_tag": { #model_cryteria
-                "position": {
-                    "left"             : self.base_var('window','left'),
-                    "top"              : self.base_var('window','top'),
-                    "width"            : self.base_var('window','width'),
-                    "height"           : self.base_var('window','height')
-                },
+                "position": self.base_window(),
                 'dialog': {
                     "position" : [
                         self.set_rezulution(25, 'with'),
@@ -289,23 +295,31 @@ class GetResolutionData:
                 }
             },
             "Movie": {
-                "position":{
-                    "left": 2562 + 400,
-                    "top": 400,
-                    "width": 1280,
-                    "height": 985
-                },
+                "position":self.base_window(),
                 "window":{
                     "description" :[450,350, 400, 200],
                     "description_limit": 500,
                     "tags": [600, 200, 375, 220],
                     "tags_limit":1000,
-                    "avatar_size": [50, 100, 250, 300],
+                    "avatar_size": [
+                        50,
+                        100,
+                        250,
+                        300
+                    ],
                     "title_size": [300, 35, 580, 100],
                     "info_size": [400, 100, 375, 350],
-                    "navbar": [0, -10, 1280, 100],
-                    "galery_size": [0, 500, 1280, 361],
-                    "galery_photo_size": [200, 200],
+                    "navbar": self.base_navbar(),
+                    "galery_size": [
+                        self.set_rezulution(3, 'with'),
+                        self.set_rezulution(40, 'height'),
+                        self.set_rezulution(70, 'with'),
+                        self.set_rezulution(50, 'height')
+                    ],
+                    "galery_photo_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(25, 'height'),
+                    ],
                     "galery_item_show": 5,
                 }
             },
