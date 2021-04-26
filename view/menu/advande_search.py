@@ -4,7 +4,7 @@ from app.forms import AdvanceSearchForm
 from view.menu.menu import Menu
 from app.db.models import Series
 from  .add_tag_advance_search import AddTagAdvnaceSearchView,AddStarsAdvnaceSearchView
-from core.setings import stars_defult,tags_defult
+from core.setings import stars_defult,tags_defult,show_limit
 class AdvanceSearch(QWidget,AbstractBaseView):
     FormSchema = AdvanceSearchForm
     model_view_off = True
@@ -14,7 +14,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     reset_view = 'advance_search'
     criterions = {'Tags':tags_defult[1:],'Stars':stars_defult[1:]}
     Menu=Menu(0)
-    limit=5
+    limit=show_limit
 
     def add_star(self,values):
         self.close()

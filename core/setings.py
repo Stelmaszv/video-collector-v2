@@ -93,8 +93,9 @@ scan_photos=False
 run_start_view=True
 clean_db=False
 #AdvanceSearchCriteria
-tags_defult                       = ('')
-stars_defult                      = ('')
+tags_defult                       = ('','Ac',"AdD","Asas","ASQ","Asqe","Kat","Kuta","AD","DQdqwfdf",'Ac',"AdD","Asas","ASQ","Asqe","Kat","Kuta","AD","DQdqwfdf")
+stars_defult                      = ('','Ac',"AdD","Asas","ASQ","Asqe","Kat","Kuta","AD","DQdqwfdf",'Ac',"AdD","Asas","ASQ","Asqe","Kat","Kuta","AD","DQdqwfdf")
+show_limit                        = 10
 order_by_defult                   = ''
 favourite_defult                  = None
 year_defult                       = None

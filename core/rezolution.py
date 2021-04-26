@@ -170,7 +170,12 @@ class GetResolutionData:
                         self.set_rezulution(25, 'with'),
                         self.set_rezulution(5, 'height')
                     ],
-                    "tags"      : [350,550,350, 50],
+                    "tags"      : [
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(48, 'height'),
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
                     "tags_limit" :1000,
                     "star_name": [
                         self.set_rezulution(35, 'with'),
@@ -179,7 +184,12 @@ class GetResolutionData:
                         self.set_rezulution(5, 'height')
                     ],
                     "stars_limit": 1000,
-                    "stars": [750,550,350, 50],
+                    "stars": [
+                        self.set_rezulution(40, 'with'),
+                        self.set_rezulution(48, 'height'),
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
                     "title_size": [
                         self.set_rezulution(25, 'with'),
                         self.set_rezulution(0, 'height'),
