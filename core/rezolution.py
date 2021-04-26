@@ -297,6 +297,12 @@ class GetResolutionData:
             "Movie": {
                 "position":self.base_window(),
                 "window":{
+                    "star_title": [
+                        self.set_rezulution(50, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
                     "description" :[
                         self.set_rezulution(25, 'with'),
                         self.set_rezulution(20, 'height'),

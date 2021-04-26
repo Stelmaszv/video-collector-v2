@@ -18,6 +18,9 @@ class MovieView(QWidget,AbstractBaseView):
     def set_galery(self):
         #self.galery_for_stars()
         #self.title_for_stars()
+
+        self.custom_title('Stars', 'star_title')
+
         self.custum_galery=self.set_dir()
 
     def set_dir(self):

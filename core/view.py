@@ -446,6 +446,7 @@ class AbstractBaseView:
             self.BaseView.listView(data, self.list_data,self.list_view,self)
 
     def custom_title(self,title,rezolution):
+        Error.throw_error_bool(rezolution+' do not have tags ',rezolution in self.WindowSize )
         data = self.WindowSize[rezolution]
         text = "<html><head/><body>" \
                "<p align=\"center\">" \
