@@ -4,6 +4,7 @@ from app.forms import AdvanceSearchForm
 from view.menu.menu import Menu
 from app.db.models import Series
 from  .add_tag_advance_search import AddTagAdvnaceSearchView,AddStarsAdvnaceSearchView
+from core.setings import stars_defult,tags_defult
 class AdvanceSearch(QWidget,AbstractBaseView):
     FormSchema = AdvanceSearchForm
     model_view_off = True
@@ -11,7 +12,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     resolution_index = 'advande_search'
     window_title = 'Advance Search'
     reset_view = 'advance_search'
-    criterions = {'Tags':[],'Stars':[]}
+    criterions = {'Tags':tags_defult[1:],'Stars':stars_defult[1:]}
     Menu=Menu(0)
     limit=5
 
@@ -48,7 +49,6 @@ class AdvanceSearch(QWidget,AbstractBaseView):
             if range_var < len(array):
                 string = string+' and others '+str(len(array)-range_var)
             return string
-
         tags=array_list(self.criterions['Tags'])
         self.custom_title('Tags', 'tags_name')
         text ="< html > < head / > < body > < p align =\"left\">"+str(tags)+"</body></html>"

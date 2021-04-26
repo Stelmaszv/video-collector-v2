@@ -164,14 +164,34 @@ class GetResolutionData:
                     "height"           : self.base_var('window','height')
                 },
                 "window": {
-                    "tags_name" : [450,500,100,50],
+                    "tags_name" : [
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(45, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
                     "tags"      : [350,550,350, 50],
                     "tags_limit" :1000,
-                    "star_name": [800, 500,100,50],
+                    "star_name": [
+                        self.set_rezulution(35, 'with'),
+                        self.set_rezulution(45, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
                     "stars_limit": 1000,
                     "stars": [750,550,350, 50],
-                    "title_size": [0, 0, 1280, 100],
-                    "form_section": [400, 100, 480, 400],
+                    "title_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
+                    "form_section": [
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(7, 'height'),
+                        self.set_rezulution(40, 'with'),
+                        self.set_rezulution(40, 'height')
+                    ],
                 }
             },
             "Menu": {
