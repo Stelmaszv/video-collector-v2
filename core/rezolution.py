@@ -297,18 +297,31 @@ class GetResolutionData:
             "Movie": {
                 "position":self.base_window(),
                 "window":{
-                    "description" :[450,350, 400, 200],
-                    "description_limit": 500,
-                    "tags": [600, 200, 375, 220],
-                    "tags_limit":1000,
-                    "avatar_size": [
-                        50,
-                        100,
-                        250,
-                        300
+                    "description" :[
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(20, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(28, 'height')
                     ],
-                    "title_size": [300, 35, 580, 100],
-                    "info_size": [400, 100, 375, 350],
+                    "description_limit": 500,
+                    "avatar_size": [
+                        self.set_rezulution(4, 'with'),
+                        self.set_rezulution(8, 'height'),
+                        self.set_rezulution(12, 'with'),
+                        self.set_rezulution(28, 'height')
+                    ],
+                    "title_size": [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "info_size": [
+                        self.set_rezulution(30, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(12, 'with'),
+                        self.set_rezulution(28, 'height')
+                    ],
                     "navbar": self.base_navbar(),
                     "galery_size": [
                         self.set_rezulution(3, 'with'),
