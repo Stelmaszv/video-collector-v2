@@ -120,16 +120,21 @@ class GetResolutionData:
                     "form_section": [150, 100, 1050, 300]
                 }
             },
-            "EditSeries":{
-                "position": {
-                    "left": 2562 + 400,
-                    "top": 400,
-                    "width": 1280,
-                    "height": 985
-                },
+            "EditSeries":{ #edit_view
+                "position": self.base_window(),
                 "window":{
-                    "title_size": [0, 0, 1280, 50],
-                    "form_section": [300, 100, 680, 300]
+                    "title_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
+                    "form_section": [
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(7, 'height'),
+                        self.set_rezulution(40, 'with'),
+                        self.set_rezulution(40, 'height')
+                    ],
                 }
             },
             "Series":{
