@@ -238,24 +238,42 @@ class GetResolutionData:
                     ]
                 }
             },
-            "add_tag": {
+            "add_tag": { #model_cryteria
                 "position": {
-                    "left": 2562+400,
-                    "top": 400,
-                    "width": 1280,
-                    "height": 985
+                    "left"             : self.base_var('window','left'),
+                    "top"              : self.base_var('window','top'),
+                    "width"            : self.base_var('window','width'),
+                    "height"           : self.base_var('window','height')
                 },
                 'dialog': {
-                    "position" : [2562+600,600,500,100],
-                    "label"    : [50,10],
-                    "acept"    : [50,50],
-                    "cancel"   : [250, 50]
+                    "position" : [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(10, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(5, 'height')],
+                    "label"    : [self.set_rezulution(1, 'with'),self.set_rezulution(0, 'height')],
+                    "acept"    : [self.set_rezulution(1, 'with'),self.set_rezulution(3, 'height')],
+                    "cancel"   : [self.set_rezulution(10, 'with'),self.set_rezulution(3, 'height')],
                 },
                 "window": {
-                    "dialog"        : [77,0,100,100],
-                    "title_size"    : [0, 0 ,1280 ,50],
-                    "form_section"  : [400, 0 ,480 ,120],
-                    "list_view_size": [300, 100, 680, 250],
+                    "title_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
+                    "form_section": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(-15, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(40, 'height')
+                    ],
+                    "list_view_size": [
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(10, 'height'),
+                        self.set_rezulution(50, 'with'),
+                        self.set_rezulution(85, 'height')
+                    ],
                 }
             },
             "EditStars": {
