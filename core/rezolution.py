@@ -15,7 +15,19 @@ class Base:
         self.height   = screen_height
         self.GetResolutionData=GetResolutionData
 
-    def base_menu(self):
+    def dialog(self):
+        return {
+            "position": [
+                self.GetResolutionData.set_rezulution(25, 'with'),
+                self.GetResolutionData.set_rezulution(10, 'height'),
+                self.GetResolutionData.set_rezulution(20, 'with'),
+                self.GetResolutionData.set_rezulution(5, 'height')],
+            "label": [self.GetResolutionData.set_rezulution(1, 'with'), self.GetResolutionData.set_rezulution(0, 'height')],
+            "acept": [self.GetResolutionData.set_rezulution(1, 'with'), self.GetResolutionData.set_rezulution(3, 'height')],
+            "cancel": [self.GetResolutionData.set_rezulution(10, 'with'), self.GetResolutionData.set_rezulution(3, 'height')],
+        }
+
+    def menu(self):
         return {
             "left": self.GetResolutionData.set_rezulution(0, 'with'),
             "top": self.GetResolutionData.set_rezulution(2, 'height'),
@@ -23,7 +35,7 @@ class Base:
             "height": self.GetResolutionData.set_rezulution(100, 'height')
         }
 
-    def base_navbar(self):
+    def navbar(self):
         return [
             self.GetResolutionData.set_rezulution(0, 'with'),
             self.GetResolutionData.set_rezulution(0, 'height'),
@@ -31,7 +43,7 @@ class Base:
             self.GetResolutionData.set_rezulution(5, 'height')
         ]
 
-    def base_window(self):
+    def window(self):
         return {
                 "left":   self.GetResolutionData.set_rezulution(25, 'with'),
                 "top":    self.GetResolutionData.set_rezulution(2, 'height'),
@@ -45,14 +57,17 @@ class GetResolutionData:
         self.AbstractBaseView = AbstractBaseView
         self.Base=Base(self)
 
+    def base_dialog(self):
+        return self.Base.dialog()
+
     def base_menu(self):
-        return self.Base.base_menu()
+        return self.Base.menu()
 
     def base_navbar(self):
-        return self.Base.base_navbar()
+        return self.Base.navbar()
 
     def base_window(self):
-        return self.Base.base_window()
+        return self.Base.window()
 
     def set_rezulution(self, procent, var_type):
         if var_type == 'with':
@@ -75,32 +90,26 @@ class GetResolutionData:
                 }
             },
             "EditMovieGalery":{
-                "position": {
-                    "left": 2562 + 400,
-                    "top": 400,
-                    "width": 1280,
-                    "height": 985
-                },
-                'dialog': {
-                    "position": [2562 + 600, 600, 500, 100],
-                    "label": [50, 10],
-                    "acept": [50, 50],
-                    "cancel": [250, 50]
-                },
+                "position": self.base_window(),
+                'dialog': self.base_dialog(),
                 "window": {
-                    "navbar": [0, 10, 1280, 100],
-                    "list_view_size": [200, 70, 700, 900],
-                    "title_size": [300, -25, 580, 100],
-                    "form_section": [150, 100, 1050, 300]
+                    "navbar": self.base_navbar(),
+                    "list_view_size": [
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(50, 'with'),
+                        self.set_rezulution(80, 'height')
+                    ],
+                    "title_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(2, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ]
                 }
              },
             "EditGalery":{
-                 "position": {
-                    "left": 2562 + 400,
-                    "top": 400,
-                    "width": 1280,
-                    "height": 985
-                },
+                "position": self.base_window(),
                 "window": {
                     #"navbar": [0, -10, 1280, 100],#
                     "list_view_size": [200, 40, 700, 900],
@@ -256,16 +265,7 @@ class GetResolutionData:
             },
             "add_tag": { #model_cryteria
                 "position": self.base_window(),
-                'dialog': {
-                    "position" : [
-                        self.set_rezulution(25, 'with'),
-                        self.set_rezulution(10, 'height'),
-                        self.set_rezulution(20, 'with'),
-                        self.set_rezulution(5, 'height')],
-                    "label"    : [self.set_rezulution(1, 'with'),self.set_rezulution(0, 'height')],
-                    "acept"    : [self.set_rezulution(1, 'with'),self.set_rezulution(3, 'height')],
-                    "cancel"   : [self.set_rezulution(10, 'with'),self.set_rezulution(3, 'height')],
-                },
+                'dialog': self.base_dialog(),
                 "window": {
                     "title_size": [
                         self.set_rezulution(25, 'with'),
