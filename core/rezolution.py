@@ -15,6 +15,24 @@ class GetResolutionData:
         self.width    = screen_width
         self.height   = screen_height
 
+    def base_var(self,index,item_index):
+        data = {
+            "menu" :{
+                "left"             : self.set_rezulution(0,'with'),
+                "top"              : self.set_rezulution(2,'height'),
+                "width"            : self.set_rezulution(25,'with'),
+                "height"           : self.set_rezulution(100,'height')
+            },
+
+            "window":{
+                "left":   self.set_rezulution(25, 'with'),
+                "top":    self.set_rezulution(2, 'height'),
+                "width":  self.set_rezulution(75, 'with'),
+                "height": self.set_rezulution(100, 'height')
+            }
+        }
+        return data[index][item_index]
+
     def set_rezulution(self,procent,var_type):
         if var_type=='with':
             new_procent = int(procent * self.width /100)
@@ -23,7 +41,6 @@ class GetResolutionData:
         return new_procent
 
     def show(self):
-
         return {
             "Loading"        :{
                 "position": {
@@ -141,10 +158,10 @@ class GetResolutionData:
             },
             "advande_search":{
                 "position": {
-                    "left": 2562 + 400,
-                    "top": 400,
-                    "width": 1280,
-                    "height": 985
+                    "left"             : self.base_var('window','left'),
+                    "top"              : self.base_var('window','top'),
+                    "width"            : self.base_var('window','width'),
+                    "height"           : self.base_var('window','height')
                 },
                 "window": {
                     "tags_name" : [450,500,100,50],
@@ -159,10 +176,10 @@ class GetResolutionData:
             },
             "Menu": {
                 "position": {
-                    "left"             : self.set_rezulution(0,'with'),
-                    "top"              : self.set_rezulution(2,'height'),
-                    "width"            : self.set_rezulution(25,'with'),
-                    "height"           : self.set_rezulution(100,'height')
+                    "left"             : self.base_var('menu','left'),
+                    "top"              : self.base_var('menu','top'),
+                    "width"            : self.base_var('menu','width'),
+                    "height"           : self.base_var('menu','height')
                 },
                 "window": {
                     "title_size"       :   [
