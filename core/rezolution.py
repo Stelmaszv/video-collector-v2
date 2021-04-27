@@ -155,20 +155,31 @@ class GetResolutionData:
                 }
             },
             "MovieListView": {
-                "position": {
-                    "left"    : 2562+400,
-                    "top"     : 400,
-                    "width"   : 1280,
-                    "height"  : 985
-                },
+                "position": self.base_window(),
                 "window":{
-                    "info_size"       : [0,10,10,10],
-                    "title_size"      : [0, 0, 1280, 100],
-                    "list_view_size"  : [450,80,671,881],
-                    "avatar_size"     : [100, 250, 250, 350],
-                    "button_series"   : [100,600,250,50],
-                    "button_star"     : [100,650,250,50]
-
+                    "info_size"       : [
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(25, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(25, 'height')
+                    ],
+                    "title_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
+                    "list_view_size"  : [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(40, 'with'),
+                        self.set_rezulution(80, 'height')
+                    ],
+                    "avatar_size"     : [
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(10, 'height'),
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(15, 'height')],
                 }
             },
             "advande_search":{
@@ -265,18 +276,6 @@ class GetResolutionData:
                         self.set_rezulution(50, 'with'),
                         self.set_rezulution(85, 'height')
                     ],
-                }
-            },
-            "EditStars": {
-                "position": {
-                    "left": 2562 + 400,
-                    "top": 400,
-                    "width": 1280,
-                    "height": 985
-                },
-                "window": {
-                    "title_size": [0, 0, 1280, 100],
-                    "form_section": [300, 100, 680, 600]
                 }
             },
             "Movie": {
@@ -382,7 +381,7 @@ class GetResolutionData:
                         self.set_rezulution(50, 'height')
                     ],
                     "section": {
-                        "avatar_with"  : self.set_rezulution(8, 'with'),
+                        "avatar_with"  : self.set_rezulution(7, 'with'),
                         "avatar_height": self.set_rezulution(12, 'height'),
                         "button_with"  :self.set_rezulution(6, 'with'),
                         "button_height":self.set_rezulution(2, 'height'),

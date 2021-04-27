@@ -6,7 +6,7 @@ from app.model_view import StarModelView
 
 class EditStarView(QWidget,AbstractBaseView):
     model = Stars
-    resolution_index = 'EditStars'
+    resolution_index = 'EditSeries'
     submit_view = 'stars'
     FormSchema = StarsForm
     ModelView = StarModelView
