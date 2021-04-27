@@ -78,17 +78,6 @@ class GetResolutionData:
 
     def show(self):
         return {
-            "Loading"        :{
-                "position": {
-                    "left": 2562 + 400,
-                    "top": 400,
-                    "width": 250,
-                    "height": 250
-                },
-                "window": {
-                    "title_size": [0, 0, 250, 250],
-                }
-            },
             "EditMovieGalery":{
                 "position": self.base_window(),
                 'dialog': self.base_dialog(),

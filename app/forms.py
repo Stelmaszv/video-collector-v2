@@ -1,4 +1,5 @@
 from core.custum_errors import Error
+from core.setings import photo_ext
 import os
 
 class FormConstract:
@@ -236,8 +237,9 @@ class BaseFormShema:
             dir=Obj.dir+''+dir_add
 
         for item in os.listdir(dir):
-            dir_loop_elment=dir + '/' +str(item)
-            dir_loop.append(dir_loop_elment)
+            if item.endswith(photo_ext):
+                dir_loop_elment=dir + '/' +str(item)
+                dir_loop.append(dir_loop_elment)
         return dir_loop
 
     def check_if_value_exist(self,args,defult,arry=False):
