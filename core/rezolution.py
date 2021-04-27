@@ -97,15 +97,6 @@ class GetResolutionData:
                     ]
                 }
              },
-            "EditGalery":{
-                "position": self.base_window(),
-                "window": {
-                    #"navbar": [0, -10, 1280, 100],#
-                    "list_view_size": [200, 40, 700, 900],
-                    "title_size": [300, -25, 580, 100],
-                    "form_section": [150, 100, 1050, 300]
-                }
-            },
             "SetPhotoToSeries": {
                 "position": {
                     "left": 2562 + 400,

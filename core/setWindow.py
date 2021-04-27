@@ -22,7 +22,7 @@ class setWindow():
         from view.menu.advande_search import AdvanceSearch
         from view.movie.edit_movie import EditMovieView
         from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
-        from view.galery.edit_galery import EditGaleryView,EditGaleryMovieView
+        from view.galery.edit_galery import EditGaleryMovieView
         from view.config.config_data_json import JSONConfigView
 
         switcher = {
@@ -42,7 +42,6 @@ class setWindow():
             'add_movie': AddMovieView(),
             'movie_list' : MovieListView(),
             'play': Player(),
-            'edit_galery':EditGaleryView(),
             'movie_add_star_to_model_view'  :MovieAddStarToModelView(),
             'series_add_star_to_model_view' :SeriesAddStarToModelView(),
             'edit_galery_movie_view' : EditGaleryMovieView()

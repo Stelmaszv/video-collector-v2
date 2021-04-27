@@ -1,5 +1,4 @@
 import os
-import random
 from PyQt5.QtWidgets import QWidget
 from app.db.models import Movies
 from core.view import AbstractBaseView
@@ -8,23 +7,17 @@ from core.setings import photo_ext,data_JSON
 from app.db.models import session
 from core.dir import PhotoMeaker
 
-class EditGaleryView(QWidget,AbstractBaseView):
-    show_elemnts = ['Info', 'Galery', 'Avatar', 'Description', 'Tags','Nav']
-    resolution_index = 'EditGalery'
-    model = Movies
-    list_view   = 'EditGalery'
-    reset_view  = 'edit_galery'
-
-    def set_up(self):
-        self.window_title='Editing galery for '+str(self.data.name)
-        self.set_list_view_data(self.data.dir)
-
-class EditGaleryMovieView(EditGaleryView):
+class EditGaleryMovieView(QWidget,AbstractBaseView):
     show_elemnts = ['Info', 'Galery', 'Avatar', 'Description', 'Tags']
     reset_view = 'edit_galery_movie_view'
     list_view    = 'EditGaleryMovies'
     resolution_index = 'EditMovieGalery'
+    model = Movies
     Nav          = MovieGaleryNav
+
+    def set_up(self):
+        self.window_title='Editing galery for '+str(self.data.name)
+        self.set_list_view_data(self.data.dir)
 
     def remove_all_photos_create_new(self,values):
         for dir in os.listdir(self.data.dir):
