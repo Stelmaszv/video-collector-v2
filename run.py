@@ -4,7 +4,7 @@ from pathlib import Path
 from app.db.models import session, Movies,Stars,Series,Sezons,Photos
 from core.config import ConfigLoop, ConfigMovies
 from core.dir import LoadFilesFromJson, PhotoMeaker
-from core.setings import data_JSON,scan_photos,run_start_view,clean_db
+from core.setings import data_JSON,scan_photos,run_start_view,clean_db,start_page
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
 
@@ -63,7 +63,7 @@ class Run:
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    Run=Run(Menu(),JSONConfigView(),DBCleaner())
+    Run=Run(Menu(start_page),JSONConfigView(),DBCleaner())
     Run.start()
     if Run.config:
         Run.show_start_view()

@@ -248,10 +248,10 @@ class GetResolutionData:
                 'dialog': self.base_dialog(),
                 "window": {
                     "title_size": [
-                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(-10, 'with'),
                         self.set_rezulution(0, 'height'),
-                        self.set_rezulution(25, 'with'),
-                        self.set_rezulution(5, 'height')
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
                     ],
                     "form_section": [
                         self.set_rezulution(25, 'with'),
@@ -339,26 +339,57 @@ class GetResolutionData:
                 }
             },
             "Stars": {
-                "position":  {
-                    "left"              : 2562+400,
-                    "top"               : 400,
-                    "width"             : 1280,
-                    "height"            : 985
-                },
+                "position": self.base_window(),
                 "window":{
-                    "navbar"            : [0,-220,1280,480],
-                    "avatar_size"       : [50, 80, 250, 300],
-                    "title_size"        : [350, 0, 300, 100],
-                    "info_size"         : [330, 80, 375, 220],
-                    "galery_size"       : [700, 50, 500, 361],
-                    "list_view_size"    : [50, 390, 1200, 550],
-                    "galery_photo_size" : [150, 150],
-                    "galery_item_show"  : 2,
-                    "description"       : [325,200,375,270],
-                    "description_limit" : 500,
+                    "navbar": self.base_navbar(),
+                    "title_size": [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "avatar_size": [
+                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(8, 'height'),
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(20, 'height')
+                    ],
+                    "info_size"         : [
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(10, 'height'),
+                        self.set_rezulution(30, 'with'),
+                        self.set_rezulution(15, 'height')
+                    ],
+                    "galery_size"       : [
+                        self.set_rezulution(40, 'with'),
+                        self.set_rezulution(8, 'height'),
+                        self.set_rezulution(30, 'with'),
+                        self.set_rezulution(30, 'height')
+                    ],
+                    "description": [
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(12, 'height'),
+                        self.set_rezulution(30, 'with'),
+                        self.set_rezulution(30, 'height')
+                    ],
+                    "description_limit": 500,
+                    "galery_item_show": 2,
+                    "galery_photo_size": [self.set_rezulution(10, 'with'),self.set_rezulution(15, 'height')],
+                    "list_view_size"    : [
+                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(40, 'height'),
+                        self.set_rezulution(65, 'with'),
+                        self.set_rezulution(50, 'height')
+                    ],
                     "section": {
-                        "left"         : 15,
-                        "left_add"     : 250,
+                        "avatar_with"  : self.set_rezulution(8, 'with'),
+                        "avatar_height": self.set_rezulution(12, 'height'),
+                        "button_with"  :self.set_rezulution(6, 'with'),
+                        "button_height":self.set_rezulution(2, 'height'),
+                        "left"         : self.set_rezulution(2, 'with'),
+                        "left_add"     : self.set_rezulution(10, 'with'),
+                        "strings_in_title" :self.set_rezulution(5, 'with'),
+                        "font"         : 10,
                         "top"          : 0,
                         "top_add"      : 250,
                         "per_row"      : 6,

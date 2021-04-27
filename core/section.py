@@ -225,18 +225,22 @@ class StarsSection(AbstractSection):
         self.BaseView.load_view('movie_list',self.BaseView.data,data)
         return True;
 
-    def more(self,item,left,top,page):
+    def more(self,item,left,top,page,Obj):
+        button_with=Obj['section']['button_with']
+        button_height = Obj['section']['button_height']
         button = QtWidgets.QPushButton(page)
         button.setObjectName("show-movies")
         button.setText('Show Movies')
-        button.setGeometry(left+20,top+200, 130,50)
+        button.setGeometry(left+20,top+200, button_with, button_height)
         button.data = item
         self.Form.buttons_loop[0]['obejct'].addButton(button)
         self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
 
-    def avatar(self,grid,seriesItem,item):
+    def avatar(self,grid,seriesItem,item,Obj):
+        avatar_with=Obj['section']['avatar_with']
+        avatar_height = Obj['section']['avatar_height']
         seriesAvatar = QtWidgets.QLabel(grid)
-        seriesAvatar.setMaximumSize(QtCore.QSize(150, 150))
+        seriesAvatar.setMaximumSize(QtCore.QSize(avatar_with, avatar_height))
         seriesAvatar.setText("")
         seriesAvatar.setPixmap(QtGui.QPixmap(item['avatar']))
         seriesAvatar.setScaledContents(True)
@@ -256,11 +260,13 @@ class StarsSection(AbstractSection):
         grid.setObjectName("gridLayoutWidget_15")
         return grid
 
-    def title(self,grid,seriesItem,item):
+    def title(self,grid,seriesItem,item,Obj):
+        font=Obj['section']['font']
+        strings_in_title=Obj['section']['strings_in_title']
         title = QtWidgets.QLabel(grid)
         title.setObjectName("seriesTitle")
-        title.setText("<html><head/><body><span style=\" font-size:12pt; font-weight:600; \">" ""
-                      + stringManipupations.short(item['name'], 35) +
+        title.setText("<html><head/><body><span style=\" font-size:"+str(font)+" px; font-weight:600; \">" ""
+                      + stringManipupations.short(item['name'], strings_in_title) +
                       "</span></body></html>")
         seriesItem.addWidget(title, 0, 0, 1, 2)
 
@@ -288,14 +294,16 @@ class StarsSection(AbstractSection):
         pages = []
         pages.append(self.page)
         self.add_page = self.page
+        tab_name = 1
+
         for item in data_list:
             el = el + 1;
 
             grid = self.grid(left, top, self.add_page)
             seriesItem = self.seriesItem(grid)
-            self.title(grid, seriesItem, item)
-            self.avatar(grid, seriesItem, item)
-            self.more(item, left, top, self.add_page)
+            self.title(grid, seriesItem, item,self.OBJ_QWidget.WindowSize)
+            self.avatar(grid, seriesItem, item,self.OBJ_QWidget.WindowSize)
+            self.more(item, left, top, self.add_page,self.OBJ_QWidget.WindowSize)
             left = left + self.OBJ_QWidget.WindowSize['section']['left_add']
 
             if el % self.OBJ_QWidget.WindowSize['section']['per_row'] == 0:
@@ -308,7 +316,6 @@ class StarsSection(AbstractSection):
                 pages.append(self.next_page)
                 top = 0
 
-        tab_name = 1
         for page_tap in pages:
             self.tabWidget.addTab(page_tap, str(tab_name))
             tab_name = tab_name + 1
