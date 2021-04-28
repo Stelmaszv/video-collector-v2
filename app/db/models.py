@@ -72,6 +72,7 @@ class Series(Base):
     likes = Column('likes', Integer,default=0)
     favourite = Column('favourite', Boolean, default=False)
     name = Column('name',String)
+    show_name = Column('show_name', String, default='')
     avatar = Column('avatar', String)
     dir = Column('dir', String, default='')
     config = Column('config', String, default='')
@@ -165,6 +166,7 @@ class Stars(Base):
 
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
+    show_name = Column('show_name', String, default='')
     avatar = Column('avatar',String)
     description = Column('description', String,default="")
     views =      Column('views', Integer,default=0)
@@ -220,6 +222,7 @@ class Movies(Base):
     views = Column('views', Integer, default=0)
     favourite = Column('favourite', Boolean,default=False)
     country = Column('country', String, default='')
+    show_name = Column('show_name',String,default='')
     description = Column('description', String, default='')
 
     tags = relationship(
@@ -251,13 +254,13 @@ class Movies(Base):
     def return_stars(self):
         stars=self._get_stars()
         if len(stars)>30:
-            return '<i>'+self.stars[0].name+'</i>'
+            return '<i>'+self.stars[0].show_name+'</i>'
         return '<li>'+stars+'</i>'
 
     def return_full_name(self):
         name=self.set_full_name()
         if len(name)>70:
-            name='<b>'+self.name+'</b>'
+            name='<b>'+self.show_name+'</b>'
         return name
 
     def set_full_name(self):
@@ -269,10 +272,10 @@ class Movies(Base):
             if len(series):
                 return series[0].name+' '
             return ''
-        return get_series(self.series)+'<b>'+get_year(self.year)+' '+self.name+'</b>'
+        return get_series(self.series)+'<b>'+get_year(self.year)+' '+self.show_name+'</b>'
 
     def __str__(self):
-        return  self.name
+        return  self.show_name
 
 Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)

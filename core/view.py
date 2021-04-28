@@ -491,7 +491,7 @@ class AbstractBaseView:
         title =''
 
         if self.data is not None:
-            title = self.data.name
+            title = self.data.show_name
         if len(self.window_title)>0:
             title=self.window_title
         if "title_size" in self.WindowSize:

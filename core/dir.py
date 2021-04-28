@@ -358,6 +358,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         sezons=self.create_sezons(self.set_sezons())
         return self.if_exist(name,self.model,self.model(
             name    =  name,
+            show_name=name,
             number_of_sezons  =  self.set_sezons(),
             sezons  =  sezons,
             avatar  =  self.set_avatar(),
@@ -367,7 +368,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
 
     def if_star_exist(self,name):
         return self.if_exist(name,Stars,Stars(
-            name   = name,
+            name      = name,
+            show_name = name,
             avatar = stars_avatar_defult,
             none   = self.set_none(),
             singles= self.set_singles(),
@@ -393,6 +395,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         print('Movie '+str(name)+' has been added')
         model=self.movie_model(
             name=name,
+            show_name=name,
             src=self.movie_dir+'\\'+sezon+'\\'+src,
             stars=stars,
             series=series,
@@ -448,6 +451,7 @@ class AddStarViaDir(AbstractAddViaDir):
 
         return self.if_exist(name, self.model, self.model(
             name=name,
+            show_name=name,
             avatar = self.set_avatar(),
             dir=self.dir,
             none = self.set_none(),
@@ -468,10 +472,11 @@ class AddStarViaDir(AbstractAddViaDir):
             new_stars.append(self.star)
             if self.if_movie_exist(self.clear_name(movie),1):
                 name=self.clear_name(movie)
-                name=name+' - '+self.star.name
+                name_new=name+' - '+self.star.name
                 src = self.movie_dir + '\\' + movie
                 movie= self.movie_model(
-                    name=name,
+                    name=name_new,
+                    show_name=name,
                     stars=new_stars,
                 )
                 movie.src=src

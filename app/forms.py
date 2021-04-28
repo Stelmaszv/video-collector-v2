@@ -295,8 +295,8 @@ class AbstractBaseFormShema(BaseFormShema):
 
         self.add_iten('edit_line', {
             'place_holder': 'Name',
-            'name': 'name',
-            'db'  : 'name',
+            'name': 'show_name',
+            'db'  : 'show_name',
             "row": False,
             "coll": True
         })

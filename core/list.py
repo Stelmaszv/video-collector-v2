@@ -45,7 +45,7 @@ class MoviesList (AbstractList):
                 self.Form.label([str(item.id), item.return_stars()], [row, col_start + 1, 1, 1], grid, el)
             if self.BaseView.list_view_type=='normal':
                 self.Form.label(
-                    [str(item.id),item.name],
+                    [str(item.id),item.show_name],
                     [row,col_start,1,1],grid,el
                 )
             self.Form.button_loop(el, grid, item, [row, col_start+ 2, 1, 1],['info'],0)
@@ -70,7 +70,7 @@ class SeriesList(AbstractList):
     def genrate(self,data,el,grid,col_start):
         row = 1
         for item in data:
-            self.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
+            self.Form.label([str(item.id), item.show_name], [row, col_start, 1, 1], grid, el)
             self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
@@ -92,7 +92,7 @@ class StarList(AbstractList):
     def genrate(self,data,el,grid,col_start):
         row = 1
         for item in data:
-            self.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
+            self.Form.label([str(item.id), item.show_name], [row, col_start, 1, 1], grid, el)
             self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
