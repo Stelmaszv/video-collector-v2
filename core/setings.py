@@ -80,8 +80,8 @@ stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'
 none_movies_defult   ='D:/project/video-collector-v2/data/none.png'
 singles_movies_defult   ='D:/project/video-collector-v2/data/none.png'
 movie_cover_defulut = 'D:/project/video-collector-v2/data/none.png'
-search_in_defult= 'stars';
-start_page=1
+search_in_defult= 'series';
+start_page=0
 photo_ext= ('.png', '.jpg', '.jpeg','.jfif')
 search_faze_defult = ''
 #player
@@ -94,7 +94,7 @@ run_start_view=True
 clean_db=False
 #AdvanceSearchCriteria
 tags_defult                       = ('')
-stars_defult                      = ('','Sean Connery')
+stars_defult                      = ('')
 show_limit                        = 10
 order_by_defult                   = ''
 favourite_defult                  = None

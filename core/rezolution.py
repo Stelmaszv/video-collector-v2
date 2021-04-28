@@ -127,31 +127,88 @@ class GetResolutionData:
                 }
             },
             "Series":{
-                "position": {
-                    "left": 2562 + 400,
-                    "top": 400,
-                    "width": 1280,
-                    "height": 985
-                },
+                "position": self.base_window(),
                 "window":{
-                    "description": [30,675, 325, 200],
-                    "description_limit": 500,
-                    "navbar": [450, -180, 480, 480],
-                    "title_size": [0, 0, 1280,50],
-                    "list_view_size": [375,75,871,881],
-                    "avatar_size": [50, 50, 250, 250],
-                    "info_size": [100,300,300,200],
-                    "galery_size": [30, 525, 300, 200],
-                    "galery_photo_size": [125, 125],
+                    "navbar": self.base_navbar(),
+
+                    "title_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(2, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
+
+                    "avatar_size": [
+                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(10, 'height'),
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(25, 'height')
+                    ],
+
+                    "info_size": [
+                        self.set_rezulution(8, 'with'),
+                        self.set_rezulution(25, 'height'),
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(25, 'height')
+                    ],
+
+                    "galery_size": [
+                        self.set_rezulution(1, 'with'),
+                        self.set_rezulution(40, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(30, 'height')
+                    ],
+
+                    "galery_photo_size": [
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(8, 'height')
+                    ],
                     "galery_item_show": 2,
-                    "section_scroller":[300, 10, 540,830],
-                    "section_avatar": [20, 50, 250, 250],
-                    "section_avatar_single_movie" :[120, 100, 250, 300],
-                    "section_info"  : [70, 300, 300, 200],
-                    "section_info_single_info"  : [500, 100, 300, 200],
-                    "single_title"  : [-200, -50, 1280, 200],
-                    "single_play_button":[150,420,250,50],
-                    "single_info_button":[450,420,250,50]
+
+                    "description": [
+                        self.set_rezulution(1, 'with'),
+                        self.set_rezulution(60, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(30, 'height')
+                    ],
+
+                    "description_limit": self.set_rezulution(25, 'with'),
+
+                    "list_view_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(8, 'height'),
+                        self.set_rezulution(45, 'with'),
+                        self.set_rezulution(80, 'height')
+                    ],
+
+                    "section_avatar": [
+                        self.set_rezulution(2, 'with'),
+                        self.set_rezulution(2, 'height'),
+                        self.set_rezulution(12, 'with'),
+                        self.set_rezulution(25, 'height')
+                    ],
+
+                    "section_info": [
+                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(30, 'height'),
+                        self.set_rezulution(12, 'with'),
+                        self.set_rezulution(25, 'height')
+                    ],
+
+                    "section_scroller":[
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(28, 'with'),
+                        self.set_rezulution(70, 'height')
+                    ],
+
+                    #single
+
+                    "section_avatar_single_movie" :[2120, 100, 250, 300],
+                    "section_info_single_info"  : [2500, 100, 300, 200],
+                    "single_title"  : [2200, -50, 1280, 200],
+                    "single_play_button":[2150,420,250,50],
+                    "single_info_button":[2450,420,250,50]
                 }
             },
             "MovieListView": {
