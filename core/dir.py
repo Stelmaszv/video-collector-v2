@@ -270,12 +270,6 @@ class AbstractAddViaDir(ABC):
             Obj = self.session.query(Model).filter(Model.name == name).first()
         return Obj
 
-    def if_movie_exist(self,name,seazon):
-        Obj = self.session.query(self.movie_model).filter(self.movie_model.name == name).first()
-        if Obj:
-            return False
-        return True
-
     def set_photo_from_json(self,defult,index):
         photo=defult
         with open(self.config) as json_file:
@@ -441,6 +435,14 @@ class AddStarViaDir(AbstractAddViaDir):
         super().__init__(dir)
         self.star=self.if_star_exist(set_name(dir))
 
+    def if_movie_exist(self,name,seazon):
+        Obj = self.session.query(self.movie_model).filter(self.movie_model.name == name).first()
+        if Obj:
+            if self.star in Obj.stars:
+                return True
+        return True
+
+
     def if_star_exist(self,name):
         name=set_name(name)
 
@@ -466,6 +468,7 @@ class AddStarViaDir(AbstractAddViaDir):
             new_stars.append(self.star)
             if self.if_movie_exist(self.clear_name(movie),1):
                 name=self.clear_name(movie)
+                name=name+' - '+self.star.name
                 src = self.movie_dir + '\\' + movie
                 movie= self.movie_model(
                     name=name,
