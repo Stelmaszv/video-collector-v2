@@ -204,11 +204,36 @@ class GetResolutionData:
 
                     #single
 
-                    "section_avatar_single_movie" :[2120, 100, 250, 300],
-                    "section_info_single_info"  : [2500, 100, 300, 200],
-                    "single_title"  : [2200, -50, 1280, 200],
-                    "single_play_button":[2150,420,250,50],
-                    "single_info_button":[2450,420,250,50]
+                    "section_avatar_single_movie" :[
+                        self.set_rezulution(2, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(12, 'with'),
+                        self.set_rezulution(25, 'height')
+                    ],
+                    "section_info_single_info"  : [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(12, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "single_title"  : [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(-10, 'height'),
+                        self.set_rezulution(70, 'with'),
+                        self.set_rezulution(25, 'height')
+                    ],
+                    "single_play_button":[
+                        self.set_rezulution(18, 'with'),
+                        self.set_rezulution(20, 'height'),
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
+                    "single_info_button":[
+                        self.set_rezulution(32, 'with'),
+                        self.set_rezulution(20, 'height'),
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ]
                 }
             },
             "MovieListView": {
