@@ -7,7 +7,7 @@ from app.db.models import session
 from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
 from pathlib import Path
-from core.setings import data_JSON,photo_ext
+from core.setings import data_JSON,photo_ext,movie_ext
 from moviepy.editor import VideoFileClip
 from core.strings import stringManipupations
 
@@ -270,7 +270,7 @@ class AbstractAddViaDir(ABC):
             Obj = self.session.query(Model).filter(Model.name == name).first()
         return Obj
 
-    def if_movie_exist(self,name):
+    def if_movie_exist(self,name,seazon):
         Obj = self.session.query(self.movie_model).filter(self.movie_model.name == name).first()
         if Obj:
             return False
@@ -407,22 +407,30 @@ class AddSeriesViaDir(AbstractAddViaDir):
         model.dir=set_movie_dir(model)
         return model
 
+    def if_movie_exist(self,name,seazon):
+        Obj = self.session.query(self.movie_model).filter(self.movie_model.name == name).first()
+        if Obj:
+            if self.series in Obj.series is False:
+                return True
+            else:
+                if Obj.sezon != int(seazon):
+                    return True
+            return False
+        return True
+
+
     def add_files(self):
         object = []
         movie_dir = os.listdir(self.movie_dir)
         for dir_element in movie_dir:
             nev_dir = self.movie_dir + '' + '\\' + str(dir_element)
-            if os.path.isdir(nev_dir):
-                nev_dir_loop = os.listdir(nev_dir)
-                stan=self.set_movie_name_is_star_name(dir_element)
-                for movie in nev_dir_loop:
-                    if self.if_movie_exist(self.clear_name(movie)):
-                        object.append(self.add_movie(movie, dir_element,stan))
-            else:
-                if self.if_movie_exist(self.clear_name(dir_element)):
-                    object.append(self.add_movie(dir_element, 1))
-        self.session.add_all(object)
-        self.session.commit()
+            nev_dir_loop = os.listdir(nev_dir)
+            stan = self.set_movie_name_is_star_name(dir_element)
+            for movie in nev_dir_loop:
+                if stan is False:
+                    if movie.endswith(movie_ext):
+                        if self.if_movie_exist(self.clear_name(movie),dir_element):
+                            object.append(self.add_movie(movie, dir_element, False))
 
 class AddStarViaDir(AbstractAddViaDir):
 
@@ -456,7 +464,7 @@ class AddStarViaDir(AbstractAddViaDir):
                 for star in stars:
                     new_stars.append(self.if_star_exist(star))
             new_stars.append(self.star)
-            if self.if_movie_exist(self.clear_name(movie)):
+            if self.if_movie_exist(self.clear_name(movie),1):
                 name=self.clear_name(movie)
                 src = self.movie_dir + '\\' + movie
                 movie= self.movie_model(
