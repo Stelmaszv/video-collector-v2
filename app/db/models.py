@@ -43,6 +43,16 @@ Series_Tags = Table('series_tags', Base.metadata,
     Column('tags_id', Integer, ForeignKey('tags.id'))
 )
 
+Producent_Tags = Table('producent_tags', Base.metadata,
+    Column('producent_id', Integer, ForeignKey('producent.id')),
+    Column('tags_id', Integer, ForeignKey('tags.id'))
+)
+
+Producent_Series = Table('producent_series', Base.metadata,
+    Column('producent_id', Integer, ForeignKey('producent.id')),
+    Column('series_id', Integer, ForeignKey('series.id'))
+)
+
 Movies_Tags = Table('movies_tags', Base.metadata,
     Column('movies_id', Integer, ForeignKey('movies.id')),
     Column('tags_id', Integer, ForeignKey('tags.id'))
@@ -65,6 +75,35 @@ class Sezons(Base):
     def __str__(self):
         return  self.sezon_name
 
+class Producent(Base):
+    __tablename__ = 'producent'
+    id = Column('id', Integer, primary_key=True)
+    views =      Column('views', Integer,default=0)
+    likes = Column('likes', Integer,default=0)
+    favourite = Column('favourite', Boolean, default=False)
+    name = Column('name',String)
+    show_name = Column('show_name', String, default='')
+    avatar = Column('avatar', String)
+    dir = Column('dir', String, default='')
+    config = Column('config', String, default='')
+    country = Column('country', String, default='')
+    description = Column('description', String, default='')
+
+    tags = relationship(
+        "Tags",
+        secondary=Producent_Tags,
+        back_populates="producent"
+    )
+
+    series = relationship(
+        "Series",
+        secondary=Producent_Series,
+        back_populates="producent"
+    )
+
+    def __str__(self):
+        return  self.show_name
+
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
@@ -80,6 +119,12 @@ class Series(Base):
     years       = Column('year', String,default='')
     country      = Column('country', String,default='')
     description  = Column('description', String,default='')
+
+    producent = relationship(
+        "Producent",
+        secondary=Producent_Series,
+        back_populates="series"
+    )
 
     tags = relationship(
         "Tags",
@@ -160,6 +205,11 @@ class Tags(Base):
         back_populates="tags"
     )
 
+    producent = relationship(
+        "Producent",
+        secondary=Producent_Tags,
+        back_populates="tags"
+    )
 
 class Stars(Base):
     __tablename__ ='stars'
@@ -208,7 +258,6 @@ class Stars(Base):
     def __str__(self):
         return  self.name
 
-
 class Movies(Base):
     __tablename__ ='movies'
     id=    Column('id',Integer,primary_key=True)
@@ -242,6 +291,9 @@ class Movies(Base):
         secondary=movies_Series,
         back_populates="movies"
     )
+
+
+
     def _get_stars(self):
         if len(self.stars) == 1:
             return self.stars[0].name
