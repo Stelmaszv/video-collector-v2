@@ -1,6 +1,6 @@
 from __future__ import annotations
 from abc import ABC
-from app.db.models import Movies,Series,Stars,Tags
+from app.db.models import Movies,Series,Stars,Tags,Producent
 from app.db.models import session
 from sqlalchemy import desc,func
 from datetime import date
@@ -81,12 +81,17 @@ class SetFactory:
 
     def get_factory(self,name):
         switcher = {
-            'movies' : GetMovies,
-            'series' : GetSeries,
-            'stars'  : GetStar
+            'movies'     : GetMovies,
+            'series'     : GetSeries,
+            'stars'      : GetStar,
+            'producents' : GetProducents
         }
         classObj = switcher.get(name, "Invalid data");
         return classObj(self.obj).return_all()
+
+class GetProducents(AbstractFactory):
+
+    model = Producent
 
 class GetMovies(AbstractFactory):
 
