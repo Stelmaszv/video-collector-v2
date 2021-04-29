@@ -24,6 +24,7 @@ class setWindow():
         from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
         from view.galery.edit_galery import EditGaleryMovieView
         from view.config.config_data_json import JSONConfigView
+        from view.producent.producent_view import ProducentView
 
         switcher = {
             'JSONCONFIG': JSONConfigView(),
@@ -44,7 +45,8 @@ class setWindow():
             'play': Player(),
             'movie_add_star_to_model_view'  :MovieAddStarToModelView(),
             'series_add_star_to_model_view' :SeriesAddStarToModelView(),
-            'edit_galery_movie_view' : EditGaleryMovieView()
+            'edit_galery_movie_view' : EditGaleryMovieView(),
+            'producent'              : ProducentView()
         }
 
         get = switcher.get(object, "Invalid data")

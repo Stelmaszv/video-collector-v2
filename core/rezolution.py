@@ -307,6 +307,19 @@ class GetResolutionData:
                     ],
                 }
             },
+
+            "Producent" : {
+                "position": self.base_window(),
+                "window": {
+                    "title_size": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(5, 'height')
+                    ],
+                }
+            },
+
             "Menu": {
                 "position": self.base_menu(),
                 "window": {
