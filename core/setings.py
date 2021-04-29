@@ -30,7 +30,7 @@ class ConfiGData:
   def valid_drive(self,dir):
     name = dir.split('\\')
     dir_error = os.path.isdir(name[0])
-    Error.throw_error_bool('Drive '+name[0]+' not exist please if is crypt ! ',dir_error)
+    Error.throw_error_bool('Drive '+name[0]+' not exist please check if is crypt ! ',dir_error)
 
   def make_dirs(self,dir):
     if os.path.isdir(dir) is False:
@@ -104,4 +104,4 @@ max_defult                        = ['views',0]
 min_defult                        = ['views',0]
 series_defult                     = ''
 #list
-show_list_defult                  = 'full'
+show_list_defult                  = 'normal'

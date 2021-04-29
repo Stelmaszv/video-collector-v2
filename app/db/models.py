@@ -245,10 +245,6 @@ class Movies(Base):
     def _get_stars(self):
         if len(self.stars) == 1:
             return self.stars[0].name
-        if len(self.stars) == 2:
-            return self.stars[0].name + ', ' + self.stars[1].name
-        if len(self.stars) > 2:
-            return self.stars[0].name + ', ' + self.stars[1].name + ' and others ' + str(len(self.stars) - 2)
         return ''
 
     def return_stars(self):
