@@ -573,7 +573,7 @@ class MenuFormSchena(BaseFormShema):
         self.add_iten('combo_box', {
             'place_holder': 'search_in',
             'name': 'search_in',
-            'combo_box_list': [self.BaseView.search_in, 'series', 'stars', 'movies'],
+            'combo_box_list': [self.BaseView.search_in, 'series', 'stars', 'movies','producents'],
             "row": False,
             "coll": True
         })

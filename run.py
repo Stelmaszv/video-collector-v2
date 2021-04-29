@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication
 from pathlib import Path
-from app.db.models import session, Movies,Stars,Series,Sezons,Photos
+from app.db.models import session, Movies,Stars,Series,Sezons,Photos,Producent
 from core.config import ConfigLoop, ConfigMovies
 from core.dir import LoadFilesFromJson, PhotoMeaker
 from core.setings import data_JSON,scan_photos,run_start_view,clean_db,start_page
@@ -10,7 +10,7 @@ from view.config.config_data_json import JSONConfigView
 
 class DBCleaner:
 
-    models=[Movies,Stars,Series,Sezons,Photos]
+    models=[Movies,Stars,Series,Sezons,Photos,Producent]
 
     def clean(self):
 
@@ -51,6 +51,15 @@ class Run:
                 for Movie in session.query(Movies).all():
                     PM = PhotoMeaker(Movie, data_JSON['movies_photos'])
                     PM.make()
+
+            model = Producent(
+                name="testowy",
+                show_name="testowy",
+            )
+
+            session.add(model)
+            session.commit()
+
         else:
             self.config=False
             self.JSONConfigView.run_window()
