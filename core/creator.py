@@ -1,5 +1,6 @@
 import json
 class SeriesCreator:
+    singles_limt=2
     none_list=[]
     singles_list=[]
     series_list=[]
@@ -42,7 +43,7 @@ class SeriesCreator:
         series_array=self.series_order(faind_star_in_movie_array)
 
         for serie in series_array:
-            if len(serie.movies) < 3:
+            if len(serie.movies) <= self.singles_limt:
                 for movie in serie.movies:
                     if if_movie_on_series(movie,self.singles_list):
                         self.add_if_not_exist(self.singles_list,movie)
@@ -97,7 +98,7 @@ class SeriesCreator:
                 if star.id == self.item.id:
                     movies.append(movie)
 
-        if len(movies)<3:
+        if len(movies)<=self.singles_limt:
             for movie in movies:
                 self.singles_list.append(movie)
 
@@ -143,7 +144,7 @@ class SeriesCreator:
     def add_series(self):
         for item in self.series_list:
             if self.if_showin_Serie(item.movies) \
-                and self.count_items(item.movies)>3 \
+                and self.count_items(item.movies)>=self.singles_limt \
                 and self.if_item_item_list(item.name):
 
                 el = {
