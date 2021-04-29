@@ -407,14 +407,12 @@ class AddSeriesViaDir(AbstractAddViaDir):
     def if_movie_exist(self,name,seazon):
         Obj = self.session.query(self.movie_model).filter(self.movie_model.name == name).first()
         if Obj:
-            if self.series in Obj.series is False:
-                return True
-            else:
-                if Obj.sezon != int(seazon):
-                    return True
-            return False
+            stan=True
+            for item in Obj.series:
+                if item.id == self.series.id:
+                    stan= False
+            return stan
         return True
-
 
     def add_files(self):
         object = []
@@ -444,7 +442,6 @@ class AddStarViaDir(AbstractAddViaDir):
             if self.star in Obj.stars:
                 return True
         return True
-
 
     def if_star_exist(self,name):
         name=set_name(name)
@@ -483,6 +480,7 @@ class AddStarViaDir(AbstractAddViaDir):
                 movie.dir = set_movie_dir(movie)
                 object.append(movie)
                 print('Movie ' + str(name) + ' has been added')
+
         self.session.add_all(object)
         self.session.commit()
 
