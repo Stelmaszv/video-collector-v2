@@ -344,6 +344,14 @@ class GetResolutionData:
                         self.set_rezulution(30, 'with'),
                         self.set_rezulution(15, 'height')
                     ],
+
+                    "description": [
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(12, 'height'),
+                        self.set_rezulution(30, 'with'),
+                        self.set_rezulution(30, 'height')
+                    ],
+                    "description_limit": 500,
                 }
             },
 

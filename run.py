@@ -56,7 +56,8 @@ class Run:
                 name="testowy",
                 show_name="testowy",
                 avatar='D:/project/video-collector-v2/data/avatar.png',
-                dir='Y:/producents/testowy'
+                dir='Y:/producents/testowy',
+                description="description description description description description description description description"
             )
 
             session.add(model)
