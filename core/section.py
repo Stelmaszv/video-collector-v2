@@ -41,6 +41,17 @@ class CustomListSection(AbstractSection):
             self.edit_section_grid.addWidget(label, row, 0, 1, 1)
             row = row + 1
 
+class ProducentSection(AbstractSection):
+
+    def __init__(self, BaseView, QWidget):
+        self.BaseView = BaseView
+        self.OBJ_QWidget = QWidget
+        self.obj = BaseView.obj
+
+    def run(self,data,data_list,page):
+        print(page)
+        print(data_list)
+
 class EditGalerySection(AbstractSection):
 
     def __init__(self, BaseView, QWidget):

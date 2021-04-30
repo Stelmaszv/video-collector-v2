@@ -47,12 +47,14 @@ class BaseView:
 
     def listView(self, data, data_list,obj_name,QWidget=None):
         from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,\
-            TagsListSection,CustomListSection,EditGalerySection,EditGaleryMoviesSection
+            TagsListSection,CustomListSection,EditGalerySection,EditGaleryMoviesSection,\
+            ProducentSection
         page=False
         if QWidget:
             if hasattr(QWidget,'page'):
                 page = QWidget.page
         switcher = {
+            'Producent'  : ProducentSection(self,QWidget),
             'Stars'      : StarsSection(self,QWidget),
             'Series'     : SeriesSection(self,QWidget),
             'Menu'       : MenuSection(self,QWidget),

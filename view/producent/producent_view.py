@@ -8,6 +8,10 @@ class ProducentView(QWidget,AbstractBaseView):
     model            = Producent
     Nav              = NavPoducent
     Info             = PrducentInfo
-    show_elemnts     = ['Tags', 'List']
+    list_view        = 'Producent'
+    show_elemnts     = ['Tags']
     resolution_index = 'Producent'
     reset_view       = 'producent'
+
+    def  set_up(self):
+        self.set_list_view_data(self.data.series)
