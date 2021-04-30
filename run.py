@@ -51,13 +51,14 @@ class Run:
                 for Movie in session.query(Movies).all():
                     PM = PhotoMeaker(Movie, data_JSON['movies_photos'])
                     PM.make()
-
+            series=[session.query(Series).get(1),session.query(Series).get(2),session.query(Series).get(3)]
             model = Producent(
                 name="testowy",
                 show_name="testowy",
                 avatar='D:/project/video-collector-v2/data/avatar.png',
                 dir='Y:/producents/testowy',
-                description="description description description description description description description description"
+                description="description description description description description description description description",
+                series=series,
             )
 
             session.add(model)

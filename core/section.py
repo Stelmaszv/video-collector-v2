@@ -47,10 +47,98 @@ class ProducentSection(AbstractSection):
         self.BaseView = BaseView
         self.OBJ_QWidget = QWidget
         self.obj = BaseView.obj
+        self.pagination = Pagination(self.obj)
+        self.Form = Form(self.BaseView.obj)
+        self.button_group_info = QtWidgets.QButtonGroup()
+        self.Form.buttons_loop= [
+            {'button': self.on_info_button, 'obejct': self.button_group_info },
+        ]
+
+    def on_info_button(self,id):
+        self.Form.buttom_genarator(self.button_group_info , self.info_button, id)
+
+    def info_button(self, item):
+        self.BaseView.load_view('series', item)
+        return True;
+
+    def grid(self,left,top,page):
+        grid = QtWidgets.QWidget(page)
+        grid.setGeometry(QtCore.QRect(left, top, 0, 0))
+        grid.setMinimumSize(QtCore.QSize(390, 200))
+        grid.setMaximumSize(QtCore.QSize(380, 200))
+        grid.setObjectName("gridLayoutWidget_15")
+        return grid
+
+    def seriesItem(self,grid):
+        seriesItem = QtWidgets.QGridLayout(grid)
+        seriesItem.setObjectName("seriesItem")
+        return seriesItem
+
+    def title(self,grid,seriesItem,item,Obj):
+        font=Obj['section']['font']
+        strings_in_title=Obj['section']['strings_in_title']
+        title = QtWidgets.QLabel(grid)
+        title.setObjectName("seriesTitle")
+        title.setText("<html><head/><body><span style=\" font-size:"+str(font)+" px; font-weight:600; \">" ""
+                      + stringManipupations.short(item.name, strings_in_title) +
+                      "</span></body></html>")
+        seriesItem.addWidget(title, 0, 0, 1, 2)
+
+    def more(self,item,left,top,page,Obj):
+        button_with=Obj['section']['button_with']
+        button_height = Obj['section']['button_height']
+        button = QtWidgets.QPushButton(page)
+        button.setObjectName("show-movies")
+        button.setText('Show Movies')
+        button.setGeometry(left+20,top+200, button_with, button_height)
+        button.data = item
+        self.Form.buttons_loop[0]['obejct'].addButton(button)
+        self.Form.buttons_loop[0]['obejct'].buttonClicked[int].connect(self.Form.buttons_loop[0]['button'])
+
+    def avatar(self,grid,seriesItem,item,Obj):
+        avatar_with=Obj['section']['avatar_with']
+        avatar_height = Obj['section']['avatar_height']
+        seriesAvatar = QtWidgets.QLabel(grid)
+        seriesAvatar.setMaximumSize(QtCore.QSize(avatar_with, avatar_height))
+        seriesAvatar.setText("")
+        seriesAvatar.setPixmap(QtGui.QPixmap(item.avatar))
+        seriesAvatar.setScaledContents(True)
+        seriesAvatar.setObjectName("seriesAvatar")
+        seriesItem.addWidget(seriesAvatar, 1, 0, 5, 1)
 
     def run(self,data,data_list,page):
-        print(page)
-        print(data_list)
+        self.tabWidget = self.pagination.tabs([data[0], data[1], data[2], data[3]])
+        self.page = self.pagination.tab()
+        left = self.OBJ_QWidget.WindowSize['section']['left']
+        top = self.OBJ_QWidget.WindowSize['section']['top']
+        el = 0;
+        pages = []
+        pages.append(self.page)
+        self.add_page = self.page
+        tab_name = 1
+
+        for item in data_list:
+            el = el + 1;
+            grid = self.grid(left, top, self.add_page)
+            seriesItem = self.seriesItem(grid)
+            self.title(grid, seriesItem, item,self.OBJ_QWidget.WindowSize)
+            self.avatar(grid, seriesItem, item,self.OBJ_QWidget.WindowSize)
+            self.more(item, left, top, self.add_page,self.OBJ_QWidget.WindowSize)
+            left = left + self.OBJ_QWidget.WindowSize['section']['left_add']
+
+            if el % self.OBJ_QWidget.WindowSize['section']['per_row'] == 0:
+                left = self.OBJ_QWidget.WindowSize['section']['left']
+                top = top + self.OBJ_QWidget.WindowSize['section']['top_add']
+
+            if el % self.OBJ_QWidget.WindowSize['section']['per_page'] == 0:
+                self.next_page = self.pagination.tab()
+                self.add_page = self.next_page
+                pages.append(self.next_page)
+                top = 0
+
+        for page_tap in pages:
+            self.tabWidget.addTab(page_tap, str(tab_name))
+            tab_name = tab_name + 1
 
 class EditGalerySection(AbstractSection):
 

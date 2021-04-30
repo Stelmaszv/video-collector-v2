@@ -360,6 +360,21 @@ class GetResolutionData:
                     ],
 
                     "description_limit": 500,
+
+                    "section": {
+                        "avatar_with": self.set_rezulution(7, 'with'),
+                        "avatar_height": self.set_rezulution(12, 'height'),
+                        "button_with": self.set_rezulution(6, 'with'),
+                        "button_height": self.set_rezulution(2, 'height'),
+                        "left": self.set_rezulution(2, 'with'),
+                        "left_add": self.set_rezulution(10, 'with'),
+                        "strings_in_title": self.set_rezulution(5, 'with'),
+                        "font": "10",
+                        "top": 0,
+                        "top_add": 250,
+                        "per_row": 6,
+                        "per_page": 12
+                    }
                 }
             },
 
