@@ -2,7 +2,7 @@ import re
 import json
 import os
 import random
-from app.db.models import Stars,Movies,Series,Photos,Sezons,Tags
+from app.db.models import Stars,Movies,Series,Photos,Sezons,Tags,Producent
 from app.db.models import session
 from abc import ABC,abstractmethod
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
@@ -484,13 +484,26 @@ class AddStarViaDir(AbstractAddViaDir):
         self.session.add_all(object)
         self.session.commit()
 
-class AddProducentViaDirLoop:
+class AddProducentViaDir(AbstractAddViaDir):
+
+    model=Producent
+    movie_dir = '\\movies'
 
     def __init__(self,dir):
-        self.dir=dir
+        super().__init__(dir)
+        self.star=self.if_producent_exist(set_name(dir))
+
+    def if_producent_exist(self,name):
+        name=set_name(name)
+        return self.if_exist(name, self.model, self.model(
+            name=name,
+            show_name=name,
+            avatar = self.set_avatar(),
+            dir=self.dir
+        ))
 
     def add_files(self):
-        print('ok')
+        pass
 
 class LoadPhotoFromDirs:
 
@@ -550,6 +563,10 @@ class AddSeriesViaDirLoop(AbstractLoopDir):
 
     LoopClass = AddSeriesViaDir
 
+class AddProducentViaDirLoop(AbstractLoopDir):
+
+    LoopClass = AddProducentViaDir
+
 class LoadData(ABC):
 
     DirLoopClass=None
@@ -561,6 +578,7 @@ class LoadData(ABC):
         dir = os.listdir(self.dir)
         for item in dir:
             new_dir = self.dir + '' + str('\\' + item)
+            print(new_dir)
             if os.path.isdir(new_dir):
                 LC = self.DirLoopClass(new_dir)
                 LC.add_files()

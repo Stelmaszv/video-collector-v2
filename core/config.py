@@ -124,7 +124,7 @@ class ProducentConfigData:
         self.dir=dir
 
     def load(self):
-        print('load producent')
+        pass
 
 
 class ConfigMovies(AbstractConfigItem):
