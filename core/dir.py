@@ -484,6 +484,14 @@ class AddStarViaDir(AbstractAddViaDir):
         self.session.add_all(object)
         self.session.commit()
 
+class AddProducentViaDirLoop:
+
+    def __init__(self,dir):
+        self.dir=dir
+
+    def add_files(self):
+        print('ok')
+
 class LoadPhotoFromDirs:
 
     session=session
@@ -565,6 +573,10 @@ class LoadStarFromJSON(LoadData):
 
     DirLoopClass = AddStarViaDirLoop
 
+class LoadProducentsFromJSON(LoadData):
+
+    DirLoopClass = AddProducentViaDirLoop
+
 class LoadFilesFromJson:
 
     objects={}
@@ -572,8 +584,9 @@ class LoadFilesFromJson:
     def __init__(self,json_data):
         self.json_data=json_data
         self.object={
-            "stars"  :  LoadStarFromJSON,
-            "series" :  LoadSeriesFromJSON
+            "stars"      :  LoadStarFromJSON,
+            "series"     :  LoadSeriesFromJSON,
+            "producents" :  LoadProducentsFromJSON
         }
 
     def add_files(self):

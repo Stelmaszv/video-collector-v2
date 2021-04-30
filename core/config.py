@@ -118,6 +118,14 @@ class StarConfigData(AbstractConfigItem):
             if 'fields' in data:
                 self.set_data_form_json(data['fields'], self.data)
 
+class ProducentConfigData:
+
+    def __init__(self,dir):
+        self.dir=dir
+
+    def load(self):
+        print('load producent')
+
 
 class ConfigMovies(AbstractConfigItem):
 
@@ -219,6 +227,10 @@ class AbstractLoadSetings(ABC):
             dir = self.dir + '' + str('\\' + item)
             self.ItemClass(dir).load()
 
+class LoadSetingsProducent(AbstractLoadSetings):
+
+    ItemClass = ProducentConfigData
+
 class LoadSetingsSeries(AbstractLoadSetings):
 
     ItemClass = SeriesConfigData
@@ -235,13 +247,18 @@ class ConfigSeries(AbstractConfig):
 
     LoadSetingsClass = LoadSetingsSeries
 
+class ConfigProducent(AbstractConfig):
+
+    LoadSetingsClass = LoadSetingsProducent
+
 class ConfigLoop:
 
     def __init__(self, json_data):
         self.json_data = json_data
         self.object = {
             "stars":  ConfigStars,
-            "series": ConfigSeries
+            "series": ConfigSeries,
+            "producents":ConfigProducent
         }
 
     def load(self):
