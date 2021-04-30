@@ -73,6 +73,13 @@ def if_star_exist(self,name):
         dir=self.set_dir_for_star(name)
     ))
 
+def if_producent_exist(self,name):
+    return self.if_exist(name, self.model, self.model(
+        name=name,
+        avatar=stars_avatar_defult,
+        dir=self.set_dir_for_star(name)
+    ))
+
 def set_name(dir):
     name = dir.split('\\')
     last = len(name)-1

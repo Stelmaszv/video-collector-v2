@@ -1,5 +1,5 @@
 from abc import ABC,abstractmethod
-from core.dir import set_name,if_star_exist,AddStarViaDir,set_dir_for_star
+from core.dir import set_name,if_star_exist,AddStarViaDir,set_dir_for_star,AddSeriesViaDir
 from app.db.models import session
 from app.db.models import Tags,Series,Stars,Movies,Producent
 from datetime import datetime
@@ -122,12 +122,22 @@ class ProducentConfigData(AbstractConfigItem):
 
     Model = Producent
 
+    def add_series(self,series,Obj):
+        for serie in series:
+            ASVD=AddSeriesViaDir(set_dir_for_star(serie))
+            SeriesObj=ASVD.if_series_exist(ASVD.name)
+            Obj.series.append(SeriesObj)
+            session.commit()
+
     def load(self):
         with open(self.config) as json_file:
             data = json.load(json_file)
+
             if 'fields' in data:
                 self.set_data_form_json(data['fields'], self.data)
 
+            if "series" in data:
+                self.add_series(data['series'], self.data)
 
 class ConfigMovies(AbstractConfigItem):
 
