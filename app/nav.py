@@ -77,6 +77,7 @@ class BaseNav:
     def reset(self,argumants):
         self.BaseActions.reset()
 
+
 class MovieNav(BaseNav):
 
     def set_nav(self):
@@ -113,6 +114,10 @@ class StarNav(BaseNav):
     pass
 
 class SeriesNav(BaseNav):
+
+    pass
+
+class NavPoducent(BaseNav):
 
     pass
 
