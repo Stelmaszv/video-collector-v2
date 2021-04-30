@@ -4,5 +4,5 @@ from app.db.models import Producent
 
 class ProducentView(QWidget,AbstractBaseView):
     model = Producent
-    show_elemnts = ['Tags', 'List','Info','Galery','Nav','Avatar','Description']
+    show_elemnts = ['Tags', 'List','Info','Galery','Nav','Description']
     resolution_index = 'Producent'

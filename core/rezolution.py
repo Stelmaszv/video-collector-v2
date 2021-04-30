@@ -311,11 +311,34 @@ class GetResolutionData:
             "Producent" : {
                 "position": self.base_window(),
                 "window": {
+                    "navbar": self.base_navbar(),
+
                     "title_size": [
-                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(-10, 'with'),
                         self.set_rezulution(0, 'height'),
-                        self.set_rezulution(25, 'with'),
-                        self.set_rezulution(5, 'height')
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+
+                    "avatar_size": [
+                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(8, 'height'),
+                        self.set_rezulution(10, 'with'),
+                        self.set_rezulution(20, 'height')
+                    ],
+
+                    "galery_size": [
+                        self.set_rezulution(40, 'with'),
+                        self.set_rezulution(8, 'height'),
+                        self.set_rezulution(30, 'with'),
+                        self.set_rezulution(30, 'height')
+                    ],
+
+                    "info_size": [
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(10, 'height'),
+                        self.set_rezulution(30, 'with'),
+                        self.set_rezulution(15, 'height')
                     ],
                 }
             },
