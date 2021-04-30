@@ -334,6 +334,10 @@ class GetResolutionData:
                         self.set_rezulution(30, 'height')
                     ],
 
+                    "galery_item_show" :2,
+
+                    "galery_photo_size": [self.set_rezulution(10, 'with'), self.set_rezulution(15, 'height')],
+
                     "info_size": [
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(10, 'height'),

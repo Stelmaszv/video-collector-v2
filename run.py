@@ -55,6 +55,8 @@ class Run:
             model = Producent(
                 name="testowy",
                 show_name="testowy",
+                avatar='D:/project/video-collector-v2/data/avatar.png',
+                dir='Y:/producents/testowy'
             )
 
             session.add(model)

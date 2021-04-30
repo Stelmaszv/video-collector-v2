@@ -200,6 +200,7 @@ class BaseView:
             obj = self.obj
 
         photos = os.listdir(dir)
+
         self.galeryGrid = QtWidgets.QWidget(obj)
         self.galeryGrid.setGeometry(QtCore.QRect(data[0],data[1],data[2],data[3]))
         self.galeryGrid.setObjectName("galeryGrid")
