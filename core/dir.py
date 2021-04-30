@@ -578,7 +578,6 @@ class LoadData(ABC):
         dir = os.listdir(self.dir)
         for item in dir:
             new_dir = self.dir + '' + str('\\' + item)
-            print(new_dir)
             if os.path.isdir(new_dir):
                 LC = self.DirLoopClass(new_dir)
                 LC.add_files()

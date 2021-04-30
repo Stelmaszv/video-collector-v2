@@ -1,7 +1,7 @@
 from abc import ABC,abstractmethod
 from core.dir import set_name,if_star_exist,AddStarViaDir,set_dir_for_star
 from app.db.models import session
-from app.db.models import Tags,Series,Stars,Movies
+from app.db.models import Tags,Series,Stars,Movies,Producent
 from datetime import datetime
 import os
 import json
@@ -118,13 +118,15 @@ class StarConfigData(AbstractConfigItem):
             if 'fields' in data:
                 self.set_data_form_json(data['fields'], self.data)
 
-class ProducentConfigData:
+class ProducentConfigData(AbstractConfigItem):
 
-    def __init__(self,dir):
-        self.dir=dir
+    Model = Producent
 
     def load(self):
-        pass
+        with open(self.config) as json_file:
+            data = json.load(json_file)
+            if 'fields' in data:
+                self.set_data_form_json(data['fields'], self.data)
 
 
 class ConfigMovies(AbstractConfigItem):
