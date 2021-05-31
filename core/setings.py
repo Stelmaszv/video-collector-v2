@@ -73,7 +73,7 @@ if Path('data.json').is_file():
 with_size_defult = 25
 height_size_defult = 25
 #menu
-menu_per_page = 50
+menu_per_page = 20
 
 series_avatar_defult ='D:/project/video-collector-v2/data/avatar.png'
 stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'
@@ -92,7 +92,7 @@ full_screen=True
 #run_setings
 scan_photos=False
 run_start_view=True
-clean_db=True
+clean_db=False
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')
