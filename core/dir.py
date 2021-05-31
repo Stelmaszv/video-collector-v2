@@ -16,6 +16,7 @@ add= False
 def set_dir_for_star(name):
     letter = name[0]
     dir = ''
+    print(name)
     if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
         dir = data_JSON['dirs'][0]['dir'] + '\\A-D\\' + name
     if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
@@ -386,7 +387,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
             dir    = self.set_dir_for_star(name)
         ))
 
-    def add_movie(self,movie,sezon,movie_name_is_star=False):
+    def add_movie(self,movie,sezon):
         name = self.clear_name(movie)
         src = movie
         stars = []
@@ -396,16 +397,12 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 star_obj = self.if_star_exist(set_name(item))
                 star_obj.series.append(self.series)
                 stars.append(star_obj)
-        else:
-            if movie_name_is_star:
-                star_obj = self.if_star_exist(name)
-                star_obj.series.append(self.series)
-                stars.append(star_obj)
         series = [self.series]
         print('Movie '+str(name)+' has been added')
         model=self.movie_model(
             name=name,
             show_name=name,
+            search_name=series[0].name+' '+name,
             src=self.movie_dir+'\\'+sezon+'\\'+src,
             stars=stars,
             series=series,
@@ -415,19 +412,14 @@ class AddSeriesViaDir(AbstractAddViaDir):
         return model
 
     def if_movie_exist(self,name,seazon):
-        Obj = self.session.query(self.movie_model).filter(self.movie_model.name == name).first()
+        Obj = self.session.query(self.movie_model).filter(self.movie_model.search_name == name).first()
         if Obj:
-            series=False
-            seazon=False
             stan=True
             for item in Obj.series:
 
                 if item.id == self.series.id:
-                    series = True
-                if Obj.sezon == seazon:
-                    seazon = True
-                if seazon is True and series:
                     stan=False
+
             return stan
         return True
 
@@ -437,11 +429,10 @@ class AddSeriesViaDir(AbstractAddViaDir):
         for dir_element in movie_dir:
             nev_dir = self.movie_dir + '' + '\\' + str(dir_element)
             nev_dir_loop = os.listdir(nev_dir)
-            stan = self.set_movie_name_is_star_name(dir_element)
             for movie in nev_dir_loop:
                 if movie.endswith(movie_ext):
-                    if self.if_movie_exist(self.clear_name(movie),dir_element):
-                        object.append(self.add_movie(movie, dir_element, self.set_movie_name_is_star_name(movie)))
+                    if self.if_movie_exist(self.series.name+' '+self.clear_name(movie),dir_element):
+                        object.append(self.add_movie(movie, dir_element))
 
 class AddStarViaDir(AbstractAddViaDir):
 

@@ -16,6 +16,6 @@ class StarView(QWidget,AbstractBaseView):
     show_elemnts       = ['Tags']
 
     def  set_up(self):
-        self.list = []
+        self.list = None
         self.list = SeriesCreator(self.data).return_obj()
         self.set_list_view_data(self.list)

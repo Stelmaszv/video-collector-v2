@@ -80,10 +80,10 @@ stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'
 none_movies_defult   ='D:/project/video-collector-v2/data/none.png'
 singles_movies_defult   ='D:/project/video-collector-v2/data/none.png'
 movie_cover_defulut = 'D:/project/video-collector-v2/data/none.png'
-search_in_defult= 'producents';
+search_in_defult= 'stars';
 start_page=0
 photo_ext= ('.png', '.jpg', '.jpeg','.jfif')
-movie_ext= ('.avi','.mkv','.mp4')
+movie_ext= ('.avi','.mkv','.mp4','.wmv')
 search_faze_defult = ''
 #player
 muted=False
