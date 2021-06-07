@@ -1,8 +1,22 @@
 from core.seader import abstractSeader
-from app.db.models import Movies,Stars,Photos,Series
+from app.db.models import Movies,Stars,Photos,Series,Tags as TagsModel
 from core.strings import stringManipupations
 from datetime import datetime
 
+class Tags(abstractSeader):
+    model = TagsModel
+
+    def add_tags(self):
+        self.objects = [
+            self.model(name="Bond"),
+            self.model(name="Action"),
+            self.model(name="Dead"),
+            self.model(name="Test"),
+        ]
+        self.addItems()
+
+    def run(self):
+        self.add_tags()
 
 
 class movies(abstractSeader):
@@ -104,6 +118,7 @@ class stars(abstractSeader):
     def addRelationsList(self):
         self.getItem(1)
         self.addRelations(self.item.movies, Movies, [1,2,3,4,5,6])
+        self.addRelations(self.item.tags, TagsModel, [1, 2, 3])
         self.addRelations(self.item.photos, Photos, [1,2,3,4,5,6])
 
     def addStar(self):
@@ -189,7 +204,7 @@ class series(abstractSeader):
         self.objects = [
             self.model(
                 name="James Bond Movies",
-                avatar="C:/Users/DeadlyComputer/Desktop/photo/images.png",
+                avatar="C:/Users/DeadlyComputer/Desktop/data/series/James Bond Movies/photo/avatar.png",
                 sezons=4
             ),
             self.model(
@@ -458,7 +473,7 @@ class series(abstractSeader):
 
 class initSeader:
 
-    seaders = [photos(),movies(),stars(),series()]
+    seaders = [Tags(),photos(),movies(),stars(),series()]
 
     def initNow(self):
         for item in self.seaders:

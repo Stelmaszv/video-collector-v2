@@ -1,86 +1,133 @@
 from __future__ import annotations
-from abc import ABC, abstractmethod
-from app.db.models import Movies,Series,Stars
+from abc import ABC
+from app.db.models import Movies,Series,Stars,Tags,Producent
 from app.db.models import session
+from sqlalchemy import desc,func
+from datetime import date
 
 class AbstractFactory(ABC):
 
+    model=None
+
+    def __init__(self,Menu):
+        self.Menu=Menu
+
+    def add_tags(self,query):
+        if len(self.Menu.AdvandeSearchCriteria.tags):
+            query = query.filter(self.model.tags.any(Tags.name.in_(self.Menu.AdvandeSearchCriteria.tags)))
+        return query
+
+    def add_stars(self,query):
+        if len(self.Menu.AdvandeSearchCriteria.stars):
+            query = query.filter(self.model.stars.any(Stars.name.in_(self.Menu.AdvandeSearchCriteria.stars)))
+        return query
+
+    def add_favourite(self,query):
+        if self.Menu.AdvandeSearchCriteria.favourite is not None:
+            query=query.filter(self.model.favourite == self.Menu.AdvandeSearchCriteria.favourite)
+        return query
+
+    def set_query(self):
+        if self.Menu.search_faze:
+            return session.query(self.model).filter(self.model.name.like(str(self.Menu.search_faze) + '%'))
+        return session.query(self.model)
+
+    def add_year(self,query):
+        if self.Menu.AdvandeSearchCriteria.year:
+            query=query.filter(self.model.AdvandeSearchCriteria.year == self.Menu.AdvandeSearchCriteriayear)
+        return query
+
+    def add_min(self,query):
+        if self.Menu.AdvandeSearchCriteria.min:
+            var=getattr(self.model,self.Menu.AdvandeSearchCriteria.min[0])
+            query = query.filter(var >= self.Menu.AdvandeSearchCriteria.min[1])
+        return query
+
+    def add_max(self,query):
+        if self.Menu.AdvandeSearchCriteria.max and self.Menu.AdvandeSearchCriteria.max[1]>0:
+            var=getattr(self.model,self.Menu.AdvandeSearchCriteria.max[0])
+            query = query.filter(var <= self.Menu.AdvandeSearchCriteria.max[1])
+        return query
+
+    def add_series(self,query):
+        if self.Menu.AdvandeSearchCriteria.series:
+            query = query.filter(self.model.series.any(Series.name.in_(self.Menu.AdvandeSearchCriteria.series)))
+        return query
+
+    def order_by(self,query):
+        if self.Menu.AdvandeSearchCriteria.order_by:
+            query=query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
+        return query
+
+    def return_all(self) -> session:
+        query = self.set_query()
+        query=self.add_tags(query)
+        query=self.add_stars(query)
+        query=self.add_favourite(query)
+        query=self.add_year(query)
+        query=self.add_min(query)
+        query = self.add_max(query)
+        query =self.add_series(query)
+        query = self.order_by(query)
+        return query.all()
+
+    def search_faze_normal(self):
+        return session.query(self.model).filter(self.model.name.like(str(self.Menu.search_faze) + '%'))
+
+class SetFactory:
+
     def __init__(self,obj):
         self.obj=obj
 
-    @abstractmethod
-    def getQuery(self) -> session:
-        pass
-
-    @abstractmethod
-    def deepSearch(self) -> session:
-        pass
-
-    def returnAll(self) -> session:
-        return self.ifIssearchFaze()
-
-    def ifIssearchFaze(self) -> session:
-        if self.obj.deepSearch and \
-                self.obj.searchFaze is not None \
-                and self.deepSearchMode is True :
-            return self.deepSearch()
-        if self.obj.searchFaze is None:
-            return session.query(self.model).all()
-        else:
-            return self.searchFazeNormal()
-
-    def searchFazeNormal(self):
-        return session.query(self.model).filter(self.model.name.like(str(self.obj.searchFaze)+'%'))
-
-class setFactory:
-
-    def __init__(self,obj):
-        self.obj=obj
-
-    def getFactory(self,name):
+    def get_factory(self,name):
         switcher = {
-            'movies' : getMovies,
-            'series' : getSeries,
-            'stars'  : getStar
+            'movies'     : GetMovies,
+            'series'     : GetSeries,
+            'stars'      : GetStar,
+            'producents' : GetProducents
         }
         classObj = switcher.get(name, "Invalid data");
-        return classObj(self.obj).getQuery()
+        return classObj(self.obj).return_all()
 
-class getMovies(AbstractFactory):
+class GetProducents(AbstractFactory):
+
+    model = Producent
+
+class GetMovies(AbstractFactory):
+
     model=Movies
-    deepSearchMode = True
 
-    def getQuery(self) ->  session:
-        return self.returnAll()
+class GetSeries(AbstractFactory):
 
-    def deepSearch(self) -> session:
-        starAr=[]
-        for item in session.query(self.model).all():
-            if len(session.query(self.model).get(item.id).stars) > 0:
-                for star in session.query(self.model).get(item.id).stars:
-                    if self.obj.searchFaze == star.name:
-                        starAr.append(item)
-        return starAr
-
-class getSeries(AbstractFactory):
     model=Series
-    deepSearchMode=False
 
-    def getQuery(self) -> session:
-        return self.returnAll()
+class GetStar(AbstractFactory):
 
-    def deepSearch(self) -> session:
-        pass
-
-class getStar(AbstractFactory):
     model=Stars
-    deepSearchMode=False
 
-    def getQuery(self) -> session:
-        return self.returnAll()
+    def order_by(self,query):
+        if self.Menu.AdvandeSearchCriteria.order_by:
+            if self.Menu.AdvandeSearchCriteria.order_by == 'year':
+                query= query.filter(
+                    func.DATE(self.model.date_of_birth) <
+                    date.today()).order_by('date_of_birth')
+            else:
+                query=query.order_by(desc(self.Menu.AdvandeSearchCriteria.order_by))
+        return query
 
-    def deepSearch(self):
-        pass
+    def return_all(self) -> session:
+        query = self.set_query()
+        query = self.add_tags(query)
+        query = self.add_favourite(query)
+        query = self.add_year(query)
+        query = self.add_min(query)
+        query = self.add_max(query)
+        query = self.add_series(query)
+        query = self.order_by(query)
+
+        return query.all()
+
+
 
 
 

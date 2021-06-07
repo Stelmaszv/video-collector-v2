@@ -4,11 +4,17 @@ from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import QPalette
 from PyQt5.QtCore import Qt, QUrl
-from app.db.models import Movies, Stars, Series
+from app.db.models import Movies
 from app.db.models import session
+from pathlib import Path
+from core.setings import auto_play,muted,full_screen
+import json
+import os
 
 class Player(QWidget):
-    playerMuted = False
+    muted        = muted
+    auto_play    = auto_play
+    full_screen  = full_screen
     model = Movies
     session = session
 
@@ -23,24 +29,62 @@ class Player(QWidget):
 
     def run_window(self):
         self.base_view.set_data(self.id)
+        self.set_setings()
         self.data = self.base_view.data
-        self.file_name = self.data.src
         self.init_ui()
         self.show()
         self.setWindowTitle(self.data.name)
-        self.mediaPlayer.play()
+
+    def set_star(self,stars,id):
+        Star=None
+        for star_array in stars:
+            if star_array.id == id:
+                Star=star_array
+        return Star
+
+
+    def set_setings(self):
+
+        self.save_setings()
+
+        with open('player_setings.JSON') as setings:
+            data = json.load(setings)
+            self.muted=data['muted']
+            self.auto_play = data['auto_play']
+            self.full_screen = data['full_screen']
+
+    def save_setings(self):
+
+        array = {
+            "muted": self.muted,
+            "auto_play": self.auto_play,
+            "full_screen": self.full_screen
+        }
+
+        json_array = json.dumps(array)
+
+        if Path('player_setings.JSON').is_file() is False:
+            f = open('player_setings.JSON', "x")
+            f.write(json_array)
+            f.close()
+
+    def set_player(self):
+        if self.muted:
+            self.mute_clicked()
+        if self.auto_play:
+            self.play_video()
+        if self.full_screen:
+            self.full_screen_switch()
 
     def init_ui(self):
         # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
-        self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.file_name)))
-
+        self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.data.src)))
         # create videowidget object
 
         videowidget = QVideoWidget()
 
         self.playBtn = QPushButton()
-        self.playBtn.setEnabled(False)
         self.playBtn.setIcon(self.style().standardIcon(QStyle.SP_MediaPlay))
         self.playBtn.clicked.connect(self.play_video)
 
@@ -58,10 +102,9 @@ class Player(QWidget):
             self.series_info_button = QPushButton('Series')
             self.series_info_button.clicked.connect(self.series_info)
 
-
         self.mute = QPushButton()
         self.mute.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
-        self.mute.clicked.connect(self.muteClicked)
+        self.mute.clicked.connect(self.mute_clicked)
 
         # create label
         self.label = QLabel()
@@ -76,9 +119,11 @@ class Player(QWidget):
         hboxLayout.addWidget(self.slider)
         hboxLayout.addWidget(self.mute)
         hboxLayout.addWidget(self.movie_info_button)
+
         if self.data.series:
             hboxLayout.addWidget(self.series_info_button)
         hboxLayout.addWidget(self.show_full_screen_button)
+        self.set_player()
 
         self.hboxLayout2 = QHBoxLayout()
         self.hboxLayout2.setContentsMargins(10, 10, 10, 10)
@@ -108,8 +153,7 @@ class Player(QWidget):
         self.base_view.load_view('series', self.data.series[0])
 
     def movie_info(self):
-        self.base_view.load_view('movies', self.data.series[0])
-
+        self.base_view.load_view('movies', self.data)
 
     def buttom_genarator(self, list, fuction, id):
         for button in list.buttons():
@@ -128,10 +172,10 @@ class Player(QWidget):
         ]
 
         index = 0
-        for star in self.data.series:
-            button = QPushButton('next video in series ' + str(star))
+        for series in self.data.series:
+            button = QPushButton('next video in series ' + str(series))
             self.hboxLayout2.addWidget(button)
-            button.data = star
+            button.data = series
             self.button_series[0]['obejct'].addButton(button)
             self.button_series[0]['obejct'].buttonClicked[int].connect(self.button_series[0]['button'])
             index = index + 1
@@ -142,34 +186,34 @@ class Player(QWidget):
 
         index = 0
         for star in self.data.stars:
-            button = QPushButton('next video with star ' + str(star))
-            self.hboxLayout2.addWidget(button)
-            button.data = star
-            self.buttons_star[0]['obejct'].addButton(button)
-            self.buttons_star[0]['obejct'].buttonClicked[int].connect(self.buttons_star[0]['button'])
+            if len(star.movies)>3:
+                button = QPushButton('next video with star ' + str(star))
+                self.hboxLayout2.addWidget(button)
+                button.data = star
+                self.buttons_star[0]['obejct'].addButton(button)
+                self.buttons_star[0]['obejct'].buttonClicked[int].connect(self.buttons_star[0]['button'])
             index = index + 1
 
-    def closeEvent(self, QCloseEvent):
-        self.mediaPlayer.stop()
-        self.Router.close_window()
-
-    def muteClicked(self):
+    def mute_clicked(self):
         if self.mediaPlayer.isMuted() is False:
             icon = QStyle.SP_MediaVolumeMuted
             self.mediaPlayer.setMuted(True)
+            self.muted = True
         else:
             icon = QStyle.SP_MediaVolume
             self.mediaPlayer.setMuted(False)
+            self.muted = False
 
         self.mute.setIcon(self.style().standardIcon(icon))
 
     def next_series(self, series):
-        movies_in_series = session.query(self.model).filter(Series.id == series.id).all()
+        movies_in_series = self.data.series[0].movies
         self.close()
         self.base_view.load_view('play', self.faind_item(movies_in_series))
 
     def next_star(self, star):
-        movies_with_star = session.query(self.model).filter(Stars.id == star.id).all()
+        star = self.set_star(self.data.stars,star.id)
+        movies_with_star=star.movies
         self.close()
         self.base_view.load_view('play', self.faind_item(movies_with_star))
 
@@ -182,7 +226,6 @@ class Player(QWidget):
                 elif math_index == len(array) - 1:
                     return 0
                 index_item = index_item + 1
-
         math_index = ''
         index_in_array = 0;
         for item in array:
@@ -196,23 +239,17 @@ class Player(QWidget):
     def full_screen_switch(self):
         if self.isFullScreen() is False:
             self.showFullScreen()
+            self.full_screen = True
         else:
             self.showNormal()
+            self.full_screen = False
 
     def mute_switch(self):
-        self.changeMuting.emit(not self.playerMuted)
-
-    def open_file(self):
-        filename, _ = QFileDialog.getOpenFileName(self, "Open Video")
-
-        if filename != '':
-            self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(filename)))
-            self.playBtn.setEnabled(True)
+        self.changeMuting.emit(not self.muted)
 
     def play_video(self):
         if self.mediaPlayer.state() == QMediaPlayer.PlayingState:
             self.mediaPlayer.pause()
-
         else:
             self.mediaPlayer.play()
 
@@ -239,3 +276,8 @@ class Player(QWidget):
     def handle_errors(self):
         self.playBtn.setEnabled(False)
         self.label.setText("Error: " + self.mediaPlayer.errorString())
+
+    def closeEvent(self, QCloseEvent):
+        os.remove("player_setings.JSON")
+        self.save_setings()
+        self.mediaPlayer.stop()

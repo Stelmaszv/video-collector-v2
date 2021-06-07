@@ -1,49 +1,34 @@
 from PyQt5.QtWidgets import QWidget
 from core.view import BaseView
 from app.db.models import Movies
+from core.view import AbstractBaseView
+from app.info import InfoForMovie
+from app.nav import MovieNav
+from core.setings import data_JSON
 
-class MovieView(QWidget):
+class MovieView(QWidget,AbstractBaseView):
+    model = Movies
+    show_elemnts = ['Tags','List']
+    resolution_index='Movie'
+    Info = InfoForMovie
+    Nav  = MovieNav
+    reset_view = 'movies'
+    edit_view = 'edit_movie'
 
-    def __init__(self):
-        super().__init__()
-        self.window_title = 'PyQt5 button - pythonspot.com'
-        self.model = Movies
-        self.BaseView= BaseView([], self)
+    def set_galery(self):
+        self.custom_title('Stars', 'star_title')
+        self.galery_from_array(self.data.stars,'stars_galery','stars_galery_size','stars_row')
+        self.custum_galery=self.set_dir()
 
-
-    def title(self):
-        data = [0, 0, 2000 ,100]
-        text = "<html><head/><body>" \
-               "<p align=\"center\">" \
-               "<span style=\" font-size:20pt;font-weight:600; " \
-               "text-decoration: none;\">" + self.data.name + \
-               "</span></p></body></html>"
-        self.BaseView.title(data, text)
-
-    def run_window(self):
-        self.BaseView.set_data(self.id)
-        self.data = self.BaseView.data
-        self.initUI()
-        self.show()
-        self.setWindowTitle(self.window_title)
+    def set_dir(self):
+        if len(self.data.series):
+            dir=data_JSON['movies_photos']+'\\series\\'+self.data.series[0].name
+            dir=dir+'\\'+str(self.data.sezon)+'\\'+self.data.name
+        else:
+            dir=data_JSON['movies_photos']+'\\movies\\'+self.data.name
+        return dir
 
 
-    def initUI(self):
-        self.title()
-        self.BaseView.get_nav([850, -100, 400, 400], [self.open_movie, self.add_favorits, self.show_edit, self.delete])
-        self.window_title=self.data.name
 
-    def open_movie(self):
-        self.BaseView.load_view('play', self)
 
-    def add_favorits(self):
-        print('faforits')
 
-    def show_edit(self):
-        print('show edit')
-
-    def delete(self):
-        print('delete')
-
-    def closeEvent(self, QCloseEvent):
-        self.Router.close_window()

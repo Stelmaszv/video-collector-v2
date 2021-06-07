@@ -1,14 +1,22 @@
-from PyQt5.QtWidgets import  QMessageBox
+from PyQt5.QtWidgets import  QMessageBox,QDialog
 from PyQt5 import QtCore, QtWidgets
-from .list import List
-from app.db.models import Movies
+from core.custum_errors import Error
 
 class QueryCounter:
 
     def __init__(self,query,per_page):
         self.query=query;
         self.per_page=per_page
-        self.page_count=query.count()
+        self.page_count=len(query)
+
+    def if_previous_page_exist(self,page):
+        if page>0:
+            return True
+        return False
+
+    @property
+    def counter(self):
+        return self.page_count
 
     def if_page_exist(self,page):
         if page in range(0,int(self.page_count/self.per_page)):
@@ -16,6 +24,21 @@ class QueryCounter:
         return False
 
 class Message:
+
+    rezolution = []
+
+    def set_resolution(self,data):
+        Error.throw_error_bool('Index position not exist in dialog ('+str(data)+')','position' in data)
+        self.rezolution_pos=data['position']
+
+        Error.throw_error_bool('Index label not exist in dialog ('+str(data)+')', 'label' in data)
+        self.rezolution_label = data['label']
+
+        Error.throw_error_bool('Index label not exist in dialog ('+str(data)+')', 'acept' in data)
+        self.rezolution_acept = data['acept']
+
+        Error.throw_error_bool('Index cancel not exist in dialog ('+str(data)+')', 'cancel' in data)
+        self.rezolution_cancel = data['cancel']
 
     def show(self,data):
         msg = QMessageBox()
@@ -25,8 +48,42 @@ class Message:
         msg.setWindowTitle(data[2])
         msg.exec_()
 
-class Pagination:
+    def info_dialog(self,text):
+        d = QDialog()
+        l = QtWidgets.QLabel(text, d)
+        l.move(self.rezolution_label[0], self.rezolution_label[1])
+        d.setWindowTitle("Dialog")
+        d.exec_()
 
+        d.close()
+
+    def dialog(self,text,accept_def,cancel_def=False):
+        def btm_cancel():
+            if cancel_def:
+                cancel_def()
+            d.close()
+        def btm_accept():
+            accept_def()
+            d.close()
+        d = QDialog()
+        accept =  QtWidgets.QPushButton("Acept", d)
+        l  =  QtWidgets.QLabel(text,d)
+        d.setGeometry(
+            self.rezolution_pos[0],
+            self.rezolution_pos[1],
+            self.rezolution_pos[2],
+            self.rezolution_pos[3]
+        )
+        l.move(self.rezolution_label[0],self.rezolution_label[1])
+        accept.move(self.rezolution_acept[0], self.rezolution_acept[1])
+        accept.clicked.connect(btm_accept)
+        cancel = QtWidgets.QPushButton("Cancel", d)
+        cancel.move(self.rezolution_cancel[0], self.rezolution_cancel[1])
+        cancel.clicked.connect(btm_cancel)
+        d.setWindowTitle("Dialog")
+        d.exec_()
+
+class Pagination:
 
     def __init__(self,obj):
         self.obj=obj

@@ -1,56 +1,31 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import BaseView
-from app.db.models import Series
-class SerieView(QWidget):
-
-    def __init__(self):
-        super().__init__()
-        self.model = Series
-        self.BaseView= BaseView([], self)
+from core.view import AbstractBaseView
+from app.db.models import Series,Movies
+from app.nav import SeriesNav
+from app.info import InfoSection
+from app.db.models import session
+from sqlalchemy import desc
 
 
-    def run_window(self):
-        self.BaseView.set_data(self.id)
-        self.data=self.BaseView.data
-        self.initUI()
-        self.show()
-        self.setWindowTitle(self.window_title)
+class SerieView(QWidget,AbstractBaseView):
 
-    def info(self):
+    Info               =  InfoSection
+    Nav                =  SeriesNav
+    model              =  Series
+    reset_view         = 'series'
+    edit_view          = 'edit_series'
+    resolution_index   = 'Series'
+    list_view          = 'Series'
+    show_list          = 'normal'
+    show_elemnts      =   ['Tags']
 
-        data   = [150,320,300,200]
+    def  set_up(self):
+        def return_Movies_in_series():
+            return session.query(Movies)\
+                .filter(Movies.series.any(Series.id.in_(("",self.data.id))))\
+                .order_by(desc('year'))\
+                .all()
+        self.set_list_view_data(return_Movies_in_series())
 
-        rows = ['itemNmae','itemName2']
 
-        inf_data=[
-            {"itemNmae" : "anser","itemName2" :"anser1"},
-            {"itemNmae" : "anser2","itemName2" :"anser2"},
-            {"itemNmae": "anser3","itemName2" :"anser2"}
-        ]
-
-        self.BaseView.info(inf_data, data, rows)
-
-    def title(self):
-        data = [0, 0, 2000 ,100]
-        text = "<html><head/><body>" \
-               "<p align=\"center\">" \
-               "<span style=\" font-size:18pt;font-weight:600; " \
-               "text-decoration: none;\">" + self.data.name + \
-               "</span></p></body></html>"
-        self.BaseView.title(data, text)
-
-    def galery(self):
-        data = [100, 500, 250, 300]
-        self.BaseView.galery(data, [100, 100], 3)
-
-    def list_view(self):
-        self.BaseView.listView([500, 100, 1200, 900], self.data.movies, 'Series',self)
-
-    def initUI(self):
-        self.info()
-        self.title()
-        self.galery()
-        self.BaseView.avatar([100, 100, 250, 250], self, self.data.avatar)
-        self.window_title=self.data.name
-        self.list_view()
 

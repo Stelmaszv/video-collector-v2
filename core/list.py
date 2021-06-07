@@ -1,7 +1,6 @@
 from abc import ABC,abstractmethod
 from PyQt5 import QtWidgets
 from .view import Form
-
 class AbstractList(ABC):
 
     def __init__(self,BaseView,per_page):
@@ -38,9 +37,19 @@ class MoviesList (AbstractList):
     def genrate(self,data,el,grid,col_start):
         row=1
         for item in data:
-            self.Form.label([str(item.id),item.name],[row,col_start,1,1],grid,el)
-            self.Form.button_loop(el, grid, item, [row, col_start+ 1, 1, 1],['info'],0)
-            #self.Form.button_loop(el, grid, item, [row, col_start +2, 1, 1],['play'],1)
+            if self.BaseView.list_view_type=='full':
+                self.Form.label(
+                    [str(item.id),item.return_full_name()],
+                    [row,col_start,1,1],grid,el
+                )
+                self.Form.label([str(item.id), item.return_stars()], [row, col_start + 1, 1, 1], grid, el)
+            if self.BaseView.list_view_type=='normal':
+                self.Form.label(
+                    [str(item.id),item.show_name],
+                    [row,col_start,1,1],grid,el
+                )
+            self.Form.button_loop(el, grid, item, [row, col_start+ 2, 1, 1],['info'],0)
+            self.Form.button_loop(el, grid, item, [row, col_start +3, 1, 1],['play'],1)
             row=row+1
 
 class SeriesList(AbstractList):
@@ -61,7 +70,7 @@ class SeriesList(AbstractList):
     def genrate(self,data,el,grid,col_start):
         row = 1
         for item in data:
-            self.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
+            self.Form.label([str(item.id), item.show_name], [row, col_start, 1, 1], grid, el)
             self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
@@ -79,15 +88,43 @@ class StarList(AbstractList):
 
     def star_info(self,item):
         self.BaseView.load_view('stars', item)
-        return False
 
     def genrate(self,data,el,grid,col_start):
         row = 1
         for item in data:
-            self.Form.label([str(item.id), item.name], [row, col_start, 1, 1], grid, el)
+            self.Form.label([str(item.id), item.show_name], [row, col_start, 1, 1], grid, el)
             self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
             row = row + 1
 
+class CustumList(AbstractList):
+
+    def __init__(self,BaseView,per_page):
+        super(CustumList, self).__init__(BaseView, per_page)
+
+    def genrate(self,data,el,grid,col_start):
+        print('ad')
+
+class ProducentsList(AbstractList):
+
+    def __init__(self,BaseView,per_page):
+        super(ProducentsList, self).__init__(BaseView, per_page)
+        self.button_group_producent_info = QtWidgets.QButtonGroup()
+        self.Form.buttons_loop= [
+            {'button': self.on_produent_info, 'obejct': self.button_group_producent_info},
+        ]
+
+    def producent_info(self,item):
+        self.BaseView.load_view('producent', item)
+
+    def on_produent_info(self,id):
+        self.BaseView.Form.buttom_genarator(self.button_group_producent_info, self.producent_info, id)
+
+    def genrate(self,data,el,grid,col_start):
+        row = 1
+        for item in data:
+            self.Form.label([str(item.id), item.show_name], [row, col_start, 1, 1], grid, el)
+            self.Form.button_loop(el, grid, item, [row, col_start + 1, 1, 1], ['info'], 0)
+            row = row + 1
 
 class List:
 
@@ -99,11 +136,12 @@ class List:
         self.set_per_page(list)
 
         switcher = {
-            'movies' : MoviesList(self.obj,self.per_page),
-            'series' : SeriesList(self.obj,self.per_page),
-            'stars'  : StarList(self.obj,self.per_page)
+            'movies'       : MoviesList(self.obj,self.per_page),
+            'series'       : SeriesList(self.obj,self.per_page),
+            'stars'        : StarList(self.obj,self.per_page),
+            'custum_list'  : CustumList(self.obj,self.per_page),
+            'producents'   : ProducentsList(self.obj,self.per_page)
         }
-
         classObj = switcher.get(place, "Invalid data");
         classObj.genrate(list,el,grid,col)
 

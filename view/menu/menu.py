@@ -1,115 +1,95 @@
-from PyQt5.QtWidgets import QAction,QMainWindow
-from PyQt5.QtCore import pyqtSlot
-from core.view import BaseView
-from core.search import setFactory
-from app.db.seaders import initSeader
+from core.view import AbstractBaseView
+from PyQt5.QtWidgets import QWidget,QMainWindow,qApp,QAction
+from PyQt5.QtGui import QIcon
+from app.forms import MenuFormSchena,MenuPaginationForm
+from core.search import SetFactory
+from core.setings import search_in_defult,search_faze_defult,menu_per_page
 from core.helper import QueryCounter
-from core.rezolution import SetResolution
+from .AdvanceSearchCriteria import AdvanceSearchCriteria
+class Menu(QMainWindow,QWidget,AbstractBaseView):
 
-#initSeader().initNow()
-class Menu(QMainWindow):
-    deepSearch = False
-    searchFaze = ''
-    searchIn = 'stars'
-    page=0
+    FormSchema                 =  MenuFormSchena
+    resolution_index           = 'Menu'
+    window_title               = 'Manu'
+    list_view                  = 'Menu'
+    list_model_off             = True
+    model_view_off             = True
+    AdvandeSearchCriteria      = AdvanceSearchCriteria()
+    reset_view                 = 'menu'
+    show_elemnts               = ['Title','Info','Galery','Nav','Avatar']
+    search_in                  = search_in_defult
+    search_faze                = search_faze_defult
+    page = 0
 
-    def __init__(self,data=False):
+    def __init__(self,page=0):
         super().__init__()
-        self.SetResolution=SetResolution()
-        self.window_title = 'Menu'
-        self.left = self.SetResolution.menu_set['Menu']['position']['left']
-        self.top =self.SetResolution.menu_set['Menu']['position']['top']
-        self.width = self.SetResolution.menu_set['Menu']['position']['width']
-        self.height = self.SetResolution.menu_set['Menu']['position']['height']
-        self.model=''
-        self.BaseView=BaseView([], self)
-        self.initUI(data)
+        self.page=page
+        exitAct = QAction(QIcon('exit.png'), '&Exit', self)
+        exitAct.setShortcut('ESC')
+        exitAct.setStatusTip('Exit application')
 
-    def search_box(self):
-        data = [0, 150, 200, 50]
-        list = ['stars','movies','series']
-        self.search_in_combo_box=self.BaseView.Form.combo_box(data, list)
-        data_search_button = [200,150,200,50]
-        data_button_info=['serch003','search']
-        self.BaseView.Form.button(data_button_info, data_search_button, self.click_search)
-        data_line = [0,100,400,50]
-        self.search_button_edit_line=self.BaseView.Form.edit_line(data_line, 'search Faze')
-        QC=QueryCounter(self.list,50)
-        if QC.if_page_exist(self.page+1):
-            next_page_button = [200, 1100, 200, 50]
-            next_page_info = ['next_page', 'next']
-            self.BaseView.Form.button(next_page_info, next_page_button, self.next_page)
-        if QC.if_page_exist(self.page -1):
-            previous_page_button = [0, 1100, 200, 50]
-            previous_page_info = ['previous_pag', 'previous']
-            self.BaseView.Form.button(previous_page_info, previous_page_button, self.previous_page)
+        jsonConfig = QAction(QIcon('exit.png'), '&Exit', self)
+        jsonConfig.setShortcut('Ctrl+C')
+        jsonConfig.setStatusTip('Json')
+        jsonConfig.triggered.connect(self.json_config)
 
-    def previous_page(self):
-        self.close()
-        M=Menu
-        M.page=self.page-1
-        M([self.searchIn, self.searchFaze])
-
-    def next_page(self):
-        self.close()
-        M = Menu
-        M.page = self.page+1
-        M([self.searchIn, self.searchFaze])
-
-    def click_search(self):
-        self.close()
-        self.searchIn = self.search_in_combo_box.currentText()
-        self.searchFaze = self.search_button_edit_line.text()
-        Menu([self.searchIn,self.searchFaze])
-
-    def title(self):
-        data = [0, 0, 400 ,100]
-        text = "<html><head/><body>" \
-               "<p align=\"center\">" \
-               "<span style=\" font-size:18pt;font-weight:600; " \
-               "text-decoration: none;\">search</span></p></body></html>"
-        self.BaseView.title(data, text)
-
-    def list_view(self):
-        data = [0, 200, 400, 900]
-        self.BaseView.menu.searchIn=self.searchIn
-        factory=setFactory(self)
-        self.list = factory.getFactory(self.BaseView.menu.searchIn)
-        self.BaseView.listView(data, self.list, 'Menu',self.page)
-
-    def set_up(self,data):
-        self.searchIn=data[0]
-        self.searchFaze=data[1]
-
-    def initUI(self,data=False):
-        if data:
-            self.set_up(data)
-        self.setWindowTitle(self.window_title)
-        self.setGeometry(self.left, self.top, self.width, self.height)
-        self.list_view()
-        self.search_box()
-        self.title()
-        self.menu()
-        self.show()
-
-    def menu(self):
         menubar = self.menuBar()
-        action_menu = menubar.addMenu('Add')
-        new_movie_menu_item = QAction('new movie', self)
-        new_movie_menu_item.triggered.connect(self.add_new_movie)
-        new_menu_object = QAction('new menu', self)
-        new_menu_object.triggered.connect(self.new_menu_object_button)
-        action_menu.addAction(new_movie_menu_item)
-        action_menu.addAction(new_menu_object)
+        fileMenu = menubar.addMenu('&JSON')
+        fileMenu.addAction(jsonConfig)
 
-    def new_menu_object_button(self):
-        Menu([self.searchIn, self.searchFaze])
+        menubar = self.menuBar()
+        fileMenu = menubar.addMenu('&File')
+        fileMenu.addAction(exitAct)
+        exitAct.triggered.connect(qApp.quit)
 
-    def add_new_movie(self):
-        self.BaseView.load_view('add_movie')
+    def json_config(self):
+        self.BaseView.load_view('JSONCONFIG')
+
+    def resizeEvent(self, event):
+        self.SetResolution.return_abstrat_view()
+
+    def  set_up(self):
+        factory = SetFactory(self)
+        self.list = factory.get_factory(self.search_in)
+        self.set_list_view_data(self.list)
+        self.QC = QueryCounter(self.list, menu_per_page)
+        self.previous=self.QC.if_previous_page_exist(self.page)
+        self.next=self.QC.if_page_exist(self.page)
+        self.cunter=self.QC.counter
+        self.custum_form(MenuPaginationForm,'pagination_form')
+
+    def previous_page(self,value):
         self.close()
+        M=Menu(self.page-1)
+        M.search_in =self.search_in
+        M.run_window()
 
-    @pyqtSlot()
-    def on_click(self):
-        print('PyQt5 button click')
-        print(self.BaseView)
+    def next_page(self, value):
+        self.close()
+        M=Menu(self.page+1)
+        M.search_in = self.search_in
+        M.run_window()
+
+    def set_search(self,values):
+        self.close()
+        self.search_faze = values[0]['value']
+        self.search_in   = values[1]['value']
+        self.run_window()
+
+    def submit_click(self,values):
+        self.close()
+        self.set_search(values)
+
+    def advance(self,advance):
+        from .advande_search import AdvanceSearch
+        #self.BaseView.load_view('advance_search')
+        self.run_window()
+        AS=AdvanceSearch()
+        AS.Menu=self
+        AS.run_window()
+
+    def reset(self,value):
+        self.close()
+        M = Menu(self.page)
+        M.search_in = self.search_in
+        M.run_window()

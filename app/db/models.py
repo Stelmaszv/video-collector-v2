@@ -1,6 +1,7 @@
 from core.db.config import Base,engine
 from sqlalchemy import Column,Integer, String,Table,ForeignKey,DateTime,Boolean
 from sqlalchemy.orm import sessionmaker,relationship
+from core.setings import movie_cover_defulut
 
 association_table = Table('association', Base.metadata,
     Column('stars_id', Integer, ForeignKey('stars.id')),
@@ -27,12 +28,115 @@ movies_Series = Table('movies_Series', Base.metadata,
     Column('series_id', Integer, ForeignKey('series.id'))
 )
 
+Stars_Tags = Table('tags_series', Base.metadata,
+    Column('tags_id', Integer, ForeignKey('tags.id')),
+    Column('stars_id', Integer, ForeignKey('stars.id'))
+)
+
+Series_sezons = Table('series_sezons', Base.metadata,
+    Column('sezons_id', Integer, ForeignKey('sezons.id')),
+    Column('series_id', Integer, ForeignKey('series.id'))
+)
+
+Series_Tags = Table('series_tags', Base.metadata,
+    Column('series_id', Integer, ForeignKey('series.id')),
+    Column('tags_id', Integer, ForeignKey('tags.id'))
+)
+
+Producent_Tags = Table('producent_tags', Base.metadata,
+    Column('producent_id', Integer, ForeignKey('producent.id')),
+    Column('tags_id', Integer, ForeignKey('tags.id'))
+)
+
+Producent_Series = Table('producent_series', Base.metadata,
+    Column('producent_id', Integer, ForeignKey('producent.id')),
+    Column('series_id', Integer, ForeignKey('series.id'))
+)
+
+Movies_Tags = Table('movies_tags', Base.metadata,
+    Column('movies_id', Integer, ForeignKey('movies.id')),
+    Column('tags_id', Integer, ForeignKey('tags.id'))
+)
+
+class Sezons(Base):
+    __tablename__ = 'sezons'
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String)
+    src = Column('src', String)
+    sezon_name = Column('sezon_name', String, default='')
+    year       = Column('year', String)
+
+    series = relationship(
+        "Series",
+        secondary=Series_sezons,
+        back_populates="sezons"
+    )
+
+    def __str__(self):
+        return  self.sezon_name
+
+class Producent(Base):
+    __tablename__ = 'producent'
+    id = Column('id', Integer, primary_key=True)
+    views =      Column('views', Integer,default=0)
+    likes = Column('likes', Integer,default=0)
+    favourite = Column('favourite', Boolean, default=False)
+    name = Column('name',String)
+    show_name = Column('show_name', String, default='')
+    avatar = Column('avatar', String)
+    dir = Column('dir', String, default='')
+    config = Column('config', String, default='')
+    country = Column('country', String, default='')
+    description = Column('description', String, default='')
+
+    tags = relationship(
+        "Tags",
+        secondary=Producent_Tags,
+        back_populates="producent"
+    )
+
+    series = relationship(
+        "Series",
+        secondary=Producent_Series,
+        back_populates="producent"
+    )
+
+    def __str__(self):
+        return  self.show_name
+
 class Series(Base):
     __tablename__ ='series'
     id= Column('id',Integer,primary_key=True)
+    views =      Column('views', Integer,default=0)
+    likes = Column('likes', Integer,default=0)
+    favourite = Column('favourite', Boolean, default=False)
     name = Column('name',String)
+    show_name = Column('show_name', String, default='')
     avatar = Column('avatar', String)
-    sezons= Column('sezons',Integer)
+    dir = Column('dir', String, default='')
+    config = Column('config', String, default='')
+    number_of_sezons = Column('sezons', Integer,default=1)
+    years       = Column('year', String,default='')
+    country      = Column('country', String,default='')
+    description  = Column('description', String,default='')
+
+    producent = relationship(
+        "Producent",
+        secondary=Producent_Series,
+        back_populates="series"
+    )
+
+    tags = relationship(
+        "Tags",
+        secondary=Series_Tags,
+        back_populates="series"
+    )
+
+    sezons = relationship(
+        "Sezons",
+        secondary=Series_sezons,
+        back_populates="series"
+    )
 
     stars = relationship(
         "Stars",
@@ -78,10 +182,41 @@ class Photos(Base):
     def __str__(self):
         return  self.src
 
+class Tags(Base):
+    __tablename__ = 'tags'
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String)
+
+    stars = relationship(
+        "Stars",
+        secondary=Stars_Tags,
+        back_populates="tags"
+    )
+
+    movies = relationship(
+        "Movies",
+        secondary=Movies_Tags,
+        back_populates="tags"
+    )
+
+    series = relationship(
+        "Series",
+        secondary=Series_Tags,
+        back_populates="tags"
+    )
+
+    producent = relationship(
+        "Producent",
+        secondary=Producent_Tags,
+        back_populates="tags"
+    )
+
 class Stars(Base):
     __tablename__ ='stars'
+
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
+    show_name = Column('show_name', String, default='')
     avatar = Column('avatar',String)
     description = Column('description', String,default="")
     views =      Column('views', Integer,default=0)
@@ -91,7 +226,18 @@ class Stars(Base):
     height = Column('height', Integer, default=0)
     ethnicity = Column('ethnicity', String, default='')
     hair_color =  Column('hair_color', String, default='')
+    dir  =  Column('dir', String, default='')
+    none = Column('none', String, default='')
+    singles = Column('singles', String, default='')
+    config = Column('config', String, default='')
     date_of_birth = Column(DateTime)
+
+    tags = relationship(
+        "Tags",
+        secondary=Stars_Tags,
+        back_populates="stars"
+    )
+
     series = relationship(
         "Series",
         secondary=stars_series,
@@ -109,7 +255,6 @@ class Stars(Base):
         secondary=photos_star,
         back_populates="stars"
     )
-
     def __str__(self):
         return  self.name
 
@@ -119,6 +264,23 @@ class Movies(Base):
     name = Column('name',String)
     src=   Column('src',String)
     sezon = Column('sezon',Integer)
+    search_name =Column('search_name',String)
+    avatar = Column('avatar', String,default=movie_cover_defulut)
+    year  = Column('year', String)
+    dir   = Column('dir',String,default='')
+    likes = Column('likes', Integer,default=0)
+    views = Column('views', Integer, default=0)
+    favourite = Column('favourite', Boolean,default=False)
+    country = Column('country', String, default='')
+    show_name = Column('show_name',String,default='')
+    description = Column('description', String, default='')
+
+    tags = relationship(
+        "Tags",
+        secondary=Movies_Tags,
+        back_populates="movies"
+    )
+
     stars = relationship(
         "Stars",
         secondary=association_table,
@@ -131,10 +293,39 @@ class Movies(Base):
         back_populates="movies"
     )
 
+
+
+    def _get_stars(self):
+        if len(self.stars) == 1:
+            return self.stars[0].name
+        return ''
+
+    def return_stars(self):
+        stars=self._get_stars()
+        if len(stars)>30:
+            return '<i>'+self.stars[0].show_name+'</i>'
+        return '<li>'+stars+'</i>'
+
+    def return_full_name(self):
+        name=self.set_full_name()
+        if len(name)>70:
+            name='<b>'+self.show_name+'</b>'
+        return name
+
+    def set_full_name(self):
+        def get_year(year):
+            if year is None:
+                return ''
+            return year+' '
+        def get_series(series):
+            if len(series):
+                return series[0].name+' '
+            return ''
+        return get_series(self.series)+'<b>'+get_year(self.year)+' '+self.show_name+'</b>'
+
     def __str__(self):
-        return  self.name
+        return  self.show_name
 
 Base.metadata.create_all(bind=engine)
 Session = sessionmaker(bind=engine)
 session = Session()
-
