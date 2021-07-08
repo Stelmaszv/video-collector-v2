@@ -211,7 +211,7 @@ class GetResolutionData:
                         self.set_rezulution(25, 'height')
                     ],
                     "section_info_single_info"  : [
-                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(0, 'with'),
                         self.set_rezulution(5, 'height'),
                         self.set_rezulution(12, 'with'),
                         self.set_rezulution(10, 'height')

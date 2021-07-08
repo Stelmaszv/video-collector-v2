@@ -12,11 +12,7 @@ class SeriesCreator:
 
     def add_if_not_exist(self,array,data):
 
-        stan=False
-        for item in array:
-            if item.id == data.id:
-                stan=True
-        if stan is False:
+        if any(item.id == data.id for item in array) is False:
             array.append(data)
 
     def set_singles(self):
@@ -24,10 +20,7 @@ class SeriesCreator:
         faind_star_in_movie_array = []
 
         def faind_star_in_movie(stars):
-            for star in stars:
-                if star.id == self.item.id:
-                    return True
-            return False
+            return any(star.id == self.item.id for star in stars)
 
         def if_movie_on_series(movie,singles_list):
             add=False
@@ -46,7 +39,6 @@ class SeriesCreator:
             count_star_in_series = self.cout_star_in_series(serie)
 
             if count_star_in_series <= self.singles_limt:
-
                 for movie in serie.movies:
                     if if_movie_on_series(movie, self.singles_list):
                         self.add_if_not_exist(self.singles_list,movie)
@@ -56,18 +48,13 @@ class SeriesCreator:
     def cout_star_in_series(self,series) -> int:
         counter =1
         for movie in  series.movies:
-            for star in movie.stars:
-                if star == self.item:
-                    counter=counter+1
+            if any(star == self.item for star in movie.stars):
+                counter=counter+1
         return counter
 
     def add_if_not_exist_series(self,array,data):
 
-        stan=False
-        for item in array:
-            if item.id == data.id:
-                stan=True
-        if stan is False:
+        if any(item.id == data.id for item in array) is False:
             array.append(data)
 
     def series_order(self,series):
@@ -88,11 +75,7 @@ class SeriesCreator:
 
     def set_none(self):
         def if_movie_on_series(movie, singles_list):
-            stan = True
-            for item in singles_list:
-                if item.id == movie.id:
-                    stan = False
-            return stan
+            return any(item.id == movie.id for item in singles_list)
 
         movies=self.item.movies
         for movie in movies:
@@ -124,19 +107,15 @@ class SeriesCreator:
         return items
 
     def if_showin_Serie(self, movies_list) ->bool:
-        stan=False
         for movie in movies_list:
-            for star in movie.stars:
-                if star.id == self.item.id:
-                    stan=True
-
+            stan = False
+            stan= any(star.id == self.item.id for star in movie.stars)
         return stan
 
     def add_singles_from_series(self, item):
         for movie in item.movies:
-            for star in movie.stars:
-                if star.name == self.item.name:
-                    self.add_if_not_exist(self.singles_list, movie)
+            if any(star.name == self.item.name for star in movie.stars):
+                self.add_if_not_exist(self.singles_list, movie)
 
     def set_element(self,item,elemnt,defult):
         new_elemnt=defult
