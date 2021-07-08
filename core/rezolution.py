@@ -140,21 +140,21 @@ class GetResolutionData:
 
                     "avatar_size": [
                         self.set_rezulution(5, 'with'),
-                        self.set_rezulution(10, 'height'),
+                        self.set_rezulution(5, 'height'),
                         self.set_rezulution(10, 'with'),
                         self.set_rezulution(25, 'height')
                     ],
 
                     "info_size": [
                         self.set_rezulution(8, 'with'),
-                        self.set_rezulution(25, 'height'),
+                        self.set_rezulution(30, 'height'),
                         self.set_rezulution(10, 'with'),
                         self.set_rezulution(25, 'height')
                     ],
 
                     "galery_size": [
                         self.set_rezulution(1, 'with'),
-                        self.set_rezulution(40, 'height'),
+                        self.set_rezulution(50, 'height'),
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(30, 'height')
                     ],

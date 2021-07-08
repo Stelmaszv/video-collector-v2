@@ -13,7 +13,7 @@ class BaseInfo:
         for el in stars:
             if count > 0:
                 stars_str = stars_str + ' , '
-            if count %5 == 0:
+            if count %2 == 0:
                 stars_str = stars_str + ' <br> '
             stars_str = stars_str + str(el.name)
             count = count + 1

@@ -16,7 +16,6 @@ add= False
 def set_dir_for_star(name):
     letter = name[0]
     dir = ''
-    print(name)
     if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
         dir = data_JSON['dirs'][0]['dir'] + '\\A-D\\' + name
     if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
