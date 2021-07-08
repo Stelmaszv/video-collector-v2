@@ -3,6 +3,7 @@ from core.dir import set_name,if_star_exist,AddStarViaDir,set_dir_for_star,AddSe
 from app.db.models import session
 from app.db.models import Tags,Series,Stars,Movies,Producent
 from datetime import datetime
+from pathlib import Path
 import os
 import json
 
@@ -16,6 +17,12 @@ class AbstractConfigItem(ABC):
         self.data = session.query(self.Model).filter(self.Model.name == self.name).first()
         self.config = self.dir+'\\config.JSON'
         self.name=set_name(dir)
+
+    def set_avatar(self,Item):
+        for logo in os.listdir(Item.dir+'\photo'):
+            dir = Item.dir+"\photo\\"+logo;
+            if Path(dir).stem == 'avatar':
+                Item.avatar=dir
 
     def add_stars(self,stars,Obj):
         for star in stars:
@@ -81,6 +88,7 @@ class SeriesConfigData(AbstractConfigItem):
             add_star_to_movie(StarObj,sezon_name)
             add_star_to_series(StarObj,self.data)
 
+
     def config_sezons(self,sezons):
         for item in sezons:
             stars = "stars" in item
@@ -107,6 +115,7 @@ class SeriesConfigData(AbstractConfigItem):
             if "sezons" in data:
                 self.config_sezons(data['sezons'])
                 self.set_for_sezon(data['sezons'])
+            self.set_avatar(self.data)
 
 class StarConfigData(AbstractConfigItem):
 
