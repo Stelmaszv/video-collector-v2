@@ -167,7 +167,7 @@ class GetResolutionData:
 
                     "description": [
                         self.set_rezulution(1, 'with'),
-                        self.set_rezulution(60, 'height'),
+                        self.set_rezulution(65, 'height'),
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(30, 'height')
                     ],

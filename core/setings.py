@@ -75,11 +75,11 @@ height_size_defult = 25
 #menu
 menu_per_page = 20
 
-series_avatar_defult ='D:/project/video-collector-v2/data/avatar.png'
-stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'
-none_movies_defult   ='D:/project/video-collector-v2/data/none.png'
-singles_movies_defult   ='D:/project/video-collector-v2/data/none.png'
-movie_cover_defulut = 'D:/project/video-collector-v2/data/none.png'
+series_avatar_defult ='D:/project/video-collector-v2/icon/star_no_photo.png'
+stars_avatar_defult  ='D:/project/video-collector-v2/icon/star_no_photo.png'
+none_movies_defult   ='D:/project/video-collector-v2/icon/star_no_photo.png'
+singles_movies_defult   ='D:/project/video-collector-v2/icon/singles.jpg'
+movie_cover_defulut = 'D:/project/video-collector-v2/icon/movie.jpg'
 search_in_defult= 'series';
 start_page=0
 photo_ext= ('.png', '.jpg', '.jpeg','.jfif')

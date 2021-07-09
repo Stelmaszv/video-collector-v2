@@ -2,6 +2,7 @@ from core.db.config import Base,engine
 from sqlalchemy import Column,Integer, String,Table,ForeignKey,DateTime,Boolean
 from sqlalchemy.orm import sessionmaker,relationship
 from core.setings import movie_cover_defulut
+from core.setings import singles_movies_defult,stars_avatar_defult,none_movies_defult
 
 association_table = Table('association', Base.metadata,
     Column('stars_id', Integer, ForeignKey('stars.id')),
@@ -83,7 +84,7 @@ class Producent(Base):
     favourite = Column('favourite', Boolean, default=False)
     name = Column('name',String)
     show_name = Column('show_name', String, default='')
-    avatar = Column('avatar', String)
+    avatar = Column('avatar', String )
     dir = Column('dir', String, default='')
     config = Column('config', String, default='')
     country = Column('country', String, default='')
@@ -217,7 +218,7 @@ class Stars(Base):
     id= Column('id',Integer,primary_key=True)
     name = Column('name',String)
     show_name = Column('show_name', String, default='')
-    avatar = Column('avatar',String)
+    avatar = Column('avatar',String ,default=stars_avatar_defult)
     description = Column('description', String,default="")
     views =      Column('views', Integer,default=0)
     likes = Column('likes', Integer,default=0)
@@ -227,8 +228,8 @@ class Stars(Base):
     ethnicity = Column('ethnicity', String, default='')
     hair_color =  Column('hair_color', String, default='')
     dir  =  Column('dir', String, default='')
-    none = Column('none', String, default='')
-    singles = Column('singles', String, default='')
+    none = Column('none', String, default=none_movies_defult)
+    singles = Column('singles', String, default=singles_movies_defult)
     config = Column('config', String, default='')
     date_of_birth = Column(DateTime)
 
