@@ -3,7 +3,7 @@ from core.dir import set_name,if_star_exist,AddStarViaDir,set_dir_for_star,AddSe
 from app.db.models import session
 from app.db.models import Tags,Series,Stars,Movies,Producent
 from datetime import datetime
-from core.setings import stars_avatar_defult
+from core.setings import stars_avatar_defult,singles_movies_defult,none_movies_defult
 from pathlib import Path
 import os
 import json
@@ -122,9 +122,19 @@ class StarConfigData(AbstractConfigItem):
 
     Model = Stars
 
-    def set_defult_avatar(self,Star):
-        if Star.avatar == '':
-            Star.avatar=stars_avatar_defult
+    def set_singles(self,Star):
+        if Star.singles == singles_movies_defult:
+            for logo in os.listdir(Star.dir + '\photo'):
+                dir = Star.dir + "\photo\\" + logo;
+                if Path(dir).stem == 'singles':
+                    Star.singles = dir
+
+    def set_none(self,Star):
+        if Star.none == none_movies_defult:
+            for logo in os.listdir(Star.dir + '\photo'):
+                dir = Star.dir + "\photo\\" + logo;
+                if Path(dir).stem == 'none':
+                    Star.none = dir
 
     def load(self):
         with open(self.config) as json_file:
@@ -132,7 +142,8 @@ class StarConfigData(AbstractConfigItem):
             if 'fields' in data:
                 self.set_data_form_json(data['fields'], self.data)
             self.set_avatar(self.data)
-            self.set_defult_avatar(self.data)
+            self.set_singles(self.data)
+            self.set_none(self.data)
 
 class ProducentConfigData(AbstractConfigItem):
 
