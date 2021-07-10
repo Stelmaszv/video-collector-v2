@@ -10,14 +10,19 @@ class BaseInfo:
     def show_stars_in_string(self,stars):
         stars_str = ''
         count = 0
-        for el in stars:
-            if count > 0:
-                stars_str = stars_str + ' , '
-            if count %2 == 0:
-                stars_str = stars_str + ' <br> '
-            stars_str = stars_str + str(el.name)
-            count = count + 1
+        if len(stars)>1:
+            for el in stars:
+                if count > 0:
+                    stars_str = stars_str + ' , '
+                if count %2 == 0:
+                    stars_str = stars_str + ' <br> '
+                stars_str = stars_str + str(el.name)
+                count = count + 1
 
+            return stars_str
+        else:
+            if len(stars)==1:
+                stars_str = stars[0].name
         return stars_str
 
 class SingleSectionInfo(BaseInfo):
