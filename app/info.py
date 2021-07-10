@@ -16,13 +16,13 @@ class BaseInfo:
                     stars_str = stars_str + ' , '
                 if count %2 == 0:
                     stars_str = stars_str + ' <br> '
-                stars_str = stars_str + str(el.name)
+                stars_str = stars_str + str(el.show_name)
                 count = count + 1
 
             return stars_str
         else:
             if len(stars)==1:
-                stars_str = stars[0].name
+                stars_str = stars[0].show_name
         return stars_str
 
 class SingleSectionInfo(BaseInfo):
