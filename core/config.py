@@ -38,6 +38,7 @@ class AbstractConfigItem(ABC):
         if Obj is not None:
             self.data=Obj
         for tag in tags:
+            print(tag)
             query = session.query(Tags).filter(Tags.name == tag).first()
             if query is None:
                 TagObj=Tags(name=tag)
@@ -203,9 +204,14 @@ class StarConfigData(AbstractConfigItem):
 
     def load(self):
         with open(self.config) as json_file:
+
             data = json.load(json_file)
             if 'fields' in data:
                 self.set_data_form_json(data['fields'], self.data)
+
+            if "tags" in data:
+                self.add_tags(data['tags'], self.data)
+
             self.set_avatar(self.data)
             self.set_singles(self.data)
             self.set_none(self.data)
