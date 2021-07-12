@@ -154,7 +154,7 @@ class GetResolutionData:
 
                     "galery_size": [
                         self.set_rezulution(1, 'with'),
-                        self.set_rezulution(50, 'height'),
+                        self.set_rezulution(55, 'height'),
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(30, 'height')
                     ],
@@ -167,7 +167,7 @@ class GetResolutionData:
 
                     "description": [
                         self.set_rezulution(1, 'with'),
-                        self.set_rezulution(65, 'height'),
+                        self.set_rezulution(70, 'height'),
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(30, 'height')
                     ],

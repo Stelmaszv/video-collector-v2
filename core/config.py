@@ -3,7 +3,7 @@ from core.dir import set_name,if_star_exist,AddStarViaDir,set_dir_for_star,AddSe
 from app.db.models import session
 from app.db.models import Tags,Series,Stars,Movies,Producent
 from datetime import datetime
-from core.setings import stars_avatar_defult,singles_movies_defult,none_movies_defult
+from core.setings import singles_movies_defult,none_movies_defult
 from pathlib import Path
 import os
 import json

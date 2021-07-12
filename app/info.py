@@ -152,8 +152,6 @@ class InfoForMovie(BaseInfo):
 
         return  self.data_info
 
-
-
 class InfoSection(BaseInfo):
 
     tag_limit=1000
@@ -194,7 +192,6 @@ class InfoSection(BaseInfo):
             "itemNmae": "Favourite",
             "itemName2": str(self.BaseView.data.favourite)
         })
-
         if len(self.BaseView.data.tags)>0:
             self.data_info.append({
                 "itemNmae": "Tags",
