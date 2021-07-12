@@ -209,6 +209,23 @@ class StarConfigData(AbstractConfigItem):
             self.set_avatar(self.data)
             self.set_singles(self.data)
             self.set_none(self.data)
+class CreateMovieList(AbstractConfigItem):
+
+    def __init__(self, json_data):
+        self.dir = json_data
+
+    def create_list(self,Star):
+        os.remove(Star.dir + '\\list.JSON')
+        Movies=[];
+        for Movie in Star.movies:
+            Movies.append(Movie.src)
+        f = open(Star.dir + '\\list.JSON', "x")
+        f.write(json.dumps(Movies))
+        f.close()
+
+    def load(self):
+        for Star in session.query(Stars).all():
+            self.create_list(Star)
 
 class ProducentConfigData(AbstractConfigItem):
 
