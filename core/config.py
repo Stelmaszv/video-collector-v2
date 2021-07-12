@@ -247,6 +247,30 @@ class ConfigMovies(AbstractConfigItem):
         for Movie in session.query(Movies).all():
             self.make_dir(Movie)
 
+class SetTags(AbstractConfigItem):
+
+    def __init__(self, json_data):
+        self.dir = json_data
+
+    def set_tags(self,Movie):
+        def set_tag_from_series(Movie):
+            series=Movie.series[0]
+            for tag in series.tags:
+                Movie.tags.append(tag)
+        def set_tag_from_star(Movie):
+            for star in Movie.stars:
+                for tag in star.tags:
+                    Movie.tags.append(tag)
+        set_tag_from_series(Movie)
+        set_tag_from_star(Movie)
+
+    def set(self):
+        for Movie in session.query(Movies).all():
+            self.set_tags(Movie)
+
+    def load(self):
+        pass
+
 class AbstractConfig(ABC):
 
     LoadSetingsClass=None
