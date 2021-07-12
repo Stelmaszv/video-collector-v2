@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import QApplication
 from pathlib import Path
 from app.db.models import session, Movies,Stars,Series,Sezons,Photos,Producent
-from core.config import ConfigLoop, ConfigMovies,SetTags
+from core.config import ConfigLoop, ConfigMovies,SetTags,CreateXML
 from core.dir import LoadFilesFromJson, PhotoMeaker
 from core.setings import data_JSON,scan_photos,run_start_view,clean_db,start_page
 from view.menu.menu import Menu
@@ -49,6 +49,9 @@ class Run:
 
             SetTAgs=SetTags(data_JSON['dirs'])
             SetTAgs.set();
+
+            CreateXMLOBJ=CreateXML(data_JSON['dirs'])
+            CreateXMLOBJ.load();
 
             if self.scan_photos:
                 for Movie in session.query(Movies).all():

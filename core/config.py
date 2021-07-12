@@ -7,6 +7,7 @@ from core.setings import stars_avatar_defult,singles_movies_defult,none_movies_d
 from pathlib import Path
 import os
 import json
+import xlsxwriter
 
 class AbstractConfigItem(ABC):
 
@@ -117,6 +118,70 @@ class SeriesConfigData(AbstractConfigItem):
                 self.config_sezons(data['sezons'])
                 self.set_for_sezon(data['sezons'])
             self.set_avatar(self.data)
+
+class CreateXML(AbstractConfigItem):
+
+    def __init__(self,json_data):
+        self.dir=json_data
+        self.movies = []
+        self.workbook = xlsxwriter.Workbook('movies.xlsx')
+        self.worksheet = self.workbook.add_worksheet()
+
+    def add_row(self,Movie):
+        def set_series(Movie):
+            if len(Movie.series):
+                return Movie.series[0].name
+            return ''
+
+        def set_producent(Movie):
+            if len(Movie.series):
+                Series=Movie.series[0]
+                if len(Series.producent):
+                    return Series.producent[0].name
+                return ''
+            return ''
+
+        def set_stars(Movie):
+            stars_str=''
+            counter=1
+            for star in Movie.stars:
+                stars_str+=str(star);
+                if counter>0 and len(Movie.stars)>counter:
+                    stars_str+=str(' , ');
+                counter=counter+1
+            return stars_str
+
+        def set_tags(Movie):
+            tags_str=''
+            counter=1
+            for tag in Movie.tags:
+                tags_str+=str(tag.name);
+                if counter>0 and len(Movie.tags)>counter:
+                    tags_str+=str(' , ');
+                counter=counter+1
+            return tags_str
+
+        self.worksheet.write(self.row, self.col, Movie.name)
+        self.worksheet.write(self.row, self.col+1, Movie.description)
+        self.worksheet.write(self.row, self.col+2, Movie.year)
+        self.worksheet.write(self.row, self.col+3, Movie.src)
+        self.worksheet.write(self.row, self.col+4, Movie.dir)
+        self.worksheet.write(self.row, self.col+5, Movie.country)
+        self.worksheet.write(self.row, self.col+6, set_series(Movie))
+        self.worksheet.write(self.row, self.col+7, set_producent(Movie))
+        self.worksheet.write(self.row, self.col+8, set_stars(Movie))
+        self.worksheet.write(self.row, self.col+9, set_tags(Movie))
+
+    def load(self):
+        self.row = 0
+        self.col = 0
+        for Movie in session.query(Movies).all():
+            self.movies.append(Movie)
+        for Movie in self.movies:
+            self.add_row(Movie)
+            self.col=0
+            self.row += 1
+        self.workbook.close()
 
 class StarConfigData(AbstractConfigItem):
 
