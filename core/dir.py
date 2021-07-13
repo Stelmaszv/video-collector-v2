@@ -186,6 +186,7 @@ class IfStar:
     def faind_stars(self,file):
         FS = FaindStar(file)
         if re.search(self.validValue, file):
+            string=FS.return_stars_in_string()
             return FS.create_star_list()
         return None
 
@@ -376,6 +377,14 @@ class AddSeriesViaDir(AbstractAddViaDir):
             config  =  self.config
         ))
 
+    def set_sort_name(self,name,series):
+        try:
+            int(name)
+            if isinstance(int(name), int):
+                return series+' '+name
+        except ValueError:
+            return name;
+
     def if_star_exist(self,name):
         return self.if_exist(name,Stars,Stars(
             name      = name,
@@ -398,9 +407,10 @@ class AddSeriesViaDir(AbstractAddViaDir):
                 stars.append(star_obj)
         series = [self.series]
         print('Movie '+str(name)+' has been added')
+        show_name=self.set_sort_name(name,series[0].name)
         model=self.movie_model(
             name=name,
-            show_name=name,
+            show_name=show_name,
             search_name=series[0].name+' '+name,
             src=self.movie_dir+'\\'+sezon+'\\'+src,
             stars=stars,

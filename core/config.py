@@ -7,6 +7,7 @@ from core.setings import singles_movies_defult,none_movies_defult
 from pathlib import Path
 import os
 import json
+import re
 import xlsxwriter
 
 class AbstractConfigItem(ABC):
@@ -38,7 +39,6 @@ class AbstractConfigItem(ABC):
         if Obj is not None:
             self.data=Obj
         for tag in tags:
-            print(tag)
             query = session.query(Tags).filter(Tags.name == tag).first()
             if query is None:
                 TagObj=Tags(name=tag)
@@ -146,7 +146,7 @@ class CreateXML(AbstractConfigItem):
             stars_str=''
             counter=1
             for star in Movie.stars:
-                stars_str+=str(star);
+                stars_str+=str(star.show_name);
                 if counter>0 and len(Movie.stars)>counter:
                     stars_str+=str(' , ');
                 counter=counter+1
@@ -161,12 +161,15 @@ class CreateXML(AbstractConfigItem):
                     tags_str+=str(' , ');
                 counter=counter+1
             return tags_str
+        def full_name(Movie):
+            return Movie.set_full_for_xlsx()
+
 
         self.worksheet.write(self.row, self.col, Movie.name)
         self.worksheet.write(self.row, self.col+1, Movie.description)
         self.worksheet.write(self.row, self.col+2, Movie.year)
         self.worksheet.write(self.row, self.col+3, Movie.src)
-        self.worksheet.write(self.row, self.col+4, Movie.dir)
+        self.worksheet.write(self.row, self.col+4, full_name(Movie))
         self.worksheet.write(self.row, self.col+5, Movie.country)
         self.worksheet.write(self.row, self.col+6, set_series(Movie))
         self.worksheet.write(self.row, self.col+7, set_producent(Movie))
@@ -221,7 +224,8 @@ class CreateMovieList(AbstractConfigItem):
         self.dir = json_data
 
     def create_list(self,Star):
-        os.remove(Star.dir + '\\list.JSON')
+        if Path(Star.dir + '\\list.JSON').is_file() is True:
+            os.remove(Star.dir + '\\list.JSON')
         Movies=[];
         for Movie in Star.movies:
             Movies.append(Movie.src)

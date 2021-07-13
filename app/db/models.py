@@ -313,6 +313,28 @@ class Movies(Base):
             name='<b>'+self.show_name+'</b>'
         return name
 
+    def set_full_for_xlsx(self):
+        def get_series(series):
+            if len(series):
+                return series[0].name+' '
+            return ''
+        def get_producent(series):
+            if len(series[0].producent):
+                return series[0].producent[0].name;
+
+        def return_full_name():
+            str=''
+            series    = get_series(self.series)
+            producent = get_producent(self.series)
+            if producent:
+                str += producent+'-'
+                if series:
+                    str += series+'-'
+            str +=self.show_name
+
+            return str;
+        return return_full_name()
+
     def set_full_name(self):
         def get_year(year):
             if year is None:
