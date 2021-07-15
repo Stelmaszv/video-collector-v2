@@ -14,9 +14,6 @@ class MovieView(QWidget,AbstractBaseView):
     edit_view = 'edit_movie'
 
     def set_galery(self):
+        self.custom_title('Stars', 'star_title')
+        self.galery_from_array(self.data.stars, 'stars_galery', 'stars_galery_size', 'stars_row')
         self.custum_galery=self.data.dir
-
-
-
-
-

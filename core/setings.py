@@ -80,7 +80,7 @@ stars_avatar_defult  ='D:/project/video-collector-v2/icon/star_no_photo.png'
 none_movies_defult   ='D:/project/video-collector-v2/icon/star_no_photo.png'
 singles_movies_defult   ='D:/project/video-collector-v2/icon/singles.jpg'
 movie_cover_defulut = 'D:/project/video-collector-v2/icon/movie.jpg'
-search_in_defult= 'series';
+search_in_defult= 'movies';
 start_page=0
 photo_ext= ('.png', '.jpg', '.jpeg','.jfif')
 movie_ext= ('.avi','.mkv','.mp4','.wmv')
@@ -92,7 +92,7 @@ full_screen=True
 #run_setings
 scan_photos=False
 run_start_view=True
-clean_db=True
+clean_db=False
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')
@@ -102,6 +102,6 @@ favourite_defult                  = None
 year_defult                       = None
 max_defult                        = ['views',0]
 min_defult                        = ['views',0]
-series_defult                     = ''
+series_defult                     = ('')
 #list
 show_list_defult                  = 'full'
