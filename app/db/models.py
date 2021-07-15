@@ -294,11 +294,9 @@ class Movies(Base):
         back_populates="movies"
     )
 
-
-
     def _get_stars(self):
         if len(self.stars) == 1:
-            return self.stars[0].name
+            return self.stars[0].show_name
         return ''
 
     def return_stars(self):
