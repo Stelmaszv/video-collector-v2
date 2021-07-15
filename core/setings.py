@@ -92,7 +92,7 @@ full_screen=True
 #run_setings
 scan_photos=False
 run_start_view=True
-clean_db=False
+clean_db=True
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')

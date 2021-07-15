@@ -16,6 +16,7 @@ class AbstractConfigItem(ABC):
 
     def __init__(self,dir):
         self.dir=dir
+        self.session=session
         self.name = set_name(dir)
         self.data = session.query(self.Model).filter(self.Model.name == self.name).first()
         self.config = self.dir+'\\config.JSON'
@@ -105,6 +106,10 @@ class SeriesConfigData(AbstractConfigItem):
                     if 'fields' in sezon_item:
                         self.set_data_form_json(sezon_item['fields'], sezon)
 
+    def add_producent(self,producent,Series):
+        ProducentObj = self.session.query(Producent).filter(Producent.name == producent[0]).first()
+        Series.producent.append(ProducentObj)
+
     def load(self):
         with open(self.config) as json_file:
             data = json.load(json_file)
@@ -114,6 +119,9 @@ class SeriesConfigData(AbstractConfigItem):
                 self.add_tags(data['tags'], self.data)
             if "stars" in data:
                 self.add_stars(data['stars'], self.data)
+
+            if "producent" in data:
+                self.add_producent(data['producent'], self.data)
 
             if "sezons" in data:
                 self.config_sezons(data['sezons'])

@@ -40,14 +40,10 @@ def set_movie_dir(Movie) ->str:
         movie_dir = sezon_dir + '\\' + Movie.name
 
         if os.path.isdir(series) is False:
-            print(series)
             os.mkdir(series)
 
         if os.path.isdir(series_name) is False:
             os.mkdir(series_name)
-
-        if os.path.isdir(sezon_dir) is False:
-            os.mkdir(sezon_dir)
 
         if os.path.isdir(sezon_dir) is False:
             os.mkdir(sezon_dir)
