@@ -50,7 +50,6 @@ class AdvanceSearch(QWidget,AbstractBaseView):
                 string = string+' and others '+str(len(array)-range_var)
             return string
 
-        print(self.criterions)
         tags=array_list(self.criterions['Tags'])
         self.custom_title('Tags', 'tags_name')
         text ="< html > < head / > < body > < p align =\"left\">"+str(tags)+"</body></html>"
@@ -99,7 +98,6 @@ class AdvanceSearch(QWidget,AbstractBaseView):
 
         if len(values[8]['value']):
             error=self.valid_series(values[8]['value'])
-            print()
             if error:
                 series=[values[8]['value']]
 
@@ -108,6 +106,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
             self.Menu.close()
             self.Menu.search_in = set_serch_in(values[1]['value'])
             self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
+            print(self.Menu.AdvandeSearchCriteria.favourite)
             self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
 
             if len(values[4]['value']) and len(values[5]['value']):
