@@ -42,7 +42,6 @@ class AbstractAdd(AbstractBaseView):
         def add_tag():
             for el in values:
                 self.data_array.append(el['value'])
-            #self.data_array.append(values[0]['value'])
             self.reset()
 
         def errr(mess):
@@ -86,7 +85,7 @@ class AddStarsAdvnaceSearchView(QWidget,AbstractAdd):
     window_title = 'Add star advance search view'
     errr =  'Star'
     AddModel =  Stars
-    index='Star'
+    index='Stars'
 
     def reset(self):
         self.close()

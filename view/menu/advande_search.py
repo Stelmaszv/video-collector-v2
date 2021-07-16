@@ -12,20 +12,20 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     resolution_index = 'advande_search'
     window_title = 'Advance Search'
     reset_view = 'advance_search'
-    criterions = {'Tags':tags_defult[1:],'Stars':stars_defult[1:],'Series':series_defult[1:0]}
+    criterions = {'Tags':tags_defult[1:],'Stars':stars_defult[1:],'Series':series_defult[1:]}
     Menu=Menu(0)
     limit=show_limit
 
     def add_star(self,values):
         self.close()
         ATASV = AddStarsAdvnaceSearchView()
-        ATASV.data_array = self.criterions['Stars']
+        ATASV.data_array = list(self.criterions['Stars'])
         ATASV.run_window()
 
     def add_tag(self,values):
         self.close()
         ATASV=AddTagAdvnaceSearchView()
-        ATASV.data_array=self.criterions['Tags']
+        ATASV.data_array=list(self.criterions['Tags'])
         ATASV.run_window()
 
     def set_up(self):
@@ -108,9 +108,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
             if len(values[6]['value']) and len(values[7]['value']):
                 self.Menu.AdvandeSearchCriteria.max = [values[6]['value'], int(values[7]['value'])]
 
-            self.Menu.AdvandeSearchCriteria.series = tuple(self.criterions['Series'])
-            self.Menu.AdvandeSearchCriteria.stars  = tuple(self.criterions['Stars'])
-            self.Menu.AdvandeSearchCriteria.tags   = tuple(self.criterions['Tags'])
-            self.Menu.custum_description('Counter', 'Counter_limit', '')
+            self.Menu.AdvandeSearchCriteria.tags = tuple(self.criterions['Tags'])
+            self.Menu.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
             self.Menu.run_window()
 
