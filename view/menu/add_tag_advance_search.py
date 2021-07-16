@@ -25,7 +25,9 @@ class AbstractAdd(AbstractBaseView):
         AS.run_window()
 
     def delete(self,Tag):
-        self.data_array.remove(Tag)
+        for el in self.data_array:
+            if el == Tag:
+                self.data_array.remove(el)
         self.reset()
 
     def set_up(self):
@@ -38,7 +40,9 @@ class AbstractAdd(AbstractBaseView):
 
     def submit_click(self,values):
         def add_tag():
-            self.data_array.append(values[0]['value'])
+            for el in values:
+                self.data_array.append(el['value'])
+            #self.data_array.append(values[0]['value'])
             self.reset()
 
         def errr(mess):
@@ -60,6 +64,7 @@ class AbstractAdd(AbstractBaseView):
                     errr(self.errr+' '+values[0]['value'] + ' not found in DB !')
                 else:
                     add_tag()
+
     def reset(self):
         pass
 

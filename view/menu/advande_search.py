@@ -4,7 +4,7 @@ from app.forms import AdvanceSearchForm
 from view.menu.menu import Menu
 from app.db.models import Series
 from  .add_tag_advance_search import AddTagAdvnaceSearchView,AddStarsAdvnaceSearchView
-from core.setings import stars_defult,tags_defult,show_limit
+from core.setings import stars_defult,tags_defult,show_limit,series_defult
 class AdvanceSearch(QWidget,AbstractBaseView):
     FormSchema = AdvanceSearchForm
     model_view_off = True
@@ -12,7 +12,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
     resolution_index = 'advande_search'
     window_title = 'Advance Search'
     reset_view = 'advance_search'
-    criterions = {'Tags':tags_defult[1:],'Stars':stars_defult[1:]}
+    criterions = {'Tags':tags_defult[1:],'Stars':stars_defult[1:],'Series':series_defult[1:0]}
     Menu=Menu(0)
     limit=show_limit
 
@@ -49,6 +49,7 @@ class AdvanceSearch(QWidget,AbstractBaseView):
             if range_var < len(array):
                 string = string+' and others '+str(len(array)-range_var)
             return string
+
         tags=array_list(self.criterions['Tags'])
         self.custom_title('Tags', 'tags_name')
         text ="< html > < head / > < body > < p align =\"left\">"+str(tags)+"</body></html>"
@@ -93,13 +94,13 @@ class AdvanceSearch(QWidget,AbstractBaseView):
             error=valid_series(values[8]['value'])
             if error:
                 series=[values[8]['value']]
+
         if error:
             self.close()
             self.Menu.close()
             self.Menu.search_in = set_serch_in(values[1]['value'])
             self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
             self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
-            self.Menu.AdvandeSearchCriteria.series=series
 
             if len(values[4]['value']) and len(values[5]['value']):
                 self.Menu.AdvandeSearchCriteria.min = [values[4]['value'],int(values[5]['value'])]
@@ -107,8 +108,9 @@ class AdvanceSearch(QWidget,AbstractBaseView):
             if len(values[6]['value']) and len(values[7]['value']):
                 self.Menu.AdvandeSearchCriteria.max = [values[6]['value'], int(values[7]['value'])]
 
-            self.Menu.AdvandeSearchCriteria.stars = tuple(self.criterions['Stars'])
-            self.Menu.AdvandeSearchCriteria.tags  =tuple(self.criterions['Tags'])
+            self.Menu.AdvandeSearchCriteria.series = tuple(self.criterions['Series'])
+            self.Menu.AdvandeSearchCriteria.stars  = tuple(self.criterions['Stars'])
+            self.Menu.AdvandeSearchCriteria.tags   = tuple(self.criterions['Tags'])
             self.Menu.custum_description('Counter', 'Counter_limit', '')
             self.Menu.run_window()
 
