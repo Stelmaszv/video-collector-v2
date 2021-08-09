@@ -195,28 +195,18 @@ class CreateXML(AbstractConfigItem):
                 return ''
             return ''
 
-        def set_stars(Movie):
+        def set_object(Movie, atter_for_str, atter_for_list):
             stars_str=''
             counter=1
-            for star in Movie.stars:
-                stars_str+=str(star.show_name);
-                if counter>0 and len(Movie.stars)>counter:
+            for Star in getattr(Movie, atter_for_list):
+                stars_str += str(getattr(Star, atter_for_str));
+                if counter > 0 and len(getattr(Movie, atter_for_list)) > counter:
                     stars_str+=str(' , ');
                 counter=counter+1
             return stars_str
 
-        def set_tags(Movie):
-            tags_str=''
-            counter=1
-            for tag in Movie.tags:
-                tags_str+=str(tag.name);
-                if counter>0 and len(Movie.tags)>counter:
-                    tags_str+=str(' , ');
-                counter=counter+1
-            return tags_str
         def full_name(Movie):
             return Movie.set_full_for_xlsx()
-
 
         self.worksheet.write(self.row, self.col, Movie.name)
         self.worksheet.write(self.row, self.col+1, Movie.description)
@@ -226,8 +216,8 @@ class CreateXML(AbstractConfigItem):
         self.worksheet.write(self.row, self.col+5, Movie.country)
         self.worksheet.write(self.row, self.col+6, set_series(Movie))
         self.worksheet.write(self.row, self.col+7, set_producent(Movie))
-        self.worksheet.write(self.row, self.col+8, set_stars(Movie))
-        self.worksheet.write(self.row, self.col+9, set_tags(Movie))
+        self.worksheet.write(self.row, self.col + 8, set_object(Movie, 'show_name', 'stars'))
+        self.worksheet.write(self.row, self.col + 9, set_object(Movie, 'name', 'tags'))
 
     def load(self):
         self.row = 0
