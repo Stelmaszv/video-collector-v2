@@ -88,9 +88,9 @@ class SeriesConfigData(AbstractConfigItem):
 
     def stars_counter(self):
         def star_count(id, stars_list):
-            count = 1
+            count = 0
             for Star in stars_list:
-                if Star['id'] != id:
+                if Star.id == id:
                     count = count + 1
             return count
 
@@ -99,7 +99,7 @@ class SeriesConfigData(AbstractConfigItem):
             added = []
             for Star in model_star_list:
                 if Star.id not in added:
-                    dict = {'Star': Star.name, 'Count': star_count(Star.id, stars_list), 'id': Star.id}
+                    dict = {'Star': Star.name, 'Count': star_count(Star.id, model_star_list), 'id': Star.id}
                     stars_list.append(dict)
                     added.append(Star.id)
 
