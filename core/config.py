@@ -7,7 +7,6 @@ from core.setings import singles_movies_defult,none_movies_defult
 from pathlib import Path
 import os
 import json
-import re
 import xlsxwriter
 
 class AbstractConfigItem(ABC):
@@ -226,6 +225,7 @@ class StarConfigData(AbstractConfigItem):
             self.set_avatar(self.data)
             self.set_singles(self.data)
             self.set_none(self.data)
+
 class CreateMovieList(AbstractConfigItem):
 
     def __init__(self, json_data):
@@ -249,7 +249,17 @@ class ProducentConfigData(AbstractConfigItem):
 
     Model = Producent
 
-    def add_series(self,series,Obj):
+    def create_series_list(self):
+        if Path(self.data.dir + '\\list.JSON').is_file() is True:
+            os.remove(self.data.dir + '\\list.JSON')
+        Series=[];
+        for Serie in self.data.series:
+            Series.append(Serie.dir)
+        f = open(self.data.dir + '\\list.JSON', "x")
+        f.write(json.dumps(Series))
+        f.close()
+
+    def add_series_list(self,series,Obj):
         for serie in series:
             ASVD=AddSeriesViaDir(set_dir_for_star(serie))
             SeriesObj=ASVD.if_series_exist(ASVD.name)
@@ -257,6 +267,7 @@ class ProducentConfigData(AbstractConfigItem):
             session.commit()
 
     def load(self):
+        self.create_series_list()
         with open(self.config) as json_file:
             data = json.load(json_file)
 
@@ -355,7 +366,6 @@ class ConfigMovies(AbstractConfigItem):
             f = open(galery, "x")
             f.write('[]')
             f.close()
-
 
     def load(self):
         for Movie in session.query(Movies).all():

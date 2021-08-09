@@ -3,12 +3,10 @@ from PyQt5 import QtGui,QtCore, QtWidgets
 from .list import List
 from core.strings import stringManipupations
 from .helper import Pagination, Scroller
-from .view import Form
 from core.setings import series_avatar_defult
 from core.BaseActions import Form
 from app.info import SingleSectionInfo
 from core.setings import photo_ext,data_JSON,menu_per_page
-from pathlib import Path
 from core.dir import PhotoMeaker
 import os
 import json
