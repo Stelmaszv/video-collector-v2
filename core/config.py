@@ -8,6 +8,7 @@ from pathlib import Path
 import os
 import json
 import xlsxwriter
+import collections
 
 class AbstractConfigItem(ABC):
 
@@ -94,20 +95,34 @@ class SeriesConfigData(AbstractConfigItem):
                     count = count + 1
             return count
 
+        def create_list(JSON):
+            if Path(self.data.dir + '\\stars_counter.JSON').is_file() is True:
+                os.remove(self.data.dir + '\\stars_counter.JSON')
+            f = open(self.data.dir + '\\stars_counter.JSON', "x")
+            f.write(json.dumps(JSON))
+            f.close()
+
         def create_star_list():
             stars_list = []
             added = []
             for Star in model_star_list:
                 if Star.id not in added:
-                    dict = {'Star': Star.name, 'Count': star_count(Star.id, model_star_list), 'id': Star.id}
-                    stars_list.append(dict)
+                    stars_list.append({'Star': Star.show_name, 'Count': star_count(Star.id, model_star_list)})
                     added.append(Star.id)
+            return stars_list
+
+        def order_by_count(el):
+            return el['Count']
 
         model_star_list = []
         for Movie in self.data.movies:
             for StarModel in Movie.stars:
                 model_star_list.append(StarModel)
-        create_star_list()
+
+        list_for_JSON = create_star_list()
+        list_for_JSON.sort(key=order_by_count, reverse=True)
+        create_list(list_for_JSON)
+
 
 
     def add_star_to_seazon(self,item):
