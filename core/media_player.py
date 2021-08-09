@@ -104,15 +104,12 @@ class Player(QWidget):
         self.mute.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
         self.mute.clicked.connect(self.mute_clicked)
 
-        # create label
         self.label = QLabel()
         self.label.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
 
-        # create hbox layout
         hboxLayout = QHBoxLayout()
         hboxLayout.setContentsMargins(20, 20, 20, 10)
 
-        # set widgets to the hbox layout
         hboxLayout.addWidget(self.playBtn)
         hboxLayout.addWidget(self.slider)
         hboxLayout.addWidget(self.mute)
