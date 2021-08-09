@@ -68,6 +68,16 @@ class AbstractConfigItem(ABC):
                     else:
                         add_item(item)
 
+    def add_list(self, Obj, atter_for_list, atter_for_literator):
+        if Path(Obj.dir + '\\list.JSON').is_file() is True:
+            os.remove(Obj.dir + '\\list.JSON')
+        ObjectsList = [];
+        for ObjInObjects in getattr(Obj, atter_for_list):
+            ObjectsList.append(getattr(ObjInObjects, atter_for_literator))
+        f = open(Obj.dir + '\\list.JSON', "x")
+        f.write(json.dumps(ObjectsList))
+        f.close()
+
     @abstractmethod
     def load(self):
         pass
@@ -232,14 +242,7 @@ class CreateMovieList(AbstractConfigItem):
         self.dir = json_data
 
     def create_list(self,Star):
-        if Path(Star.dir + '\\list.JSON').is_file() is True:
-            os.remove(Star.dir + '\\list.JSON')
-        Movies=[];
-        for Movie in Star.movies:
-            Movies.append(Movie.src)
-        f = open(Star.dir + '\\list.JSON', "x")
-        f.write(json.dumps(Movies))
-        f.close()
+        self.add_list(Star, 'movies', 'src')
 
     def load(self):
         for Star in session.query(Stars).all():
@@ -250,14 +253,7 @@ class ProducentConfigData(AbstractConfigItem):
     Model = Producent
 
     def create_series_list(self):
-        if Path(self.data.dir + '\\list.JSON').is_file() is True:
-            os.remove(self.data.dir + '\\list.JSON')
-        Series=[];
-        for Serie in self.data.series:
-            Series.append(Serie.dir)
-        f = open(self.data.dir + '\\list.JSON', "x")
-        f.write(json.dumps(Series))
-        f.close()
+        self.add_list(self.data, 'series', 'dir')
 
     def add_series_list(self,series,Obj):
         for serie in series:
