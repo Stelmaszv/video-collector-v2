@@ -106,7 +106,6 @@ class AdvanceSearch(QWidget,AbstractBaseView):
             self.Menu.close()
             self.Menu.search_in = set_serch_in(values[1]['value'])
             self.Menu.AdvandeSearchCriteria.favourite=convert_to_bool(values[2]['value'])
-            print(self.Menu.AdvandeSearchCriteria.favourite)
             self.Menu.AdvandeSearchCriteria.order_by = values[3]['value']
 
             if len(values[4]['value']) and len(values[5]['value']):

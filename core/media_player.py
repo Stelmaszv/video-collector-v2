@@ -77,10 +77,8 @@ class Player(QWidget):
             self.full_screen_switch()
 
     def init_ui(self):
-        # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.data.src)))
-        # create videowidget object
 
         videowidget = QVideoWidget()
 
