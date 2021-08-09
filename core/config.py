@@ -8,7 +8,6 @@ from pathlib import Path
 import os
 import json
 import xlsxwriter
-import collections
 
 class AbstractConfigItem(ABC):
 
@@ -34,7 +33,6 @@ class AbstractConfigItem(ABC):
             Obj.stars.append(StarObj)
             StarObj.movies.append(self.data)
             session.commit()
-
 
     def add_tags(self,tags,Obj=None):
         if Obj is not None:
@@ -122,8 +120,6 @@ class SeriesConfigData(AbstractConfigItem):
         list_for_JSON = create_star_list()
         list_for_JSON.sort(key=order_by_count, reverse=True)
         create_list(list_for_JSON)
-
-
 
     def add_star_to_seazon(self,item):
         def add_star_to_movie(Star,name):
