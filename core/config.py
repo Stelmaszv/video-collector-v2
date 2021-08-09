@@ -86,6 +86,30 @@ class SeriesConfigData(AbstractConfigItem):
 
     Model = Series
 
+    def stars_counter(self):
+        def star_count(id, stars_list):
+            count = 1
+            for Star in stars_list:
+                if Star['id'] != id:
+                    count = count + 1
+            return count
+
+        def create_star_list():
+            stars_list = []
+            added = []
+            for Star in model_star_list:
+                if Star.id not in added:
+                    dict = {'Star': Star.name, 'Count': star_count(Star.id, stars_list), 'id': Star.id}
+                    stars_list.append(dict)
+                    added.append(Star.id)
+
+        model_star_list = []
+        for Movie in self.data.movies:
+            for StarModel in Movie.stars:
+                model_star_list.append(StarModel)
+        create_star_list()
+
+
     def add_star_to_seazon(self,item):
         def add_star_to_movie(Star,name):
             for movie in self.data.movies:
@@ -120,6 +144,7 @@ class SeriesConfigData(AbstractConfigItem):
         Series.producent.append(ProducentObj)
 
     def load(self):
+        self.stars_counter()
         with open(self.config) as json_file:
             data = json.load(json_file)
             if 'fields' in data:
