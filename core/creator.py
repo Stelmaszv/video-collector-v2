@@ -108,7 +108,6 @@ class SeriesCreator:
 
     def if_showin_Serie(self, movies_list) ->bool:
         for movie in movies_list:
-            stan = False
             stan= any(star.id == self.item.id for star in movie.stars)
         return stan
 

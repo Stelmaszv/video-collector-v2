@@ -10,11 +10,26 @@ import json
 import xlsxwriter
 
 
+class MovieListForStars:
+
+    def __init__(self, star_list):
+        self.list = star_list
+
+    def add_list(self):
+        for el in self.list:
+            el['Movies'] = self.get_movies_list(el['Star'])
+        return self.list
+
+    def get_movies_list(self, id):
+        movies_list = []
+        return movies_list
+
 class StarList:
 
     def __init__(self, star_list, AbstractConfigItem_data):
         self.list = star_list
         self.AbstractConfigItem_data = AbstractConfigItem_data
+        self.is_producent = True
 
     def create_list(self, JSON):
         if Path(self.AbstractConfigItem_data.dir + '\\stars_counter.JSON').is_file() is True:
@@ -22,6 +37,7 @@ class StarList:
         f = open(self.AbstractConfigItem_data.dir + '\\stars_counter.JSON', "x")
         f.write(json.dumps(JSON))
         f.close()
+
 
     def create_star_list(self):
         def star_count(id, stars_list):
@@ -35,7 +51,9 @@ class StarList:
         added = []
         for Star in self.list:
             if Star.id not in added:
-                stars_list.append({'Star': Star.show_name, 'Count': star_count(Star.id, self.list)})
+                stars_list.append({
+                    'Star': Star.show_name,
+                    'Count': star_count(Star.id, self.list)})
                 added.append(Star.id)
         return stars_list
 
@@ -114,7 +132,8 @@ class AbstractConfigItem(ABC):
 
         StarListObj = StarList(stars_list, self.data)
         list_for_JSON = StarListObj.create_star_list()
-        list_for_JSON.sort(key=order_by_count, reverse=True)
+        MLFS = MovieListForStars(list_for_JSON)
+        MLFS.add_list().sort(key=order_by_count, reverse=True)
         StarListObj.create_list(list_for_JSON)
 
     @abstractmethod
