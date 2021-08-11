@@ -257,7 +257,7 @@ class Stars(Base):
         back_populates="stars"
     )
     def __str__(self):
-        return  self.name
+        return self.show_name
 
 class Movies(Base):
     __tablename__ ='movies'

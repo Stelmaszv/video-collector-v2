@@ -9,19 +9,24 @@ import os
 import json
 import xlsxwriter
 
-
 class MovieListForStars:
 
-    def __init__(self, star_list):
+    def __init__(self, star_list, dirs_list, AbstractConfigItem_data):
         self.list = star_list
+        self.dirs_list = dirs_list
+        self.AbstractConfigItem_data = AbstractConfigItem_data
 
     def add_list(self):
         for el in self.list:
             el['Movies'] = self.get_movies_list(el['Star'])
         return self.list
 
-    def get_movies_list(self, id):
+    def get_movies_list(self, star_name):
         movies_list = []
+
+        for Star in self.dirs_list:
+            if star_name == Star['Star']:
+                movies_list.append(Star['dir'])
         return movies_list
 
 class StarList:
@@ -126,14 +131,15 @@ class AbstractConfigItem(ABC):
         f.write(json.dumps(ObjectsList))
         f.close()
 
-    def counter(self, stars_list):
+    def counter(self, stars_list, movies_dir):
         def order_by_count(el):
             return el['Count']
 
         StarListObj = StarList(stars_list, self.data)
         list_for_JSON = StarListObj.create_star_list()
-        MLFS = MovieListForStars(list_for_JSON)
-        MLFS.add_list().sort(key=order_by_count, reverse=True)
+        MLFS = MovieListForStars(list_for_JSON, movies_dir, self.data)
+        print(MLFS.add_list())
+        list_for_JSON.sort(key=order_by_count, reverse=True)
         StarListObj.create_list(list_for_JSON)
 
     @abstractmethod
@@ -146,12 +152,14 @@ class SeriesConfigData(AbstractConfigItem):
 
     def stars_counter(self):
 
+        movies_dir = []
         model_star_list = []
         for Movie in self.data.movies:
             for StarModel in Movie.stars:
                 model_star_list.append(StarModel)
+                movies_dir.append({"Star": StarModel.show_name, "dir": Movie.dir})
 
-        self.counter(model_star_list)
+        self.counter(model_star_list, movies_dir)
 
     def add_star_to_seazon(self,item):
         def add_star_to_movie(Star,name):
@@ -315,12 +323,14 @@ class ProducentConfigData(AbstractConfigItem):
     def stars_in_producent(self):
 
         stars = []
+        movies_dir = []
         for Serie in self.data.series:
             for Movie in Serie.movies:
                 for Star in Movie.stars:
                     stars.append(Star)
+                    movies_dir.append({"Star": Star.show_name, "dir": Movie.dir})
 
-        self.counter(stars)
+        self.counter(stars, movies_dir)
 
     def add_series_list(self,series,Obj):
         for serie in series:
