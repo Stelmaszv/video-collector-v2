@@ -136,7 +136,6 @@ class SeriesConfigData(AbstractConfigItem):
             add_star_to_movie(StarObj,sezon_name)
             add_star_to_series(StarObj,self.data)
 
-
     def config_sezons(self,sezons):
         for item in sezons:
             stars = "stars" in item
@@ -281,6 +280,42 @@ class ProducentConfigData(AbstractConfigItem):
     def create_series_list(self):
         self.add_list(self.data, 'series', 'dir')
 
+    def stars_in_producent(self):
+        def star_count(id, stars_list):
+            count = 0
+            for Star in stars_list:
+                if Star.id == id:
+                    count = count + 1
+            return count
+
+        def create_list(JSON):
+            if Path(self.data.dir + '\\stars_counter.JSON').is_file() is True:
+                os.remove(self.data.dir + '\\stars_counter.JSON')
+            f = open(self.data.dir + '\\stars_counter.JSON', "x")
+            f.write(json.dumps(JSON))
+            f.close()
+
+        def create_star_list():
+            stars_list = []
+            added = []
+            for Star in stars:
+                if Star.id not in added:
+                    stars_list.append({'Star': Star.show_name, 'Count': star_count(Star.id, stars)})
+                    added.append(Star.id)
+            return stars_list
+
+        def order_by_count(el):
+            return el['Count']
+
+        stars = []
+        for Serie in self.data.series:
+            for Movie in Serie.movies:
+                for Star in Movie.stars:
+                    stars.append(Star)
+        list_for_JSON = create_star_list()
+        list_for_JSON.sort(key=order_by_count, reverse=True)
+        create_list(list_for_JSON)
+
     def add_series_list(self,series,Obj):
         for serie in series:
             ASVD=AddSeriesViaDir(set_dir_for_star(serie))
@@ -289,6 +324,7 @@ class ProducentConfigData(AbstractConfigItem):
             session.commit()
 
     def load(self):
+        self.stars_in_producent()
         self.create_series_list()
         with open(self.config) as json_file:
             data = json.load(json_file)
