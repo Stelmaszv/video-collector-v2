@@ -138,7 +138,6 @@ class AbstractConfigItem(ABC):
         StarListObj = StarList(stars_list, self.data)
         list_for_JSON = StarListObj.create_star_list()
         MLFS = MovieListForStars(list_for_JSON, movies_dir, self.data)
-        print(MLFS.add_list())
         list_for_JSON.sort(key=order_by_count, reverse=True)
         StarListObj.create_list(list_for_JSON)
 
@@ -157,7 +156,7 @@ class SeriesConfigData(AbstractConfigItem):
         for Movie in self.data.movies:
             for StarModel in Movie.stars:
                 model_star_list.append(StarModel)
-                movies_dir.append({"Star": StarModel.show_name, "dir": Movie.dir})
+                movies_dir.append({"Star": StarModel.show_name, "dir": Movie.src})
 
         self.counter(model_star_list, movies_dir)
 
@@ -328,7 +327,7 @@ class ProducentConfigData(AbstractConfigItem):
             for Movie in Serie.movies:
                 for Star in Movie.stars:
                     stars.append(Star)
-                    movies_dir.append({"Star": Star.show_name, "dir": Movie.dir})
+                    movies_dir.append({"Star": Star.show_name, "dir": Movie.src})
 
         self.counter(stars, movies_dir)
 
