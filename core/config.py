@@ -9,6 +9,37 @@ import os
 import json
 import xlsxwriter
 
+
+class StarList:
+
+    def __init__(self, star_list, AbstractConfigItem_data):
+        self.list = star_list
+        self.AbstractConfigItem_data = AbstractConfigItem_data
+
+    def create_list(self, JSON):
+        if Path(self.AbstractConfigItem_data.dir + '\\stars_counter.JSON').is_file() is True:
+            os.remove(self.AbstractConfigItem_data.dir + '\\stars_counter.JSON')
+        f = open(self.AbstractConfigItem_data.dir + '\\stars_counter.JSON', "x")
+        f.write(json.dumps(JSON))
+        f.close()
+
+    def create_star_list(self):
+        def star_count(id, stars_list):
+            count = 0
+            for Star in stars_list:
+                if Star.id == id:
+                    count = count + 1
+            return count
+
+        stars_list = []
+        added = []
+        for Star in self.list:
+            if Star.id not in added:
+                stars_list.append({'Star': Star.show_name, 'Count': star_count(Star.id, self.list)})
+                added.append(Star.id)
+        return stars_list
+
+
 class AbstractConfigItem(ABC):
 
     Model= None
@@ -77,6 +108,15 @@ class AbstractConfigItem(ABC):
         f.write(json.dumps(ObjectsList))
         f.close()
 
+    def counter(self, stars_list):
+        def order_by_count(el):
+            return el['Count']
+
+        StarListObj = StarList(stars_list, self.data)
+        list_for_JSON = StarListObj.create_star_list()
+        list_for_JSON.sort(key=order_by_count, reverse=True)
+        StarListObj.create_list(list_for_JSON)
+
     @abstractmethod
     def load(self):
         pass
@@ -86,40 +126,13 @@ class SeriesConfigData(AbstractConfigItem):
     Model = Series
 
     def stars_counter(self):
-        def star_count(id, stars_list):
-            count = 0
-            for Star in stars_list:
-                if Star.id == id:
-                    count = count + 1
-            return count
-
-        def create_list(JSON):
-            if Path(self.data.dir + '\\stars_counter.JSON').is_file() is True:
-                os.remove(self.data.dir + '\\stars_counter.JSON')
-            f = open(self.data.dir + '\\stars_counter.JSON', "x")
-            f.write(json.dumps(JSON))
-            f.close()
-
-        def create_star_list():
-            stars_list = []
-            added = []
-            for Star in model_star_list:
-                if Star.id not in added:
-                    stars_list.append({'Star': Star.show_name, 'Count': star_count(Star.id, model_star_list)})
-                    added.append(Star.id)
-            return stars_list
-
-        def order_by_count(el):
-            return el['Count']
 
         model_star_list = []
         for Movie in self.data.movies:
             for StarModel in Movie.stars:
                 model_star_list.append(StarModel)
 
-        list_for_JSON = create_star_list()
-        list_for_JSON.sort(key=order_by_count, reverse=True)
-        create_list(list_for_JSON)
+        self.counter(model_star_list)
 
     def add_star_to_seazon(self,item):
         def add_star_to_movie(Star,name):
@@ -281,40 +294,14 @@ class ProducentConfigData(AbstractConfigItem):
         self.add_list(self.data, 'series', 'dir')
 
     def stars_in_producent(self):
-        def star_count(id, stars_list):
-            count = 0
-            for Star in stars_list:
-                if Star.id == id:
-                    count = count + 1
-            return count
-
-        def create_list(JSON):
-            if Path(self.data.dir + '\\stars_counter.JSON').is_file() is True:
-                os.remove(self.data.dir + '\\stars_counter.JSON')
-            f = open(self.data.dir + '\\stars_counter.JSON', "x")
-            f.write(json.dumps(JSON))
-            f.close()
-
-        def create_star_list():
-            stars_list = []
-            added = []
-            for Star in stars:
-                if Star.id not in added:
-                    stars_list.append({'Star': Star.show_name, 'Count': star_count(Star.id, stars)})
-                    added.append(Star.id)
-            return stars_list
-
-        def order_by_count(el):
-            return el['Count']
 
         stars = []
         for Serie in self.data.series:
             for Movie in Serie.movies:
                 for Star in Movie.stars:
                     stars.append(Star)
-        list_for_JSON = create_star_list()
-        list_for_JSON.sort(key=order_by_count, reverse=True)
-        create_list(list_for_JSON)
+
+        self.counter(stars)
 
     def add_series_list(self,series,Obj):
         for serie in series:
