@@ -138,7 +138,7 @@ class AbstractConfigItem(ABC):
         StarListObj = StarList(stars_list, self.data)
         list_for_JSON = StarListObj.create_star_list()
         MLFS = MovieListForStars(list_for_JSON, movies_dir, self.data)
-        list_for_JSON.sort(key=order_by_count, reverse=True)
+        MLFS.add_list().sort(key=order_by_count, reverse=True)
         StarListObj.create_list(list_for_JSON)
 
     @abstractmethod
