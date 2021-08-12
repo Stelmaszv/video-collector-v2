@@ -14,7 +14,6 @@ from core.strings import stringManipupations
 add= False
 
 def set_dir_for_star(name):
-    print(name)
     letter = name[0]
     dir = ''
     if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
