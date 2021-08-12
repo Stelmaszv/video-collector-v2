@@ -317,8 +317,9 @@ class Movies(Base):
                 return series[0].name+' '
             return ''
         def get_producent(series):
-            if len(series[0].producent):
-                return series[0].producent[0].name;
+            if len(series):
+                if len(series[0].producent):
+                    return series[0].producent[0].name;
 
         def return_full_name():
             str=''

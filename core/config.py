@@ -245,7 +245,6 @@ class CreateXML(AbstractConfigItem):
 
         def full_name(Movie):
             return Movie.set_full_for_xlsx()
-
         self.worksheet.write(self.row, self.col, Movie.name)
         self.worksheet.write(self.row, self.col+1, Movie.description)
         self.worksheet.write(self.row, self.col+2, Movie.year)
@@ -458,7 +457,9 @@ class SetTags(AbstractConfigItem):
             for star in Movie.stars:
                 for tag in star.tags:
                     Movie.tags.append(tag)
-        set_tag_from_series(Movie)
+
+        if len(Movie.series) > 0:
+            set_tag_from_series(Movie)
         set_tag_from_star(Movie)
 
     def set(self):
