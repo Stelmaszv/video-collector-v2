@@ -62,7 +62,6 @@ class StarList:
                 added.append(Star.id)
         return stars_list
 
-
 class AbstractConfigItem(ABC):
 
     Model= None
@@ -82,10 +81,12 @@ class AbstractConfigItem(ABC):
                 Item.avatar=dir
 
     def add_stars(self,stars,Obj):
+
         for star in stars:
             StarObj = if_star_exist(AddStarViaDir(set_dir_for_star(star)), star)
             Obj.stars.append(StarObj)
-            StarObj.movies.append(self.data)
+            if hasattr(self, 'data'):
+                StarObj.movies.append(self.data)
             session.commit()
 
     def add_tags(self,tags,Obj=None):
