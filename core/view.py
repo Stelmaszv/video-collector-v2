@@ -1,4 +1,5 @@
 import os
+import json
 from PyQt5 import QtGui,QtCore, QtWidgets
 from core.BaseActions import ViewBaseAction
 from app.db.models import session
@@ -14,7 +15,6 @@ from app.model_view import BaseModelViewSet
 from core.strings import stringManipupations
 from app.forms import BaseFormShema
 from core.setings import photo_ext,show_list_defult
-import json
 
 class BaseView:
 
@@ -88,7 +88,6 @@ class BaseView:
         self.avatar_photo.setObjectName("avatar")
         return self.avatar_photo
 
-
     def info(self,infoData,data,rows,obj=None):
         if obj==None:
             obj=self.obj
@@ -132,13 +131,16 @@ class BaseView:
         self.nav_grid.setObjectName("movie-grid")
         row=0
         for button in buttons:
-            self.Form.button([button['item_name'], button['name']], [],button['button'], self.nav_grid, [0, row, 2, 2], [100, 0, 10, 16777215])
+            self.Form.button(
+                [button['item_name'], button['name']],
+                [],button['button'], self.nav_grid,
+                [0, row, 2, 2], [100, 0, 10, 16777215])
             row=row+1
 
     def description(self,text,data,grid=None,obj=None):
         if obj==None:
             obj=self.obj
-        description = QtWidgets.QLabel(self.obj)
+        description = QtWidgets.QLabel(obj)
         description.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         text = "<html><head/><body>" \
                "<p align=\"center\">" \

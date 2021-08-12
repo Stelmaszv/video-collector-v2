@@ -12,7 +12,6 @@ from pathlib import Path
 from abc import ABC,abstractmethod
 from core.setings import photo_ext,with_size_defult,height_size_defult
 
-
 class ViewBaseAction:
 
     def __init__(self,obj):
@@ -33,7 +32,6 @@ class ViewBaseAction:
             self.obj.BaseView.load_view(self.obj.edit_view,self.obj.data)
         else:
             Error.throw_error(self.obj.__class__.__name__+' do not have atter "edit_view" ',False)
-
 
     def add_favourite(self):
         if self.obj.data.favourite is True:
@@ -57,7 +55,6 @@ class AbstractAddToModel(ABC):
     Model=None
     field = ''
     dialog_mes='Dialog'
-
 
     def __init__(self,data,Obj):
         self.data=data

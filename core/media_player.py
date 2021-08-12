@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, \
-    QSlider, QStyle, QSizePolicy, QFileDialog, QButtonGroup
+    QSlider, QStyle, QSizePolicy,QButtonGroup
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtGui import QPalette
@@ -77,10 +77,8 @@ class Player(QWidget):
             self.full_screen_switch()
 
     def init_ui(self):
-        # create media player object
         self.mediaPlayer = QMediaPlayer(None, QMediaPlayer.VideoSurface)
         self.mediaPlayer.setMedia(QMediaContent(QUrl.fromLocalFile(self.data.src)))
-        # create videowidget object
 
         videowidget = QVideoWidget()
 
@@ -106,15 +104,12 @@ class Player(QWidget):
         self.mute.setIcon(self.style().standardIcon(QStyle.SP_MediaVolume))
         self.mute.clicked.connect(self.mute_clicked)
 
-        # create label
         self.label = QLabel()
         self.label.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Maximum)
 
-        # create hbox layout
         hboxLayout = QHBoxLayout()
         hboxLayout.setContentsMargins(20, 20, 20, 10)
 
-        # set widgets to the hbox layout
         hboxLayout.addWidget(self.playBtn)
         hboxLayout.addWidget(self.slider)
         hboxLayout.addWidget(self.mute)

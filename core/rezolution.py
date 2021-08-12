@@ -140,21 +140,21 @@ class GetResolutionData:
 
                     "avatar_size": [
                         self.set_rezulution(5, 'with'),
-                        self.set_rezulution(10, 'height'),
+                        self.set_rezulution(5, 'height'),
                         self.set_rezulution(10, 'with'),
                         self.set_rezulution(25, 'height')
                     ],
 
                     "info_size": [
                         self.set_rezulution(8, 'with'),
-                        self.set_rezulution(25, 'height'),
+                        self.set_rezulution(30, 'height'),
                         self.set_rezulution(10, 'with'),
                         self.set_rezulution(25, 'height')
                     ],
 
                     "galery_size": [
                         self.set_rezulution(1, 'with'),
-                        self.set_rezulution(40, 'height'),
+                        self.set_rezulution(55, 'height'),
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(30, 'height')
                     ],
@@ -167,7 +167,7 @@ class GetResolutionData:
 
                     "description": [
                         self.set_rezulution(1, 'with'),
-                        self.set_rezulution(60, 'height'),
+                        self.set_rezulution(70, 'height'),
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(30, 'height')
                     ],
@@ -211,7 +211,7 @@ class GetResolutionData:
                         self.set_rezulution(25, 'height')
                     ],
                     "section_info_single_info"  : [
-                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(0, 'with'),
                         self.set_rezulution(5, 'height'),
                         self.set_rezulution(12, 'with'),
                         self.set_rezulution(10, 'height')
@@ -307,7 +307,6 @@ class GetResolutionData:
                     ],
                 }
             },
-
             "Producent" : {
                 "position": self.base_window(),
                 "window": {
@@ -377,7 +376,6 @@ class GetResolutionData:
                     }
                 }
             },
-
             "Menu": {
                 "position": self.base_menu(),
                 "window": {
@@ -519,9 +517,9 @@ class GetResolutionData:
                         self.set_rezulution(30, 'height')
                     ],
                     "description": [
-                        self.set_rezulution(10, 'with'),
-                        self.set_rezulution(12, 'height'),
-                        self.set_rezulution(30, 'with'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(15, 'height'),
+                        self.set_rezulution(20, 'with'),
                         self.set_rezulution(30, 'height')
                     ],
                     "description_limit": 500,

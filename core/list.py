@@ -102,7 +102,7 @@ class CustumList(AbstractList):
         super(CustumList, self).__init__(BaseView, per_page)
 
     def genrate(self,data,el,grid,col_start):
-        print('ad')
+        pass
 
 class ProducentsList(AbstractList):
 

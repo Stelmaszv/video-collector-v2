@@ -75,12 +75,12 @@ height_size_defult = 25
 #menu
 menu_per_page = 20
 
-series_avatar_defult ='D:/project/video-collector-v2/data/avatar.png'
-stars_avatar_defult  ='D:/project/video-collector-v2/data/no-avatar.png'
-none_movies_defult   ='D:/project/video-collector-v2/data/none.png'
-singles_movies_defult   ='D:/project/video-collector-v2/data/none.png'
-movie_cover_defulut = 'D:/project/video-collector-v2/data/none.png'
-search_in_defult= 'stars';
+series_avatar_defult ='D:/project/video-collector-v2/icon/series.jpg'
+stars_avatar_defult  ='D:/project/video-collector-v2/icon/star_no_photo.png'
+none_movies_defult   ='D:/project/video-collector-v2/icon/star_no_photo.png'
+singles_movies_defult   ='D:/project/video-collector-v2/icon/singles.jpg'
+movie_cover_defulut = 'D:/project/video-collector-v2/icon/movie.jpg'
+search_in_defult= 'movies';
 start_page=0
 photo_ext= ('.png', '.jpg', '.jpeg','.jfif')
 movie_ext= ('.avi','.mkv','.mp4','.wmv')
@@ -91,17 +91,17 @@ auto_play=True
 full_screen=True
 #run_setings
 scan_photos=False
-run_start_view=True
-clean_db=False
+run_start_view = True
+clean_db = False
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')
 show_limit                        = 10
 order_by_defult                   = ''
-favourite_defult                  = None
+favourite_defult                  = False
 year_defult                       = None
 max_defult                        = ['views',0]
 min_defult                        = ['views',0]
-series_defult                     = ''
+series_defult                     = ('')
 #list
 show_list_defult                  = 'full'

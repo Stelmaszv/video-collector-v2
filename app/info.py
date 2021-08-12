@@ -10,14 +10,19 @@ class BaseInfo:
     def show_stars_in_string(self,stars):
         stars_str = ''
         count = 0
-        for el in stars:
-            if count > 0:
-                stars_str = stars_str + ' , '
-            if count %5 == 0:
-                stars_str = stars_str + ' <br> '
-            stars_str = stars_str + str(el.name)
-            count = count + 1
+        if len(stars)>1:
+            for el in stars:
+                if count > 0:
+                    stars_str = stars_str + ' , '
+                if count %2 == 0:
+                    stars_str = stars_str + ' <br> '
+                stars_str = stars_str + str(el.show_name)
+                count = count + 1
 
+            return stars_str
+        else:
+            if len(stars)==1:
+                stars_str = stars[0].show_name
         return stars_str
 
 class SingleSectionInfo(BaseInfo):
@@ -147,8 +152,6 @@ class InfoForMovie(BaseInfo):
 
         return  self.data_info
 
-
-
 class InfoSection(BaseInfo):
 
     tag_limit=1000
@@ -189,7 +192,6 @@ class InfoSection(BaseInfo):
             "itemNmae": "Favourite",
             "itemName2": str(self.BaseView.data.favourite)
         })
-
         if len(self.BaseView.data.tags)>0:
             self.data_info.append({
                 "itemNmae": "Tags",
