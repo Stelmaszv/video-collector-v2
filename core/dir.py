@@ -208,7 +208,7 @@ class AbstractAddViaDir(ABC):
     movie_model=Movies
     photo_model=Photos
     sezons_model=Sezons
-    movie_dir = '\\data\\movies'
+    movie_dir = '\\movies'
     photo_dir = '\\photo'
     star=None
     name=''
