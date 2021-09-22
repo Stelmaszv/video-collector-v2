@@ -427,7 +427,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
             name=name,
             show_name=show_name,
             search_name=series[0].name+' '+name,
-            src=self.movie_dir+'\\'+sezon+'\\'+src,
+            src=self.movie_dir + '\\' + sezon + '\\DATA\\' + src,
             stars=stars,
             series=series,
             sezon=sezon
@@ -451,7 +451,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         object = []
         movie_dir = os.listdir(self.movie_dir)
         for dir_element in movie_dir:
-            nev_dir = self.movie_dir + '' + '\\' + str(dir_element)
+            nev_dir = self.movie_dir + '' + '\\' + str(dir_element) + '\\DATA'
             nev_dir_loop = []
             if os.path.isdir(nev_dir):
                 nev_dir_loop = os.listdir(nev_dir)
