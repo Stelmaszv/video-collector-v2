@@ -208,8 +208,8 @@ class AbstractAddViaDir(ABC):
     movie_model=Movies
     photo_model=Photos
     sezons_model=Sezons
-    movie_dir='\\movies'
-    photo_dir='\\photo'
+    movie_dir = '\\data\\movies'
+    photo_dir = '\\photo'
     star=None
     name=''
     series=None
@@ -342,6 +342,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
 
     def __init__(self,dir):
         super().__init__(dir)
+        self.config = self.dir + '\\config.JSON'
+        self.skip_galery = self.dir + '\\skip_galery.JSON'
         self.name=set_name(dir)
         item=session.query(self.model).filter(self.model.name == self.name).first()
         if item is None:
@@ -450,8 +452,12 @@ class AddSeriesViaDir(AbstractAddViaDir):
         movie_dir = os.listdir(self.movie_dir)
         for dir_element in movie_dir:
             nev_dir = self.movie_dir + '' + '\\' + str(dir_element)
-            nev_dir_loop = os.listdir(nev_dir)
+            nev_dir_loop = []
+            if os.path.isdir(nev_dir):
+                nev_dir_loop = os.listdir(nev_dir)
+
             for movie in nev_dir_loop:
+
                 if movie.endswith(movie_ext):
                     if self.if_movie_exist(self.series.name+' '+self.clear_name(movie),dir_element):
                         object.append(self.add_movie(movie, dir_element))
