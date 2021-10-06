@@ -26,12 +26,10 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
         self.page=page
 
         jsonConfig = QAction(QIcon('exit.png'), '&Change Json File', self)
-        jsonConfig.setShortcut('Ctrl+J')
         jsonConfig.setStatusTip('Change Json File')
         jsonConfig.triggered.connect(self.json_config)
 
         raportConfig = QAction(QIcon('exit.png'), '&Raport', self)
-        raportConfig.setShortcut('Ctrl+R')
         raportConfig.setStatusTip('Raport')
         raportConfig.triggered.connect(self.raport)
 

@@ -380,7 +380,7 @@ class GetResolutionData:
                 "position": self.base_menu(),
                 "window": {
                     "info_size": [
-                        self.set_rezulution(2, 'with'),
+                        self.set_rezulution(7, 'with'),
                         self.set_rezulution(7, 'height'),
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(10, 'height')

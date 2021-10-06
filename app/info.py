@@ -1,5 +1,7 @@
 from core.datamanipulation import Data as Data
 from core.strings import stringManipupations
+from app.db.models import Movies, Stars, Series, Producent
+from app.db.models import session
 class BaseInfo:
     data_info=[]
     def __init__(self, Obj=None, methods=[]):
@@ -111,10 +113,14 @@ class RaportInfo(BaseInfo):
 
     def return_data(self):
         return [
-            {"itemNmae": "anser", "itemName2": "anser1"},
-            {"itemNmae": "anser2", "itemName2": "anser2"},
-            {"itemNmae": "anser3", "itemName2": "anser2"}
+            {"itemNmae": "Movies", "itemName2": str(self.counter(Movies))},
+            {"itemNmae": "Stars", "itemName2": str(self.counter(Stars))},
+            {"itemNmae": "Series", "itemName2": str(self.counter(Series))},
+            {"itemNmae": "Producents", "itemName2": str(self.counter(Producent))},
         ]
+
+    def counter(self, Model):
+        return session.query(Model).count()
 
 class InfoForMovie(BaseInfo):
 
