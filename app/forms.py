@@ -681,11 +681,30 @@ class JSONDataConfigForm(AbstractBaseFormShema):
 
         self.add_iten('edit_line', {
             'place_holder': 'Series dir edit label',
-            'custum_name':'Stars dir edit label',
+            'custum_name': 'Series dir edit label',
             'required': True,
             'data_type': 'dir',
             'model':False,
             'name': 'series_edit',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Producents Dir',
+            'name': 'producents_label',
+            'new_row': True,
+            "row": True,
+            "coll": False
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Producents dir edit label',
+            'custum_name': 'Producents dir edit label',
+            'required': True,
+            'data_type': 'dir',
+            'model':False,
+            'name': 'producents_edit',
             "row": False,
             "coll": True
         })
@@ -699,14 +718,22 @@ class JSONDataConfigForm(AbstractBaseFormShema):
         })
 
         self.add_iten('edit_line', {
-            'place_holder': 'Series dir edit label',
-            'custum_name':'Stars dir edit label',
+            'place_holder': 'Movies Photos dir edit label',
+            'custum_name': 'Movies Photos dir edit label',
             'required': True,
             'data_type': 'dir',
-            'model':False,
+            'model': False,
             'name': 'movies_photos_edit',
             "row": False,
             "coll": True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Add JSON File',
+            'name': 'add_json',
+            "row": True,
+            "coll": True,
+            'new_row': True
         })
 
         self.add_iten('button', {

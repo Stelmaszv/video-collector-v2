@@ -1,6 +1,7 @@
 import json
+import os
 from core.view import AbstractBaseView
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QFileDialog
 from app.forms import JSONDataConfigForm
 from app.model_view import ConfigAddDataModel
 from view.menu.menu import Menu
@@ -11,6 +12,16 @@ class JSONConfigView(QWidget,AbstractBaseView):
     window_title = 'JSON data config'
     resolution_index   = 'Menu'
     show_elemnts = ['Title','Info','Galery','Nav','Avatar','List']
+
+    def add_json(self, values):
+        file_filter = 'Data File (*.xlsx *.csv *.dat);; Excel File (*.xlsx *.xls)'
+        response = QFileDialog.getOpenFileName(
+            caption='Select a data file',
+            directory=os.getcwd(),
+            filter=file_filter,
+            initialFilter='Excel File (*.xlsx *.xls)'
+        )
+        print(response)
 
     def submit_click(self,values):
         self.Submit.auto_model=False
@@ -25,7 +36,12 @@ class JSONConfigView(QWidget,AbstractBaseView):
                     {
                         "type": "series",
                         "dir": values[1]['value']
+                    },
+                    {
+                        "type": "producents",
+                        "dir": values[2]['value']
                     }
+
                 ],
                 "movies_photos": values[2]['value'],
             }
