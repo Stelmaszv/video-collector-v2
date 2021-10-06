@@ -23,13 +23,14 @@ class GetRezolution:
 class ConfiGData:
 
   def __init__(self,json):
-      self.valid_drive(json)
     for dir in json['dirs']:
+      self.valid_drive(dir['dir'])
       self.make_dirs(dir['dir'])
 
   def valid_drive(self,dir):
-      Error.throw_error_bool('Drive ' + dir['drive'] + ' not exist please check if is crypt ! ',
-                             os.path.isdir(dir['drive']))
+    name = dir.split('\\')
+    dir_error = os.path.isdir(name[0])
+    Error.throw_error_bool('Drive ' + name[0] + ' not exist please check if is crypt ! ', dir_error)
 
   def make_dirs(self,dir):
     if os.path.isdir(dir) is False:

@@ -34,21 +34,7 @@ class JSONConfigView(QWidget,AbstractBaseView):
             data = json.load(json_file)
             valid_JSON(data)
             array = {
-                "drive": "Z",
-                "dirs": [{
-                    "type": "stars",
-                    "dir": data['dirs'][0]
-                },
-                    {
-                        "type": "series",
-                        "dir": data['dirs'][1]
-                    },
-                    {
-                        "type": "producents",
-                        "dir": data['dirs'][2]
-                    }
-
-                ],
+                "dirs": data['dirs'],
                 "movies_photos": data['movies_photos'],
             }
             json_array = json.dumps(array)
