@@ -24,26 +24,28 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
     def __init__(self,page=0):
         super().__init__()
         self.page=page
-        exitAct = QAction(QIcon('exit.png'), '&Exit', self)
-        exitAct.setShortcut('ESC')
-        exitAct.setStatusTip('Exit application')
 
-        jsonConfig = QAction(QIcon('exit.png'), '&Exit', self)
-        jsonConfig.setShortcut('Ctrl+C')
-        jsonConfig.setStatusTip('Json')
+        jsonConfig = QAction(QIcon('exit.png'), '&Change Json File', self)
+        jsonConfig.setShortcut('Ctrl+J')
+        jsonConfig.setStatusTip('Change Json File')
         jsonConfig.triggered.connect(self.json_config)
 
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&JSON')
-        fileMenu.addAction(jsonConfig)
+        raportConfig = QAction(QIcon('exit.png'), '&Raport', self)
+        raportConfig.setShortcut('Ctrl+R')
+        raportConfig.setStatusTip('Raport')
+        raportConfig.triggered.connect(self.raport)
 
         menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction(exitAct)
-        exitAct.triggered.connect(qApp.quit)
+        fileMenu = menubar.addMenu('&Actions')
+        fileMenu.addAction(jsonConfig)
+        fileMenu.addAction(raportConfig)
 
     def json_config(self):
         self.BaseView.load_view('JSONCONFIG')
+
+    def raport(self):
+        self.BaseView.load_view('raport')
+
 
     def resizeEvent(self, event):
         self.SetResolution.return_abstrat_view()

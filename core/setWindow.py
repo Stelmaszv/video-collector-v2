@@ -1,8 +1,6 @@
 from core.media_player import Player
-from core.strings import stringManipupations
-import sys
-from PyQt5.QtWidgets import QApplication
 from core.custum_errors import Error
+
 
 open_wnidows=[]
 
@@ -24,10 +22,12 @@ class setWindow():
         from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
         from view.galery.edit_galery import EditGaleryMovieView
         from view.config.config_data_json import JSONConfigView
+        from view.config.RaportView import RaportView
         from view.producent.producent_view import ProducentView
 
         switcher = {
             'JSONCONFIG': JSONConfigView(),
+            'raport': RaportView(),
             'stars_add_tag_view' : StarsAddTagView(),
             'movies_add_tag_view': MoviesAddTagView(),
             'series_add_tag_view': SeriesAddTagView(),
