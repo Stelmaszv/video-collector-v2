@@ -14,14 +14,39 @@ class JSONConfigView(QWidget,AbstractBaseView):
     show_elemnts = ['Title','Info','Galery','Nav','Avatar','List']
 
     def add_json(self, values):
-        file_filter = 'Data File (*.xlsx *.csv *.dat);; Excel File (*.xlsx *.xls)'
+        file_filter = 'Data File (*.JSON)'
         response = QFileDialog.getOpenFileName(
             caption='Select a data file',
             directory=os.getcwd(),
-            filter=file_filter,
-            initialFilter='Excel File (*.xlsx *.xls)'
+            filter=file_filter
         )
-        print(response)
+        response
+        with open(response[0]) as json_file:
+            data = json.load(json_file)
+            array = {
+                "dirs": [{
+                    "type": "stars",
+                    "dir": data['dirs'][0]
+                },
+                    {
+                        "type": "series",
+                        "dir": data['dirs'][1]
+                    },
+                    {
+                        "type": "producents",
+                        "dir": data['dirs'][2]
+                    }
+
+                ],
+                "movies_photos": data['movies_photos'],
+            }
+            json_array = json.dumps(array)
+            f = open('data.JSON', "x")
+            f.write(json_array)
+            f.close()
+            self.close()
+            M = Menu(0)
+            M.run_window()
 
     def submit_click(self,values):
         self.Submit.auto_model=False
