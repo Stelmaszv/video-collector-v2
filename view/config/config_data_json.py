@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QWidget, QFileDialog
 from app.forms import JSONDataConfigForm
 from app.model_view import ConfigAddDataModel
 from view.menu.menu import Menu
+from core.custum_errors import Error
 class JSONConfigView(QWidget,AbstractBaseView):
     FormSchema = JSONDataConfigForm
     ModelView  = ConfigAddDataModel
@@ -33,6 +34,7 @@ class JSONConfigView(QWidget,AbstractBaseView):
             data = json.load(json_file)
             valid_JSON(data)
             array = {
+                "drive": "Z",
                 "dirs": [{
                     "type": "stars",
                     "dir": data['dirs'][0]
