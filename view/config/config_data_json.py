@@ -14,15 +14,24 @@ class JSONConfigView(QWidget,AbstractBaseView):
     show_elemnts = ['Title','Info','Galery','Nav','Avatar','List']
 
     def add_json(self, values):
+        def valid_JSON(data):
+            if 'dirs' not in data or 'movies_photos' not in data:
+                print('Invalid JSON File !')
+                exit()
+            for dir in data['dirs']:
+                if 'type' not in dir or 'dir' not in dir:
+                    print('Invalid JSON File !')
+                    exit()
         file_filter = 'Data File (*.JSON)'
         response = QFileDialog.getOpenFileName(
             caption='Select a data file',
             directory=os.getcwd(),
             filter=file_filter
         )
-        response
+
         with open(response[0]) as json_file:
             data = json.load(json_file)
+            valid_JSON(data)
             array = {
                 "dirs": [{
                     "type": "stars",
