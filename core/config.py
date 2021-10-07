@@ -389,7 +389,8 @@ class ConfigMovies(AbstractConfigItem):
 
             if os.path.isdir(series) is False:
                 os.mkdir(series)
-            letter = Movie.series[0].name[0]
+            letter_of_movie = Movie.series[0].name[0]
+            letter = letter_of_movie.upper()
             dir = ''
 
             if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
@@ -404,6 +405,7 @@ class ConfigMovies(AbstractConfigItem):
                 dir = series + '\\R-U'
             if letter == 'W' or letter == 'V' or letter == 'X' or letter == 'Y' or letter == 'Z':
                 dir = series + '\\W-Z'
+
             if os.path.isdir(dir) is False:
                 os.mkdir(dir)
             sereis_dir = dir + '\\' + Movie.series[0].name

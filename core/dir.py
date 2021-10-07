@@ -11,7 +11,7 @@ from core.setings import data_JSON,photo_ext,movie_ext
 from moviepy.editor import VideoFileClip
 from core.strings import stringManipupations
 
-add= False
+add: bool = False
 
 
 def set_dir_for_star(name: object) -> object:
@@ -465,7 +465,6 @@ class AddStarViaDir(AbstractAddViaDir):
                     stars=new_stars,
                 )
                 movie.src=src
-                movie.dir = set_movie_dir(movie)
                 object.append(movie)
                 print('Movie ' + str(name) + ' has been added')
 
