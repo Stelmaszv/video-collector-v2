@@ -31,51 +31,6 @@ def set_dir_for_star(name: object) -> object:
         dir = data_JSON['dirs'][0]['dir'] + '\\W-Z\\' + name
     return dir
 
-def set_movie_dir(Movie) ->str:
-    if len(Movie.series):
-        series = data_JSON['movies_photos'] + '\\series'
-        series_name = series + '\\' + Movie.series[0].name
-        sezon_dir = series_name + '\\' + str(Movie.sezon)
-        movie_dir = sezon_dir + '\\' + Movie.name
-
-        if os.path.isdir(series) is False:
-            os.mkdir(series)
-        letter = Movie.series[0].name[0]
-        dir = ''
-
-        if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
-            dir = series + '\\A-D'
-        if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
-            dir = series + '\\E-H'
-        if letter == 'I' or letter == 'J' or letter == 'K' or letter == 'L':
-            dir = series + '\\I-L'
-        if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P' or letter == 'Q':
-            dir = series + '\\M-P'
-        if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
-            dir = series + '\\R-U'
-        if letter == 'W' or letter == 'V' or letter == 'X' or letter == 'Y' or letter == 'Z':
-            dir = series + '\\W-Z'
-        if os.path.isdir(dir) is False:
-            os.mkdir(dir)
-        sereis_dir=dir+'\\'+Movie.series[0].name
-        if os.path.isdir(sereis_dir) is False:
-            os.mkdir(sereis_dir)
-
-        sezon_dir = sereis_dir + '\\' + Movie.sezon
-        if os.path.isdir(sezon_dir) is False:
-            os.mkdir(sezon_dir)
-        movie_dir = sezon_dir + '\\' + Movie.name
-        if os.path.isdir(movie_dir) is False:
-            os.mkdir(movie_dir)
-    else:
-        movies = data_JSON['movies_photos'] + '\\movies'
-        if os.path.isdir(movies) is False:
-            os.mkdir(movies)
-
-        movie_dir = movies + '\\' + Movie.name
-        if os.path.isdir(movie_dir) is False:
-            os.mkdir(movie_dir)
-    return movie_dir
 
 def if_star_exist(self,name):
     return self.if_exist(name, self.model, self.model(
@@ -431,7 +386,6 @@ class AddSeriesViaDir(AbstractAddViaDir):
             series=series,
             sezon=sezon
         );
-        model.dir=set_movie_dir(model)
         return model
 
     def if_movie_exist(self,name,seazon):
