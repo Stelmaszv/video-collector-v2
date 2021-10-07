@@ -13,7 +13,8 @@ from core.strings import stringManipupations
 
 add= False
 
-def set_dir_for_star(name):
+
+def set_dir_for_star(name: object) -> object:
     letter = name[0]
     dir = ''
     if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
@@ -28,8 +29,6 @@ def set_dir_for_star(name):
         dir = data_JSON['dirs'][0]['dir'] + '\\R-U\\' + name
     if letter == 'W' or letter == 'V' or letter == 'X' or letter == 'Y' or letter == 'Z':
         dir = data_JSON['dirs'][0]['dir'] + '\\W-Z\\' + name
-    if os.path.exists(dir) is False:
-        os.mkdir(dir)
     return dir
 
 def set_movie_dir(Movie) ->str:
