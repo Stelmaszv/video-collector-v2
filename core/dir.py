@@ -5,6 +5,8 @@ import random
 from app.db.models import Stars,Movies,Series,Photos,Sezons,Tags,Producent
 from app.db.models import session
 from abc import ABC,abstractmethod
+
+from core.custum_errors import Error
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
 from pathlib import Path
 from core.setings import data_JSON,photo_ext,movie_ext
@@ -15,7 +17,9 @@ add: bool = False
 
 
 def set_dir_for_star(name: object) -> object:
-    letter = name[0]
+    letter_of_movie = name[0]
+    Error.throw_error_bool("First letter of star can not be 'space' (" + str(name) + ") !!", letter_of_movie != " ")
+    letter = letter_of_movie.upper()
     dir = ''
     if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
         dir = data_JSON['dirs'][0]['dir'] + '\\A-D\\' + name
