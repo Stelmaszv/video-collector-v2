@@ -398,9 +398,9 @@ class GetResolutionData:
                         self.set_rezulution(10, 'height')
                     ],
                     "list_view_size"   :   [
-                        self.set_rezulution(2, 'with'),
+                        self.set_rezulution(0, 'with'),
                         self.set_rezulution(20, 'height'),
-                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(25, 'with'),
                         self.set_rezulution(65, 'height')
                     ],
                     "pagination_form"  :   [

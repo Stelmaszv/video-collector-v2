@@ -15,4 +15,3 @@ class MovieListView(QWidget, AbstractBaseView):
 
     def  set_up(self):
         self.set_list_view_data(self.list['movies'])
-
