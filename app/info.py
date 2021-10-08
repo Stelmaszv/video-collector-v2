@@ -16,7 +16,7 @@ class BaseInfo:
             for el in stars:
                 if count > 0:
                     stars_str = stars_str + ' , '
-                if count %2 == 0:
+                if count % 4 == 0:
                     stars_str = stars_str + ' <br> '
                 stars_str = stars_str + str(el.show_name)
                 count = count + 1
@@ -60,8 +60,8 @@ class SingleSectionInfo(BaseInfo):
 
         if stars_in_seazom:
             self.data_info.append({
-                "itemNmae": "Stars",
-                "itemName2": stars_in_seazom
+                "itemNmae": stars_in_seazom,
+                "itemName2": ""
             })
         return self.data_info
 

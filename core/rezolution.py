@@ -189,10 +189,10 @@ class GetResolutionData:
                     ],
 
                     "section_info": [
-                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(1, 'with'),
                         self.set_rezulution(30, 'height'),
-                        self.set_rezulution(12, 'with'),
-                        self.set_rezulution(25, 'height')
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(10, 'height')
                     ],
 
                     "section_scroller":[
