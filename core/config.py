@@ -355,10 +355,11 @@ class ProducentConfigData(AbstractConfigItem):
             new_dir = self.dir + '/stars/' + item['Star']
             if os.path.isdir(new_dir) is False:
                 os.mkdir(new_dir)
-            if os.path.isdir(new_dir + '\\list.JSON') is False:
-                f = open(new_dir + '\\list.JSON', "x")
-                f.write(json.dumps(item['Movies']))
-                f.close()
+            if Path(new_dir + '\\list.JSON').is_file() is True:
+                os.remove(new_dir + '\\list.JSON')
+            f = open(new_dir + '\\list.JSON', "x")
+            f.write(json.dumps(item['Movies']))
+            f.close()
 
     def movies_list(self):
         def convert_to_src(movies):
@@ -370,6 +371,8 @@ class ProducentConfigData(AbstractConfigItem):
         movies = []
         for el in self.data.series:
             movies.extend(el.movies)
+        if Path(self.dir + '\\movies_list.JSON').is_file() is True:
+            os.remove(self.dir + '\\movies_list.JSON')
         f = open(self.dir + '\\movies_list.JSON', "x")
         new_movies = convert_to_src(movies)
         f.write(json.dumps(new_movies))
