@@ -338,9 +338,31 @@ class ProducentConfigData(AbstractConfigItem):
             Obj.series.append(SeriesObj)
             session.commit()
 
+    def dir_for_stars(self):
+        if os.path.isdir(self.dir + '/stars') is False:
+            os.mkdir(self.dir + '/stars')
+
+        with open(self.dir + '/stars_counter.JSON') as json_file:
+            data = json.load(json_file)
+            new_array = []
+            for item in data:
+                if item['Count'] > 2:
+                    new_array.append(item)
+        self.create_star_dir(new_array)
+
+    def create_star_dir(self, array):
+        for item in array:
+            new_dir = self.dir + '/stars/' + item['Star']
+            if os.path.isdir(new_dir) is False:
+                os.mkdir(new_dir)
+            f = open(new_dir + '\\list.JSON', "x")
+            f.write(json.dumps(item['Movies']))
+            f.close()
+
     def load(self):
         self.stars_in_producent()
         self.create_series_list()
+        self.dir_for_stars()
         with open(self.config) as json_file:
             data = json.load(json_file)
 
