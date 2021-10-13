@@ -321,7 +321,6 @@ class ProducentConfigData(AbstractConfigItem):
         self.add_list(self.data, 'series', 'dir')
 
     def stars_in_producent(self):
-
         stars = []
         movies_dir = []
         for Serie in self.data.series:
