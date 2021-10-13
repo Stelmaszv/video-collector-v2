@@ -133,6 +133,30 @@ class AbstractConfigItem(ABC):
         f.write(json.dumps(ObjectsList))
         f.close()
 
+    def dir_for_stars(self):
+        if os.path.isdir(self.dir + '/stars') is False:
+            os.mkdir(self.dir + '/stars')
+
+        with open(self.dir + '/stars_counter.JSON') as json_file:
+            data = json.load(json_file)
+            new_array = []
+            for item in data:
+                if item['Count'] > 2:
+                    new_array.append(item)
+        self.create_star_dir(new_array)
+
+    def create_star_dir(self, array):
+        for item in array:
+            new_dir = self.dir + '/stars/' + item['Star']
+            if os.path.isdir(new_dir) is False:
+                os.mkdir(new_dir)
+            if Path(new_dir + '\\list.JSON').is_file() is True:
+                os.remove(new_dir + '\\list.JSON')
+            f = open(new_dir + '\\list.JSON', "x")
+            f.write(json.dumps(item['Movies']))
+            f.close()
+
+
     def counter(self, stars_list, movies_dir):
         def order_by_count(el):
             return el['Count']
@@ -194,8 +218,24 @@ class SeriesConfigData(AbstractConfigItem):
         ProducentObj = self.session.query(Producent).filter(Producent.name == producent[0]).first()
         Series.producent.append(ProducentObj)
 
+    def movies_list(self):
+        def convert_to_src(movies):
+            new_movies = []
+            for item in movies:
+                new_movies.append(item.src)
+            return new_movies
+
+        if Path(self.dir + '\\movies_list.JSON').is_file() is True:
+            os.remove(self.dir + '\\movies_list.JSON')
+        f = open(self.dir + '\\movies_list.JSON', "x")
+        new_movies = convert_to_src(self.data.movies)
+        f.write(json.dumps(new_movies))
+        f.close()
+
     def load(self):
         self.stars_counter()
+        self.dir_for_stars()
+        self.movies_list()
         with open(self.config) as json_file:
             data = json.load(json_file)
             if 'fields' in data:
@@ -337,29 +377,6 @@ class ProducentConfigData(AbstractConfigItem):
             SeriesObj=ASVD.if_series_exist(ASVD.name)
             Obj.series.append(SeriesObj)
             session.commit()
-
-    def dir_for_stars(self):
-        if os.path.isdir(self.dir + '/stars') is False:
-            os.mkdir(self.dir + '/stars')
-
-        with open(self.dir + '/stars_counter.JSON') as json_file:
-            data = json.load(json_file)
-            new_array = []
-            for item in data:
-                if item['Count'] > 2:
-                    new_array.append(item)
-        self.create_star_dir(new_array)
-
-    def create_star_dir(self, array):
-        for item in array:
-            new_dir = self.dir + '/stars/' + item['Star']
-            if os.path.isdir(new_dir) is False:
-                os.mkdir(new_dir)
-            if Path(new_dir + '\\list.JSON').is_file() is True:
-                os.remove(new_dir + '\\list.JSON')
-            f = open(new_dir + '\\list.JSON', "x")
-            f.write(json.dumps(item['Movies']))
-            f.close()
 
     def movies_list(self):
         def convert_to_src(movies):
