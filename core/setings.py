@@ -30,7 +30,7 @@ class ConfiGData:
   def valid_drive(self,dir):
     name = dir.split('\\')
     dir_error = os.path.isdir(name[0])
-    Error.throw_error_bool('Drive '+name[0]+' not exist please check if is crypt ! ',dir_error)
+    Error.throw_error_bool('Drive ' + name[0] + ' not exist please check if is crypt ! ', dir_error)
 
   def make_dirs(self,dir):
     if os.path.isdir(dir) is False:
@@ -91,7 +91,7 @@ auto_play=True
 full_screen=True
 #run_setings
 scan_photos=False
-run_start_view = True
+run_start_view = False
 clean_db = False
 #AdvanceSearchCriteria
 tags_defult                       = ('')

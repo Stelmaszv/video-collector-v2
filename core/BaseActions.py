@@ -184,6 +184,11 @@ class Submit:
                     self.error.append("<b>" + item['error'] + "</b> is required !")
 
             if 'data-type' in item:
+                if item['data-type'] == 'dir_create':
+                    if os.path.isdir(item['value']) is False:
+                        if item['value']:
+                            os.mkdir(item['value'])
+
                 if item['data-type'] == 'photo_location':
                     if len(item['value']) > 0:
                         if Path(item['value']).is_file() is False:

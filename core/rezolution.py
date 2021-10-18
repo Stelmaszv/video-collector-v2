@@ -189,10 +189,10 @@ class GetResolutionData:
                     ],
 
                     "section_info": [
-                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(1, 'with'),
                         self.set_rezulution(30, 'height'),
-                        self.set_rezulution(12, 'with'),
-                        self.set_rezulution(25, 'height')
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(10, 'height')
                     ],
 
                     "section_scroller":[
@@ -379,6 +379,12 @@ class GetResolutionData:
             "Menu": {
                 "position": self.base_menu(),
                 "window": {
+                    "info_size": [
+                        self.set_rezulution(7, 'with'),
+                        self.set_rezulution(7, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
                     "title_size"       :   [
                         self.set_rezulution(0, 'with'),
                         self.set_rezulution(2, 'height'),
@@ -392,9 +398,9 @@ class GetResolutionData:
                         self.set_rezulution(10, 'height')
                     ],
                     "list_view_size"   :   [
-                        self.set_rezulution(2, 'with'),
+                        self.set_rezulution(0, 'with'),
                         self.set_rezulution(20, 'height'),
-                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(25, 'with'),
                         self.set_rezulution(65, 'height')
                     ],
                     "pagination_form"  :   [

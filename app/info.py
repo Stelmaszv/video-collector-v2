@@ -1,5 +1,7 @@
 from core.datamanipulation import Data as Data
 from core.strings import stringManipupations
+from app.db.models import Movies, Stars, Series, Producent
+from app.db.models import session
 class BaseInfo:
     data_info=[]
     def __init__(self, Obj=None, methods=[]):
@@ -14,7 +16,7 @@ class BaseInfo:
             for el in stars:
                 if count > 0:
                     stars_str = stars_str + ' , '
-                if count %2 == 0:
+                if count % 4 == 0:
                     stars_str = stars_str + ' <br> '
                 stars_str = stars_str + str(el.show_name)
                 count = count + 1
@@ -58,8 +60,8 @@ class SingleSectionInfo(BaseInfo):
 
         if stars_in_seazom:
             self.data_info.append({
-                "itemNmae": "Stars",
-                "itemName2": stars_in_seazom
+                "itemNmae": stars_in_seazom,
+                "itemName2": ""
             })
         return self.data_info
 
@@ -92,19 +94,60 @@ class MovisWithStar(BaseInfo):
 
     def return_data(self):
         return [
-            {"itemNmae": "anser", "itemName2": "anser1"},
-            {"itemNmae": "anser2", "itemName2": "anser2"},
-            {"itemNmae": "anser3", "itemName2": "anser2"}
+            {"itemNmae": "Movies", "itemName2": "anser1"},
         ]
 
 class PrducentInfo(BaseInfo):
+    tag_limit = 1000
+    def return_data(self):
+        self.data_info = []
+        self.data_info.append({
+            "itemNmae": "Views / Likes",
+            "itemName2": str(self.BaseView.data.views) + ' / ' + str(self.BaseView.data.likes)
+        })
+        self.data_info.append({
+            "itemNmae": "Favourite",
+            "itemName2": str(self.BaseView.data.favourite)
+        })
+        self.data_info.append({
+            "itemNmae": "Series",
+            "itemName2": str(len(self.BaseView.data.series))
+        })
+
+        self.data_info.append({
+            "itemNmae": "Movies",
+            "itemName2": str(self.movies_count(self.BaseView.data.series))
+        })
+
+        if len(self.BaseView.data.tags) > 0:
+            self.data_info.append({
+                "itemNmae": "Tags",
+                "itemName2": stringManipupations.short(
+                    stringManipupations.array_to_string(
+                        self.BaseView.data.tags
+                    ),
+                    self.tag_limit)
+            })
+        return self.data_info
+
+    def movies_count(self, series):
+        counter = 0
+        for serie in series:
+            counter = counter + len(serie.movies)
+        return counter
+
+class RaportInfo(BaseInfo):
 
     def return_data(self):
         return [
-            {"itemNmae": "anser", "itemName2": "anser1"},
-            {"itemNmae": "anser2", "itemName2": "anser2"},
-            {"itemNmae": "anser3", "itemName2": "anser2"}
+            {"itemNmae": "Movies", "itemName2": str(self.counter(Movies))},
+            {"itemNmae": "Stars", "itemName2": str(self.counter(Stars))},
+            {"itemNmae": "Series", "itemName2": str(self.counter(Series))},
+            {"itemNmae": "Producents", "itemName2": str(self.counter(Producent))},
         ]
+
+    def counter(self, Model):
+        return session.query(Model).count()
 
 class InfoForMovie(BaseInfo):
 
