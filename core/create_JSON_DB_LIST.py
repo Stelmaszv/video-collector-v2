@@ -5,9 +5,9 @@ import os
 
 class CreateJSONDBLIST:
     Sesion = session
-    series_fields = ["years", "country", "number_of_sezons", "stars"]
+    series_fields = ["years", "country", "number_of_sezons", 'top stars']
     stars_fields = ['weight', 'height', 'ethnicity', 'hair_color', 'date_of_birth']
-    movies_fields = ["stars"]
+    movies_fields = ["short_series", "short_stars"]
     producent_fields = ['country', 'series', 'top stars']
 
     def base_get(self, Model, atters):
@@ -32,8 +32,26 @@ class CreateJSONDBLIST:
                     item["stars"] = self.return_stars(item_db)
                 if atter == "top stars":
                     item["top_stars"] = self.return_top_stars(item_db)
+                if atter == "short_series":
+                    item["short_series"] = self.return_short_series(item_db)
+                if atter == "short_stars":
+                    item["short_stars"] = self.return_short_stars(item_db)
             array_return.append(item)
         return array_return
+
+    def return_short_stars(self, item_db):
+        array = []
+        for item_db in item_db.stars:
+            tag_json = {
+                "name": item_db.name,
+                "dir": item_db.dir,
+                "avatar": item_db.avatar,
+            }
+            array.append(tag_json)
+        return array
+
+    def return_short_series(self, item_db):
+        return item_db.series[0].show_name
 
     def return_top_stars(self, item):
         top_stars = []
