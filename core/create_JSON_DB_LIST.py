@@ -1,9 +1,20 @@
 from app.db.models import session
-from app.db.models import Producent, Tags
+from app.db.models import Producent, Tags, Stars
 import json
 
 class CreateJSONDBLIST:
     Sesion = session
+
+    def base_get(self, Model, atters):
+        array_return = []
+        loop = self.loop(Model)
+        for item_db in loop.all():
+            item = self.add_defults(item_db)
+            for atter in atters:
+                if hasattr(item_db, atter):
+                    item[atter] = getattr(item_db, atter)
+                array_return.append(item)
+        return array_return
 
     def return_tags(self):
         tags = self.loop(Tags)
@@ -11,29 +22,28 @@ class CreateJSONDBLIST:
         for tag in tags.all():
             tag_json = {
                 "id": tag.id,
-                "name": tag.name
+                "name": tag.name,
             }
             tags_array.append(tag_json)
         return tags_array
+
+    def add_defults(self, item):
+        data_JSON = {
+            "id": item.id,
+            "name": item.name,
+            "show_name": item.show_name,
+            "dir": item.dir,
+            "description": item.description,
+            "avatar": item.avatar,
+            "tags": self.return_tags()
+        }
+        return data_JSON
 
     def loop(self, Model):
         return self.Sesion.query(Model)
 
     def get_producnets(self):
-        producents = []
-        loop = self.loop(Producent)
-        for item in loop.all():
-            item = {
-                "id": item.id,
-                "name": item.name,
-                "avatar": item.avatar,
-                "dir": item.dir,
-                "country": item.country,
-                "description": item.description,
-                "tags": self.return_tags()
-            }
-            producents.append(item)
-        return producents
+        return self.base_get(Producent, ['country'])
 
     def get_movies(self):
         return {}
@@ -42,7 +52,7 @@ class CreateJSONDBLIST:
         return {}
 
     def get_stars(self):
-        return {}
+        return self.base_get(Stars, ['weight', 'height', 'ethnicity', 'hair_color', 'date_of_birth'])
 
     def create(self):
         list = []
