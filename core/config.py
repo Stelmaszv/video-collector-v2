@@ -5,7 +5,6 @@ from app.db.models import Tags,Series,Stars,Movies,Producent
 from datetime import datetime
 from core.setings import singles_movies_defult,none_movies_defult
 from pathlib import Path
-import time
 import os
 import json
 import xlsxwriter
@@ -44,6 +43,13 @@ class StarList:
         f.write(json.dumps(JSON))
         f.close()
 
+    def star_do_JSON(self, Star):
+        JSON = {
+            "dir": Star.dir,
+            "avatar": Star.avatar,
+            "name": Star.show_name
+        }
+        return JSON
 
     def create_star_list(self):
         def star_count(id, stars_list):
@@ -59,7 +65,9 @@ class StarList:
             if Star.id not in added:
                 stars_list.append({
                     'Star': Star.show_name,
-                    'Count': star_count(Star.id, self.list)})
+                    'Count': star_count(Star.id, self.list),
+                    'StarObj': self.star_do_JSON(Star)
+                })
                 added.append(Star.id)
         return stars_list
 

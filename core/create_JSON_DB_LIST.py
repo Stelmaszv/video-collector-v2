@@ -1,13 +1,14 @@
 from app.db.models import session
 from app.db.models import Producent, Stars, Movies, Series
 import json
+import os
 
 class CreateJSONDBLIST:
     Sesion = session
     series_fields = ["years", "country", "number_of_sezons", "stars"]
     stars_fields = ['weight', 'height', 'ethnicity', 'hair_color', 'date_of_birth']
     movies_fields = ["stars"]
-    producent_fields = ['country', 'series']
+    producent_fields = ['country', 'series', 'top stars']
 
     def base_get(self, Model, atters):
 
@@ -20,7 +21,7 @@ class CreateJSONDBLIST:
         for item_db in loop_all:
             item = self.add_defults(item_db)
             for atter in atters:
-                if atter != "series":
+                if atter != "series" or atter != "stars" or atter != "top stars":
                     if hasattr(item_db, atter):
                         item[atter] = getattr(item_db, atter)
                 if atter == "series":
@@ -29,8 +30,16 @@ class CreateJSONDBLIST:
                     item["movies"] = self.return_movies(item_db)
                 if atter == "stars":
                     item["stars"] = self.return_stars(item_db)
+                if atter == "top stars":
+                    item["top_stars"] = self.return_top_stars(item_db)
             array_return.append(item)
         return array_return
+
+    def return_top_stars(self, item):
+        top_stars = []
+        with open(item.dir + '/stars_counter.JSON') as json_file:
+            data = json.load(json_file)
+        return top_stars
 
     def return_stars(self, item):
         return self.base_get(item.stars, self.stars_fields)
@@ -80,11 +89,12 @@ class CreateJSONDBLIST:
 
     def create(self):
         list = [
-            {"OBJ": self.get_producnets(), 'name': 'producents.JSON'},
-            {"OBJ": self.get_movies(), 'name': 'movies.JSON'},
-            {"OBJ": self.get_series(), 'name': 'series.JSON'},
-            {"OBJ": self.get_stars(), 'name': 'stars.JSON'}
+            {"OBJ": self.get_producnets(), 'name': 'JSONOUTPUT/producents.JSON'},
+            {"OBJ": self.get_movies(), 'name': 'JSONOUTPUT/movies.JSON'},
+            {"OBJ": self.get_series(), 'name': 'JSONOUTPUT/series.JSON'},
+            {"OBJ": self.get_stars(), 'name': 'JSONOUTPUT/stars.JSON'}
         ]
+        os.mkdir('JSONOUTPUT')
         for el in list:
             f = open(el['name'], "x")
             f.write(json.dumps(el['OBJ']))
