@@ -1,12 +1,12 @@
 from app.db.models import session
-from app.db.models import Producent, Tags, Stars, Movies, Series
+from app.db.models import Producent, Stars, Movies, Series
 import json
 
 class CreateJSONDBLIST:
     Sesion = session
-    series_fields = ["years", "country", "number_of_sezons", "movies", "stars"]
+    series_fields = ["years", "country", "number_of_sezons", "stars"]
     stars_fields = ['weight', 'height', 'ethnicity', 'hair_color', 'date_of_birth']
-    movies_fields = []
+    movies_fields = ["stars"]
     producent_fields = ['country', 'series']
 
     def base_get(self, Model, atters):
@@ -79,11 +79,13 @@ class CreateJSONDBLIST:
         return self.base_get(Stars, self.stars_fields)
 
     def create(self):
-        list = []
-        list.append({"producents": self.get_producnets()})
-        list.append({"movies": self.get_movies()})
-        list.append({"series": self.get_series()})
-        list.append({"stars": self.get_stars()})
-        f = open('db.JSON', "x")
-        f.write(json.dumps(list))
-        f.close()
+        list = [
+            {"OBJ": self.get_producnets(), 'name': 'producents.JSON'},
+            {"OBJ": self.get_movies(), 'name': 'movies.JSON'},
+            {"OBJ": self.get_series(), 'name': 'series.JSON'},
+            {"OBJ": self.get_stars(), 'name': 'stars.JSON'}
+        ]
+        for el in list:
+            f = open(el['name'], "x")
+            f.write(json.dumps(el['OBJ']))
+            f.close()
