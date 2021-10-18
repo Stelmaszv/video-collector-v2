@@ -7,6 +7,7 @@ from core.dir import LoadFilesFromJson, PhotoMeaker
 from core.setings import data_JSON,scan_photos,run_start_view,clean_db,start_page
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
+from core.create_JSON_DB_LIST import CreateJSONDBLIST
 
 class DBCleaner:
 
@@ -55,6 +56,9 @@ class Run:
 
             CreateXMLOBJ = CreateMovieList(data_JSON['dirs'])
             CreateXMLOBJ.load();
+
+            CreateJSONDBLISTOBJ = CreateJSONDBLIST()
+            CreateJSONDBLISTOBJ.create();
 
             if self.scan_photos:
                 for Movie in session.query(Movies).all():
