@@ -1,5 +1,7 @@
+from abc import ABC
 from app.db.models import session
 from app.db.models import Producent, Stars, Movies, Series
+from core.custum_errors import Error
 from pathlib import Path
 import json
 import os
@@ -125,13 +127,13 @@ class CreateJSONDBLIST:
             f.close()
 
 
-class GenerateJSONOtputsMovies:
-    input = "JSONOUTPUT/movies.JSON"
-    movies_fields = ["short_series", "short_stars"]
-    Model = Movies
+class AbstratJSONOtpus(ABC):
+    input = ""
+    Model = None
+    fields = []
     CreateJSONDBLISTObj = CreateJSONDBLIST()
 
-    def add_db(self, Movie):
+    def defult_add(self, Movie):
         data_JSON = {
             "id": Movie["id"],
             "name": Movie["name"],
@@ -144,11 +146,24 @@ class GenerateJSONOtputsMovies:
         return data_JSON
 
     def create(self):
+        Error.throw_error_bool("input not exist", self.input != "")
         with open(self.input) as json_file:
             data = json.load(json_file)
             for movie in data:
                 if Path(movie["dir"] + '\db.JSON').is_file() is True:
                     os.remove(movie["dir"] + '\db.JSON')
                 f = open(movie["dir"] + '\db.JSON', "x")
-                f.write(json.dumps(self.add_db(movie)))
+                f.write(json.dumps(self.defult_add(movie)))
                 f.close()
+
+
+class GenerateJSONOtputsMovies(AbstratJSONOtpus):
+    input = "JSONOUTPUT/movies.JSON"
+    fields = []
+    Model = Movies
+
+
+class GenerateJSONOtputsStars((AbstratJSONOtpus)):
+    input = "JSONOUTPUT/stars.JSON"
+    fields = []
+    Model = Stars
