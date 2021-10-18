@@ -5,7 +5,6 @@ import random
 from app.db.models import Stars,Movies,Series,Photos,Sezons,Tags,Producent
 from app.db.models import session
 from abc import ABC,abstractmethod
-
 from core.custum_errors import Error
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
 from pathlib import Path
