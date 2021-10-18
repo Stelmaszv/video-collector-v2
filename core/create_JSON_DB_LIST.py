@@ -54,7 +54,11 @@ class CreateJSONDBLIST:
         return array
 
     def return_short_series(self, item_db):
-        return item_db.series[0].show_name
+        return {
+            "name": item_db.series[0].show_name,
+            "dir": item_db.series[0].dir,
+            "avatar": item_db.series[0].avatar,
+        }
 
     def return_top_stars(self, item):
         top_stars = []
