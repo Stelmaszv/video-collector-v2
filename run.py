@@ -8,7 +8,7 @@ from core.setings import data_JSON,scan_photos,run_start_view,clean_db,start_pag
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
-    GenerateJSONOtputsSeries
+    GenerateJSONOtputsSeries, GenerateJSONOtputsProducent
 
 class DBCleaner:
 
@@ -72,10 +72,9 @@ class Run:
             GenerateJSONOtputsStarsOBJ = GenerateJSONOtputsStars()
             GenerateJSONOtputsStarsOBJ.create()
 
-            print("Config JSON Outputs for series in progres")
-            GenerateJSONOtputsSeriesOBJ = GenerateJSONOtputsSeries()
-            GenerateJSONOtputsSeriesOBJ.create()
-
+            print("Config JSON Outputs for producent in progres")
+            GenerateJSONOtputsProducentOBJ = GenerateJSONOtputsProducent()
+            GenerateJSONOtputsProducentOBJ.create()
 
             if self.scan_photos:
                 print("Createing screen shots in progres")

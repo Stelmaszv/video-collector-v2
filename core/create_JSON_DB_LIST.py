@@ -189,7 +189,6 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
     input = "JSONOUTPUT/series.JSON"
     fields = []
     Model = Series
-    series_fields = ["years", "country", "number_of_sezons", 'top stars']
 
     def add_fields(self, data_JSON, Movie):
         data_JSON['years'] = Movie['years']
@@ -198,4 +197,35 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
         data_JSON['top_stars'] = Movie['top_stars']
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, self.fields)
+        return data_JSON
+
+
+class GenerateJSONOtputsProducent(AbstratJSONOtpus):
+    input = "JSONOUTPUT/producents.JSON"
+    fields = []
+    Model = Producent
+    series_fields = []
+
+    def add_movies(self, data):
+        movies = [];
+        for series in data:
+            for Movie in series.movies:
+                data_JSON = {
+                    "id": Movie.id,
+                    "name": Movie.name,
+                    "show_name": Movie.show_name,
+                    "dir": Movie.dir,
+                    "description": Movie.description,
+                    "avatar": Movie.avatar,
+                }
+                data_JSON['short_series'] = self.CreateJSONDBLISTObj.return_short_stars(Movie)
+                movies.append(data_JSON)
+        return movies
+
+    def add_fields(self, data_JSON, Movie):
+        data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
+        data_JSON['country'] = Movie['country']
+        data_JSON['top_stars'] = Movie['top_stars']
+        data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, self.fields)
+        data_JSON['movies'] = self.add_movies(data.series)
         return data_JSON
