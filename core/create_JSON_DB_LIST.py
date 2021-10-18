@@ -39,6 +39,9 @@ class CreateJSONDBLIST:
         top_stars = []
         with open(item.dir + '/stars_counter.JSON') as json_file:
             data = json.load(json_file)
+            for star in data:
+                if star['Count'] > 3:
+                    top_stars.append(star["StarObj"])
         return top_stars
 
     def return_stars(self, item):
