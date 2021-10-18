@@ -38,29 +38,30 @@ class Run:
             self.DBCleaner.clean()
 
         if Path('data.json').is_file():
-
+            print("Scaning Dir in progres")
             JSON = LoadFilesFromJson(data_JSON['dirs'])
             JSON.add_files()
-
+            print("Config in progres")
             Config = ConfigLoop(data_JSON['dirs'])
             Config.load()
-
+            print("Config Movies in progres")
             Config = ConfigMovies(data_JSON['movies_photos'])
             Config.load()
-
+            print("Set Tags in progres")
             SetTAgs=SetTags(data_JSON['dirs'])
             SetTAgs.set();
-
+            print("Create XML in progres")
             CreateXMLOBJ=CreateXML(data_JSON['dirs'])
             CreateXMLOBJ.load();
-
+            print("Create Movies List in progres")
             CreateXMLOBJ = CreateMovieList(data_JSON['dirs'])
             CreateXMLOBJ.load();
-
+            print("Config JSON Outputs in progres")
             CreateJSONDBLISTOBJ = CreateJSONDBLIST()
             CreateJSONDBLISTOBJ.create();
 
             if self.scan_photos:
+                print("Create screen shots in progres")
                 for Movie in session.query(Movies).all():
                     PM = PhotoMeaker(Movie, data_JSON['movies_photos'])
                     PM.make()
