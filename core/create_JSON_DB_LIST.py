@@ -143,6 +143,9 @@ class AbstratJSONOtpus(ABC):
             "avatar": Movie["avatar"],
             "tags": Movie['tags']
         }
+        return self.add_fields(data_JSON, Movie)
+
+    def add_fields(self, data_JSON, Movie):
         return data_JSON
 
     def create(self):
@@ -165,5 +168,15 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
 
 class GenerateJSONOtputsStars((AbstratJSONOtpus)):
     input = "JSONOUTPUT/stars.JSON"
-    fields = []
+    fields = ["short_series", "short_stars"]
     Model = Stars
+
+    def add_fields(self, data_JSON, Movie):
+        data_JSON['weight'] = Movie['weight']
+        data_JSON['height'] = Movie['height']
+        data_JSON['ethnicity'] = Movie['ethnicity']
+        data_JSON['hair_color'] = Movie['hair_color']
+        data_JSON['hair_color'] = Movie['date_of_birth']
+        data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
+        data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, self.fields)
+        return data_JSON
