@@ -7,7 +7,7 @@ from core.dir import LoadFilesFromJson, PhotoMeaker
 from core.setings import data_JSON,scan_photos,run_start_view,clean_db,start_page
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
-from core.create_JSON_DB_LIST import CreateJSONDBLIST
+from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies
 
 class DBCleaner:
 
@@ -50,18 +50,25 @@ class Run:
             print("Set Tags in progres")
             SetTAgs=SetTags(data_JSON['dirs'])
             SetTAgs.set();
-            print("Create XML in progres")
+            print("Createing XML in progres")
             CreateXMLOBJ=CreateXML(data_JSON['dirs'])
             CreateXMLOBJ.load();
-            print("Create Movies List in progres")
+            print("Createing Movies List in progres")
             CreateXMLOBJ = CreateMovieList(data_JSON['dirs'])
             CreateXMLOBJ.load();
+
+            """
             print("Config JSON Outputs in progres")
             CreateJSONDBLISTOBJ = CreateJSONDBLIST()
             CreateJSONDBLISTOBJ.create();
+            """
+
+            print("Config JSON Outputs for movies in progres")
+            GenerateJSONOtputsOBJ = GenerateJSONOtputsMovies()
+            GenerateJSONOtputsOBJ.create();
 
             if self.scan_photos:
-                print("Create screen shots in progres")
+                print("Createing screen shots in progres")
                 for Movie in session.query(Movies).all():
                     PM = PhotoMeaker(Movie, data_JSON['movies_photos'])
                     PM.make()

@@ -1,5 +1,6 @@
 from app.db.models import session
 from app.db.models import Producent, Stars, Movies, Series
+from pathlib import Path
 import json
 import os
 
@@ -117,6 +118,37 @@ class CreateJSONDBLIST:
         ]
         os.mkdir('JSONOUTPUT')
         for el in list:
+            if Path(el['name']).is_file() is True:
+                os.remove(el['name'])
             f = open(el['name'], "x")
             f.write(json.dumps(el['OBJ']))
             f.close()
+
+
+class GenerateJSONOtputsMovies:
+    input = "JSONOUTPUT/movies.JSON"
+    movies_fields = ["short_series", "short_stars"]
+    Model = Movies
+    CreateJSONDBLISTObj = CreateJSONDBLIST()
+
+    def add_db(self, Movie):
+        data_JSON = {
+            "id": Movie["id"],
+            "name": Movie["name"],
+            "show_name": Movie["show_name"],
+            "dir": Movie["dir"],
+            "description": Movie["description"],
+            "avatar": Movie["avatar"],
+            "tags": Movie['tags']
+        }
+        return data_JSON
+
+    def create(self):
+        with open(self.input) as json_file:
+            data = json.load(json_file)
+            for movie in data:
+                if Path(movie["dir"] + '\db.JSON').is_file() is True:
+                    os.remove(movie["dir"] + '\db.JSON')
+                f = open(movie["dir"] + '\db.JSON', "x")
+                f.write(json.dumps(self.add_db(movie)))
+                f.close()
