@@ -210,15 +210,8 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
         movies = [];
         for series in data:
             for Movie in series.movies:
-                data_JSON = {
-                    "id": Movie.id,
-                    "name": Movie.name,
-                    "show_name": Movie.show_name,
-                    "dir": Movie.dir,
-                    "description": Movie.description,
-                    "avatar": Movie.avatar,
-                }
-                data_JSON['short_series'] = self.CreateJSONDBLISTObj.return_short_stars(Movie)
+                data_JSON = self.CreateJSONDBLISTObj.add_defults(Movie)
+                data_JSON['short_series'] = self.CreateJSONDBLISTObj.return_short_series(Movie)
                 movies.append(data_JSON)
         return movies
 
