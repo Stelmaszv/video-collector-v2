@@ -1,5 +1,5 @@
 from app.db.models import session
-from app.db.models import Producent, Tags, Stars
+from app.db.models import Producent, Tags, Stars, Movies, Series
 import json
 
 class CreateJSONDBLIST:
@@ -7,6 +7,7 @@ class CreateJSONDBLIST:
     series_fields = ["years", "country", "number_of_sezons", "movies", "stars"]
     stars_fields = ['weight', 'height', 'ethnicity', 'hair_color', 'date_of_birth']
     movies_fields = []
+    producent_fields = ['country', 'series']
 
     def base_get(self, Model, atters):
 
@@ -66,13 +67,13 @@ class CreateJSONDBLIST:
         return self.Sesion.query(Model)
 
     def get_producnets(self):
-        return self.base_get(Producent, ['country', 'series'])
+        return self.base_get(Producent, self.producent_fields)
 
     def get_movies(self):
-        return {}
+        return self.base_get(Movies, self.movies_fields)
 
     def get_series(self):
-        return {}
+        return self.base_get(Series, self.series_fields)
 
     def get_stars(self):
         return self.base_get(Stars, self.stars_fields)
@@ -82,7 +83,7 @@ class CreateJSONDBLIST:
         list.append({"producents": self.get_producnets()})
         list.append({"movies": self.get_movies()})
         list.append({"series": self.get_series()})
-        # list.append({"stars": self.get_stars()})
+        list.append({"stars": self.get_stars()})
         f = open('db.JSON', "x")
         f.write(json.dumps(list))
         f.close()
