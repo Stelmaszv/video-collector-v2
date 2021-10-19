@@ -178,6 +178,13 @@ class AbstratJSONOtpus(ABC):
                 f.write(json.dumps(self.defult_add(movie)))
                 f.close()
 
+                if Path(movie["dir"] + '\db.js').is_file() is True:
+                    os.remove(movie["dir"] + '\db.js')
+                f = open(movie["dir"] + '\db.js', "x")
+                string = 'var data = ' + str(self.defult_add(movie))
+                f.write(string)
+                f.close()
+
     def add_index(self, fields, data_JSON, Movie):
         for el in fields:
             data_JSON[el] = Movie[el]
