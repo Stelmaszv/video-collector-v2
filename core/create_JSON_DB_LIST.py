@@ -6,12 +6,18 @@ from pathlib import Path
 import json
 import os
 
+producent_fields_defult = ['country', 'top_stars']
+producent_fields_defult2 = ['country', 'top_stars', 'series']
+series_fields_defults = ["years", "country", "number_of_sezons", 'top_stars']
+movies_fields_defults = ["short_series", "short_stars"]
+stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'date_of_birth']
+
 class CreateJSONDBLIST:
     Sesion = session
-    series_fields = ["years", "country", "number_of_sezons", 'top stars']
-    stars_fields = ['weight', 'height', 'ethnicity', 'hair_color', 'date_of_birth']
-    movies_fields = ["short_series", "short_stars"]
-    producent_fields = ['country', 'series', 'top stars']
+    series_fields = series_fields_defults
+    stars_fields = stars_fields_defults
+    movies_fields = movies_fields_defults
+    producent_fields = producent_fields_defult2
 
     def base_get(self, Model, atters):
 
@@ -33,7 +39,7 @@ class CreateJSONDBLIST:
                     item["movies"] = self.return_movies(item_db)
                 if atter == "stars":
                     item["stars"] = self.return_stars(item_db)
-                if atter == "top stars":
+                if atter == "top_stars":
                     item["top_stars"] = self.return_top_stars(item_db)
                 if atter == "short_series":
                     item["short_series"] = self.return_short_series(item_db)
@@ -172,53 +178,45 @@ class AbstratJSONOtpus(ABC):
                 f.write(json.dumps(self.defult_add(movie)))
                 f.close()
 
+    def add_index(self, fields, data_JSON, Movie):
+        for el in fields:
+            data_JSON[el] = Movie[el]
 
 class GenerateJSONOtputsMovies(AbstratJSONOtpus):
     input = "JSONOUTPUT/movies.JSON"
-    fields = []
+    fields = movies_fields_defults
     Model = Movies
 
     def add_fields(self, data_JSON, Movie):
-        data_JSON['short_series'] = Movie['short_series']
+        self.add_index(self.fields, data_JSON, Movie)
         return data_JSON
-
 
 class GenerateJSONOtputsStars((AbstratJSONOtpus)):
     input = "JSONOUTPUT/stars.JSON"
-    fields = ["short_series", "short_stars"]
+    fields = stars_fields_defults
     Model = Stars
 
     def add_fields(self, data_JSON, Movie):
-        data_JSON['weight'] = Movie['weight']
-        data_JSON['height'] = Movie['height']
-        data_JSON['ethnicity'] = Movie['ethnicity']
-        data_JSON['hair_color'] = Movie['hair_color']
-        data_JSON['hair_color'] = Movie['date_of_birth']
+        self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, self.fields)
         return data_JSON
-
 
 class GenerateJSONOtputsSeries(AbstratJSONOtpus):
     input = "JSONOUTPUT/series.JSON"
-    fields = []
+    fields = series_fields_defults
     Model = Series
 
     def add_fields(self, data_JSON, Movie):
-        data_JSON['years'] = Movie['years']
-        data_JSON['country'] = Movie['country']
-        data_JSON['number_of_sezons'] = Movie['number_of_sezons']
-        data_JSON['top_stars'] = Movie['top_stars']
+        self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, self.fields)
         return data_JSON
 
-
 class GenerateJSONOtputsProducent(AbstratJSONOtpus):
     input = "JSONOUTPUT/producents.JSON"
-    fields = []
+    fields = producent_fields_defult
     Model = Producent
-    series_fields = []
 
     def add_movies(self, data):
         movies = [];
@@ -231,8 +229,7 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
 
     def add_fields(self, data_JSON, Movie):
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
-        data_JSON['country'] = Movie['country']
-        data_JSON['top_stars'] = Movie['top_stars']
+        self.add_index(self.fields, data_JSON, Movie)
         data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, self.fields)
         data_JSON['movies'] = self.add_movies(data.series)
         return data_JSON
