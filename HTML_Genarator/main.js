@@ -7,9 +7,8 @@
         series += '</ul>';
         return series
     }
-    const JSON_data = JSON.parse(data);
     let list = document.querySelector(".list");
-    for (let el of JSON_data){
+    for (let el of data){
         list.innerHTML += '<div>';
         list.innerHTML += '<div><a href="'+el.dir+'/index.html">'+el.name+'</a><div>';
         list.innerHTML += '<div><img width="300" height="150" src="'+el.avatar+'"><div>';

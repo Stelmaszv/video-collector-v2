@@ -120,17 +120,24 @@ class CreateJSONDBLIST:
 
     def create(self):
         list = [
-            {"OBJ": self.get_producnets(), 'name': 'JSONOUTPUT/producents.JSON'},
-            {"OBJ": self.get_movies(), 'name': 'JSONOUTPUT/movies.JSON'},
-            {"OBJ": self.get_series(), 'name': 'JSONOUTPUT/series.JSON'},
-            {"OBJ": self.get_stars(), 'name': 'JSONOUTPUT/stars.JSON'}
+            {"OBJ": self.get_producnets(), 'name': 'JSONOUTPUT/producents.JSON', 'js': 'JSONOUTPUT/producents.js'},
+            {"OBJ": self.get_movies(), 'name': 'JSONOUTPUT/movies.JSON', 'js': 'JSONOUTPUT/movies.js'},
+            {"OBJ": self.get_series(), 'name': 'JSONOUTPUT/series.JSON', 'js': 'JSONOUTPUT/series.js'},
+            {"OBJ": self.get_stars(), 'name': 'JSONOUTPUT/stars.JSON', 'js': 'JSONOUTPUT/stars.js'}
         ]
-        os.mkdir('JSONOUTPUT')
+        if os.path.isdir('JSONOUTPUT') is False:
+            os.mkdir('JSONOUTPUT')
         for el in list:
             if Path(el['name']).is_file() is True:
                 os.remove(el['name'])
             f = open(el['name'], "x")
             f.write(json.dumps(el['OBJ']))
+            f.close()
+            if Path(el['js']).is_file() is True:
+                os.remove(el['js'])
+            f = open(el['js'], "x")
+            string = 'var data = ' + str(el['OBJ'])
+            f.write(string)
             f.close()
 
 class AbstratJSONOtpus(ABC):
