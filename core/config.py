@@ -43,9 +43,12 @@ class StarList:
         f.write(json.dumps(JSON))
         f.close()
 
+    def escepe_string(self, string):
+        return string.replace('\\', '/')
+
     def star_do_JSON(self, Star):
         JSON = {
-            "dir": Star.dir,
+            "dir": self.escepe_string(Star.dir),
             "avatar": Star.avatar,
             "name": Star.show_name
         }

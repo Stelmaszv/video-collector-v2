@@ -58,11 +58,9 @@ class Run:
             CreateXMLOBJ = CreateMovieList(data_JSON['dirs'])
             CreateXMLOBJ.load();
 
-            """
             print("Config JSON Outputs in progres")
             CreateJSONDBLISTOBJ = CreateJSONDBLIST()
             CreateJSONDBLISTOBJ.create();
-            """
 
             print("Config JSON Outputs for movies in progres")
             GenerateJSONOtputsMoviesOBJ = GenerateJSONOtputsMovies()

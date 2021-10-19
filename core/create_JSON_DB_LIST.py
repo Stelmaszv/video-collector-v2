@@ -47,7 +47,7 @@ class CreateJSONDBLIST:
         for item_db in item_db.stars:
             tag_json = {
                 "name": item_db.name,
-                "dir": item_db.dir,
+                "dir": self.escepe_string(item_db.dir),
                 "avatar": item_db.avatar,
             }
             array.append(tag_json)
@@ -56,7 +56,7 @@ class CreateJSONDBLIST:
     def return_short_series(self, item_db):
         return {
             "name": item_db.series[0].show_name,
-            "dir": item_db.series[0].dir,
+            "dir": self.escepe_string(item_db.series[0].dir),
             "avatar": item_db.series[0].avatar,
         }
 
@@ -93,12 +93,15 @@ class CreateJSONDBLIST:
             "id": item.id,
             "name": item.name,
             "show_name": item.show_name,
-            "dir": item.dir,
+            "dir": self.escepe_string(item.dir),
             "description": item.description,
             "avatar": item.avatar,
             "tags": self.return_tags(item.tags)
         }
         return data_JSON
+
+    def escepe_string(self, string):
+        return string.replace('\\', '/')
 
     def loop(self, Model):
         return self.Sesion.query(Model)
