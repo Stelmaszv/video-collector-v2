@@ -10,7 +10,7 @@ producent_fields_defult = ['country', 'top_stars']
 producent_fields_defult2 = ['country', 'top_stars', 'series']
 series_fields_defults = ["years", "country", "number_of_sezons", 'top_stars']
 movies_fields_defults = ["src", "short_series", "short_stars"]
-stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'date_of_birth']
+stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color']
 
 class CreateJSONDBLIST:
     Sesion = session
