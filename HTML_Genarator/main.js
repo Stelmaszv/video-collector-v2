@@ -66,3 +66,40 @@ function LoadMovieID(){
         stars_lists.innerHTML = add_stars(data.short_stars);
     }, 10);
 }
+
+function LoadMovies(){
+    max=0
+    let list = document.querySelector(".list");
+    let load_more = document.querySelector(".load_more");
+    load_more.addEventListener("click", function(){
+        add_new_array=[]
+        max=max+data_limit
+        for (let el_nev_in_data of data){
+            if (index>data_limit && index<max){
+                if (data.hasOwnProperty(index)){
+                add_new_array.push(data[index])
+                }
+            }
+            index=index+1
+        }
+        index=max
+        for (let el_in_add_new_array of add_new_array){
+            list.innerHTML += '<div><a href="'+el_in_add_new_array.dir+'/index.html">'+el_in_add_new_array.short_series.name+'-'+el_in_add_new_array.name+'</a><div>';
+        }
+    });
+    list.innerHTML=""
+    data_limit=51
+    new_data=[]
+    index=0
+    for (let el_in_data of data){
+        if (index<data_limit){
+            new_data.push(data[index])
+        }
+        index=index+1
+    }
+    index=data_limit
+    for (let el_in_nev_data of new_data){
+        list.innerHTML += '<div><a href="'+el_in_nev_data.dir+'/index.html">'+el_in_nev_data.short_series.name+'-'+el_in_nev_data.name+'</a><div>';
+    }
+
+}
