@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Stars</title>
+</head>
+<script src="Z:\HTML Generator\js\stars.js"></script>
+<script src="Z:\HTML Generator\js\main.js"></script>
+<script>
+    const OBJ=new LoadStars()
+
+
+</script>
+<body>
+<h2>Movies</h2>
+<a href="movies.JSON">Data</a>
+<div class="list">
+    Wczytywanie
+</div>
+<div class="load_more" onclick="LoadMore(OBJ)">Load More</div>
+</body>
+<script>
+    let load_more = document.querySelector(OBJ.loadMoreSelector);
+    load_more.click();
+
+</script>
+</html>
