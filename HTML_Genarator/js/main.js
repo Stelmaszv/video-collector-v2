@@ -134,27 +134,15 @@ class LoadProducent extends LoadContet{
         return '<li class="el"><a href="'+arr_el.dir+'/series_id.html">'+arr_el.name+'</a> </li>'
     }
 }
-max=0
-add_new_array=[]
-index=0
+let page=0
 function LoadMore(OBJ){
-    console.log(index)
-    var show=0
-    var limit=OBJ.limit
-    if (max!=0){
-        show=show+OBJ.limit
-    }
-    max=max+OBJ.limit
     let list = document.querySelector(OBJ.listSelector);
-    for (let el_nev_in_data of data){
-        if (index=>show && index<limit){
-            add_new_array.push(el_nev_in_data)
-            show=show+1
+    if (data.hasOwnProperty(page)){
+        for (let el_in_nev_data of data[page]['Objets']){
+            OBJ.on_load(list,el_in_nev_data)
         }
-        index=index+1
-    }
-
-    for (let el_in_add_new_array of add_new_array){
-        OBJ.on_load(list,el_in_add_new_array)
+        if (data.hasOwnProperty(page+1)){
+            page=page+1
+        }
     }
 }

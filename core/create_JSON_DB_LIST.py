@@ -151,13 +151,26 @@ class CreateJSONDBLIST:
     def create(self):
         list = [
             {"OBJ": self.create_pagination(self.get_producnets(), defult_producents_pages),
+             'name': 'OUTPUT/json/producents_paginated.JSON',
+             'js': 'OUTPUT/js/producents_paginated.js'},
+            {"OBJ": self.create_pagination(self.get_movies(), defult_movis),
+             'name': 'OUTPUT/json/movies_paginated.JSON',
+             'js': 'OUTPUT/js/movies_paginated.js'},
+            {"OBJ": self.create_pagination(self.get_series(), defult_series),
+             'name': 'OUTPUT/json/series_paginated.JSON',
+             'js': 'OUTPUT/js/series_paginated.js'},
+            {"OBJ": self.create_pagination(self.get_stars(), defult_stars),
+             'name': 'OUTPUT/json/stars_paginated.JSON',
+             'js': 'OUTPUT/js/stars_paginated.js'},
+            {"OBJ": self.get_producnets(),
              'name': 'OUTPUT/json/producents.JSON', 'js': 'OUTPUT/js/producents.js'},
-            {"OBJ": self.create_pagination(self.get_movies(), defult_movis), 'name': 'OUTPUT/json/movies.JSON',
+            {"OBJ": self.get_movies(), 'name': 'OUTPUT/json/movies.JSON',
              'js': 'OUTPUT/js/movies.js'},
-            {"OBJ": self.create_pagination(self.get_series(), defult_series), 'name': 'OUTPUT/json/series.JSON',
+            {"OBJ": self.get_series(),
+             'name': 'OUTPUT/json/series.JSON',
              'js': 'OUTPUT/js/series.js'},
-            {"OBJ": self.create_pagination(self.get_stars(), defult_stars), 'name': 'OUTPUT/json/stars.JSON',
-             'js': 'OUTPUT/js/stars.js'}
+            {"OBJ": self.get_stars(), 'name': 'OUTPUT/json/stars.JSON',
+             'js': 'OUTPUT/js/stars.js'},
         ]
         if os.path.isdir('OUTPUT') is False:
             os.mkdir('OUTPUT')

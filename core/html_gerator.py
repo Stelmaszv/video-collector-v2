@@ -79,47 +79,47 @@ class HTMLGenaratorMain:
 
         self.create_file(
             self.js,
-            'movies.js',
+            'movies_paginated.js',
             data_JSON['project_url'] + '\OUTPUT\js')
 
         self.create_file(
             self.js,
-            'producents.js',
+            'producents_paginated.js',
             data_JSON['project_url'] + '\OUTPUT\js')
 
         self.create_file(
             self.js,
-            'series.js',
+            'series_paginated.js',
             data_JSON['project_url'] + '\OUTPUT\js')
 
         self.create_file(
             self.js,
-            'movies.js',
+            'movies_paginated.js',
             data_JSON['project_url'] + '\OUTPUT\js')
 
         self.create_file(
             self.js,
-            'stars.js',
+            'stars_paginated.js',
             data_JSON['project_url'] + '\OUTPUT\js')
 
         self.create_file(
             self.json,
-            'movies.JSON',
+            'movies_paginated.JSON',
             data_JSON['project_url'] + '\OUTPUT\json')
 
         self.create_file(
             self.json,
-            'producents.JSON',
+            'producents_paginated.JSON',
             data_JSON['project_url'] + '\OUTPUT\json')
 
         self.create_file(
             self.json,
-            'series.JSON',
+            'series_paginated.JSON',
             data_JSON['project_url'] + '\OUTPUT\json')
 
         self.create_file(
             self.json,
-            'stars.JSON',
+            'stars_paginated.JSON',
             data_JSON['project_url'] + '\OUTPUT\json')
 
     def create_file(self, dir, file_name, shema_url):
