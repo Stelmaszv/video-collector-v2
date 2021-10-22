@@ -4,10 +4,10 @@ from pathlib import Path
 from app.db.models import session, Movies,Stars,Series,Sezons,Photos,Producent
 from core.config import ConfigLoop, ConfigMovies,SetTags,CreateXML,CreateMovieList
 from core.dir import LoadFilesFromJson, PhotoMeaker
+from core.html_gerator import HTMLGenaratorBase
 from core.setings import data_JSON, scan_photos, run_start_view, clean_db, start_page, scan_dir, config, config_movies \
     , set_tags, create_xml, create_movie_list, generate_json_otputs_movies, create_json_dblist, \
-    generate_json_otputs_stars, \
-    generate_json_otputs_producents
+    generate_json_otputs_stars, generate_json_otputs_producents, generate_html_base
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
@@ -101,6 +101,11 @@ class Run:
                 "obj": GenerateJSONOtputsProducent(), "method": 'create',
                 "stan": generate_json_otputs_producents, "start_mes": 'Config JSON Outputs for producent in progres',
                 "end_mees": 'End of Config JSON Outputs for producent in progres'
+            },
+            {
+                "obj": HTMLGenaratorBase(), "method": 'generate',
+                "stan": generate_html_base, "start_mes": 'Genereting HTML Base',
+                "end_mees": 'End of Genereting HTML Base'
             },
 
         ]
