@@ -3,6 +3,7 @@ from app.db.models import session
 from app.db.models import Producent, Stars, Movies, Series
 from core.custum_errors import Error
 from pathlib import Path
+import math
 import json
 import os
 
@@ -11,6 +12,10 @@ producent_fields_defult2 = ['country', 'top_stars', 'series']
 series_fields_defults = ["years", "country", "number_of_sezons", 'top_stars']
 movies_fields_defults = ["src", "short_series", "short_stars"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color']
+defult_producents_pages = 1
+defult_movis = 10
+defult_stars = 10
+defult_series = 10
 
 class CreateJSONDBLIST:
     Sesion = session
@@ -126,12 +131,33 @@ class CreateJSONDBLIST:
     def get_stars(self):
         return self.base_get(Stars, self.stars_fields)
 
+    def create_pagination(self, data, per_page):
+        count = len(data)
+        pages = math.ceil(count / per_page)
+        new_array = []
+        index = 0
+        for el in range(1, pages + 1):
+            movies = []
+            elments = 0
+            for item in data:
+                if elments < per_page and index < count:
+                    movies.append(data[index])
+                    index = index + 1
+                elments = elments + 1
+
+            new_array.append({"page": el, "Objets": movies})
+        return new_array
+
     def create(self):
         list = [
-            {"OBJ": self.get_producnets(), 'name': 'OUTPUT/json/producents.JSON', 'js': 'OUTPUT/js/producents.js'},
-            {"OBJ": self.get_movies(), 'name': 'OUTPUT/json/movies.JSON', 'js': 'OUTPUT/js/movies.js'},
-            {"OBJ": self.get_series(), 'name': 'OUTPUT/json/series.JSON', 'js': 'OUTPUT/js/series.js'},
-            {"OBJ": self.get_stars(), 'name': 'OUTPUT/json/stars.JSON', 'js': 'OUTPUT/js/stars.js'}
+            {"OBJ": self.create_pagination(self.get_producnets(), defult_producents_pages),
+             'name': 'OUTPUT/json/producents.JSON', 'js': 'OUTPUT/js/producents.js'},
+            {"OBJ": self.create_pagination(self.get_movies(), defult_movis), 'name': 'OUTPUT/json/movies.JSON',
+             'js': 'OUTPUT/js/movies.js'},
+            {"OBJ": self.create_pagination(self.get_series(), defult_series), 'name': 'OUTPUT/json/series.JSON',
+             'js': 'OUTPUT/js/series.js'},
+            {"OBJ": self.create_pagination(self.get_stars(), defult_stars), 'name': 'OUTPUT/json/stars.JSON',
+             'js': 'OUTPUT/js/stars.js'}
         ]
         if os.path.isdir('OUTPUT') is False:
             os.mkdir('OUTPUT')

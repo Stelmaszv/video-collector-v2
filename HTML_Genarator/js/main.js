@@ -108,7 +108,7 @@ class LoadContet{
 }
 
 class LoadMovies extends LoadContet{
-    limit=500
+    limit=5
     on_load(list,el){
         list.innerHTML += '<div class="el"><a href="'+el.dir+'/movies_id.html">'+el.short_series.name+'-'+el.name+'</a><div>';
     }
@@ -134,44 +134,27 @@ class LoadProducent extends LoadContet{
         return '<li class="el"><a href="'+arr_el.dir+'/series_id.html">'+arr_el.name+'</a> </li>'
     }
 }
-
+max=0
+add_new_array=[]
+index=0
 function LoadMore(OBJ){
-    max=0
-    index=0
+    console.log(index)
+    var show=0
+    var limit=OBJ.limit
+    if (max!=0){
+        show=show+OBJ.limit
+    }
+    max=max+OBJ.limit
     let list = document.querySelector(OBJ.listSelector);
-    let load_more = document.querySelector(OBJ.loadMoreSelector);
-    data_limit=OBJ.limit
-    load_more.addEventListener("click", function(){
-        add_new_array=[]
-        max=max+data_limit
-        if (max>data.length){
-            max=data.length
-        }
-        for (let el_nev_in_data of data){
-            if (index>=data_limit && index<=max){
-                if (data.hasOwnProperty(index)){
-                    add_new_array.push(data[index])
-                }
-            }
-            index=index+1
-        }
-        index=max
-        for (let el_in_add_new_array of add_new_array){
-            OBJ.on_load(list,el_in_add_new_array)
-        }
-    });
-    new_data=[]
-    index=0
-    for (let el_in_data of data){
-        if (index<data_limit){
-            new_data.push(data[index])
+    for (let el_nev_in_data of data){
+        if (index=>show && index<limit){
+            add_new_array.push(el_nev_in_data)
+            show=show+1
         }
         index=index+1
     }
-    index=data_limit
-    for (let el_in_nev_data of new_data){
-       OBJ.on_load(list,el_in_nev_data)
+
+    for (let el_in_add_new_array of add_new_array){
+        OBJ.on_load(list,el_in_add_new_array)
     }
-
-
 }
