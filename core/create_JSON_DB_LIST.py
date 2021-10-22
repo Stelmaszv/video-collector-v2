@@ -197,7 +197,7 @@ class AbstratJSONOtpus(ABC):
             data_JSON[el] = Movie[el]
 
 class GenerateJSONOtputsMovies(AbstratJSONOtpus):
-    input = "JSONOUTPUT/movies.JSON"
+    input = "OUTPUT/json/movies.JSON"
     fields = movies_fields_defults
     Model = Movies
 
@@ -206,7 +206,7 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
         return data_JSON
 
 class GenerateJSONOtputsStars((AbstratJSONOtpus)):
-    input = "JSONOUTPUT/stars.JSON"
+    input = "OUTPUT/json/stars.JSON"
     fields = stars_fields_defults
     Model = Stars
 
@@ -217,7 +217,7 @@ class GenerateJSONOtputsStars((AbstratJSONOtpus)):
         return data_JSON
 
 class GenerateJSONOtputsSeries(AbstratJSONOtpus):
-    input = "JSONOUTPUT/series.JSON"
+    input = "OUTPUT/json/series.JSON"
     fields = series_fields_defults
     Model = Series
 
@@ -228,7 +228,7 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
         return data_JSON
 
 class GenerateJSONOtputsProducent(AbstratJSONOtpus):
-    input = "JSONOUTPUT/producents.JSON"
+    input = "OUTPUT/json/producents.JSON"
     fields = producent_fields_defult
     Model = Producent
 

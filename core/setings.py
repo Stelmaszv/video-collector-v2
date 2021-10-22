@@ -103,7 +103,9 @@ generate_json_otputs_movies = False
 create_json_dblist = False
 generate_json_otputs_stars = False
 generate_json_otputs_producents = False
+open_html = False
 generate_html_base = True
+generate_html_movies = True
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')

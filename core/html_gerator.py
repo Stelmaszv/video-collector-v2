@@ -1,8 +1,23 @@
+from core.custum_errors import Error
 from core.setings import data_JSON
 from pathlib import Path
+import json
 import os
 
-class HTMLGenaratorBase:
+
+class HtmlGenaratorBase:
+    def return_html_as_string(self, shema_url):
+        return Path(shema_url).read_text()
+
+    def create_file(self, dir, file_name, shema_url):
+        if Path(dir + '\\' + file_name).is_file() is True:
+            os.remove(dir + '\\' + file_name)
+        f = open(dir + '\\' + file_name, "w")
+        f.write(self.return_html_as_string(shema_url + '\\' + str(file_name)))
+        f.close()
+
+
+class HTMLGenaratorMain:
     dir = data_JSON['html_output'] + '\HTML Generator'
     sites = data_JSON['html_output'] + '\HTML Generator\sites'
     css = data_JSON['html_output'] + '\HTML Generator\css'
@@ -107,13 +122,30 @@ class HTMLGenaratorBase:
             'stars.JSON',
             data_JSON['project_url'] + '\OUTPUT\json')
 
+    def create_file(self, dir, file_name, shema_url):
+        return HtmlGenaratorBase().create_file(dir, file_name, shema_url)
 
-    def return_html_as_string(self, shema_url):
-        return Path(shema_url).read_text()
+
+class AbstractGenarta:
+    input = ""
+    shema_file = ""
+
+    def generate(self):
+        Error.throw_error_bool("input not exist", self.input != "")
+        Error.throw_error_bool("shema_file not exist", self.shema_file != "")
+        with open(self.input) as json_file:
+            data = json.load(json_file)
+            print("HTML for " + str(self.name))
+            for item in data:
+                self.create_file(
+                    item['dir'],
+                    self.shema_file,
+                    data_JSON['project_url'] + '\HTML_Genarator\schema')
 
     def create_file(self, dir, file_name, shema_url):
-        if Path(dir + '\\' + file_name).is_file() is True:
-            os.remove(dir + '\\' + file_name)
-        f = open(dir + '\\' + file_name, "x")
-        f.write(self.return_html_as_string(shema_url + '\\' + str(file_name)))
-        f.close()
+        return HtmlGenaratorBase().create_file(dir, file_name, shema_url)
+
+
+class GenerateHTMLMovies(AbstractGenarta):
+    input = "OUTPUT/json/movies.JSON"
+    shema_file = "movies_id.html"
