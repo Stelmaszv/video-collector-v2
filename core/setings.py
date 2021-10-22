@@ -90,9 +90,19 @@ muted=False
 auto_play=True
 full_screen=True
 #run_setings
-scan_photos=False
 run_start_view = False
-clean_db = False
+scan_photos=False
+clean_db = True
+scan_dir = True
+config = True
+config_movies = True
+set_tags = True
+create_xml = True
+create_movie_list = True
+generate_json_otputs_movies = True
+create_json_dblist = True
+generate_json_otputs_stars = True
+generate_json_otputs_producents = True
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')

@@ -2,14 +2,23 @@
 <head>
     <title>Movies</title>
 </head>
-<body onload="LoadMoviesOBJ.load()">
+<script src="movies.js"></script>
+<script src="Z:/HTML_Genarator/main.js"></script>
+<script>
+    const OBJ=new LoadMovies()
+
+</script>
+<body>
 <h2>Movies</h2>
 <a href="movies.JSON">Data</a>
 <div class="list">
     Wczytywanie
 </div>
-<div class="load_more" onclick="LoadMoviesOBJ.load_more()">Load More</div>
+<div class="load_more" onclick="LoadMore(OBJ)">Load More</div>
 </body>
-<script src="movies.js"></script>
-<script src="Z:/HTML_Genarator/main.js"></script>
+<script>
+    let load_more = document.querySelector(OBJ.loadMoreSelector);
+    load_more.click();
+
+</script>
 </html>

@@ -1,13 +1,21 @@
 <html>
 <head>
-    <title>Producents</title>
+    <title>Movies</title>
 </head>
-<body onload="LoadProducentOBJ.load()">
-<h2>Producents</h2>
-<div class="list"></div>
-<h2 class="load_more" onclick="LoadProducentOBJ.load_more()">Load More</h2>
-<a href="producents.JSON">Data</a>
-</body>
 <script src="producents.js"></script>
-<script src="../main.js"></script>
+<script src="Z:/HTML_Genarator/main.js"></script>
+<script>
+    const OBJ=new LoadProducent()
+    let load_more = document.querySelector(OBJ.loadMoreSelector);
+    load_more.click()
+
+</script>
+<body>
+<h2>Movies</h2>
+<a href="movies.JSON">Data</a>
+<div class="list">
+    Wczytywanie
+</div>
+<div class="load_more" onclick="LoadMore(OBJ)">Load More</div>
+</body>
 </html>

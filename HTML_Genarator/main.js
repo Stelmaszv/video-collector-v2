@@ -1,3 +1,21 @@
+function LoadProduent(){
+    function add_Series(series_json){
+        series = '<ul>';
+        for (let serie of series_json){
+            series += '<li><a href="'+serie.dir+'/index.html">'+serie.name+'</a> </li>'
+        }
+        series += '</ul>';
+        return series
+    }
+    let list = document.querySelector(".list");
+    for (let el of data){
+        list.innerHTML += '<div>';
+        list.innerHTML += '<div><a href="'+el.dir+'/index.html">'+el.name+'</a><div>';
+        list.innerHTML += '<div><img width="300" height="150" src="'+el.avatar+'"><div>';
+        list.innerHTML += add_Series(el.series)
+        list.innerHTML += '</div>';
+    }
+};
 
 function LoadProduentID(){
     function add_Series(series_json){
@@ -49,6 +67,7 @@ function LoadMovieID(){
     }, 10);
 }
 
+
 class LoadContet{
     listSelector='.list'
     loadMoreSelector='.load_more'
@@ -85,74 +104,74 @@ class LoadContet{
             this.on_load(list,el_in_add_new_array)
         }
     }
-
-    load_more(){
-        let list = document.querySelector(this.listSelector);
-        this.add_new_array=[]
-        this.max=this.max+this.limit
-        console.log(this.max)
-        for (let el_nev_in_data of data){
-            if (this.index>this.limit && this.limit<this.max){
-                if (data.hasOwnProperty(this.index)){
-                    this.add_new_array.push(data[this.index])
-                }
-            }
-            this.index=this.index+1
-        }
-        this.index=this.max
-        for (let el_in_add_new_array of this.add_new_array){
-           this.on_load(list,el_in_add_new_array)
-        }
-    }
-
-    load(){
-        let list = document.querySelector(this.listSelector);
-        let load_more = document.querySelector(this.loadMoreSelector);
-        list.innerHTML=""
-        for (let el_in_data of data){
-            if (this.index<this.limit){
-                this.new_data.push(data[this.index])
-            }
-            this.index=this.index+1
-        }
-        this.index=this.limit
-        load_more.index=this.index
-        load_more.limit=this.limit
-        load_more.max=this.max
-    
-        for (let el of this.new_data){
-            this.on_load(list,el)
-        }
-    }
     on_load(list,el){}
 }
 
-class LoadProducent extends LoadContet{
+class LoadMovies extends LoadContet{
+    limit=500
     on_load(list,el){
-        list.innerHTML += '<div>';
+        list.innerHTML += '<div class="el"><a href="'+el.dir+'/index.html">'+el.short_series.name+'-'+el.name+'</a><div>';
+    }
+}
+
+class LoadStars extends LoadContet{
+    limit=10
+    on_load(list,el){
+        list.innerHTML += '<div class="el"><a href="'+el.dir+'/index.html">'+el.show_name+'</a><div>';
+    }
+}
+
+class LoadProducent extends LoadContet{
+    limit=1
+    on_load(list,el){
+        list.innerHTML += '<div class="el">';
         list.innerHTML += '<div><a href="'+el.dir+'/index.html">'+el.name+'</a><div>';
         list.innerHTML += '<div><img width="300" height="150" src="'+el.avatar+'"><div>';
         list.innerHTML += this.add_list(el.series,this.on_series_list)
         list.innerHTML += '</div>';
     }
     on_series_list(arr_el){
-        return '<li><a href="'+arr_el.dir+'/index.html">'+arr_el.name+'</a> </li>'
+        return '<li class="el"><a href="'+arr_el.dir+'/index.html">'+arr_el.name+'</a> </li>'
     }
 }
 
-class LoadMovies extends LoadContet{
-    limit=11
-    on_load(list,el){
-        list.innerHTML += '<div><a href="'+el.dir+'/index.html">'+el.short_series.name+'-'+el.name+'</a><div>';
+function LoadMore(OBJ){
+    max=0
+    index=0
+    let list = document.querySelector(OBJ.listSelector);
+    let load_more = document.querySelector(OBJ.loadMoreSelector);
+    data_limit=OBJ.limit
+    load_more.addEventListener("click", function(){
+        add_new_array=[]
+        max=max+data_limit
+        if (max>data.length){
+            max=data.length
+        }
+        for (let el_nev_in_data of data){
+            if (index>=data_limit && index<=max){
+                if (data.hasOwnProperty(index)){
+                    add_new_array.push(data[index])
+                }
+            }
+            index=index+1
+        }
+        index=max
+        for (let el_in_add_new_array of add_new_array){
+            OBJ.on_load(list,el_in_add_new_array)
+        }
+    });
+    new_data=[]
+    index=0
+    for (let el_in_data of data){
+        if (index<data_limit){
+            new_data.push(data[index])
+        }
+        index=index+1
     }
-}
+    index=data_limit
+    for (let el_in_nev_data of new_data){
+       OBJ.on_load(list,el_in_nev_data)
+    }
 
-class LoadStars extends LoadContet{
-    limit=11
-    on_load(list,el){
-        list.innerHTML += '<div><a href="'+el.dir+'/index.html">'+el.show_name+'</a><div>';
-    }
+
 }
-const LoadStarsOBJ=new LoadStars()
-const LoadMoviesOBJ=new LoadMovies()
-const LoadProducentOBJ=new LoadProducent()
