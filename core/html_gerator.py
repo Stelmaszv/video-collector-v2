@@ -6,6 +6,7 @@ import os
 class HTMLGenaratorBase:
     dir = data_JSON['html_output'] + '\HTML Generator'
     sites = data_JSON['html_output'] + '\HTML Generator\sites'
+    project_genarator_url = data_JSON['project_url']
 
     def __init__(self):
         if os.path.isdir(self.dir) is False:
@@ -15,12 +16,12 @@ class HTMLGenaratorBase:
             os.mkdir(self.sites)
 
     def generate(self):
-        self.create_file(self.dir, 'index.html', 'D:\project\\video-collector-v2\HTML_Genarator\index.html')
-        self.create_file(self.sites, 'stars.html', 'D:\project\\video-collector-v2\HTML_Genarator\schema\stars.html')
+        self.create_file(self.dir, 'index.html', data_JSON['project_url'] + '\HTML_Genarator\index.html')
+        self.create_file(self.sites, 'stars.html', data_JSON['project_url'] + '\HTML_Genarator\schema\stars.html')
         self.create_file(self.sites, 'producent.html',
-                         'D:\project\\video-collector-v2\HTML_Genarator\schema\producent.html')
-        self.create_file(self.sites, 'series.html', 'D:\project\\video-collector-v2\HTML_Genarator\schema\series.html')
-        self.create_file(self.sites, 'movies.html', 'D:\project\\video-collector-v2\HTML_Genarator\schema\movies.html')
+                         data_JSON['project_url'] + '\HTML_Genarator\schema\producent.html')
+        self.create_file(self.sites, 'series.html', data_JSON['project_url'] + '\HTML_Genarator\schema\series.html')
+        self.create_file(self.sites, 'movies.html', data_JSON['project_url'] + '\HTML_Genarator\schema\movies.html')
 
     def return_html_as_string(self, shema_url):
         return Path(shema_url).read_text()
