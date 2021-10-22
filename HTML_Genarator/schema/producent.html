@@ -1,14 +1,11 @@
 <html>
 <head>
-    <title>Movies</title>
+    <title>Producent</title>
 </head>
-<script src="producents.js"></script>
-<script src="Z:/HTML_Genarator/main.js"></script>
+<script src="Z:\HTML Generator\js\producents.js"></script>
+<script src="Z:\HTML Generator\js\main.js"></script>
 <script>
     const OBJ=new LoadProducent()
-    let load_more = document.querySelector(OBJ.loadMoreSelector);
-    load_more.click()
-
 </script>
 <body>
 <h2>Movies</h2>
@@ -18,4 +15,9 @@
 </div>
 <div class="load_more" onclick="LoadMore(OBJ)">Load More</div>
 </body>
+<script>
+    let load_more = document.querySelector(OBJ.loadMoreSelector);
+    load_more.click();
+
+</script>
 </html>

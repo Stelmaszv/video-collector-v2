@@ -122,7 +122,7 @@ class LoadStars extends LoadContet{
 }
 
 class LoadProducent extends LoadContet{
-    limit=1
+    limit=20
     on_load(list,el){
         list.innerHTML += '<div class="el">';
         list.innerHTML += '<div><a href="'+el.dir+'/index.html">'+el.name+'</a><div>';

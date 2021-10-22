@@ -128,13 +128,18 @@ class CreateJSONDBLIST:
 
     def create(self):
         list = [
-            {"OBJ": self.get_producnets(), 'name': 'JSONOUTPUT/producents.JSON', 'js': 'JSONOUTPUT/producents.js'},
-            {"OBJ": self.get_movies(), 'name': 'JSONOUTPUT/movies.JSON', 'js': 'JSONOUTPUT/movies.js'},
-            {"OBJ": self.get_series(), 'name': 'JSONOUTPUT/series.JSON', 'js': 'JSONOUTPUT/series.js'},
-            {"OBJ": self.get_stars(), 'name': 'JSONOUTPUT/stars.JSON', 'js': 'JSONOUTPUT/stars.js'}
+            {"OBJ": self.get_producnets(), 'name': 'OUTPUT/json/producents.JSON', 'js': 'OUTPUT/js/producents.js'},
+            {"OBJ": self.get_movies(), 'name': 'OUTPUT/json/movies.JSON', 'js': 'OUTPUT/js/movies.js'},
+            {"OBJ": self.get_series(), 'name': 'OUTPUT/json/series.JSON', 'js': 'OUTPUT/js/series.js'},
+            {"OBJ": self.get_stars(), 'name': 'OUTPUT/json/stars.JSON', 'js': 'OUTPUT/js/stars.js'}
         ]
-        if os.path.isdir('JSONOUTPUT') is False:
-            os.mkdir('JSONOUTPUT')
+        if os.path.isdir('OUTPUT') is False:
+            os.mkdir('OUTPUT')
+            if os.path.isdir('OUTPUT/json') is False:
+                os.mkdir('OUTPUT/json')
+            if os.path.isdir('OUTPUT/js') is False:
+                os.mkdir('OUTPUT/js')
+
         for el in list:
             if Path(el['name']).is_file() is True:
                 os.remove(el['name'])
