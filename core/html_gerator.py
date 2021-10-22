@@ -135,8 +135,8 @@ class AbstractGenarta:
         Error.throw_error_bool("shema_file not exist", self.shema_file != "")
         with open(self.input) as json_file:
             data = json.load(json_file)
-            print("HTML for " + str(self.name))
             for item in data:
+                print('Generate HTML for ' + str(item['name']))
                 self.create_file(
                     item['dir'],
                     self.shema_file,
@@ -145,7 +145,21 @@ class AbstractGenarta:
     def create_file(self, dir, file_name, shema_url):
         return HtmlGenaratorBase().create_file(dir, file_name, shema_url)
 
-
 class GenerateHTMLMovies(AbstractGenarta):
     input = "OUTPUT/json/movies.JSON"
     shema_file = "movies_id.html"
+
+
+class GenerateHTMLProducents(AbstractGenarta):
+    input = "OUTPUT/json/producents.JSON"
+    shema_file = "producent_id.html"
+
+
+class GenerateHTMLSeries(AbstractGenarta):
+    input = "OUTPUT/json/series.JSON"
+    shema_file = "series_id.html"
+
+
+class GenerateHTMLStars(AbstractGenarta):
+    input = "OUTPUT/json/stars.JSON"
+    shema_file = "stars_id.html"

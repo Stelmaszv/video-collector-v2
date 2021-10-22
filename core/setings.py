@@ -106,6 +106,9 @@ generate_json_otputs_producents = False
 open_html = False
 generate_html_base = True
 generate_html_movies = True
+generate_html_producents = True
+generate_html_series = True
+generate_html_stars = True
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')

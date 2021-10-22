@@ -4,10 +4,12 @@ from pathlib import Path
 from app.db.models import session, Movies,Stars,Series,Sezons,Photos,Producent
 from core.config import ConfigLoop, ConfigMovies,SetTags,CreateXML,CreateMovieList
 from core.dir import LoadFilesFromJson, PhotoMeaker
-from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies
+from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTMLProducents, GenerateHTMLSeries, \
+    GenerateHTMLStars
 from core.setings import data_JSON, scan_photos, run_start_view, clean_db, start_page, scan_dir, config, config_movies \
     , set_tags, create_xml, create_movie_list, generate_json_otputs_movies, create_json_dblist, \
-    generate_json_otputs_stars, generate_json_otputs_producents, generate_html_base, generate_html_movies, open_html
+    generate_json_otputs_stars, generate_json_otputs_producents, generate_html_base, generate_html_movies, open_html, \
+    generate_html_producents, generate_html_series, generate_html_stars
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
@@ -111,6 +113,21 @@ class Run:
                 "obj": GenerateHTMLMovies(), "method": 'generate',
                 "stan": generate_html_movies, "start_mes": 'Genereting HTML Movies',
                 "end_mees": 'End of Genereting HTML Movies'
+            },
+            {
+                "obj": GenerateHTMLProducents(), "method": 'generate',
+                "stan": generate_html_producents, "start_mes": 'Genereting HTML Producents',
+                "end_mees": 'End of Genereting HTML Producents'
+            },
+            {
+                "obj": GenerateHTMLSeries(), "method": 'generate',
+                "stan": generate_html_series, "start_mes": 'Genereting HTML Series',
+                "end_mees": 'End of Genereting HTML Series'
+            },
+            {
+                "obj": GenerateHTMLStars(), "method": 'generate',
+                "stan": generate_html_stars, "start_mes": 'Genereting HTML Stars',
+                "end_mees": 'End of Genereting HTML Stars'
             },
         ]
 
