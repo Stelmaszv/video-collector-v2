@@ -21,7 +21,7 @@ function LoadProduentID(){
     function add_Series(series_json){
         series = '<ul>';
         for (let serie of series_json){
-            series += '<li><a href="'+serie.dir+'/index.html">'+serie.name+'</a> </li>'
+            series += '<li><a href="'+serie.dir+'/series_id.html">'+serie.name+'</a> </li>'
         }
         series += '</ul>';
         return series
@@ -29,7 +29,7 @@ function LoadProduentID(){
     function add_movies(series_json){
         series = '<ul>';
         for (let serie of series_json){
-            series += '<li><a href="'+serie.dir+'/index.html">'+serie.name+'</a> </li>'
+            series += '<li><a href="'+serie.dir+'/movies_id.html">'+serie.name+'</a> </li>'
         }
         series += '</ul>';
         return series
@@ -51,7 +51,7 @@ function LoadMovieID(){
         function add_stars(series_json){
             series = '<ul>';
             for (let serie of series_json){
-                series += '<li><a href="'+serie.dir+'/index.html">'+serie.name+'</a> </li>'
+                series += '<li><a href="'+serie.dir+'/stars_id.html">'+serie.name+'</a> </li>'
             }
             series += '</ul>';
             return series
@@ -110,14 +110,14 @@ class LoadContet{
 class LoadMovies extends LoadContet{
     limit=500
     on_load(list,el){
-        list.innerHTML += '<div class="el"><a href="'+el.dir+'/index.html">'+el.short_series.name+'-'+el.name+'</a><div>';
+        list.innerHTML += '<div class="el"><a href="'+el.dir+'/movies_id.html">'+el.short_series.name+'-'+el.name+'</a><div>';
     }
 }
 
 class LoadStars extends LoadContet{
     limit=10
     on_load(list,el){
-        list.innerHTML += '<div class="el"><a href="'+el.dir+'/index.html">'+el.show_name+'</a><div>';
+        list.innerHTML += '<div class="el"><a href="'+el.dir+'/stars_id.html">'+el.show_name+'</a><div>';
     }
 }
 
@@ -125,13 +125,13 @@ class LoadProducent extends LoadContet{
     limit=20
     on_load(list,el){
         list.innerHTML += '<div class="el">';
-        list.innerHTML += '<div><a href="'+el.dir+'/index.html">'+el.name+'</a><div>';
+        list.innerHTML += '<div><a href="'+el.dir+'/producent_id.html">'+el.name+'</a><div>';
         list.innerHTML += '<div><img width="300" height="150" src="'+el.avatar+'"><div>';
         list.innerHTML += this.add_list(el.series,this.on_series_list)
         list.innerHTML += '</div>';
     }
     on_series_list(arr_el){
-        return '<li class="el"><a href="'+arr_el.dir+'/index.html">'+arr_el.name+'</a> </li>'
+        return '<li class="el"><a href="'+arr_el.dir+'/series_id.html">'+arr_el.name+'</a> </li>'
     }
 }
 
