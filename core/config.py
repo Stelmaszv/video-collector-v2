@@ -82,6 +82,7 @@ class AbstractConfigItem(ABC):
         self.dir=dir
         self.session=session
         self.name = set_name(dir)
+        print("Config " + str(self.name))
         self.data = session.query(self.Model).filter(self.Model.name == self.name).first()
         self.config = self.dir+'\\config.JSON'
         self.name=set_name(dir)
@@ -514,6 +515,7 @@ class ConfigMovies(AbstractConfigItem):
 
     def load(self):
         for Movie in session.query(Movies).all():
+            print('Config for ' + str(Movie))
             self.make_dir(Movie)
 
 class SetTags(AbstractConfigItem):
@@ -537,6 +539,7 @@ class SetTags(AbstractConfigItem):
 
     def set(self):
         for Movie in session.query(Movies).all():
+            print('Adding tag for ' + str(Movie))
             self.set_tags(Movie)
 
     def load(self):

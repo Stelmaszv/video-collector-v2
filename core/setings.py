@@ -92,7 +92,7 @@ full_screen=True
 #run_setings
 run_start_view = False
 scan_photos=False
-clean_db = True
+clean_db = False
 scan_dir = True
 config = True
 config_movies = True

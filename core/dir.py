@@ -302,6 +302,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         self.config = self.dir + '\\config.JSON'
         self.skip_galery = self.dir + '\\skip_galery.JSON'
         self.name=set_name(dir)
+        print("Scaning Series " + str(self.name))
         item=session.query(self.model).filter(self.model.name == self.name).first()
         if item is None:
             self.series=self.if_series_exist(self.name)
