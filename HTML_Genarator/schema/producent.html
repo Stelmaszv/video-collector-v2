@@ -1,23 +1,18 @@
 <html>
 <head>
     <title>Producent</title>
+    <script src="Z:\HTML Generator\js\producents_paginated.js"></script>
+    <script src="Z:\HTML Generator\js\main.js"></script>
 </head>
-<script src="Z:\HTML Generator\js\producents_paginated.js"></script>
-<script src="Z:\HTML Generator\js\main.js"></script>
-<script>
-    const OBJ=new LoadProducent()
-</script>
 <body>
-<h2>Movies</h2>
+<h2>Producents</h2>
 <a href="movies.JSON">Data</a>
-<div class="list">
-    Wczytywanie
-</div>
-<div class="load_more" onclick="LoadMore(OBJ)">Load More</div>
+<div class="list"></div>
+<div class="load_more">Load More</div>
 </body>
 <script>
-    let load_more = document.querySelector(OBJ.loadMoreSelector);
-    load_more.click();
-
+    const OBJ=new LoadProducent()
+    OBJ.construct()
+    document.querySelector(OBJ.loadMoreSelector).click()
 </script>
 </html>

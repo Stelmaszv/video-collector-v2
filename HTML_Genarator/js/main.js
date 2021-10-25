@@ -66,18 +66,15 @@ function LoadMovieID(){
         stars_lists.innerHTML = add_stars(data.short_stars);
     }, 10);
 }
-
-
+let page=0
 class LoadContet{
     listSelector='.list'
     loadMoreSelector='.load_more'
-    array_str=''
-    max=0
-    limit=1
-    index=0
-    new_data=[]
-    add_new_array=[]
-    construct() {}
+    end=false
+
+    construct(){
+        this.load_more(this)
+    }
 
     add_list(list,on_list){
         this.array_str = '<ul>';
@@ -88,41 +85,44 @@ class LoadContet{
         return this.array_str
     }
 
-    on_more_button(index){
-        this.add_new_array=[]
-        this.max=this.max+1
-        for (let el_nev_in_data of data){
-            if (this.index>this.limit && this.limit<this.max){
-                if (data.hasOwnProperty(this.index)){
-                    this.add_new_array.push(data[this.index])
+    load_more(OBJ){
+        let list = document.querySelector(OBJ.listSelector);
+        let load_more=document.querySelector(OBJ.loadMoreSelector);
+        load_more.addEventListener("click", function(){
+            if (OBJ.end == false){
+                if (OBJ.data.hasOwnProperty(page)){
+                    for (let el_in_nev_data of OBJ.data[page]['Objets']){
+                        OBJ.on_load(list,el_in_nev_data)
+                    }
+                    if (OBJ.data.hasOwnProperty(page+1)){
+                        page=page+1
+                    }else{
+                        OBJ.end=true
+                        load_more.innerHTML=''
+                    }
+
                 }
             }
-            this.index=this.index+1
-        }
-        this.index=this.max
-        for (let el_in_add_new_array of this.add_new_array){
-            this.on_load(list,el_in_add_new_array)
-        }
+        });
     }
-    on_load(list,el){}
 }
 
 class LoadMovies extends LoadContet{
-    limit=5
+    data=movies
     on_load(list,el){
         list.innerHTML += '<div class="el"><a href="'+el.dir+'/movies_id.html">'+el.short_series.name+'-'+el.name+'</a><div>';
     }
 }
 
 class LoadStars extends LoadContet{
-    limit=10
+    data=stars
     on_load(list,el){
         list.innerHTML += '<div class="el"><a href="'+el.dir+'/stars_id.html">'+el.show_name+'</a><div>';
     }
 }
 
 class LoadProducent extends LoadContet{
-    limit=20
+    data=producents
     on_load(list,el){
         list.innerHTML += '<div class="el">';
         list.innerHTML += '<div><a href="'+el.dir+'/producent_id.html">'+el.name+'</a><div>';
@@ -134,16 +134,11 @@ class LoadProducent extends LoadContet{
         return '<li class="el"><a href="'+arr_el.dir+'/series_id.html">'+arr_el.name+'</a> </li>'
     }
 }
-let page=0
-function LoadMore(OBJ){
-    let list = document.querySelector(OBJ.listSelector);
-    if (data.hasOwnProperty(page)){
-        for (let el_in_nev_data of data[page]['Objets']){
-            OBJ.on_load(list,el_in_nev_data)
-        }
-        if (data.hasOwnProperty(page+1)){
-            page=page+1
-        }
+
+class LoadSeries extends LoadContet{
+    data=series
+    on_load(list,el){
+        list.innerHTML += '<div class="el"><a href="'+el.dir+'/stars_id.html">'+el.show_name+'</a><div>';
     }
 }
 

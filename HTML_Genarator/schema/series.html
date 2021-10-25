@@ -1,0 +1,19 @@
+<html>
+<head>
+    <title>Series</title>
+    <script src="Z:\HTML Generator\js\series_paginated.js"></script>
+    <script src="Z:\HTML Generator\js\main.js"></script>
+</head>
+<body>
+<h2>Stars</h2>
+<a href="Z:\HTML Generator\json\series_paginated.JSON">Data</a>
+<div class="list"></div>
+<div class="load_more">Load More</div>
+</body>
+<script>
+        const OBJ=new LoadSeries()
+        OBJ.construct()
+        document.querySelector(OBJ.loadMoreSelector).click()
+
+</script>
+</html>

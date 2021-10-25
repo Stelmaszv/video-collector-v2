@@ -1,25 +1,21 @@
 <html>
 <head>
     <title>Stars</title>
+    <script src="Z:\HTML Generator\js\stars_paginated.js"></script>
+    <script src="Z:\HTML Generator\js\main.js"></script>
 </head>
-<script src="Z:\HTML Generator\js\stars_paginated.js"></script>
-<script src="Z:\HTML Generator\js\main.js"></script>
-<script>
-    const OBJ=new LoadStars()
-
-
-</script>
 <body>
-<h2>Movies</h2>
+<h2>Stars</h2>
 <a href="Z:\HTML Generator\json\stars_paginated.JSON">Data</a>
 <div class="list">
     Wczytywanie
 </div>
-<div class="load_more" onclick="LoadMore(OBJ)">Load More</div>
+<div class="load_more">Load More</div>
 </body>
 <script>
-    let load_more = document.querySelector(OBJ.loadMoreSelector);
-    load_more.click();
+        const OBJ=new LoadStars()
+        OBJ.construct()
+        document.querySelector(OBJ.loadMoreSelector).click()
 
 </script>
 </html>
