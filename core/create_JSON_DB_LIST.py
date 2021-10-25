@@ -3,13 +3,14 @@ from app.db.models import session
 from app.db.models import Producent, Stars, Movies, Series
 from core.custum_errors import Error
 from pathlib import Path
+import os.path
 import math
 import json
 import os
 
-producent_fields_defult = ['country', 'top_stars']
-producent_fields_defult2 = ['country', 'top_stars', 'series']
-series_fields_defults = ["years", "country", "number_of_sezons", 'top_stars']
+producent_fields_defult = ['country']
+producent_fields_defult2 = ['country', 'series']
+series_fields_defults = ["years", "country", "number_of_sezons"]
 movies_fields_defults = ["src", "short_series", "short_stars"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series']
 defult_producents_pages = 1
@@ -77,7 +78,10 @@ class CreateJSONDBLIST:
 
     def return_top_stars(self, item):
         top_stars = []
-        with open(item.dir + '/stars_counter.JSON') as json_file:
+        dir = item.dir + '/stars_counter.JSON'
+        if os.path.isfile(dir) is False:
+            dir = item.series[0].dir + '/stars_counter.JSON'
+        with open(dir) as json_file:
             data = json.load(json_file)
             for star in data:
                 if star['Count'] > 3:
@@ -265,7 +269,8 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
     def add_fields(self, data_JSON, Movie):
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
-        data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, self.fields)
+        data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
+        data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
         return data_JSON
 
 class GenerateJSONOtputsProducent(AbstratJSONOtpus):

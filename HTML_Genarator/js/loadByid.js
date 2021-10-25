@@ -1,4 +1,5 @@
 class LoadID{
+
     data=data
     content='.content'
     constructor(){
@@ -10,7 +11,6 @@ class LoadID{
 
 }
 class Star extends LoadID{
-
 
     set_elements(){
         this.filter='All'
@@ -54,6 +54,34 @@ class Star extends LoadID{
     }
 
     add_movie(Movie){
-        return '<div class="el"><a href="'+Movie.dir+'/stars_id.html">'+Movie.short_series.name+' - '+Movie.show_name+'</a><div>'  
+        return '<div class="el"><a href="'+Movie.dir+'/movies_id.html">'+Movie.short_series.name+' - '+Movie.show_name+'</a><div>'  
+    }
+}
+
+class Series extends LoadID{
+
+    set_elements(){
+        this.movies=this.content_slector.querySelector('.movies')
+        this.laod_movies()
+        this.set_stars()
+    }
+
+    set_stars_stars(){
+        let stars = []
+        for (let Movie of this.data['movies']){
+            if (series.includes(Movie.stars) == false){
+                stars.push(Movie.short_series.name)
+            }
+        }
+    }
+
+    laod_movies(){
+        for (let Movie of this.data['movies']){
+            this.movies.innerHTML+=this.add_movie(Movie) 
+        }
+    }
+
+    add_movie(Movie){
+        return '<div class="el"><a href="'+Movie.dir+'/movies_id.html">'+Movie.show_name+'</a><div>'  
     }
 }

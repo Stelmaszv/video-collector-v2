@@ -41,21 +41,21 @@ class StarsSearch extends Search{
 class SeriesSearch extends Search{
     data=series
     on_result(results,objetc){
-        results.innerHTML+= '<div class="el"><a href="'+objetc.dir+'/stars_id.html">'+objetc.show_name+'</a><div>';
+        results.innerHTML+= '<div class="el"><a href="'+objetc.dir+'/series_id.html">'+objetc.show_name+'</a><div>';
     }
 }
 
 class MoviesSearch extends Search{
     data=movies
     on_result(results,objetc){
-        results.innerHTML+= '<div class="el"><a href="'+objetc.dir+'/stars_id.html">'+objetc.show_name+'</a><div>';
+        results.innerHTML+= '<div class="el"><a href="'+objetc.dir+'/movies_id.html">'+objetc.show_name+'</a><div>';
     }
 }
 
 class ProducentSearch extends Search{
     data=producents
     on_result(results,objetc){
-        results.innerHTML+= '<div class="el"><a href="'+objetc.dir+'/stars_id.html">'+objetc.show_name+'</a><div>';
+        results.innerHTML+= '<div class="el"><a href="'+objetc.dir+'/producent_id.html">'+objetc.show_name+'</a><div>';
     }
 }
 
