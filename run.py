@@ -9,7 +9,7 @@ from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTM
 from core.setings import data_JSON, scan_photos, run_start_view, clean_db, start_page, scan_dir, config, config_movies \
     , set_tags, create_xml, create_movie_list, generate_json_otputs_movies, create_json_dblist, \
     generate_json_otputs_stars, generate_json_otputs_producents, generate_html_base, generate_html_movies, open_html, \
-    generate_html_producents, generate_html_series, generate_html_stars
+    generate_html_producents, generate_html_series, generate_html_stars, generate_json_otputs_series
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
@@ -69,6 +69,11 @@ class Run:
             {
                 "obj": ConfigMovies(data_JSON['movies_photos']), "method": 'load',
                 "stan": config_movies, "start_mes": 'Config Movies in progres', "end_mees": 'End of Movies in progres'
+            },
+            {
+                "obj": GenerateJSONOtputsSeries(), "method": 'create',
+                "stan": generate_json_otputs_series, "start_mes": 'Config Series in progres',
+                "end_mees": 'End of Series in progres'
             },
             {
                 "obj": SetTags(data_JSON['dirs']), "method": 'set',

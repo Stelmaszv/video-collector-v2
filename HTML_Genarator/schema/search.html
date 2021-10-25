@@ -3,11 +3,6 @@
     <title>Search</title>
 </head>
 <script src="Z:\HTML Generator\js\stars_paginated.js"></script>
-<script src="Z:\HTML Generator\js\main.js"></script>
-<script>
-   let SearchOBJ= new Search()
-
-</script>
 <body>
 <form>
     <input class="search" type="text">
@@ -16,11 +11,17 @@
     </select>
     <button>Search</button>
 </form>
+<div class="results"></div>
 </body>
+<script src="Z:\HTML Generator\js\main.js"></script>
 <script>
-    document.querySelector('.search').addEventListener("keyup", function(){
-        SearchOBJ.on_key_up()
-    });
+    let SearchOBJ= new Search()
+    SearchOBJ.on_key_up();
+
+
+    //let re = new RegExp('Ev');
+    //let result = re.test('Evie');
+    //console.log(result)
 
 </script>
 </html>

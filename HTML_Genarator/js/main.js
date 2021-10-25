@@ -148,13 +148,29 @@ function LoadMore(OBJ){
 }
 
 class Search{
-    search='.search'
-    construct() {
-        this.search_button = document.querySelector(this.search);
-        this.on_key_up()
 
-    }
+    search='.search'
+    results='.results'
+
     on_key_up(){
-        console.log("Hello World")
+        let search  = document.querySelector(this.search)
+        let results = document.querySelector(this.results)
+        console.log(results)
+        search.addEventListener("keyup", function(){
+            results.innerHTML="Not Found"
+            let length=(data.length)
+            let str = "Evie";
+            let result = str.search(/Evie/g);
+            let value=search.value
+            for (let page = 0; page < length; page++) {
+                for (let objetc of data[page]['Objets']){
+                    let re = new RegExp(value);
+                    let req_exp = re.test(objetc.name);
+                    if (req_exp){
+                        results.innerHTML= '<div class="el"><a href="'+objetc.dir+'/stars_id.html">'+objetc.show_name+'</a><div>';
+                    }
+                }
+            }
+        });
     }
 }
