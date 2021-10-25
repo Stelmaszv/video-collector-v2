@@ -152,25 +152,25 @@ class CreateJSONDBLIST:
         list = [
             {"OBJ": self.create_pagination(self.get_producnets(), defult_producents_pages),
              'name': 'OUTPUT/json/producents_paginated.JSON',
-             'js': 'OUTPUT/js/producents_paginated.js'},
+             'js': 'OUTPUT/js/producents_paginated.js', 'var_name': 'producents'},
             {"OBJ": self.create_pagination(self.get_movies(), defult_movis),
              'name': 'OUTPUT/json/movies_paginated.JSON',
-             'js': 'OUTPUT/js/movies_paginated.js'},
+             'js': 'OUTPUT/js/movies_paginated.js', 'var_name': 'movies'},
             {"OBJ": self.create_pagination(self.get_series(), defult_series),
              'name': 'OUTPUT/json/series_paginated.JSON',
-             'js': 'OUTPUT/js/series_paginated.js'},
+             'js': 'OUTPUT/js/series_paginated.js', 'var_name': 'series'},
             {"OBJ": self.create_pagination(self.get_stars(), defult_stars),
              'name': 'OUTPUT/json/stars_paginated.JSON',
-             'js': 'OUTPUT/js/stars_paginated.js'},
+             'js': 'OUTPUT/js/stars_paginated.js', 'var_name': 'stars'},
             {"OBJ": self.get_producnets(),
-             'name': 'OUTPUT/json/producents.JSON', 'js': 'OUTPUT/js/producents.js'},
+             'name': 'OUTPUT/json/producents.JSON', 'js': 'OUTPUT/js/producents.js', 'var_name': 'producents'},
             {"OBJ": self.get_movies(), 'name': 'OUTPUT/json/movies.JSON',
-             'js': 'OUTPUT/js/movies.js'},
+             'js': 'OUTPUT/js/movies.js', 'var_name': 'movies'},
             {"OBJ": self.get_series(),
              'name': 'OUTPUT/json/series.JSON',
-             'js': 'OUTPUT/js/series.js'},
+             'js': 'OUTPUT/js/series.js', 'var_name': 'series'},
             {"OBJ": self.get_stars(), 'name': 'OUTPUT/json/stars.JSON',
-             'js': 'OUTPUT/js/stars.js'},
+             'js': 'OUTPUT/js/stars.js', 'var_name': 'stars'},
         ]
         if os.path.isdir('OUTPUT') is False:
             os.mkdir('OUTPUT')
@@ -188,7 +188,7 @@ class CreateJSONDBLIST:
             if Path(el['js']).is_file() is True:
                 os.remove(el['js'])
             f = open(el['js'], "x")
-            string = 'var data = ' + str(el['OBJ'])
+            string = 'var ' + el['var_name'] + ' = ' + str(el['OBJ'])
             f.write(string)
             f.close()
 
