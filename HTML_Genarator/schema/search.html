@@ -1,0 +1,26 @@
+<html>
+<head>
+    <title>Search</title>
+</head>
+<script src="Z:\HTML Generator\js\stars_paginated.js"></script>
+<script src="Z:\HTML Generator\js\main.js"></script>
+<script>
+   let SearchOBJ= new Search()
+
+</script>
+<body>
+<form>
+    <input class="search" type="text">
+    <select>
+        <option>Series</option>
+    </select>
+    <button>Search</button>
+</form>
+</body>
+<script>
+    document.querySelector('.search').addEventListener("keyup", function(){
+        SearchOBJ.on_key_up()
+    });
+
+</script>
+</html>

@@ -146,3 +146,15 @@ function LoadMore(OBJ){
         }
     }
 }
+
+class Search{
+    search='.search'
+    construct() {
+        this.search_button = document.querySelector(this.search);
+        this.on_key_up()
+
+    }
+    on_key_up(){
+        console.log("Hello World")
+    }
+}
