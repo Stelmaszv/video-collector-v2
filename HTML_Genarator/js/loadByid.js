@@ -61,23 +61,74 @@ class Star extends LoadID{
 class Series extends LoadID{
 
     set_elements(){
+        this.filter='All'
         this.movies=this.content_slector.querySelector('.movies')
+        this.stars_filter=this.content_slector.querySelector('.stars_filter')
+        this.sezon_filter=this.content_slector.querySelector('.sezon_filter')
         this.laod_movies()
         this.set_stars()
+        this.set_sezons()
+        this.on_select(this)
     }
 
-    set_stars_stars(){
+    on_select(Obj){
+        this.stars_filter.addEventListener("change", function(){
+            Obj.movies.innerHTML=""
+            Obj.filter=this.value
+            Obj.laod_movies()
+        })
+    }
+
+    on_select(Obj){
+        this.sezon_filter.addEventListener("change", function(){
+            Obj.movies.innerHTML=""
+            Obj.filter=this.value
+            Obj.laod_movies_sezon()
+        })
+    }
+
+    set_sezons(){
+        let sezons = []
+        for (let Movie of this.data['movies']){
+            if (sezons.includes(Movie.sezon) == false){
+                sezons.push(Movie.sezon)
+            }
+        }
+        for (let sezon of sezons){
+            this.sezon_filter.innerHTML+="<option>"+sezon+"</option>"
+        }
+    }
+
+    set_stars(){
         let stars = []
         for (let Movie of this.data['movies']){
-            if (series.includes(Movie.stars) == false){
-                stars.push(Movie.short_series.name)
+            for (let star of Movie.short_stars){
+                if (stars.includes(star.name) == false){
+                    stars.push(star.name)
+                }
             }
+        }
+        for (let serie of stars){
+            this.stars_filter.innerHTML+="<option>"+serie+"</option>"
         }
     }
 
     laod_movies(){
         for (let Movie of this.data['movies']){
-            this.movies.innerHTML+=this.add_movie(Movie) 
+            for(let star of Movie.short_stars){
+                if (star.name==this.filter || this.filter == "All"){
+                    this.movies.innerHTML+=this.add_movie(Movie)
+                }
+            }
+          
+        }
+    }
+
+    laod_movies_sezon(){
+        for (let Movie of this.data['movies']){
+            if (Movie.sezon == this.filter || this.filter == "All"){
+                this.movies.innerHTML+=this.add_movie(Movie)
+            }    
         }
     }
 
