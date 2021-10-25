@@ -1,68 +1,59 @@
-function LoadProduent(){
-    function add_Series(series_json){
-        series = '<ul>';
-        for (let serie of series_json){
-            series += '<li><a href="'+serie.dir+'/index.html">'+serie.name+'</a> </li>'
-        }
-        series += '</ul>';
-        return series
+class LoadID{
+    data=data
+    content='.content'
+    constructor(){
+        this.content_slector=document.querySelector(this.content)
+        document.querySelector('title').innerHTML=this.data.name
+        this.set_elements()    
     }
-    let list = document.querySelector(".list");
-    for (let el of data){
-        list.innerHTML += '<div>';
-        list.innerHTML += '<div><a href="'+el.dir+'/index.html">'+el.name+'</a><div>';
-        list.innerHTML += '<div><img width="300" height="150" src="'+el.avatar+'"><div>';
-        list.innerHTML += add_Series(el.series)
-        list.innerHTML += '</div>';
-    }
-};
+    set_elements(){}
 
-function LoadProduentID(){
-    function add_Series(series_json){
-        series = '<ul>';
-        for (let serie of series_json){
-            series += '<li><a href="'+serie.dir+'/series_id.html">'+serie.name+'</a> </li>'
-        }
-        series += '</ul>';
-        return series
-    }
-    function add_movies(series_json){
-        series = '<ul>';
-        for (let serie of series_json){
-            series += '<li><a href="'+serie.dir+'/movies_id.html">'+serie.name+'</a> </li>'
-        }
-        series += '</ul>';
-        return series
-    }
-    setTimeout(function(){ 
-        let name = document.querySelector(".name"); 
-        name.innerHTML = data.name;
-        let series_lists = document.querySelector(".series_lists"); 
-        series_lists.innerHTML = add_Series(data.series);
-        let movies_lists = document.querySelector(".movies_lists"); 
-        movies_lists.innerHTML = add_movies(data.movies);
-        let head = document.querySelector("title"); 
-        head.innerHTML = data.name; 
-    }, 10);
 }
+class Star extends LoadID{
 
-function LoadMovieID(){
-    setTimeout(function(){ 
-        function add_stars(series_json){
-            series = '<ul>';
-            for (let serie of series_json){
-                series += '<li><a href="'+serie.dir+'/stars_id.html">'+serie.name+'</a> </li>'
+
+    set_elements(){
+        this.filter='All'
+        let name=this.content_slector.querySelector('.name')
+        this.movies=this.content_slector.querySelector('.movies')
+        this.select=this.content_slector.querySelector('.filter')
+        name.innerHTML=this.data.name
+        this.on_select(this)
+        this.laod_movies()
+        this.set_select()
+    }
+
+    on_select(Obj){
+        this.select.addEventListener("change", function(){
+            Obj.movies.innerHTML=""
+            Obj.filter=this.value
+            Obj.laod_movies()
+        })
+    }
+
+    set_select(){
+        let series = []
+
+        for (let Movie of this.data['movies']){
+            if (series.includes(Movie.short_series.name) == false){
+                series.push(Movie.short_series.name)
             }
-            series += '</ul>';
-            return series
         }
-        let head = document.querySelector("title"); 
-        head.innerHTML = data.show_name; 
-        let name = document.querySelector(".name"); 
-        name.innerHTML = data.show_name; 
-        let wideo_src = document.querySelector(".wideo_src"); 
-        wideo_src.src=data.src
-        let stars_lists = document.querySelector(".stars_lists"); 
-        stars_lists.innerHTML = add_stars(data.short_stars);
-    }, 10);
+        for (let serie of series){
+            this.select.innerHTML+="<option>"+serie+"</option>"
+        }
+    }
+
+    laod_movies(){
+        for (let Movie of this.data['movies']){
+            if (Movie.short_series.name == this.filter || this.filter == "All"){
+                this.movies.innerHTML+=this.add_movie(Movie)
+            }    
+        }
+    
+    }
+
+    add_movie(Movie){
+        return '<div class="el"><a href="'+Movie.dir+'/stars_id.html">'+Movie.short_series.name+' - '+Movie.show_name+'</a><div>'  
+    }
 }

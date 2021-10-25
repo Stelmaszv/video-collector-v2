@@ -11,7 +11,7 @@ producent_fields_defult = ['country', 'top_stars']
 producent_fields_defult2 = ['country', 'top_stars', 'series']
 series_fields_defults = ["years", "country", "number_of_sezons", 'top_stars']
 movies_fields_defults = ["src", "short_series", "short_stars"]
-stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color']
+stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series']
 defult_producents_pages = 1
 defult_movis = 10
 defult_stars = 10
@@ -67,11 +67,13 @@ class CreateJSONDBLIST:
         return array
 
     def return_short_series(self, item_db):
-        return {
-            "name": item_db.series[0].show_name,
-            "dir": self.escepe_string(item_db.series[0].dir),
-            "avatar": item_db.series[0].avatar,
-        }
+        if len(item_db.series):
+            return {
+                "name": item_db.series[0].show_name,
+                "dir": self.escepe_string(item_db.series[0].dir),
+                "avatar": item_db.series[0].avatar,
+            }
+        return {}
 
     def return_top_stars(self, item):
         top_stars = []
