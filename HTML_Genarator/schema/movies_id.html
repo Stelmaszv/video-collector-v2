@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="Z:/HTML Generator/css/bootstrap.min.css" rel="stylesheet">
     <link href="Z:/HTML Generator/css/main.css" rel="stylesheet">
-    <title></title>
+      <title class="name_js"></title>
   </head>
   <body>
 
@@ -18,7 +18,7 @@
                 <a class="nav-link" aria-current="page" href="Z:/HTML Generator/sites/series.html">Series</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="Z:/HTML Generator/sites/stars.html">Series</a>
+                <a class="nav-link" aria-current="page" href="Z:/HTML Generator/sites/stars.html">Stars</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="Z:/HTML Generator/sites/producent.html">Producent</a>
@@ -35,18 +35,60 @@
                 <a href="#" class="movie-js active">Movie</a>
             </div>
             <div clsas="movie" style="background-color: black;">
-                <h1 class="d-flex justify-content-center name"></h1>
-                <div class="ratio ratio-4x3">
-                    <video class="wideo_src" controls>
-                        <source src="" type="video/mp4">
-                    </video>
+                <h1 class="d-flex justify-content-center name name_js"></h1>
+                <div class="wideo-section d-flex justify-content-center">
+                    <img class="movie_avatar ">
                 </div>
             </div>
+            <script>
+                let wideo_section=document.querySelector('.wideo-section')
+                wideo_section.addEventListener("click", function(){
+                    wideo_section.innerHTML='<video style="min-height:100%"  class="wideo_src" playsinline autoplay controls muted loop fullscreen id="bgvid"><source type="video/mp4"></video>'
+                    let wideo_src=document.querySelector('.wideo_src')
+                    wideo_src.src=data.src
+                });
+
+            </script>
+            <style>
+
+            </style>
         </div>
         <div class="ditels-section">
             <div class="stars">
                 <h1 class="d-flex justify-content-center star-name">Stars</h1>
                 <div class="d-flex justify-content-center stars_js"></div>
+            </div>
+            <h1 class="d-flex justify-content-center">Movie Informaton</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <img class="movie_avatar">
+                    </div>
+                    <div class="col">
+                        <h2 class="name_js d-flex justify-content-center"></h2>
+                        <p class="movie_description_js movie_description"></p>
+                        <table class="table table-borderless">
+                            <tbody>
+                            <tr>
+                                <td>Producent</td>
+                                <td><p class="d-flex justify-content-center producent_js"></p></td>
+                            </tr>
+                            <tr>
+                                <td>Series</td>
+                                <td><p class="d-flex justify-content-center series-js"></p></td>
+                            </tr>
+                            <tr>
+                                <td>Tags</td>
+                                <td><p class="d-flex justify-content-center tags_js"></p></td>
+                            </tr>
+                            <tr>
+                                <td>Stars</td>
+                                <td><p class="d-flex justify-content-center stars_strig_js"></p></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="galery">

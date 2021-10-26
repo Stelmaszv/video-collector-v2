@@ -53,7 +53,28 @@
 }
 
 .ditels-section .stars .star_src {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
+}
+
+.ditels-section .movie_avatar {
+  width: 500px;
+  height: 700px;
+}
+
+.ditels-section .movie_description {
+  text-align: justify;
+}
+
+.ditels-section .tag {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+video#bgvid {
+  height: 100vh;
+  width: 100vw;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 /*# sourceMappingURL=main.css.map */

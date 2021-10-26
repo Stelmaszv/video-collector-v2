@@ -4,9 +4,10 @@ class LoadID{
     content='.content'
     constructor(){
         this.content_slector=document.querySelector(this.content)
-        document.querySelector('title').innerHTML=this.data.name
-        let name=this.content_slector.querySelector('.name')
-        name.innerHTML=this.data.name
+        let names=this.content_slector.querySelectorAll('.name_js')
+        for (let name of names){
+            name.innerHTML=this.data.name
+        }
         this.set_elements()    
     }
     set_elements(){}
@@ -141,19 +142,33 @@ class Movie extends LoadID{
     set_elements(){
         let producent=document.querySelector('.producent-js')
         producent.innerHTML='Producent'
-        let serie=document.querySelector('.series-js')
-        serie.innerHTML=data.short_series.name
-        serie.setAttribute('href',data.short_series.dir+'/series_id.html')
+        let series=document.querySelectorAll('.series-js')
+        for (let serie of series){
+            serie.innerHTML=data.short_series.name
+        }
         let movie=document.querySelector('.movie-js')
         movie.innerHTML=data.name
-        let wideo_src=document.querySelector('.wideo_src')
-        wideo_src.src=data.src
+        let movie_avatars=document.querySelectorAll('.movie_avatar')
+        for (let avatar of movie_avatars){
+            avatar.setAttribute('src',this.data.avatar)
+        }
+        let movie_description=document.querySelector('.movie_description_js')
+        movie_description.innerHTML=data.description
         this.set_stars()
+        this.set_tags()
+    }
+    set_tags(){
+        let stars=document.querySelector('.tags_js')
+        for (let tag of this.data.tags){
+            stars.innerHTML+='<spam class="tag">'+tag.name+'</spam>'
+        }
     }
     set_stars(){
         let stars=document.querySelector('.stars_js')
+        let stars_strig_js=document.querySelector('.stars_strig_js')
         for (let star of data.short_stars){
             stars.innerHTML+='<a href="'+star.dir+'/stars_id.html"><img src="'+star.avatar+'" class="img-thumbnail star_src"></a>'
+            stars_strig_js.innerHTML+="<spam class='star-string'><a href='"+star.dir+"/stars_id.html'>"+star.name+"</a></spam>"
         }
     }
 }
