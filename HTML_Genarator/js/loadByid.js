@@ -5,6 +5,8 @@ class LoadID{
     constructor(){
         this.content_slector=document.querySelector(this.content)
         document.querySelector('title').innerHTML=this.data.name
+        let name=this.content_slector.querySelector('.name')
+        name.innerHTML=this.data.name
         this.set_elements()    
     }
     set_elements(){}
@@ -14,10 +16,8 @@ class Star extends LoadID{
 
     set_elements(){
         this.filter='All'
-        let name=this.content_slector.querySelector('.name')
         this.movies=this.content_slector.querySelector('.movies')
         this.select=this.content_slector.querySelector('.filter')
-        name.innerHTML=this.data.name
         this.on_select(this)
         this.laod_movies()
         this.set_select()
@@ -134,5 +134,10 @@ class Series extends LoadID{
 
     add_movie(Movie){
         return '<div class="el"><a href="'+Movie.dir+'/movies_id.html">'+Movie.show_name+'</a><div>'  
+    }
+}
+
+class Movie extends LoadID{
+    set_elements(){
     }
 }

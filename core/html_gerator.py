@@ -78,6 +78,16 @@ class HTMLGenaratorMain:
             data_JSON['project_url'] + '\HTML_Genarator\css')
 
         self.create_file(
+            self.css,
+            'bootstrap.min.css',
+            data_JSON['project_url'] + '\HTML_Genarator\css')
+
+        self.create_file(
+            self.css,
+            'bootstrap.rtl.min.css',
+            data_JSON['project_url'] + '\HTML_Genarator\css')
+
+        self.create_file(
             self.js,
             'load.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
@@ -90,6 +100,11 @@ class HTMLGenaratorMain:
         self.create_file(
             self.js,
             'loadByid.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
+            self.js,
+            'bootstrap.bundle.min.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
         self.create_file(
