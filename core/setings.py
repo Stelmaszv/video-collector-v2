@@ -34,6 +34,86 @@ class ResetMode(AbstractMode):
         }
 
 
+class OffAll(AbstractMode):
+
+    def return_setings(self):
+        return {
+            "run_start_view": False,
+            "scan_photos": False,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": False,
+            "generate_html": False
+        }
+
+
+class HTML(AbstractMode):
+
+    def return_setings(self):
+        return {
+            "run_start_view": False,
+            "scan_photos": False,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": True,
+            "generate_html": True
+        }
+
+
+class Add(AbstractMode):
+
+    def return_setings(self):
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+        return {
+            "run_start_view": False,
+            "scan_photos": True,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": True,
+            "generate_html": True
+        }
+
+
+class All(AbstractMode):
+
+    def return_setings(self):
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+        return {
+            "run_start_view": True,
+            "scan_photos": True,
+            "scan_dir": True,
+            "config": True,
+            "create_xml": True,
+            "create_movie_list": True,
+            "generate_json": True,
+            "generate_html": True
+        }
+
+
+class Screenshot(AbstractMode):
+
+    def return_setings(self):
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+        return {
+            "run_start_view": False,
+            "scan_photos": True,
+            "scan_dir": True,
+            "config": True,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": False,
+            "generate_html": False
+        }
+
 class SetMode:
 
     def __init__(self, setings_array, mode):
@@ -41,13 +121,19 @@ class SetMode:
         self.set_mode(mode)
 
     def set_mode(self, mode):
-        modes = ["reset", "Off all", "HTML", "add"]
+        modes = ["reset", "Off all", "HTML", "add", 'all', "screenshot"]
         error = mode in modes
-        Error.throw_error_bool('Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML", "add"', error)
+        mes = 'Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML", "add" ,"all","screenshot"'
+        Error.throw_error_bool(mes, error)
         setings_array = {
             "reset": ResetMode(self.setings),
+            "Off all": OffAll(self.setings),
+            "HTML": HTML(self.setings),
+            "add": Add(self.setings),
+            "all": All(self.setings),
+            "screenshot": Screenshot(self.setings),
         }
-        self.Mode = setings_array["reset"]
+        self.Mode = setings_array[mode]
 
     def return_setings(self):
         return self.Mode.return_setings()
@@ -136,8 +222,8 @@ search_faze_defult = ''
 muted=False
 auto_play=True
 full_screen=True
-# mode available "normal","reset","Off all","HTML", "add"
-MODE = 'reset'
+# mode available "normal","reset","Off all","HTML", "add","all","screenshot"
+MODE = 'screenshot'
 # run_setings only when mode set to "normal"
 setings_array = {
     "run_start_view": False,
@@ -152,6 +238,7 @@ setings_array = {
 if MODE != "normal":
     SetMode = SetMode(setings_array, MODE)
     setings_array = SetMode.return_setings()
+
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')
