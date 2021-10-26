@@ -143,7 +143,7 @@ class SetMode:
         setings_array = {
             "reset": ResetMode(self.setings),
             "Off all": OffAll(self.setings),
-            "HTML&JSOM": HTML(self.setings),
+            "HTML": HTML(self.setings),
             "add": Add(self.setings),
             "all": All(self.setings),
             "screenshot": Screenshot(self.setings),
