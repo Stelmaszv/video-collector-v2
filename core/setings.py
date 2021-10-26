@@ -19,7 +19,19 @@ class AbstractMode(ABC):
 class ResetMode(AbstractMode):
 
     def return_setings(self):
-        return self.setings
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+
+        return {
+            "run_start_view": False,
+            "scan_photos": False,
+            "scan_dir": True,
+            "config": True,
+            "create_xml": True,
+            "create_movie_list": True,
+            "generate_json": True,
+            "generate_html": True
+        }
 
 
 class SetMode:
