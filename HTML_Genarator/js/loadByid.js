@@ -139,5 +139,12 @@ class Series extends LoadID{
 
 class Movie extends LoadID{
     set_elements(){
+        let producent=document.querySelector('.producent-js')
+        producent.innerHTML='Producent'
+        let serie=document.querySelector('.series-js')
+        serie.innerHTML=data.short_series.name
+        serie.setAttribute('href',data.short_series.dir+'/series_id.html')
+        let movie=document.querySelector('.movie-js')
+        movie.innerHTML=data.name
     }
 }

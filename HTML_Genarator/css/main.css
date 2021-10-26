@@ -1,4 +1,37 @@
-.testeqe {
-  color: #EE82EE;
+.nav {
+  background-color: black;
+}
+
+.nav li a {
+  color: rgba(233, 206, 55, 0.822);
+}
+
+.nav li :hover {
+  color: gold;
+}
+
+.active-section {
+  background-color: #1b1a1a;
+  padding: 10px;
+}
+
+.active-section a {
+  color: rgba(233, 206, 55, 0.897);
+  text-decoration: none;
+}
+
+.active-section a :hover {
+  color: gold;
+}
+
+.active-section a.active {
+  color: gold;
+  font-weight: bold;
+}
+
+.active-section .seperator_link {
+  color: white;
+  padding-left: 5;
+  padding-right: 5;
 }
 /*# sourceMappingURL=main.css.map */
