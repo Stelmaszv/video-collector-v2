@@ -59,7 +59,7 @@ class HTML(AbstractMode):
             "config": False,
             "create_xml": False,
             "create_movie_list": False,
-            "generate_json": True,
+            "generate_json": False,
             "generate_html": True
         }
 
@@ -114,6 +114,21 @@ class Screenshot(AbstractMode):
             "generate_html": False
         }
 
+
+class HTMLJSOM(AbstractMode):
+    def return_setings(self):
+        return {
+            "run_start_view": False,
+            "scan_photos": False,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": True,
+            "generate_html": True
+        }
+
+
 class SetMode:
 
     def __init__(self, setings_array, mode):
@@ -121,17 +136,18 @@ class SetMode:
         self.set_mode(mode)
 
     def set_mode(self, mode):
-        modes = ["reset", "Off all", "HTML", "add", 'all', "screenshot"]
+        modes = ["reset", "Off all", "HTML", "add", 'all', "screenshot", "HTML&JSOM"]
         error = mode in modes
-        mes = 'Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML", "add" ,"all","screenshot"'
+        mes = 'Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML&JSOM", "add" ,"all","screenshot"'
         Error.throw_error_bool(mes, error)
         setings_array = {
             "reset": ResetMode(self.setings),
             "Off all": OffAll(self.setings),
-            "HTML": HTML(self.setings),
+            "HTML&JSOM": HTML(self.setings),
             "add": Add(self.setings),
             "all": All(self.setings),
             "screenshot": Screenshot(self.setings),
+            "HTML&JSOM": HTMLJSOM(self.setings),
         }
         self.Mode = setings_array[mode]
 
@@ -222,8 +238,8 @@ search_faze_defult = ''
 muted=False
 auto_play=True
 full_screen=True
-# mode available "normal","reset","Off all","HTML", "add","all","screenshot"
-MODE = 'screenshot'
+# mode available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML"
+MODE = 'HTML'
 # run_setings only when mode set to "normal"
 setings_array = {
     "run_start_view": False,
