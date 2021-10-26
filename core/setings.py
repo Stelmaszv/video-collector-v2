@@ -75,6 +75,10 @@ height_size_defult = 25
 #menu
 menu_per_page = 20
 
+
+def set_mode(MODE):
+    scan_photos = True
+
 series_avatar_defult ='D:/project/video-collector-v2/icon/series.jpg'
 stars_avatar_defult  ='D:/project/video-collector-v2/icon/star_no_photo.png'
 none_movies_defult   ='D:/project/video-collector-v2/icon/star_no_photo.png'
@@ -89,27 +93,19 @@ search_faze_defult = ''
 muted=False
 auto_play=True
 full_screen=True
-#run_setings
-run_start_view = False
-scan_photos=False
-clean_db = False
-scan_dir = False
-config = False
-config_movies = False
-set_tags = False
-create_xml = False
-create_movie_list = False
-generate_json_otputs_movies = False
-create_json_dblist = False
-generate_json_otputs_stars = False
-generate_json_otputs_series = False
-generate_json_otputs_producents = False
-open_html = False
-generate_html_base = True
-generate_html_movies = False
-generate_html_producents = False
-generate_html_series = False
-generate_html_stars = False
+# mode available "normal","reset","Off all","HTML", "add"
+MODE = 'normal'
+# run_setings only when mode set to "normal"
+setings = {
+    "run_start_view": False,
+    "scan_photos": False,
+    "scan_dir": True,
+    "config": True,
+    "create_xml": True,
+    "create_movie_list": True,
+    "generate_json": True,
+    "generate_html": True
+}
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')

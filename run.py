@@ -6,25 +6,11 @@ from core.config import ConfigLoop, ConfigMovies,SetTags,CreateXML,CreateMovieLi
 from core.dir import LoadFilesFromJson, PhotoMeaker
 from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTMLProducents, GenerateHTMLSeries, \
     GenerateHTMLStars
-from core.setings import data_JSON, scan_photos, run_start_view, clean_db, start_page, scan_dir, config, config_movies \
-    , set_tags, create_xml, create_movie_list, generate_json_otputs_movies, create_json_dblist, \
-    generate_json_otputs_stars, generate_json_otputs_producents, generate_html_base, generate_html_movies, open_html, \
-    generate_html_producents, generate_html_series, generate_html_stars, generate_json_otputs_series
+from core.setings import data_JSON, setings, start_page
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
     GenerateJSONOtputsSeries, GenerateJSONOtputsProducent
-
-class DBCleaner:
-
-    models=[Movies,Stars,Series,Sezons,Photos,Producent]
-
-    def clean(self):
-        for Model in self.models:
-            print("DB is erasing ! - " + str(Model.__name__))
-            session.query(Model).delete()
-            session.commit()
-
 
 class LoopRun:
     objets = []
@@ -41,9 +27,8 @@ class LoopRun:
             self.run_object(objet['obj'], objet['method'], objet['stan'], objet['start_mes'], objet['end_mees'])
 
 class Run:
-
-    scan_photos=scan_photos
-    run_start_view=run_start_view
+    scan_photos = setings["scan_photos"]
+    run_start_view = setings["run_start_view"]
     config=True
 
     def __init__(self, StartView, JSONConfigView):
@@ -55,83 +40,81 @@ class Run:
 
         self.LoopRun.objets = [
             {
-                "obj": DBCleaner(), "method": 'clean',
-                "stan": clean_db, "start_mes": 'Erasing is started !', "end_mees": 'DB is erased !'
-            },
-            {
                 "obj": LoadFilesFromJson(data_JSON['dirs']), "method": 'add_files',
-                "stan": scan_dir, "start_mes": 'Scaning Dir in progres', "end_mees": 'End of scaning'
+                "stan": setings["scan_dir"], "start_mes": 'Scaning Dir in progres', "end_mees": 'End of scaning'
             },
             {
                 "obj": ConfigLoop(data_JSON['dirs']), "method": 'load',
-                "stan": config, "start_mes": 'Config in progres', "end_mees": 'End of Config'
+                "stan": setings["config"], "start_mes": 'Config in progres', "end_mees": 'End of Config'
             },
             {
                 "obj": ConfigMovies(data_JSON['movies_photos']), "method": 'load',
-                "stan": config_movies, "start_mes": 'Config Movies in progres', "end_mees": 'End of Movies in progres'
+                "stan": setings["config"], "start_mes": 'Config Movies in progres',
+                "end_mees": 'End of Movies in progres'
             },
-            {
-                "obj": GenerateJSONOtputsSeries(), "method": 'create',
-                "stan": generate_json_otputs_series, "start_mes": 'Config Series in progres',
-                "end_mees": 'End of Series in progres'
-            },
+
             {
                 "obj": SetTags(data_JSON['dirs']), "method": 'set',
-                "stan": set_tags, "start_mes": 'Set Tags in progres', "end_mees": 'End of Set Tags in progres'
+                "stan": setings["config"], "start_mes": 'Set Tags in progres', "end_mees": 'End of Set Tags in progres'
             },
             {
                 "obj": CreateXML(data_JSON['dirs']), "method": 'load',
-                "stan": create_xml, "start_mes": 'Createing XML in progres',
+                "stan": setings["create_xml"], "start_mes": 'Createing XML in progres',
                 "end_mees": 'End of Createing XML in progres'
             },
             {
                 "obj": CreateMovieList(data_JSON['dirs']), "method": 'load',
-                "stan": create_movie_list, "start_mes": 'Createing Movies List in progres',
+                "stan": setings["create_movie_list"], "start_mes": 'Createing Movies List in progres',
                 "end_mees": 'End of Createing Movies List in progres'
             },
             {
                 "obj": CreateJSONDBLIST(), "method": 'create',
-                "stan": create_json_dblist, "start_mes": 'Config JSON Outputs in progres',
+                "stan": setings["generate_json"], "start_mes": 'Config JSON Outputs in progres',
                 "end_mees": 'End of Config JSON Outputs in progres'
             },
             {
+                "obj": GenerateJSONOtputsSeries(), "method": 'create',
+                "stan": setings["generate_json"], "start_mes": 'Config Series in progres',
+                "end_mees": 'End of Series in progres'
+            },
+            {
                 "obj": GenerateJSONOtputsMovies(), "method": 'create',
-                "stan": generate_json_otputs_movies, "start_mes": 'Config JSON Outputs for movies in progres',
+                "stan": setings["generate_json"], "start_mes": 'Config JSON Outputs for movies in progres',
                 "end_mees": 'End of Config JSON Outputs for movies in progres'
             },
             {
                 "obj": GenerateJSONOtputsStars(), "method": 'create',
-                "stan": generate_json_otputs_stars, "start_mes": 'Config JSON Outputs for stars in progres',
+                "stan": setings["generate_json"], "start_mes": 'Config JSON Outputs for stars in progres',
                 "end_mees": 'End of Config JSON Outputs for stars in progres'
             },
             {
                 "obj": GenerateJSONOtputsProducent(), "method": 'create',
-                "stan": generate_json_otputs_producents, "start_mes": 'Config JSON Outputs for producent in progres',
+                "stan": setings["generate_json"], "start_mes": 'Config JSON Outputs for producent in progres',
                 "end_mees": 'End of Config JSON Outputs for producent in progres'
             },
             {
                 "obj": HTMLGenaratorMain(), "method": 'generate',
-                "stan": generate_html_base, "start_mes": 'Genereting HTML Base',
+                "stan": setings["generate_html"], "start_mes": 'Genereting HTML Base',
                 "end_mees": 'End of Genereting HTML Base'
             },
             {
                 "obj": GenerateHTMLMovies(), "method": 'generate',
-                "stan": generate_html_movies, "start_mes": 'Genereting HTML Movies',
+                "stan": setings["generate_html"], "start_mes": 'Genereting HTML Movies',
                 "end_mees": 'End of Genereting HTML Movies'
             },
             {
                 "obj": GenerateHTMLProducents(), "method": 'generate',
-                "stan": generate_html_producents, "start_mes": 'Genereting HTML Producents',
+                "stan": setings["generate_html"], "start_mes": 'Genereting HTML Producents',
                 "end_mees": 'End of Genereting HTML Producents'
             },
             {
                 "obj": GenerateHTMLSeries(), "method": 'generate',
-                "stan": generate_html_series, "start_mes": 'Genereting HTML Series',
+                "stan": setings["generate_html"], "start_mes": 'Genereting HTML Series',
                 "end_mees": 'End of Genereting HTML Series'
             },
             {
                 "obj": GenerateHTMLStars(), "method": 'generate',
-                "stan": generate_html_stars, "start_mes": 'Genereting HTML Stars',
+                "stan": setings["generate_html"], "start_mes": 'Genereting HTML Stars',
                 "end_mees": 'End of Genereting HTML Stars'
             },
         ]
