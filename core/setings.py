@@ -1,9 +1,44 @@
 import json
 import os
 import sys
+from abc import ABC, abstractmethod
 from core.custum_errors import Error
 from pathlib import Path
 from PyQt5 import QtWidgets
+
+
+class AbstractMode(ABC):
+    def __init__(self, setings):
+        self.setings = setings
+
+    @abstractmethod
+    def return_setings(self):
+        pass
+
+
+class ResetMode(AbstractMode):
+
+    def return_setings(self):
+        return self.setings
+
+
+class SetMode:
+
+    def __init__(self, setings_array, mode):
+        self.setings = setings_array
+        self.set_mode(mode)
+
+    def set_mode(self, mode):
+        modes = ["reset", "Off all", "HTML", "add"]
+        error = mode in modes
+        Error.throw_error_bool('Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML", "add"', error)
+        setings_array = {
+            "reset": ResetMode(self.setings),
+        }
+        self.Mode = setings_array["reset"]
+
+    def return_setings(self):
+        return self.Mode.return_setings()
 
 class GetRezolution:
 
@@ -19,6 +54,7 @@ class GetRezolution:
   @property
   def set_height(self):
     return self.size.height()
+
 
 class ConfiGData:
 
@@ -74,11 +110,6 @@ with_size_defult = 25
 height_size_defult = 25
 #menu
 menu_per_page = 20
-
-
-def set_mode(MODE):
-    scan_photos = True
-
 series_avatar_defult ='D:/project/video-collector-v2/icon/series.jpg'
 stars_avatar_defult  ='D:/project/video-collector-v2/icon/star_no_photo.png'
 none_movies_defult   ='D:/project/video-collector-v2/icon/star_no_photo.png'
@@ -94,9 +125,9 @@ muted=False
 auto_play=True
 full_screen=True
 # mode available "normal","reset","Off all","HTML", "add"
-MODE = 'normal'
+MODE = 'reset'
 # run_setings only when mode set to "normal"
-setings = {
+setings_array = {
     "run_start_view": False,
     "scan_photos": False,
     "scan_dir": True,
@@ -106,6 +137,9 @@ setings = {
     "generate_json": True,
     "generate_html": True
 }
+if MODE != "normal":
+    SetMode = SetMode(setings_array, MODE)
+    setings_array = SetMode.return_setings()
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')
