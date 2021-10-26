@@ -11,7 +11,7 @@
 }
 
 .active-section {
-  background-color: #1b1a1a;
+  background-color: black;
   padding: 10px;
 }
 
@@ -33,5 +33,27 @@
   color: white;
   padding-left: 5;
   padding-right: 5;
+}
+
+.movie {
+  background-color: black;
+}
+
+.name {
+  color: white;
+}
+
+.ditels-section .stars {
+  padding-bottom: 10px;
+}
+
+.ditels-section .stars .star-name {
+  background-color: black;
+  color: white;
+}
+
+.ditels-section .stars .star_src {
+  width: 200px;
+  height: 200px;
 }
 /*# sourceMappingURL=main.css.map */

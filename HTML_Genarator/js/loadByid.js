@@ -146,5 +146,14 @@ class Movie extends LoadID{
         serie.setAttribute('href',data.short_series.dir+'/series_id.html')
         let movie=document.querySelector('.movie-js')
         movie.innerHTML=data.name
+        let wideo_src=document.querySelector('.wideo_src')
+        wideo_src.src=data.src
+        this.set_stars()
+    }
+    set_stars(){
+        let stars=document.querySelector('.stars_js')
+        for (let star of data.short_stars){
+            stars.innerHTML+='<a href="'+star.dir+'/stars_id.html"><img src="'+star.avatar+'" class="img-thumbnail star_src"></a>'
+        }
     }
 }
