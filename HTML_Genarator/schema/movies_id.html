@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="Z:/HTML Generator/css/bootstrap.min.css" rel="stylesheet">
     <link href="Z:/HTML Generator/css/main.css" rel="stylesheet">
-      <title class="name_js"></title>
+      <title></title>
   </head>
   <body>
 
@@ -37,20 +37,23 @@
             <div clsas="movie" style="background-color: black;">
                 <h1 class="d-flex justify-content-center name name_js"></h1>
                 <div class="wideo-section d-flex justify-content-center">
-                    <img class="movie_avatar ">
+                    <img class="movie_avatar">
                 </div>
             </div>
             <script>
                 let wideo_section=document.querySelector('.wideo-section')
                 wideo_section.addEventListener("click", function(){
-                    wideo_section.innerHTML='<video style="min-height:100%"  class="wideo_src" playsinline autoplay controls muted loop fullscreen id="bgvid"><source type="video/mp4"></video>'
+                    wideo_section.innerHTML='<video style="min-height:100%"  class="wideo_src" autoplay controls muted loop id="bgvid"><source type="video/mp4"></video>'
                     let wideo_src=document.querySelector('.wideo_src')
                     wideo_src.src=data.src
                 });
-
             </script>
             <style>
-
+                video#bgvid {
+                    height: 100vh;
+                    width: 100vw;
+                    object-fit:cover;
+                }                
             </style>
         </div>
         <div class="ditels-section">
@@ -68,27 +71,42 @@
                         <h2 class="name_js d-flex justify-content-center"></h2>
                         <p class="movie_description_js movie_description"></p>
                         <table class="table table-borderless table_information">
-                            <!--
-                            <tbody>
-                            <tr>
-                                <td>Producent</td>
-                                <td><p class="d-flex justify-content-center producent_js"></p></td>
-                            </tr>
-                            <tr>
-                                <td>Series</td>
-                                <td><p class="d-flex justify-content-center series-js"></p></td>
-                            </tr>
-                            <tr>
-                                <td>Tags</td>
-                                <td><p class="d-flex justify-content-center tags_js"></p></td>
-                            </tr>
-                            <tr>
-                                <td>Stars</td>
-                                <td><p class="d-flex justify-content-center stars_strig_js"></p></td>
-                            </tr>
-                            </tbody>
-                            -->
                         </table>
+                    </div>
+                </div>
+            </div>
+            <div class="tabs_nav">
+                <ul class="nav nav-pills mb-3 tab_nav d-flex justify-content-center" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
+                                aria-selected="true">Home
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
+                                aria-selected="false">Profile
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
+                                aria-selected="false">Contact
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                         aria-labelledby="pills-home-tab">
+                        <div class="d-flex justify-content-center">1</div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="d-flex justify-content-center">2</div>
+                    </div>
+                    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                        <div class="d-flex justify-content-center">2</div>
                     </div>
                 </div>
             </div>

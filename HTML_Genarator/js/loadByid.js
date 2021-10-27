@@ -4,6 +4,7 @@ class LoadID{
     content='.content'
     constructor(){
         this.content_slector=document.querySelector(this.content)
+        document.querySelector('title').innerHTML=this.data.name
         let names=this.content_slector.querySelectorAll('.name_js')
         for (let name of names){
             name.innerHTML=this.data.name
@@ -140,23 +141,6 @@ class Series extends LoadID{
 
 class Movie extends LoadID{
     set_elements(){
-        /*
-        let producents=document.querySelectorA+ll('.producent-js')
-        for (let producent of producents){
-            producent.innerHTML=data.series[0].producent.name
-        }
-        let series=document.querySelectorAll('.series-js')
-        for (let serie of series){
-            console.log(data.series[0])
-            serie.innerHTML=data.series[0].name
-        }
-        let movie=document.querySelector('.movie-js')
-        movie.innerHTML=data.name
-        let movie_avatars=document.querySelectorAll('.movie_avatar')
-        for (let avatar of movie_avatars){
-            avatar.setAttribute('src',this.data.avatar)
-        }
-        */
         let movie_description=document.querySelector('.movie_description_js')
         movie_description.innerHTML=data.description
         let movie_avatars=document.querySelectorAll('.movie_avatar')
