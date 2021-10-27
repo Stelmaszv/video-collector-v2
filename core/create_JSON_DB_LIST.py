@@ -10,8 +10,8 @@ import os
 
 producent_fields_defult = ['country']
 producent_fields_defult2 = ['country', 'series']
-series_fields_defults = ["years", "country", "number_of_sezons"]
-movies_fields_defults = ["src", "short_series", "short_stars", "sezon"]
+series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent"]
+movies_fields_defults = ["src", "short_stars", "sezon", "year", "likes", "views", "favourite", "country"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series']
 defult_producents_pages = 1
 defult_movis = 10
@@ -36,9 +36,13 @@ class CreateJSONDBLIST:
         for item_db in loop_all:
             item = self.add_defults(item_db)
             for atter in atters:
-                if atter != "series" or atter != "stars" or atter != "top stars" or atter != "src":
+                if atter != "series" or atter != "stars" or atter != "top stars" or atter != "src" or atter != "producent":
                     if hasattr(item_db, atter):
                         item[atter] = getattr(item_db, self.escepe_string(atter))
+                if atter == "producent":
+                    item["producent"] = self.return_producent(item_db)
+                if atter == "favourite":
+                    item[atter] = str(getattr(item_db, self.escepe_string(atter)))
                 if atter == "src":
                     item[atter] = self.escepe_string(getattr(item_db, self.escepe_string(atter)))
                 if atter == "series":
@@ -55,6 +59,17 @@ class CreateJSONDBLIST:
                     item["short_stars"] = self.return_short_stars(item_db)
             array_return.append(item)
         return array_return
+
+    def return_producent(self, item_db):
+
+        if len(item_db.producent):
+            if len(item_db.producent):
+                return {
+                    "name": item_db.producent[0].show_name,
+                    "dir": self.escepe_string(item_db.producent[0].dir),
+                    "avatar": item_db.producent[0].avatar,
+                }
+        return {}
 
     def return_short_stars(self, item_db):
         array = []
@@ -248,7 +263,14 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
 
     def add_fields(self, data_JSON, Movie):
         self.add_index(self.fields, data_JSON, Movie)
+        data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
+        data_JSON['photos'] = self.return_galery(data_JSON)
+        data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, series_fields_defults)
         return data_JSON
+
+    def return_galery(self, JSON):
+        return os.listdir(JSON['dir'])
+
 
 class GenerateJSONOtputsStars((AbstratJSONOtpus)):
     input = "OUTPUT/json/stars.JSON"
