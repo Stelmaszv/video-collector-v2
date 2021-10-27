@@ -140,11 +140,15 @@ class Series extends LoadID{
 
 class Movie extends LoadID{
     set_elements(){
-        let producent=document.querySelector('.producent-js')
-        producent.innerHTML='Producent'
+        /*
+        let producents=document.querySelectorAll('.producent-js')
+        for (let producent of producents){
+            producent.innerHTML=data.series[0].producent.name
+        }
         let series=document.querySelectorAll('.series-js')
         for (let serie of series){
-            serie.innerHTML=data.short_series.name
+            console.log(data.series[0])
+            serie.innerHTML=data.series[0].name
         }
         let movie=document.querySelector('.movie-js')
         movie.innerHTML=data.name
@@ -154,8 +158,23 @@ class Movie extends LoadID{
         }
         let movie_description=document.querySelector('.movie_description_js')
         movie_description.innerHTML=data.description
+        */
+        this.shorcut_menu()
+        let movie_avatars=document.querySelectorAll('.movie_avatar')
+        for (let avatar of movie_avatars){
+            avatar.setAttribute('src',this.data.avatar)
+        }
         this.set_stars()
         this.set_tags()
+    }
+    shorcut_menu(){
+        let shorcut_menu=document.querySelectorAll('.shorcut_elment')
+        shorcut_menu[0].innerHTML=this.data.series[0].producent.name
+        shorcut_menu[0].href=this.data.series[0].producent.dir+'/producent_id.html'
+        shorcut_menu[1].innerHTML=this.data.series[0].name
+        shorcut_menu[1].href=this.data.series[0].dir+'/series_id.html'
+        shorcut_menu[2].innerHTML=this.data.name
+        shorcut_menu[2].href=this.data.dir+'/movies_id.html'
     }
     set_tags(){
         let stars=document.querySelector('.tags_js')
