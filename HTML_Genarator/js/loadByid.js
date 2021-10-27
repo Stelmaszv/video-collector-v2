@@ -141,7 +141,7 @@ class Series extends LoadID{
 class Movie extends LoadID{
     set_elements(){
         /*
-        let producents=document.querySelectorAll('.producent-js')
+        let producents=document.querySelectorA+ll('.producent-js')
         for (let producent of producents){
             producent.innerHTML=data.series[0].producent.name
         }
@@ -156,16 +156,47 @@ class Movie extends LoadID{
         for (let avatar of movie_avatars){
             avatar.setAttribute('src',this.data.avatar)
         }
+        */
         let movie_description=document.querySelector('.movie_description_js')
         movie_description.innerHTML=data.description
-        */
-        this.shorcut_menu()
         let movie_avatars=document.querySelectorAll('.movie_avatar')
         for (let avatar of movie_avatars){
             avatar.setAttribute('src',this.data.avatar)
         }
+        this.create_table_information()
+        this.shorcut_menu()
         this.set_stars()
         this.set_tags()
+    }
+    create_table_information(){
+        let table=document.querySelector('.table_information')
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Producent</td><td><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Serie</td><td><a href="'+this.data.series[0].dir+'/series_id.html">'+this.data.series[0].name+'</a></td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Stars</td><td class="stars_strig_js"></td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
+        table.innerHTML+='</tr>'
     }
     shorcut_menu(){
         let shorcut_menu=document.querySelectorAll('.shorcut_elment')
