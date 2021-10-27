@@ -147,10 +147,28 @@ class Movie extends LoadID{
         for (let avatar of movie_avatars){
             avatar.setAttribute('src',this.data.avatar)
         }
+        this.load_galery()
         this.create_table_information()
         this.shorcut_menu()
         this.set_stars()
         this.set_tags()
+    }
+    load_galery(){
+        function getExt(filename){
+            var ext = filename.split('.').pop();
+            if(ext == filename) return "";
+            return ext;
+        }
+        let galery=document.querySelector('.galery')
+        for (let photo of this.data.photos){
+            let ext= getExt(photo)
+
+            if (ext==="png" || ext==="jpg"){
+             galery.innerHTML+='<a href="'+photo+'" data-caption="Caption 1"><img class="galery-item" src="'+photo+'"></a>'
+            }
+            
+        }
+        
     }
     create_table_information(){
         let table=document.querySelector('.table_information')

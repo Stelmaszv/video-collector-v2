@@ -85,4 +85,16 @@
   background-color: black;
   font-weight: bold;
 }
+
+.ditels-section .galery {
+  margin-left: 25%;
+  padding-bottom: 20px;
+  width: 1500px;
+}
+
+.ditels-section .galery .galery-item {
+  margin: 5px;
+  width: 250px;
+  height: 250px;
+}
 /*# sourceMappingURL=main.css.map */
