@@ -152,6 +152,53 @@ class Movie extends LoadID{
         this.shorcut_menu()
         this.set_stars()
         this.set_tags()
+        this.add_series_movies()
+    }
+    add_series_movies(){
+        let series_name=document.querySelector('.all-series-name')
+        series_name.innerHTML=this.data.series[0].name
+        let movies_series=document.querySelector('.all-in-series')
+        function sort_string(string){
+            let limit=150
+            let str=''
+            if (string.length>limit){
+                for (let i = 0; i < limit; i++) {
+                    str += string[i];
+                  }
+                return str+' ...'
+            }
+            return string
+        }
+        function title(movie){
+            return '<h5 class="card-title">'+movie.name+'</h5>'
+        }
+        function body(movie){
+            return '<p class="card-text" style="height: 10rem;">'+sort_string(movie.description)+'</p>'
+        }
+        function img(movie){
+            return '<img style="width: 13rem; height: 15rem;" src="'+movie.avatar+'" class="card-img-top" alt="...">'
+        }
+        function action_grup(movie){
+            let str=''
+            str+='<ul class="list-group list-group-flush">'
+            str+='<li class="list-group-item"><a href="'+data.series[0].producent.dir+'/producent_id.html" class="card-link">'+data.series[0].producent.name+'</a></li>'
+            str+='<li class="list-group-item"><a href="'+data.series[0].dir+'/series_id.html" class="card-link">'+data.series[0].name+'</a></li>'
+            str+='<li class="list-group-item"><a href="'+movie.dir+'/movies_id.html" class="card-link">'+movie.name+'</a></li>'
+            str+='</ul>'
+            return str
+        }
+        function links(movie){
+            let str=''
+            str+= '<div class="card-body">'
+            for (let star of movie.short_stars){
+                str+= '<a href="'+star.dir+'/stars_id.html" class="card-link">'+star.name+'</a>'
+            }
+            str+= '</div>'
+            return str
+        }
+        for (let movie of this.data.series[0].movies){
+            movies_series.innerHTML+='<div class="col"> <div class="card cart-item" style="width: 13rem; margin:1rem;">'+img(movie)+'<div class="card-body">'+title(movie)+' '+body(movie)+'</div>'+action_grup(movie)+''+links(movie)+'</div></div> '
+        }
     }
     load_galery(){
         function getExt(filename){
@@ -164,7 +211,7 @@ class Movie extends LoadID{
             let ext= getExt(photo)
 
             if (ext==="png" || ext==="jpg"){
-             galery.innerHTML+='<a href="'+photo+'" data-caption="Caption 1"><img class="galery-item" src="'+photo+'"></a>'
+             galery.innerHTML+='<div class="col"><a href="'+photo+'"><img class="galery-item" src="'+photo+'"></a></div>'
             }
             
         }
