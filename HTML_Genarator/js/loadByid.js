@@ -26,18 +26,40 @@ class LoadID{
         }
     }
 
+    load_galery(array){
+        function getExt(filename){
+            var ext = filename.split('.').pop();
+            if(ext == filename) return "";
+            return ext;
+        }
+        let galery=document.querySelector('.galery')
+        galery.innerHTML=''
+        for (let photo of array){
+            let ext= getExt(photo)
+            if (ext==="png" || ext==="jpg"){
+             galery.innerHTML+='<div class="col"><a href="'+photo+'"><img class="galery-item" src="'+photo+'"></a></div>'
+            }  
+        }
+    }
+
 }
 class Star extends LoadID{
     set_elements(){
         this.create_table_information()
         this.set_tags()
+        this.load_galery(this.set_galery())
+        let ObjMovieList = new MovieList(this.data,'.star_name','.stars-movies-output',this.data.movies,this.data.name)
+        ObjMovieList.return_movies()
+    }
+
+    set_galery(){
+        return []
     }
 
     create_table_information(){
         function count_age(){
             return '25'
         }
-        console.log(this.data)
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
         table.innerHTML+='<td>Nationality</td><td>'+this.data.nationality+'</td>'
@@ -49,35 +71,6 @@ class Star extends LoadID{
         table.innerHTML+='<td>Weight</td><td>'+this.data.weight+'</td>'
         table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
         table.innerHTML+='</tr>'
-        /*
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Producent</td><td><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
-        table.innerHTML+='</tr>'
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Serie</td><td><a href="'+this.data.series[0].dir+'/series_id.html">'+this.data.series[0].name+'</a></td>'
-        table.innerHTML+='</tr>'
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Stars</td><td class="stars_strig_js"></td>'
-        table.innerHTML+='</tr>'
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
-        table.innerHTML+='</tr>'
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
-        table.innerHTML+='</tr>'
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
-        table.innerHTML+='</tr>'
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
-        table.innerHTML+='</tr>'
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
-        table.innerHTML+='</tr>'
-        table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
-        table.innerHTML+='</tr>'
-        */
     }
     /*
     set_elements(){
@@ -215,6 +208,7 @@ class MovieList{
             series_name.innerHTML=data.series[0].name
         }
         this.movies_series=document.querySelector( div_output)
+        this.movies_series.innerHTML=''
     }
 
     img(movie){
@@ -272,11 +266,7 @@ class MovieList{
 
 class Movie extends LoadID{
     set_elements(){
-        let movie_avatars=document.querySelectorAll('.movie_avatar')
-        for (let avatar of movie_avatars){
-            avatar.setAttribute('src',this.data.avatar)
-        }
-        this.load_galery()
+        this.load_galery(this.data.photos)
         this.create_table_information()
         this.shorcut_menu()
         this.set_stars()
@@ -305,23 +295,7 @@ class Movie extends LoadID{
         let ObjMovieList = new MovieList(this.data,'.all-series-name','.all-in-series',this.data.series[0].movies)
         ObjMovieList.return_movies()
     }
-    load_galery(){
-        function getExt(filename){
-            var ext = filename.split('.').pop();
-            if(ext == filename) return "";
-            return ext;
-        }
-        let galery=document.querySelector('.galery')
-        for (let photo of this.data.photos){
-            let ext= getExt(photo)
 
-            if (ext==="png" || ext==="jpg"){
-             galery.innerHTML+='<div class="col"><a href="'+photo+'"><img class="galery-item" src="'+photo+'"></a></div>'
-            }
-            
-        }
-        
-    }
     create_table_information(){
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'

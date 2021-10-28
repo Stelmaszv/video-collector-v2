@@ -282,7 +282,7 @@ class GenerateJSONOtputsStars((AbstratJSONOtpus)):
     def add_fields(self, data_JSON, Movie):
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
-        data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, self.fields)
+        data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
         return data_JSON
 
 class GenerateJSONOtputsSeries(AbstratJSONOtpus):
