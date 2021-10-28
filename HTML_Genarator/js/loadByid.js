@@ -9,13 +9,77 @@ class LoadID{
         for (let name of names){
             name.innerHTML=this.data.name
         }
+        let movie_avatars=document.querySelectorAll('.avatar_js')
+        for (let avatar of movie_avatars){
+            avatar.setAttribute('src',this.data.avatar)
+        }
+        let movie_description=document.querySelector('.description_js')
+        movie_description.innerHTML=data.description
         this.set_elements()    
     }
     set_elements(){}
 
+    set_tags(){
+        let stars=document.querySelector('.tags_js')
+        for (let tag of this.data.tags){
+            stars.innerHTML+='<spam class="tag">'+tag.name+'</spam>'
+        }
+    }
+
 }
 class Star extends LoadID{
+    set_elements(){
+        this.create_table_information()
+        this.set_tags()
+    }
 
+    create_table_information(){
+        function count_age(){
+            return '25'
+        }
+        console.log(this.data)
+        let table=document.querySelector('.table_information')
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Nationality</td><td>'+this.data.nationality+'</td>'
+        table.innerHTML+='<td>Birth place</td><td>'+this.data.birth_place+'</td>'
+        table.innerHTML+='<td>Date of birth</td><td>'+this.data.date_of_birth+', <b>age '+count_age(this.data.date_of_birth)+' years old</b></td>'
+        table.innerHTML+='<td>Ethnicity</td><td>'+this.data.ethnicity+'</td>'
+        table.innerHTML+='<td>Hair color</td><td>'+this.data.hair_color+'</td>'
+        table.innerHTML+='<td>Height</td><td>'+this.data.height+'</td>'
+        table.innerHTML+='<td>Weight</td><td>'+this.data.weight+'</td>'
+        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        table.innerHTML+='</tr>'
+        /*
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Producent</td><td><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Serie</td><td><a href="'+this.data.series[0].dir+'/series_id.html">'+this.data.series[0].name+'</a></td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Stars</td><td class="stars_strig_js"></td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
+        table.innerHTML+='</tr>'
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
+        table.innerHTML+='</tr>'
+        */
+    }
+    /*
     set_elements(){
         this.filter='All'
         this.movies=this.content_slector.querySelector('.movies')
@@ -58,6 +122,7 @@ class Star extends LoadID{
     add_movie(Movie){
         return '<div class="el"><a href="'+Movie.dir+'/movies_id.html">'+Movie.short_series.name+' - '+Movie.show_name+'</a><div>'  
     }
+    */
 }
 
 class Series extends LoadID{
@@ -207,8 +272,6 @@ class MovieList{
 
 class Movie extends LoadID{
     set_elements(){
-        let movie_description=document.querySelector('.movie_description_js')
-        movie_description.innerHTML=data.description
         let movie_avatars=document.querySelectorAll('.movie_avatar')
         for (let avatar of movie_avatars){
             avatar.setAttribute('src',this.data.avatar)
@@ -232,13 +295,6 @@ class Movie extends LoadID{
                         }
                     }
                 }
-                /*
-                for (let star of movie.short_stars){
-                    if (star.name==name){
-                        stars.push(movie)
-                    }
-                }
-                */
             }
             return stars
         }
@@ -304,12 +360,6 @@ class Movie extends LoadID{
         shorcut_menu[1].href=this.data.series[0].dir+'/series_id.html'
         shorcut_menu[2].innerHTML=this.data.name
         shorcut_menu[2].href=this.data.dir+'/movies_id.html'
-    }
-    set_tags(){
-        let stars=document.querySelector('.tags_js')
-        for (let tag of this.data.tags){
-            stars.innerHTML+='<spam class="tag">'+tag.name+'</spam>'
-        }
     }
     set_stars(){
         let stars=document.querySelector('.stars_js')

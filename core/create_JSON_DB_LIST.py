@@ -13,7 +13,8 @@ producent_fields_defult2 = ['country', 'series']
 series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent"]
 movies_fields_defults = ["src", "short_stars", "sezon", "year", "likes", "views", "favourite", "country",
                          "short_series"]
-stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series']
+stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series', 'nationality', 'birth_place',
+                        'date_of_birth']
 defult_producents_pages = 1
 defult_movis = 10
 defult_stars = 10

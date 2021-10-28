@@ -1,3 +1,8 @@
+.tag {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
 .nav {
   background-color: black;
 }
@@ -95,5 +100,14 @@
   margin: 5px;
   width: 250px;
   height: 250px;
+}
+
+.ditels-section .star_avatar {
+  width: 20rem;
+  height: 25rem;
+}
+
+.ditels-section .movie_description {
+  text-align: justify;
 }
 /*# sourceMappingURL=main.css.map */

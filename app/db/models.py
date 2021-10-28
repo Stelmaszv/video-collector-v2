@@ -1,5 +1,5 @@
 from core.db.config import Base,engine
-from sqlalchemy import Column,Integer, String,Table,ForeignKey,DateTime,Boolean
+from sqlalchemy import Column, Integer, String, Table, ForeignKey, DateTime, Boolean, Date, Text
 from sqlalchemy.orm import sessionmaker,relationship
 from core.setings import movie_cover_defulut
 from core.setings import singles_movies_defult,stars_avatar_defult,none_movies_defult
@@ -219,7 +219,7 @@ class Stars(Base):
     name = Column('name',String)
     show_name = Column('show_name', String, default='')
     avatar = Column('avatar',String ,default=stars_avatar_defult)
-    description = Column('description', String,default="")
+    description = Column('description', Text, default="")
     views =      Column('views', Integer,default=0)
     likes = Column('likes', Integer,default=0)
     favourite = Column('favourite', Boolean,default=False)
@@ -227,11 +227,13 @@ class Stars(Base):
     height = Column('height', Integer, default=0)
     ethnicity = Column('ethnicity', String, default='')
     hair_color =  Column('hair_color', String, default='')
+    birth_place = Column('birth_place', String, default='')
+    nationality = Column('nationality', String, default='')
     dir  =  Column('dir', String, default='')
     none = Column('none', String, default=none_movies_defult)
     singles = Column('singles', String, default=singles_movies_defult)
     config = Column('config', String, default='')
-    date_of_birth = Column(DateTime)
+    date_of_birth = Column(Date)
 
     tags = relationship(
         "Tags",
