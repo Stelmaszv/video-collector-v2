@@ -239,7 +239,7 @@ muted=False
 auto_play=True
 full_screen=True
 # mode available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML"
-MODE = 'HTML'
+MODE = 'reset'
 # run_setings only when mode set to "normal"
 setings_array = {
     "run_start_view": False,

@@ -273,6 +273,8 @@ class AbstractAddViaDir(ABC):
 
     def set_dir_for_star(self,name):
         dir=set_dir_for_star(name)
+        if os.path.isdir(dir + '\\photo\DATA') is False:
+            os.mkdir(dir + '\\photo\DATA')
         if os.path.isdir(dir) is False:
             os.mkdir(dir)
             os.mkdir(dir+'\\none')

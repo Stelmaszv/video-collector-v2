@@ -35,9 +35,9 @@ class LoadID{
         let galery=document.querySelector('.galery')
         galery.innerHTML=''
         for (let photo of array){
-            let ext= getExt(photo)
+            let ext= getExt(photo.photo)
             if (ext==="png" || ext==="jpg"){
-             galery.innerHTML+='<div class="col"><a href="'+photo+'"><img class="galery-item" src="'+photo+'"></a></div>'
+             galery.innerHTML+='<div class="col"><a href="'+photo.photo+'" data-caption="'+photo.name+'"><img class="galery-item" src="'+photo.photo+'"></a></div>'
             }  
         }
     }
@@ -47,13 +47,9 @@ class Star extends LoadID{
     set_elements(){
         this.create_table_information()
         this.set_tags()
-        this.load_galery(this.set_galery())
+        this.load_galery(this.data.photos)
         let ObjMovieList = new MovieList(this.data,'.star_name','.stars-movies-output',this.data.movies,this.data.name)
         ObjMovieList.return_movies()
-    }
-
-    set_galery(){
-        return []
     }
 
     create_table_information(){
@@ -67,55 +63,11 @@ class Star extends LoadID{
         table.innerHTML+='<td>Date of birth</td><td>'+this.data.date_of_birth+', <b>age '+count_age(this.data.date_of_birth)+' years old</b></td>'
         table.innerHTML+='<td>Ethnicity</td><td>'+this.data.ethnicity+'</td>'
         table.innerHTML+='<td>Hair color</td><td>'+this.data.hair_color+'</td>'
-        table.innerHTML+='<td>Height</td><td>'+this.data.height+'</td>'
-        table.innerHTML+='<td>Weight</td><td>'+this.data.weight+'</td>'
+        table.innerHTML+='<td>Height</td><td>'+this.data.height+' cm</td>'
+        table.innerHTML+='<td>Weight</td><td>'+this.data.weight+' kg</td>'
         table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
         table.innerHTML+='</tr>'
     }
-    /*
-    set_elements(){
-        this.filter='All'
-        this.movies=this.content_slector.querySelector('.movies')
-        this.select=this.content_slector.querySelector('.filter')
-        this.on_select(this)
-        this.laod_movies()
-        this.set_select()
-    }
-
-    on_select(Obj){
-        this.select.addEventListener("change", function(){
-            Obj.movies.innerHTML=""
-            Obj.filter=this.value
-            Obj.laod_movies()
-        })
-    }
-
-    set_select(){
-        let series = []
-
-        for (let Movie of this.data['movies']){
-            if (series.includes(Movie.short_series.name) == false){
-                series.push(Movie.short_series.name)
-            }
-        }
-        for (let serie of series){
-            this.select.innerHTML+="<option>"+serie+"</option>"
-        }
-    }
-
-    laod_movies(){
-        for (let Movie of this.data['movies']){
-            if (Movie.short_series.name == this.filter || this.filter == "All"){
-                this.movies.innerHTML+=this.add_movie(Movie)
-            }    
-        }
-    
-    }
-
-    add_movie(Movie){
-        return '<div class="el"><a href="'+Movie.dir+'/movies_id.html">'+Movie.short_series.name+' - '+Movie.show_name+'</a><div>'  
-    }
-    */
 }
 
 class Series extends LoadID{
