@@ -42,7 +42,7 @@ class LoadContet{
 class LoadMovies extends LoadContet{
     data=movies
     on_load(list,el){
-        list.innerHTML += '<div class="el"><a href="'+el.dir+'/movies_id.html">'+el.short_series.name+'-'+el.name+'</a><div>';
+        list.innerHTML += '<div class="el"><a href="'+el.dir+'/movies_id.html">'+el.short_series[0].name+'-'+el.name+'</a><div>';
     }
 }
 

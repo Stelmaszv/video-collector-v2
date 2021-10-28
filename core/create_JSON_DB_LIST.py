@@ -11,7 +11,8 @@ import os
 producent_fields_defult = ['country']
 producent_fields_defult2 = ['country', 'series']
 series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent"]
-movies_fields_defults = ["src", "short_stars", "sezon", "year", "likes", "views", "favourite", "country"]
+movies_fields_defults = ["src", "short_stars", "sezon", "year", "likes", "views", "favourite", "country",
+                         "short_series"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series']
 defult_producents_pages = 1
 defult_movis = 10
@@ -38,7 +39,7 @@ class CreateJSONDBLIST:
             for atter in atters:
                 if atter != "series" or atter != "stars" or atter != "top stars" or atter != "src" or atter != "producent":
                     if hasattr(item_db, atter):
-                        item[atter] = getattr(item_db, self.escepe_string(atter))
+                        item[atter] = str(getattr(item_db, self.escepe_string(atter)))
                 if atter == "producent":
                     item["producent"] = self.return_producent(item_db)
                 if atter == "favourite":
