@@ -164,7 +164,7 @@ class MovieList{
     }
 
     img(movie){
-        return '<img style="width: 13rem; height: 15rem;" src="'+movie.avatar+'" class="card-img-top" alt="...">'
+        return '<img img="cover"" src="'+movie.avatar+'" class="card-img-top" alt="...">'
     }
 
     title(movie){

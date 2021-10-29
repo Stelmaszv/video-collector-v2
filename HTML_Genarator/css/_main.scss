@@ -1,0 +1,35 @@
+.tag{
+    margin-left: 5px;
+    font-weight: bold;
+}
+.galery{
+    padding-bottom: 20px;
+    width: 1500px;
+    .galery-item{
+        margin: 5px;
+        width: 250px;
+        height: 250px;
+    }
+}
+.tabs_nav{
+    margin-top:30px;
+    background-color: rgba(190, 186, 186, 0.609);
+    ul{
+        li{
+            .nav-link{
+                color: white;
+                &.active{
+                    color: gold;
+                    background-color:black;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+.cart-item{
+    .cover{
+        width: 13rem; 
+        height: 15rem;
+    }
+}

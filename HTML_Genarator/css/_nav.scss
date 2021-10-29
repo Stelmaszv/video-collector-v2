@@ -1,0 +1,14 @@
+$navbarBC:black;
+$navbarlinkcolor:rgba(233, 206, 55, 0.822);
+$navbarlinkcolorHover:gold;
+.nav{
+    background-color: $navbarBC;
+    li{
+        a{
+            color: $navbarlinkcolor;
+        }
+        :hover{
+            color: $navbarlinkcolorHover;
+        }
+    }
+}
