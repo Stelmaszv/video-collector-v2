@@ -91,6 +91,8 @@ class Series extends LoadID{
         this.set_tags()
         this.get_banner()
         this.load_galery(this.data.photos)
+        let ObjMovieList = new MovieList(this.data,'.series_name','.series-movies-output',this.data.movies,this.data.name)
+        ObjMovieList.return_movies()
     }
 
     create_table_information(){
@@ -106,83 +108,6 @@ class Series extends LoadID{
         table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
         table.innerHTML+='</tr>'
     }
-    /*
-    set_elements(){
-        this.filter='All'
-        this.movies=this.content_slector.querySelector('.movies')
-        this.stars_filter=this.content_slector.querySelector('.stars_filter')
-        this.sezon_filter=this.content_slector.querySelector('.sezon_filter')
-        this.laod_movies()
-        this.set_stars()
-        this.set_sezons()
-        this.on_select(this)
-    }
-
-    on_select(Obj){
-        this.stars_filter.addEventListener("change", function(){
-            Obj.movies.innerHTML=""
-            Obj.filter=this.value
-            Obj.laod_movies()
-        })
-    }
-
-    on_select(Obj){
-        this.sezon_filter.addEventListener("change", function(){
-            Obj.movies.innerHTML=""
-            Obj.filter=this.value
-            Obj.laod_movies_sezon()
-        })
-    }
-
-    set_sezons(){
-        let sezons = []
-        for (let Movie of this.data['movies']){
-            if (sezons.includes(Movie.sezon) == false){
-                sezons.push(Movie.sezon)
-            }
-        }
-        for (let sezon of sezons){
-            this.sezon_filter.innerHTML+="<option>"+sezon+"</option>"
-        }
-    }
-
-    set_stars(){
-        let stars = []
-        for (let Movie of this.data['movies']){
-            for (let star of Movie.short_stars){
-                if (stars.includes(star.name) == false){
-                    stars.push(star.name)
-                }
-            }
-        }
-        for (let serie of stars){
-            this.stars_filter.innerHTML+="<option>"+serie+"</option>"
-        }
-    }
-
-    laod_movies(){
-        for (let Movie of this.data['movies']){
-            for(let star of Movie.short_stars){
-                if (star.name==this.filter || this.filter == "All"){
-                    this.movies.innerHTML+=this.add_movie(Movie)
-                }
-            }
-          
-        }
-    }
-
-    laod_movies_sezon(){
-        for (let Movie of this.data['movies']){
-            if (Movie.sezon == this.filter || this.filter == "All"){
-                this.movies.innerHTML+=this.add_movie(Movie)
-            }    
-        }
-    }
-
-    add_movie(Movie){
-        return '<div class="el"><a href="'+Movie.dir+'/movies_id.html">'+Movie.show_name+'</a><div>'  
-    }
-    */
 }
 
 class MovieList{
@@ -210,7 +135,7 @@ class MovieList{
     }
 
     img(movie){
-        return '<img img="cover"" src="'+movie.avatar+'" class="card-img-top" alt="...">'
+        return '<img src="'+movie.avatar+'" class="card-img-top cover" alt="...">'
     }
 
     body(movie){
@@ -222,7 +147,7 @@ class MovieList{
         }
 
         let string='<b class="card-title">'+movie.name+'</b><br>'+str
-        return '<p class="card-text" style="height: 10rem;">'+this.sort_string(string,165)+'</p>'
+        return '<p class="card-text">'+this.sort_string(string,165)+'</p>'
     }
 
     action_grup(movie){
