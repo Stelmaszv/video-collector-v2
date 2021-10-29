@@ -29,6 +29,17 @@
   font-weight: bold;
 }
 
+.series-cart {
+  width: 18rem;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.series-cart .card-img-top {
+  width: 16rem;
+  height: 20rem;
+}
+
 .cart-item {
   width: 13rem;
   margin: 1rem;

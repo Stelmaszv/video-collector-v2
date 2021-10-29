@@ -25,6 +25,23 @@ class LoadID{
         }
     }
 
+    get_series(){
+        let series=document.querySelector('.series-movies-output')
+        series.innerHTML=''
+        for (let serie of this.data.series){
+            let str=''
+            str+='<div class="card series-cart">'
+            str+='<img src="'+serie.avatar+'" class="card-img-top">'
+            str+='<div class="card-body">'
+            str+='</div>'
+            str+='<h5 class="card-title">'+serie.name+'</h5>'
+            str+='<p class="card-text">'+serie.description+'</p>'
+            str+='<a href="'+serie.dir+'/series_id.html" class="btn btn-primary">'+serie.name+'</a>'
+            str+='</div>'
+            series.innerHTML+=str
+        }
+    }
+
     get_top_stars(){
         let top_stars=document.querySelector('.top-stars-otput')
         top_stars.innerHTML=''
@@ -84,15 +101,10 @@ class Producnet extends LoadID{
         this.set_tags()
         this.get_banner()
         this.get_top_stars()
-        setTimeout(
-            function(){ 
-                let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.data.movies,this.data.name)
-                ObjMovieList.return_movies()
-            }
-        , 100);
-
-
-        //this.load_galery(this.data.photos)
+        this.get_series()
+        let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.data.movies,this.data.name)
+        this.load_galery(data.photos)
+        ObjMovieList.return_movies()
     }
 
     create_table_information(){
