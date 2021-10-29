@@ -52,6 +52,21 @@
   width: 100%;
 }
 
+.col-star {
+  margin: 5px;
+}
+
+.col-star .star-cart {
+  width: 10rem;
+  height: 20rem;
+  padding: 1rem;
+}
+
+.col-star .star-cart .star-cart-img {
+  width: 8rem;
+  height: 14rem;
+}
+
 .nav {
   background-color: black;
 }

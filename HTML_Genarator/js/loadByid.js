@@ -25,6 +25,24 @@ class LoadID{
         }
     }
 
+    get_top_stars(){
+        let top_stars=document.querySelector('.top-stars-otput')
+        top_stars.innerHTML=''
+        for (let star of this.data.stars){
+            let str='<div class="col col-star">'
+            str+='<a href="'+star.dir+'">'
+            str+='<div class="card star-cart">'
+            str+='<img src="'+star.avatar+'" class="card-img-top star-cart-img">'
+            str+='<div class="card-body">'
+            str+=star.name
+            str+='</div>'
+            str+='</div>'
+            str+='</a>'
+            str+='</div>'
+            top_stars.innerHTML+=str
+        }
+    }
+
     get_banner(){
         function getExt(filename){
             var ext = filename.split('.').pop();
@@ -91,6 +109,7 @@ class Series extends LoadID{
         this.set_tags()
         this.get_banner()
         this.load_galery(this.data.photos)
+        this.get_top_stars()
         let ObjMovieList = new MovieList(this.data,'.series_name','.series-movies-output',this.data.movies,this.data.name)
         ObjMovieList.return_movies()
     }
@@ -98,7 +117,9 @@ class Series extends LoadID{
     create_table_information(){
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Producent</td><td><a href="'+this.data.producent.dir+'/producent_id.html">'+this.data.producent.name+'</a></td>'
+        if (this.data.producent.hasOwnProperty('dir')){
+            table.innerHTML+='<td>Producent</td><td><a href="'+this.data.producent.dir+'/producent_id.html">'+this.data.producent.name+'</a></td>'
+        }
         table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
         table.innerHTML+='<td>Years</td><td>'+this.data.years+'</td>'
         table.innerHTML+='<td>Number of sezons</td><td>'+this.data.number_of_sezons+'</td>'
@@ -167,7 +188,6 @@ class MovieList{
     
     return_movies(){
         for (let movie of this.array){
-            console.log(movie)
             let str ='<div class="col">'
             str+='<div class="card cart-item">'
             str+=this.img(movie)+'<div class="card-body">'+this.body(movie)+'</div>'+this.action_grup(movie)
@@ -213,7 +233,9 @@ class Movie extends LoadID{
     create_table_information(){
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Producent</td><td><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
+        if (this.data.series[0].producent.hasOwnProperty('dir')){
+            table.innerHTML+='<td>Producent</td><td><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
+        }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
         table.innerHTML+='<td>Serie</td><td><a href="'+this.data.series[0].dir+'/series_id.html">'+this.data.series[0].name+'</a></td>'

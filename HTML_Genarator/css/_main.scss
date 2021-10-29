@@ -47,3 +47,15 @@
         width: 100%;
     }
 }
+.col-star{
+    margin: 5px;
+    .star-cart{
+        width: 10rem; 
+        height: 20rem;
+        padding: 1rem;
+        .star-cart-img{
+            width: 8rem; 
+            height: 14rem; 
+        }
+    }
+}

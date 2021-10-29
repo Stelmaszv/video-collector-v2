@@ -101,8 +101,9 @@ class CreateJSONDBLIST:
             dir = item.series[0].dir + '/stars_counter.JSON'
         with open(dir) as json_file:
             data = json.load(json_file)
+            print(data)
             for star in data:
-                if star['Count'] > 3:
+                if star['Count'] >= 3:
                     top_stars.append(star["StarObj"])
         return top_stars
 

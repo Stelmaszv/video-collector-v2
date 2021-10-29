@@ -54,12 +54,21 @@
                         aria-selected="false">Galery
                 </button>
             </li>
+
             <li class="nav-item" role="presentation">
                 <button class="nav-link name_js series_name" id="pills-stars-movies" data-bs-toggle="pill"
                         data-bs-target="#movis-stars" type="button" role="tab" aria-controls="pills-contact"
                         aria-selected="false">Galery
                 </button>
             </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-stars-tab" data-bs-toggle="pill"
+                        data-bs-target="#stars-tab" type="button" role="tab" aria-controls="pills-contact"
+                        aria-selected="false">Top Stars
+                </button>
+            </li>
+
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
@@ -76,11 +85,18 @@
                 </div>
             </div>
 
+            <div class="tab-pane fade" id="stars-tab" role="tabpanel"
+                 aria-labelledby="pills-stars-tab">
+                <div class="container">
+                    <div class="row top-stars-otput">
+                        [#StarsOtput#]
+                    </div>
+                </div>
+            </div>
+
 
         </div>
     </div>
-
-
 </div>
 <script src="Z:/HTML Generator/js/bootstrap.bundle.min.js"></script>
 <script src="db.js"></script>
