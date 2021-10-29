@@ -90,6 +90,7 @@ class Series extends LoadID{
         this.create_table_information()
         this.set_tags()
         this.get_banner()
+        this.load_galery(this.data.photos)
     }
 
     create_table_information(){

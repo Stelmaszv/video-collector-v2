@@ -316,7 +316,21 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
         data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
+        data_JSON['photos'] = self.return_galery(data_JSON, Movie)
         return data_JSON
+
+    def return_galery(self, JSON, Movie):
+        photos = []
+        for item in os.listdir(JSON['dir'] + '\\photo\DATA'):
+            new_item = JSON['dir'] + '\\photo\DATA\\' + item
+            photos.append({"photo": new_item, "name": JSON['name']})
+
+        for movie in JSON['movies']:
+            for item in os.listdir(movie['dir']):
+                new_item = movie['dir'] + '\\' + item
+                name = JSON['name'] + ' - ' + movie['name']
+                photos.append({"photo": new_item, "name": name})
+        return photos
 
 class GenerateJSONOtputsProducent(AbstratJSONOtpus):
     input = "OUTPUT/json/producents.JSON"
