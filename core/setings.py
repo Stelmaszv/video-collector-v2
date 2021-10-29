@@ -129,6 +129,20 @@ class HTMLJSOM(AbstractMode):
         }
 
 
+class Run(AbstractMode):
+    def return_setings(self):
+        return {
+            "run_start_view": True,
+            "scan_photos": False,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": False,
+            "generate_html": False
+        }
+
+
 class SetMode:
 
     def __init__(self, setings_array, mode):
@@ -136,9 +150,9 @@ class SetMode:
         self.set_mode(mode)
 
     def set_mode(self, mode):
-        modes = ["reset", "Off all", "HTML", "add", 'all', "screenshot", "HTML&JSOM"]
+        modes = ["reset", "Off all", "HTML", "add", 'all', "screenshot", "HTML&JSOM", "Run"]
         error = mode in modes
-        mes = 'Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML&JSOM", "add" ,"all","screenshot"'
+        mes = 'Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML&JSOM", "add" ,"all","screenshot",Run'
         Error.throw_error_bool(mes, error)
         setings_array = {
             "reset": ResetMode(self.setings),
@@ -148,6 +162,7 @@ class SetMode:
             "all": All(self.setings),
             "screenshot": Screenshot(self.setings),
             "HTML&JSOM": HTMLJSOM(self.setings),
+            "Run": Run(self.setings)
         }
         self.Mode = setings_array[mode]
 
@@ -238,18 +253,18 @@ search_faze_defult = ''
 muted=False
 auto_play=True
 full_screen=True
-# mode available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML"
-MODE = 'HTML'
+# mode available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run"
+MODE = 'Run'
 # run_setings only when mode set to "normal"
 setings_array = {
-    "run_start_view": False,
+    "run_start_view": True,
     "scan_photos": False,
-    "scan_dir": True,
-    "config": True,
-    "create_xml": True,
-    "create_movie_list": True,
-    "generate_json": True,
-    "generate_html": True
+    "scan_dir": False,
+    "config": False,
+    "create_xml": False,
+    "create_movie_list": False,
+    "generate_json": False,
+    "generate_html": False
 }
 if MODE != "normal":
     SetMode = SetMode(setings_array, MODE)
