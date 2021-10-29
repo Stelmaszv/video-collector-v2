@@ -114,6 +114,7 @@ class Series(Base):
     name = Column('name',String)
     show_name = Column('show_name', String, default='')
     avatar = Column('avatar', String)
+    baner = Column('baner', String)
     dir = Column('dir', String, default='')
     config = Column('config', String, default='')
     number_of_sezons = Column('sezons', Integer,default=1)

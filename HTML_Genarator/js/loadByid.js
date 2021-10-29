@@ -17,12 +17,27 @@ class LoadID{
         movie_description.innerHTML=data.description
         this.set_elements()    
     }
-    set_elements(){}
 
     set_tags(){
         let stars=document.querySelector('.tags_js')
         for (let tag of this.data.tags){
             stars.innerHTML+='<spam class="tag">'+tag.name+'</spam>'
+        }
+    }
+
+    get_banner(){
+        function getExt(filename){
+            var ext = filename.split('.').pop();
+            if(ext == filename) return "";
+            return ext;
+        }
+        let ext=getExt(this.data.baner)
+        if (ext==="png" || ext==="jpg"){
+            let baner=document.querySelector('.baner_js')
+            baner.setAttribute('src',this.data.baner)
+        }else{
+            let baner=document.querySelector('.baner')
+            baner.style.display="none"
         }
     }
 
@@ -71,7 +86,26 @@ class Star extends LoadID{
 }
 
 class Series extends LoadID{
+    set_elements(){
+        this.create_table_information()
+        this.set_tags()
+        this.get_banner()
+    }
 
+    create_table_information(){
+        let table=document.querySelector('.table_information')
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Producent</td><td><a href="'+this.data.producent.dir+'/producent_id.html">'+this.data.producent.name+'</a></td>'
+        table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
+        table.innerHTML+='<td>Years</td><td>'+this.data.years+'</td>'
+        table.innerHTML+='<td>Number of sezons</td><td>'+this.data.number_of_sezons+'</td>'
+        table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
+        table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
+        table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
+        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        table.innerHTML+='</tr>'
+    }
+    /*
     set_elements(){
         this.filter='All'
         this.movies=this.content_slector.querySelector('.movies')
@@ -147,6 +181,7 @@ class Series extends LoadID{
     add_movie(Movie){
         return '<div class="el"><a href="'+Movie.dir+'/movies_id.html">'+Movie.show_name+'</a><div>'  
     }
+    */
 }
 
 class MovieList{

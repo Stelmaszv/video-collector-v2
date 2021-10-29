@@ -10,7 +10,8 @@ import os
 
 producent_fields_defult = ['country']
 producent_fields_defult2 = ['country', 'series']
-series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent"]
+series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "views", "likes", "favourite",
+                         "baner"]
 movies_fields_defults = ["src", "short_stars", "sezon", "year", "likes", "views", "favourite", "country",
                          "short_series"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series', 'nationality', 'birth_place',
