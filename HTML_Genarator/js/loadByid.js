@@ -162,53 +162,49 @@ class MovieList{
         this.movies_series=document.querySelector( div_output)
         this.movies_series.innerHTML=''
     }
+    sort_string(string,limit){
+        let str=''
+        if (string.length>limit){
+            for (let i = 0; i < limit; i++) {
+                str += string[i];
+              }
+            return str+' ...'
+        }
+        return string
+    }
 
     img(movie){
         return '<img img="cover"" src="'+movie.avatar+'" class="card-img-top" alt="...">'
     }
 
-    title(movie){
-        return '<h5 class="card-title">'+movie.name+'</h5>'
-    }
-
     body(movie){
-        function sort_string(string){
-            let limit=150
-            let str=''
-            if (string.length>limit){
-                for (let i = 0; i < limit; i++) {
-                    str += string[i];
-                  }
-                return str+' ...'
-            }
-            return string
+        let str=''
+        if (movie.description.length==0){
+            str="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        }else{
+            str=movie.description
         }
-        return '<p class="card-text" style="height: 10rem;">'+sort_string(movie.description)+'</p>'
+
+        let string='<b class="card-title">'+movie.name+'</b><br>'+str
+        return '<p class="card-text" style="height: 10rem;">'+this.sort_string(string,165)+'</p>'
     }
 
     action_grup(movie){
         let str=''
+        let index_round = movie.short_stars[Math.floor(Math.random()* movie.short_stars.length)];
         str+='<ul class="list-group list-group-flush">'
         str+='<li class="list-group-item"><a href="'+movie.short_series.dir+'/series_id.html" class="card-link">'+movie.short_series.name+'</a></li>'
-        str+='<li class="list-group-item"><a href="'+movie.dir+'/movies_id.html" class="card-link">'+movie.name+'</a></li>'
+        str+='<li class="list-group-item"><a href="'+movie.dir+'/movies_id.html" class="card-link">'+this.sort_string(movie.name,21)+'</a></li>'
+        str+='<li class="list-group-item"><a href="'+index_round.dir+'/movies_id.html" class="card-link">'+index_round.name+'</a></li>'
         str+='</ul>'
         return str
     }
-    links(movie){
-        let str=''
-        str+= '<div class="card-body">'
-        for (let star of movie.short_stars){
-            str+= '<a href="'+star.dir+'/stars_id.html" class="card-link">'+star.name+'</a>'
-        }
-        str+= '</div>'
-        return str
-    }
-
+    
     return_movies(){
         for (let movie of this.array){
             let str ='<div class="col">'
-            str+='<div class="card cart-item" style="width: 13rem; margin:1rem;">'
-            str+=this.img(movie)+'<div class="card-body">'+this.title(movie)+' '+this.body(movie)+'</div>'+this.action_grup(movie)+''+this.links(movie)
+            str+='<div class="card cart-item">'
+            str+=this.img(movie)+'<div class="card-body">'+this.body(movie)+'</div>'+this.action_grup(movie)
             str+='</div>'
             str+='</div>'
             this.movies_series.innerHTML+=str
@@ -292,7 +288,7 @@ class Movie extends LoadID{
         let stars_strig_js=document.querySelector('.stars_strig_js')
         for (let star of data.short_stars){
             stars.innerHTML+='<a href="'+star.dir+'/stars_id.html"><img src="'+star.avatar+'" class="img-thumbnail star_src"></a>'
-            stars_strig_js.innerHTML+="<spam class='star-string'><a href='"+star.dir+"/stars_id.html'>"+star.name+"</a></spam>"
+            stars_strig_js.innerHTML+="<spam class='star-string'><a href='"+star.dir+"/stars_id.html'>"+star.name+"</a></spam>, "
         }
     }
 }

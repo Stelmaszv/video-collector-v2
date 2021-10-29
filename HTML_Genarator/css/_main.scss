@@ -28,8 +28,17 @@
     }
 }
 .cart-item{
+    width:13rem; 
+    margin:1rem;
     .cover{
         width: 13rem; 
         height: 15rem;
+    }
+    .card-text{
+        .card-title{
+            text-align: center;
+         }
+        height: 10rem;
+        text-align: justify;
     }
 }

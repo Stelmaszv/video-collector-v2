@@ -29,6 +29,25 @@
   font-weight: bold;
 }
 
+.cart-item {
+  width: 13rem;
+  margin: 1rem;
+}
+
+.cart-item .cover {
+  width: 13rem;
+  height: 15rem;
+}
+
+.cart-item .card-text {
+  height: 10rem;
+  text-align: justify;
+}
+
+.cart-item .card-text .card-title {
+  text-align: center;
+}
+
 .nav {
   background-color: black;
 }
