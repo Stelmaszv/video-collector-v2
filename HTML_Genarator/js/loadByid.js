@@ -145,24 +145,29 @@ class MovieList{
         }else{
             str=movie.description
         }
-
-        let string='<b class="card-title">'+movie.name+'</b><br>'+str
-        return '<p class="card-text">'+this.sort_string(string,165)+'</p>'
+        let name='<a href="'+movie.dir+'/movies_id.html" >'+movie.name+'</a>'
+        let string=name+'<br>'+str
+        return '<p class="card-text">'+this.sort_string(string,250)+'</p>'
     }
 
     action_grup(movie){
         let str=''
-        let index_round = movie.short_stars[Math.floor(Math.random()* movie.short_stars.length)];
+        let index_round=''
+        if (movie.short_stars.length>0){
+            index_round = movie.short_stars[Math.floor(Math.random()* movie.short_stars.length)];
+        }
         str+='<ul class="list-group list-group-flush">'
         str+='<li class="list-group-item"><a href="'+movie.short_series.dir+'/series_id.html" class="card-link">'+movie.short_series.name+'</a></li>'
-        str+='<li class="list-group-item"><a href="'+movie.dir+'/movies_id.html" class="card-link">'+this.sort_string(movie.name,21)+'</a></li>'
-        str+='<li class="list-group-item"><a href="'+index_round.dir+'/movies_id.html" class="card-link">'+index_round.name+'</a></li>'
+        if (movie.short_stars.length>0){
+            str+='<li class="list-group-item"><a href="'+index_round.dir+'/movies_id.html" class="card-link">'+index_round.name+'</a></li>'
+        }
         str+='</ul>'
         return str
     }
     
     return_movies(){
         for (let movie of this.array){
+            console.log(movie)
             let str ='<div class="col">'
             str+='<div class="card cart-item">'
             str+=this.img(movie)+'<div class="card-body">'+this.body(movie)+'</div>'+this.action_grup(movie)
