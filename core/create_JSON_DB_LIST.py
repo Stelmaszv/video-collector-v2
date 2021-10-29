@@ -8,8 +8,10 @@ import math
 import json
 import os
 
-producent_fields_defult = ['country']
-producent_fields_defult2 = ['country', 'series']
+producent_fields_defult = ['country', "views", "likes", "favourite",
+                           "baner", "year"]
+producent_fields_defult2 = ['country', 'series', "views", "likes", "favourite",
+                            "baner", "year"]
 series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "views", "likes", "favourite",
                          "baner"]
 movies_fields_defults = ["src", "short_stars", "sezon", "year", "likes", "views", "favourite", "country",
@@ -101,7 +103,6 @@ class CreateJSONDBLIST:
             dir = item.series[0].dir + '/stars_counter.JSON'
         with open(dir) as json_file:
             data = json.load(json_file)
-            print(data)
             for star in data:
                 if star['Count'] >= 3:
                     top_stars.append(star["StarObj"])
@@ -338,12 +339,25 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
     fields = producent_fields_defult
     Model = Producent
 
+    def return_galery(self, JSON, Movie):
+        photos = []
+        for item in os.listdir(JSON['dir'] + '\\photo\DATA'):
+            new_item = JSON['dir'] + '\\photo\DATA' + '\\' + item
+            photos.append({"photo": new_item, "name": JSON['name']})
+        for movie in JSON['movies']:
+            for dir in os.listdir(movie['dir']):
+                new_item = movie['dir'] + '\\' + dir
+                name = movie['short_series']['name'] + ' - ' + movie['name']
+                photos.append({"photo": new_item, "name": name})
+        return photos
+
     def add_movies(self, data):
         movies = [];
         for series in data:
             for Movie in series.movies:
                 data_JSON = self.CreateJSONDBLISTObj.add_defults(Movie)
                 data_JSON['short_series'] = self.CreateJSONDBLISTObj.return_short_series(Movie)
+                data_JSON['short_stars'] = self.CreateJSONDBLISTObj.return_short_stars(Movie)
                 movies.append(data_JSON)
         return movies
 
@@ -352,4 +366,6 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
         self.add_index(self.fields, data_JSON, Movie)
         data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, self.fields)
         data_JSON['movies'] = self.add_movies(data.series)
+        data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
+        data_JSON['photos'] = self.return_galery(data_JSON, Movie)
         return data_JSON

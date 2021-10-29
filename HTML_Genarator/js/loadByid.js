@@ -30,7 +30,7 @@ class LoadID{
         top_stars.innerHTML=''
         for (let star of this.data.stars){
             let str='<div class="col col-star">'
-            str+='<a href="'+star.dir+'">'
+            str+='<a href="'+star.dir+'/stars_id.html">'
             str+='<div class="card star-cart">'
             str+='<img src="'+star.avatar+'" class="card-img-top star-cart-img">'
             str+='<div class="card-body">'
@@ -76,6 +76,39 @@ class LoadID{
     }
 
 }
+
+class Producnet extends LoadID{
+    
+    set_elements(){
+        this.create_table_information()
+        this.set_tags()
+        this.get_banner()
+        this.get_top_stars()
+        setTimeout(
+            function(){ 
+                let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.data.movies,this.data.name)
+                ObjMovieList.return_movies()
+            }
+        , 100);
+
+
+        //this.load_galery(this.data.photos)
+    }
+
+    create_table_information(){
+
+        let table=document.querySelector('.table_information')
+        table.innerHTML+='<tr>'
+        table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
+        table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
+        table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
+        table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
+        table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
+        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        table.innerHTML+='</tr>'
+    }
+}
+
 class Star extends LoadID{
     set_elements(){
         this.create_table_information()

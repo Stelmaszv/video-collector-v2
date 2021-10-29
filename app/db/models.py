@@ -83,6 +83,8 @@ class Producent(Base):
     likes = Column('likes', Integer,default=0)
     favourite = Column('favourite', Boolean, default=False)
     name = Column('name',String)
+    baner = Column('baner', String)
+    year = Column('year', String)
     show_name = Column('show_name', String, default='')
     avatar = Column('avatar', String )
     dir = Column('dir', String, default='')

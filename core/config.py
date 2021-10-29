@@ -421,6 +421,9 @@ class ProducentConfigData(AbstractConfigItem):
             if "series" in data:
                 self.add_series(data['series'], self.data)
 
+            if "tags" in data:
+                self.add_tags(data['tags'], self.data)
+
 class ConfigMovies(AbstractConfigItem):
 
     Movies=Movies
