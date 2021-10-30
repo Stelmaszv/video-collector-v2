@@ -74,6 +74,11 @@ class HTMLGenaratorMain:
 
         self.create_file(
             self.css,
+            'baguetteBox.css',
+            data_JSON['project_url'] + '\HTML_Genarator\css')
+
+        self.create_file(
+            self.css,
             'main.css',
             data_JSON['project_url'] + '\HTML_Genarator\css')
 
@@ -100,6 +105,16 @@ class HTMLGenaratorMain:
         self.create_file(
             self.js,
             'loadByid.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
+            self.js,
+            'paginator.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
+            self.js,
+            'baguetteBox.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
         self.create_file(
