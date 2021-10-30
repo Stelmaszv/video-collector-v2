@@ -3,7 +3,7 @@ class Paginator{
         this.data=data
         this.limit=limit
     }
-    
+
     count_pages(){
         return Math.ceil(this.data.length/this.limit)
     }

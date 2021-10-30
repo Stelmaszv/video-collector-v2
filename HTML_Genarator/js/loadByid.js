@@ -293,37 +293,55 @@ class MovieList{
         }
     }
 }
-
+let movie_galery_page=0
+let movies_with_star=0
+let movies_in_series=0
 class Movie extends LoadID{
     set_elements(){
-        this.load_galery(this.data.photos)
         this.create_table_information()
-        this.shorcut_menu()
         this.set_stars()
         this.set_tags()
-        this.add_series_movies()
-        this.all_movies_with_star()
+        this.paginators()
+
+        this.load_galery(this.photos,movie_galery_page)
+        movie_galery_page++
+
+        this.all_movies_with_star(movies_with_star)
+        movies_with_star++
+
+        this.add_series_movies(movies_in_series)
+        movies_in_series++
     }
-    all_movies_with_star(){
-        function get_movies_white_star(name){
-            let stars=[]
-            for (let movie of movies){
-                for (let objetc of movie['Objets']){
-                    for (let star of objetc.short_stars){
-                        if (star.name==name){
-                            stars.push(objetc)
-                        }
-                    }
-                }
-            }
-            return stars
-        }
-        let ObjMovieList = new MovieList(this.data,'.all-with-star-name','.all_stars_output',get_movies_white_star(this.data.short_stars[0].name),this.data.short_stars[0].name)
-        ObjMovieList.return_movies()
+
+    reset_tabs(){
+        let series=document.querySelector('.series-movies-output')
+        let galery=document.querySelector('.galery')
+        let movies_output=document.querySelector('.movies-output')
+        let top_stars=document.querySelector('.top-stars-otput')
+        movies_output.innerHTML=''
+        galery.innerHTML=''
+        series.innerHTML=''
+        top_stars.innerHTML=''
     }
-    add_series_movies(){
-        let ObjMovieList = new MovieList(this.data,'.all-series-name','.all-in-series',this.data.series[0].movies)
-        ObjMovieList.return_movies()
+
+    paginators(){
+        const PaginatorPhoto  = new Paginator(this.data.photos,10)
+        this.photos=PaginatorPhoto.genrate_pages()
+
+        const PaginatorMovies = new Paginator(this.data.movies_with_stars,1)
+        this.movies=PaginatorMovies.genrate_pages()
+
+        const PaginatorMoviesSeries = new Paginator(this.data.series[0].movies,5)
+        this.series_movies=PaginatorMoviesSeries.genrate_pages()
+    }
+
+    all_movies_with_star(page){
+        let ObjMovieList = new MovieList(this.data,'.all-with-star-name','.all_stars_output',this.movies,this.data.short_stars[0].name)
+        ObjMovieList.return_movies(page)
+    }
+    add_series_movies(page){
+        let ObjMovieList = new MovieList(this.data,'.all-series-name','.all-in-series',this.series_movies)
+        ObjMovieList.return_movies(page)
     }
 
     create_table_information(){
@@ -357,15 +375,6 @@ class Movie extends LoadID{
         table.innerHTML+='<tr>'
         table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
         table.innerHTML+='</tr>'
-    }
-    shorcut_menu(){
-        let shorcut_menu=document.querySelectorAll('.shorcut_elment')
-        shorcut_menu[0].innerHTML=this.data.series[0].producent.name
-        shorcut_menu[0].href=this.data.series[0].producent.dir+'/producent_id.html'
-        shorcut_menu[1].innerHTML=this.data.series[0].name
-        shorcut_menu[1].href=this.data.series[0].dir+'/series_id.html'
-        shorcut_menu[2].innerHTML=this.data.name
-        shorcut_menu[2].href=this.data.dir+'/movies_id.html'
     }
     set_stars(){
         let stars=document.querySelector('.stars_js')

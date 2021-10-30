@@ -271,7 +271,15 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['photos'] = self.return_galery(data_JSON)
         data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, series_fields_defults)
+        data_JSON['movies_with_stars'] = self.CreateJSONDBLISTObj.base_get(self.set_movies_with_star(data.stars),
+                                                                           movies_fields_defults)
         return data_JSON
+
+    def set_movies_with_star(self, stars):
+        movies = []
+        for star in stars:
+            movies.extend(star.movies)
+        return movies
 
     def return_galery(self, JSON):
         photos = []
@@ -289,6 +297,7 @@ class GenerateJSONOtputsStars((AbstratJSONOtpus)):
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
         data_JSON['photos'] = self.return_galery(data_JSON, Movie)
+
         return data_JSON
 
     def return_galery(self, JSON, Movie):
