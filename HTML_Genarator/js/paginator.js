@@ -4,11 +4,6 @@ class Paginator{
         this.limit=limit
     }
     
-    create_pages(){
-        this.count_pages()
-        this.genrate_pages()
-    }  
-    
     count_pages(){
         return Math.ceil(this.data.length/this.limit)
     }
@@ -30,7 +25,6 @@ class Paginator{
             }
             new_array.push({"page": i, "Objets": movies})
         }
-        console.log(new_array)
         return new_array
     }
     

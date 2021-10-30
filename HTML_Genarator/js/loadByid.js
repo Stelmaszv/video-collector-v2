@@ -76,27 +76,28 @@ class LoadID{
         }
     }
 
-    load_galery(array){
+    load_galery(array,corent_page){
         function getExt(filename){
             var ext = filename.split('.').pop();
             if(ext == filename) return "";
             return ext;
         }
         let galery=document.querySelector('.galery')
-        galery.innerHTML=''
-        for (let photo of array){
-            let ext= getExt(photo.photo)
-            if (ext==="png" || ext==="jpg"){
-             galery.innerHTML+='<div class="col"><a href="'+photo.photo+'" data-caption="'+photo.name+'"><img class="galery-item" src="'+photo.photo+'"></a></div>'
-            }  
-        }
-    }
+        let new_array=array[corent_page].Objets
 
+        for (let photo of new_array){
+            let ext= getExt(photo.photo)
+            if (ext==="png" || ext==="jpg")
+             galery.innerHTML+='<div class="col"><a href="'+photo.photo+'" data-caption="'+photo.name+'"><img class="galery-item" src="'+photo.photo+'"></a></div>'
+        }  
+    }
 }
 
+let producet_galery_page=0
 class Producnet extends LoadID{
     
     set_elements(){
+        let tab="galery"
         this.create_table_information()
         this.set_tags()
         //this.get_banner()
@@ -104,9 +105,11 @@ class Producnet extends LoadID{
         //this.get_series()
         //let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.data.movies,this.data.name)
         const PaginatorObj = new Paginator(data.photos,20)
-        PaginatorObj.create_pages()
-        
-        //this.load_galery(data.photos)
+        this.photos=PaginatorObj.genrate_pages()
+        let galery=document.querySelector('.galery')
+        galery.innerHTML=''
+        this.load_galery(this.photos,producet_galery_page)
+        producet_galery_page++
         //ObjMovieList.return_movies()
     }
 
