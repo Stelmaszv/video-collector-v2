@@ -79,14 +79,15 @@
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="galery-tab" role="tabpanel"
+            <div class="tab-pane fade show active" id="galery-tab" type="Galery" role="tabpanel"
                  aria-labelledby="pills-galery-tab">
                 <div class="container">
                     <div class="row galery galery-run">[#Galery#]</div>
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="movis-stars" role="tabpanel" aria-labelledby="pills-stars-movies">
+            <div class="tab-pane fade" id="movis-stars" type="SeriesOutput" role="tabpanel"
+                 aria-labelledby="pills-stars-movies">
                 <div class="container">
                     <div class="row series-movies-output"> [#SeriesOutput#]
                     </div>
@@ -94,13 +95,13 @@
             </div>
 
 
-            <div class="tab-pane fade" id="movis" role="tabpanel" aria-labelledby="pills-movies">
+            <div class="tab-pane fade" id="movis" role="tabpanel" type="MoviesOutPut" aria-labelledby="pills-movies">
                 <div class="container">
                     <div class="row movies-output">[#MoviesOutPut#]</div>
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="stars-tab" role="tabpanel"
+            <div class="tab-pane fade" id="stars-tab" type="StarsOtput" role="tabpanel"
                  aria-labelledby="pills-stars-tab">
                 <div class="container">
                     <div class="row top-stars-otput">
@@ -121,12 +122,36 @@
 <script>
     const ProducnetObj=new Producnet()
     baguetteBox.run('.galery-run');
+    let type=''
     window.addEventListener("scroll", (event) => {
         var limit = document.body.offsetHeight - window.innerHeight;
-        let scrol_pos=80/100*limit
+        let scrol_pos=90/100*limit
+        let all=document.querySelectorAll('.tab-pane')
+        for (let tab of all){
+            if (tab.classList.contains('active')){
+                type = tab.getAttribute('type')
+            }
+        }
         if (window.scrollY>scrol_pos){
-            ProducnetObj.load_galery(ProducnetObj.photos,producet_galery_page++)
-            baguetteBox.run('.galery-run');
+
+            if (type =="Galery"){
+                ProducnetObj.load_galery(ProducnetObj.photos,producet_galery_page++)
+                baguetteBox.run('.galery-run');
+            }
+
+            if (type =="MoviesOutPut"){
+                ProducnetObj.load_movies(producet_movies_page++)
+            }
+
+            if (type == "SeriesOutput"){
+                ProducnetObj.get_series(ProducnetObj.series,producet_series_page++)
+            }
+
+            
+            if (type == "StarsOtput"){
+                ProducnetObj.get_top_stars(ProducnetObj.stars,producet_stars_page++)
+            }
+            
         }
     });
 </script>

@@ -25,38 +25,43 @@ class LoadID{
         }
     }
 
-    get_series(){
+    get_series(array,page){
+        
         let series=document.querySelector('.series-movies-output')
-        series.innerHTML=''
-        for (let serie of this.data.series){
-            let str=''
-            str+='<div class="card series-cart">'
-            str+='<img src="'+serie.avatar+'" class="card-img-top">'
-            str+='<div class="card-body">'
-            str+='</div>'
-            str+='<h5 class="card-title">'+serie.name+'</h5>'
-            str+='<p class="card-text">'+serie.description+'</p>'
-            str+='<a href="'+serie.dir+'/series_id.html" class="btn btn-primary">'+serie.name+'</a>'
-            str+='</div>'
-            series.innerHTML+=str
+        if (array.hasOwnProperty(page)){
+            let new_array=array[page].Objets;
+            for (let serie of new_array){
+                let str=''
+                str+='<div class="card series-cart">'
+                str+='<img src="'+serie.avatar+'" class="card-img-top">'
+                str+='<div class="card-body">'
+                str+='</div>'
+                str+='<h5 class="card-title">'+serie.name+'</h5>'
+                str+='<p class="card-text">'+serie.description+'</p>'
+                str+='<a href="'+serie.dir+'/series_id.html" class="btn btn-primary">'+serie.name+'</a>'
+                str+='</div>'
+                series.innerHTML+=str
+            }
         }
     }
 
-    get_top_stars(){
+    get_top_stars(array,page){
         let top_stars=document.querySelector('.top-stars-otput')
-        top_stars.innerHTML=''
-        for (let star of this.data.stars){
-            let str='<div class="col col-star">'
-            str+='<a href="'+star.dir+'/stars_id.html">'
-            str+='<div class="card star-cart">'
-            str+='<img src="'+star.avatar+'" class="card-img-top star-cart-img">'
-            str+='<div class="card-body">'
-            str+=star.name
-            str+='</div>'
-            str+='</div>'
-            str+='</a>'
-            str+='</div>'
-            top_stars.innerHTML+=str
+        if (array.hasOwnProperty(page)){
+            let new_array=array[page].Objets;
+            for (let star of new_array){
+                let str='<div class="col col-star">'
+                str+='<a href="'+star.dir+'/stars_id.html">'
+                str+='<div class="card star-cart">'
+                str+='<img src="'+star.avatar+'" class="card-img-top star-cart-img">'
+                str+='<div class="card-body">'
+                str+=star.name
+                str+='</div>'
+                str+='</div>'
+                str+='</a>'
+                str+='</div>'
+                top_stars.innerHTML+=str
+            }
         }
     }
 
@@ -83,34 +88,70 @@ class LoadID{
             return ext;
         }
         let galery=document.querySelector('.galery')
-        let new_array=array[corent_page].Objets
 
-        for (let photo of new_array){
-            let ext= getExt(photo.photo)
-            if (ext==="png" || ext==="jpg")
-             galery.innerHTML+='<div class="col"><a href="'+photo.photo+'" data-caption="'+photo.name+'"><img class="galery-item" src="'+photo.photo+'"></a></div>'
+        if (array.hasOwnProperty(corent_page)){
+            let new_array=array[corent_page].Objets
+            for (let photo of new_array){
+                let ext= getExt(photo.photo)
+                if (ext==="png" || ext==="jpg")
+                galery.innerHTML+='<div class="col"><a href="'+photo.photo+'" data-caption="'+photo.name+'"><img class="galery-item" src="'+photo.photo+'"></a></div>'
+            }
         }  
     }
 }
 
 let producet_galery_page=0
+let producet_movies_page=0
+let producet_series_page=0
+let producet_stars_page=0
 class Producnet extends LoadID{
     
     set_elements(){
-        let tab="galery"
         this.create_table_information()
         this.set_tags()
-        //this.get_banner()
-        //this.get_top_stars()
-        //this.get_series()
-        //let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.data.movies,this.data.name)
-        const PaginatorObj = new Paginator(data.photos,20)
-        this.photos=PaginatorObj.genrate_pages()
-        let galery=document.querySelector('.galery')
-        galery.innerHTML=''
+        this.get_banner()
+        this.paginators()
+        this.reset_tabs()
+
+        this.get_top_stars(this.stars,producet_stars_page)
+        producet_stars_page++
+
+        this.get_series(this.series,producet_series_page)
+        producet_series_page++
+
+        this.load_movies(producet_movies_page)
+        producet_movies_page++
+ 
         this.load_galery(this.photos,producet_galery_page)
         producet_galery_page++
-        //ObjMovieList.return_movies()
+    }
+
+    reset_tabs(){
+        let series=document.querySelector('.series-movies-output')
+        let galery=document.querySelector('.galery')
+        let movies_output=document.querySelector('.movies-output')
+        let top_stars=document.querySelector('.top-stars-otput')
+        movies_output.innerHTML=''
+        galery.innerHTML=''
+        series.innerHTML=''
+        top_stars.innerHTML=''
+    }
+
+    paginators(){
+        const PaginatorMovies = new Paginator(this.data.movies,20)
+        const PaginatorPhoto  = new Paginator(this.data.photos,20)
+        const PaginatorStars  = new Paginator(this.data.stars,4)
+        const PaginatorSeries = new Paginator(this.data.series,5)
+        this.stars=PaginatorStars.genrate_pages()
+        this.series=PaginatorSeries.genrate_pages()
+        this.photos=PaginatorPhoto.genrate_pages()
+        this.producent_movies=PaginatorMovies.genrate_pages()
+    }
+
+    load_movies(producet_movies_page){
+        let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.producent_movies,this.data.name)
+        ObjMovieList.return_movies(producet_movies_page)
+        producet_movies_page++
     }
 
     create_table_information(){
@@ -183,6 +224,7 @@ class Series extends LoadID{
 }
 
 class MovieList{
+
     constructor(data,div_name,div_output,array,tab_name=''){
         this.array=array
         this.data=data
@@ -192,9 +234,9 @@ class MovieList{
         }else{
             series_name.innerHTML=data.series[0].name
         }
-        this.movies_series=document.querySelector( div_output)
-        this.movies_series.innerHTML=''
+        this.movies_series=document.querySelector(div_output)
     }
+
     sort_string(string,limit){
         let str=''
         if (string.length>limit){
@@ -237,14 +279,17 @@ class MovieList{
         return str
     }
     
-    return_movies(){
-        for (let movie of this.array){
-            let str ='<div class="col">'
-            str+='<div class="card cart-item">'
-            str+=this.img(movie)+'<div class="card-body">'+this.body(movie)+'</div>'+this.action_grup(movie)
-            str+='</div>'
-            str+='</div>'
-            this.movies_series.innerHTML+=str
+    return_movies(page){
+        if (this.array.hasOwnProperty(page)){
+            let array=this.array[page].Objets
+            for (let movie of array){
+                let str ='<div class="col">'
+                str+='<div class="card cart-item">'
+                str+=this.img(movie)+'<div class="card-body">'+this.body(movie)+'</div>'+this.action_grup(movie)
+                str+='</div>'
+                str+='</div>'
+                this.movies_series.innerHTML+=str
+            }
         }
     }
 }
