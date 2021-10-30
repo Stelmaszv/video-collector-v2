@@ -99,12 +99,15 @@ class Producnet extends LoadID{
     set_elements(){
         this.create_table_information()
         this.set_tags()
-        this.get_banner()
-        this.get_top_stars()
-        this.get_series()
-        let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.data.movies,this.data.name)
-        this.load_galery(data.photos)
-        ObjMovieList.return_movies()
+        //this.get_banner()
+        //this.get_top_stars()
+        //this.get_series()
+        //let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.data.movies,this.data.name)
+        const PaginatorObj = new Paginator(data.photos,20)
+        PaginatorObj.create_pages()
+        
+        //this.load_galery(data.photos)
+        //ObjMovieList.return_movies()
     }
 
     create_table_information(){
