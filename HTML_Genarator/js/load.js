@@ -1,4 +1,33 @@
 let page=0
+class LoadContet{}
+
+class LoadMovies{
+
+    limit=20
+
+    constructor(){
+        this.set_list(this.limit)
+
+        let movies_div=document.querySelector('.movies-output')
+        movies_div.innerHTML=''
+
+        this.load_movies(page)
+        page++
+
+    }
+    
+    set_list(limit){
+        const PaginatorMovies = new Paginator(movies,limit)
+        this.movies=PaginatorMovies.genrate_pages()
+    
+    }
+
+    load_movies(page){
+        let ObjMovieList = new MovieList('.movies-output',this.movies)
+        ObjMovieList.return_movies(page)
+    }
+}
+/*
 class LoadContet{
     listSelector='.list'
     loadMoreSelector='.load_more'
@@ -73,3 +102,5 @@ class LoadSeries extends LoadContet{
         list.innerHTML += '<div class="el"><a href="'+el.dir+'/stars_id.html">'+el.show_name+'</a><div>';
     }
 }
+
+*/

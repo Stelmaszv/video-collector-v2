@@ -114,8 +114,18 @@ class HTMLGenaratorMain:
 
         self.create_file(
             self.js,
+            'lists.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
+            self.js,
             'baguetteBox.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
+            self.js,
+            'movies.js',
+            data_JSON['project_url'] + '\OUTPUT\js')
 
         self.create_file(
             self.js,

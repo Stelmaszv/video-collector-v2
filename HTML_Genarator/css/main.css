@@ -86,8 +86,14 @@
   color: rgba(233, 206, 55, 0.822);
 }
 
+.nav li a.active {
+  color: #ffd900;
+  font-weight: bolder;
+}
+
 .nav li :hover {
-  color: gold;
+  color: rgba(255, 217, 0, 0.746);
+  font-weight: bolder;
 }
 
 .active-section {

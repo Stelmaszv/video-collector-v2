@@ -101,6 +101,7 @@
         </div>
     </div>
 </div>
+<script src="Z:/HTML Generator/js/lists.js"></script>
 <script src="Z:/HTML Generator/js/paginator.js"></script>
 <script src="Z:/HTML Generator/js/bootstrap.bundle.min.js"></script>
 <script src="db.js"></script>
@@ -127,12 +128,12 @@
                 baguetteBox.run('.galery-run');
             }
                 
-            if (type == "all_movies_with_star"){
-                SeriesObj.all_movies_with_star(movies_with_star++)
+            if (type == "movies_in_series"){
+                SeriesObj.load_movies(movies_with_star++)
             }
 
             if (type == "top-stars"){
-                SeriesObj.add_series_movies(movies_in_series++)
+                SeriesObj.get_top_stars(SeriesObj.stars,movies_in_series++)
             }
         
         }

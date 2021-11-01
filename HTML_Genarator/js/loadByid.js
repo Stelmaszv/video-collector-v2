@@ -149,7 +149,7 @@ class Producnet extends LoadID{
     }
 
     load_movies(producet_movies_page){
-        let ObjMovieList = new MovieList(this.data,'.movies','.movies-output',this.producent_movies,this.data.name)
+        let ObjMovieList = new MovieList('.movies-output',this.producent_movies)
         ObjMovieList.return_movies(producet_movies_page)
         producet_movies_page++
     }
@@ -182,14 +182,10 @@ class Star extends LoadID{
         this.load_movies(stars_movies)
         stars_movies++
 
-        //this.load_galery(this.data.photos)
-        //let ObjMovieList = new MovieList(this.data,'.star_name','.stars-movies-output',this.data.movies,this.data.name)
-        //ObjMovieList.return_movies()
     }
 
-    
     load_movies(stars_movies){
-        let ObjMovieList = new MovieList(this.data,'.star_name','.stars-movies-output',this.starsmovies,this.data.name)
+        let ObjMovieList = new MovieList('.stars-movies-output',this.starsmovies)
         ObjMovieList.return_movies(stars_movies)
     }
 
@@ -250,7 +246,7 @@ class Series extends LoadID{
     }
 
     load_movies(series_movies_page){
-        let ObjMovieList = new MovieList(this.data,'.series_name_js','.series-movies-output',this.series_movies,this.data.name)
+        let ObjMovieList = new MovieList('.series-movies-output',this.series_movies)
         ObjMovieList.return_movies(series_movies_page)
     }
 
@@ -296,76 +292,7 @@ class Series extends LoadID{
     }
 }
 
-class MovieList{
 
-    constructor(data,div_name,div_output,array,tab_name=''){
-        this.array=array
-        this.data=data
-        let series_name=document.querySelector(div_name)
-        if (tab_name){
-            series_name.innerHTML=tab_name
-        }else{
-            series_name.innerHTML=data.series[0].name
-        }
-        this.movies_series=document.querySelector(div_output)
-    }
-
-    sort_string(string,limit){
-        let str=''
-        if (string.length>limit){
-            for (let i = 0; i < limit; i++) {
-                str += string[i];
-              }
-            return str+' ...'
-        }
-        return string
-    }
-
-    img(movie){
-        return '<img src="'+movie.avatar+'" class="card-img-top cover" alt="...">'
-    }
-
-    body(movie){
-        let str=''
-        if (movie.description.length==0){
-            str="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-        }else{
-            str=movie.description
-        }
-        let name='<a href="'+movie.dir+'/movies_id.html" >'+movie.name+'</a>'
-        let string=name+'<br>'+str
-        return '<p class="card-text">'+this.sort_string(string,250)+'</p>'
-    }
-
-    action_grup(movie){
-        let str=''
-        let index_round=''
-        if (movie.short_stars.length>0){
-            index_round = movie.short_stars[Math.floor(Math.random()* movie.short_stars.length)];
-        }
-        str+='<ul class="list-group list-group-flush">'
-        str+='<li class="list-group-item"><a href="'+movie.short_series.dir+'/series_id.html" class="card-link">'+movie.short_series.name+'</a></li>'
-        if (movie.short_stars.length>0){
-            str+='<li class="list-group-item"><a href="'+index_round.dir+'/stars_id.html" class="card-link">'+index_round.name+'</a></li>'
-        }
-        str+='</ul>'
-        return str
-    }
-    
-    return_movies(page){
-        if (this.array.hasOwnProperty(page)){
-            let array=this.array[page].Objets
-            for (let movie of array){
-                let str ='<div class="col">'
-                str+='<div class="card cart-item">'
-                str+=this.img(movie)+'<div class="card-body">'+this.body(movie)+'</div>'+this.action_grup(movie)
-                str+='</div>'
-                str+='</div>'
-                this.movies_series.innerHTML+=str
-            }
-        }
-    }
-}
 let movie_galery_page=0
 let movies_with_star=0
 let movies_in_series=0
@@ -409,11 +336,11 @@ class Movie extends LoadID{
     }
 
     all_movies_with_star(page){
-        let ObjMovieList = new MovieList(this.data,'.all-with-star-name','.all_stars_output',this.movies,this.data.short_stars[0].name)
+        let ObjMovieList = new MovieList('.all_stars_output',this.movies)
         ObjMovieList.return_movies(page)
     }
     add_series_movies(page){
-        let ObjMovieList = new MovieList(this.data,'.all-series-name','.all-in-series',this.series_movies)
+        let ObjMovieList = new MovieList('.all-in-series',this.series_movies)
         ObjMovieList.return_movies(page)
     }
 
