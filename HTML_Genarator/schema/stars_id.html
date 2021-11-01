@@ -60,14 +60,15 @@
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="galery-tab" role="tabpanel"
+            <div class="tab-pane fade show active" id="galery-tab" type="Galery" role="tabpanel"
                  aria-labelledby="pills-galery-tab">
                 <div class="container">
                     <div class="row galery galery-run">[#Galery#]</div>
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="movis-stars" role="tabpanel" aria-labelledby="pills-stars-movies">
+            <div class="tab-pane fade" id="movis-stars" role="tabpanel" type="stars_movies"
+                 aria-labelledby="pills-stars-movies">
                 <div class="container">
                     <div class="row stars-movies-output">[#MoviesOutPut#]</div>
                 </div>
@@ -79,13 +80,38 @@
 
 
 </div>
+<script src="Z:/HTML Generator/js/paginator.js"></script>
 <script src="Z:/HTML Generator/js/bootstrap.bundle.min.js"></script>
 <script src="db.js"></script>
-<script src="Z:/HTML Generator/js/movies_paginated.js"></script>
 <script src="Z:/HTML Generator/js/LoadByid.js"></script>
 <script>
-              const star=new Star()
-              baguetteBox.run('.galery-run');
+const StarObj=new Star()
+baguetteBox.run('.galery-run');
+let type=''
+window.addEventListener("scroll", (event) => {
+    var limit = document.body.offsetHeight - window.innerHeight;
+    let scrol_pos=90/100*limit
+    let all=document.querySelectorAll('.tab-pane')
+          
+    for (let tab of all){
+        if (tab.classList.contains('active')){
+            type = tab.getAttribute('type')
+        }
+    }
+          
+    if (window.scrollY>scrol_pos){
+          
+         if (type == "Galery"){
+            StarObj.load_galery(StarObj.photos,stars_galery_page++)
+            baguetteBox.run('.galery-run');
+        }
+         
+        if (type == "stars_movies"){
+            StarObj.load_movies(stars_movies++)
+        }
+                            
+    }
+});
 
 </script>
 </body>

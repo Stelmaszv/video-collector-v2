@@ -167,14 +167,46 @@ class Producnet extends LoadID{
         table.innerHTML+='</tr>'
     }
 }
-
+let stars_galery_page=0
+let stars_movies=0
 class Star extends LoadID{
     set_elements(){
         this.create_table_information()
         this.set_tags()
-        this.load_galery(this.data.photos)
-        let ObjMovieList = new MovieList(this.data,'.star_name','.stars-movies-output',this.data.movies,this.data.name)
-        ObjMovieList.return_movies()
+        this.paginators()
+        this.reset_tabs()
+
+        this.load_galery(this.photos,stars_galery_page)
+        stars_galery_page++
+
+        this.load_movies(stars_movies)
+        stars_movies++
+
+        //this.load_galery(this.data.photos)
+        //let ObjMovieList = new MovieList(this.data,'.star_name','.stars-movies-output',this.data.movies,this.data.name)
+        //ObjMovieList.return_movies()
+    }
+
+    
+    load_movies(stars_movies){
+        let ObjMovieList = new MovieList(this.data,'.star_name','.stars-movies-output',this.starsmovies,this.data.name)
+        ObjMovieList.return_movies(stars_movies)
+    }
+
+    reset_tabs(){
+        let galery=document.querySelector('.galery')
+        galery.innerHTML=''
+
+        let star_movies_output=document.querySelector('.stars-movies-output')
+        star_movies_output.innerHTML=''
+    }
+
+    paginators(){
+        const PaginatorPhoto = new Paginator(this.data.photos,10)
+        this.photos=PaginatorPhoto.genrate_pages()
+
+        const PaginatorStars = new Paginator(this.data.movies,1)
+        this.starsmovies=PaginatorStars.genrate_pages()
     }
 
     create_table_information(){
