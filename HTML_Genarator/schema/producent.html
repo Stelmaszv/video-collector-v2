@@ -1,18 +1,48 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="Z:/HTML Generator/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Z:/HTML Generator/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="Z:/HTML Generator/css/baguetteBox.css">
+    <script src="Z:/HTML Generator/js/baguetteBox.js" async></script>
     <title>Producent</title>
-    <script src="Z:\HTML Generator\js\producents_paginated.js"></script>
-    <script src="Z:\HTML Generator\js\load.js"></script>
 </head>
 <body>
-<h2>Producents</h2>
-<a href="movies.JSON">Data</a>
-<div class="list"></div>
-<div class="load_more">Load More</div>
+<nav>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="Z:/HTML Generator/sites/movies.html">Movies</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="Z:/HTML Generator/sites/series.html">Series</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="Z:/HTML Generator/sites/stars.html">Stars</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="Z:/HTML Generator/sites/producent.html">Producent</a>
+        </li>
+    </ul>
+</nav>
+<main class='content container'>
+    <div class="row producent-otput">[#ProducentsOputs#]</div>
+</main>
 </body>
+
+<script src="Z:\HTML Generator\js\lists.js"></script>
+<script src="Z:\HTML Generator\js\paginator.js"></script>
+<script src="Z:\HTML Generator\js\producents.js"></script>
+<script src="Z:\HTML Generator\js\load.js"></script>
 <script>
-    const OBJ=new LoadProducent()
-    OBJ.construct()
-    document.querySelector(OBJ.loadMoreSelector).click()
+    const LoadProducentsObj=new LoadProducents()
+    window.addEventListener("scroll", (event) => {
+        var limit = document.body.offsetHeight - window.innerHeight;
+        let scrol_pos=90/100*limit
+        if (window.scrollY>scrol_pos){
+            LoadProducentsObj.load(page++)
+        }
+    });
 </script>
 </html>
