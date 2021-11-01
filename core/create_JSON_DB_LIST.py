@@ -157,37 +157,8 @@ class CreateJSONDBLIST:
     def get_stars(self):
         return self.base_get(Stars, self.stars_fields)
 
-    def create_pagination(self, data, per_page):
-        count = len(data)
-        pages = math.ceil(count / per_page)
-        new_array = []
-        index = 0
-        for el in range(1, pages + 1):
-            movies = []
-            elments = 0
-            for item in data:
-                if elments < per_page and index < count:
-                    movies.append(data[index])
-                    index = index + 1
-                elments = elments + 1
-
-            new_array.append({"page": el, "Objets": movies})
-        return new_array
-
     def create(self):
         list = [
-            {"OBJ": self.create_pagination(self.get_producnets(), defult_producents_pages),
-             'name': 'OUTPUT/json/producents_paginated.JSON',
-             'js': 'OUTPUT/js/producents_paginated.js', 'var_name': 'producents'},
-            {"OBJ": self.create_pagination(self.get_movies(), defult_movis),
-             'name': 'OUTPUT/json/movies_paginated.JSON',
-             'js': 'OUTPUT/js/movies_paginated.js', 'var_name': 'movies'},
-            {"OBJ": self.create_pagination(self.get_series(), defult_series),
-             'name': 'OUTPUT/json/series_paginated.JSON',
-             'js': 'OUTPUT/js/series_paginated.js', 'var_name': 'series'},
-            {"OBJ": self.create_pagination(self.get_stars(), defult_stars),
-             'name': 'OUTPUT/json/stars_paginated.JSON',
-             'js': 'OUTPUT/js/stars_paginated.js', 'var_name': 'stars'},
             {"OBJ": self.get_producnets(),
              'name': 'OUTPUT/json/producents.JSON', 'js': 'OUTPUT/js/producents.js', 'var_name': 'producents'},
             {"OBJ": self.get_movies(), 'name': 'OUTPUT/json/movies.JSON',

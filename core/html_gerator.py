@@ -122,50 +122,6 @@ class HTMLGenaratorMain:
             'bootstrap.bundle.min.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
-        self.create_file(
-            self.js,
-            'movies_paginated.js',
-            data_JSON['project_url'] + '\OUTPUT\js')
-
-        self.create_file(
-            self.js,
-            'producents_paginated.js',
-            data_JSON['project_url'] + '\OUTPUT\js')
-
-        self.create_file(
-            self.js,
-            'series_paginated.js',
-            data_JSON['project_url'] + '\OUTPUT\js')
-
-        self.create_file(
-            self.js,
-            'movies_paginated.js',
-            data_JSON['project_url'] + '\OUTPUT\js')
-
-        self.create_file(
-            self.js,
-            'stars_paginated.js',
-            data_JSON['project_url'] + '\OUTPUT\js')
-
-        self.create_file(
-            self.json,
-            'movies_paginated.JSON',
-            data_JSON['project_url'] + '\OUTPUT\json')
-
-        self.create_file(
-            self.json,
-            'producents_paginated.JSON',
-            data_JSON['project_url'] + '\OUTPUT\json')
-
-        self.create_file(
-            self.json,
-            'series_paginated.JSON',
-            data_JSON['project_url'] + '\OUTPUT\json')
-
-        self.create_file(
-            self.json,
-            'stars_paginated.JSON',
-            data_JSON['project_url'] + '\OUTPUT\json')
 
     def create_file(self, dir, file_name, shema_url):
         return HtmlGenaratorBase().create_file(dir, file_name, shema_url)

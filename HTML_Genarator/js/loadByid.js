@@ -200,6 +200,7 @@ class Series extends LoadID{
         this.create_table_information()
         this.set_tags()
         this.get_banner()
+        
         this.load_galery(this.data.photos)
         this.get_top_stars()
         let ObjMovieList = new MovieList(this.data,'.series_name','.series-movies-output',this.data.movies,this.data.name)
