@@ -27,12 +27,12 @@ class LoadID{
 
     get_series(div,array,page){
         const series = new SeriesList(div,array)
-        series.return_series(page)
+        series.return_data(page)
     }
 
     get_top_stars(array,page){
         const series = new StarsList('.top-stars-otput',array)
-        series.return_stars(page)
+        series.return_data(page)
     }
 
     get_banner(){
@@ -120,7 +120,7 @@ class Producnet extends LoadID{
 
     load_movies(producet_movies_page){
         let ObjMovieList = new MovieList('.movies-output',this.producent_movies)
-        ObjMovieList.return_movies(producet_movies_page)
+        ObjMovieList.return_data(producet_movies_page)
         producet_movies_page++
     }
 
@@ -217,7 +217,7 @@ class Series extends LoadID{
 
     load_movies(series_movies_page){
         let ObjMovieList = new MovieList('.series-movies-output',this.series_movies)
-        ObjMovieList.return_movies(series_movies_page)
+        ObjMovieList.return_data(series_movies_page)
     }
 
     reset_tabs(){
@@ -307,11 +307,11 @@ class Movie extends LoadID{
 
     all_movies_with_star(page){
         let ObjMovieList = new MovieList('.all_stars_output',this.movies)
-        ObjMovieList.return_movies(page)
+        ObjMovieList.return_data(page)
     }
     add_series_movies(page){
         let ObjMovieList = new MovieList('.all-in-series',this.series_movies)
-        ObjMovieList.return_movies(page)
+        ObjMovieList.return_data(page)
     }
 
     create_table_information(){
