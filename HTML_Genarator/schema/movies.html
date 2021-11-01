@@ -40,31 +40,10 @@
             var limit = document.body.offsetHeight - window.innerHeight;
             let scrol_pos=90/100*limit
             if (window.scrollY>scrol_pos){
-                LoadMoviesObj.load_movies(page++)
+                LoadMoviesObj.load(page++)
             }
         });
 
 </script>
 </html>
 
-<!--
-<html>
-<head>
-    <title>Movies</title>
-    <script src="Z:\HTML Generator\js\movies_paginated.js"></script>
-    <script src="Z:\HTML Generator\js\load.js"></script>
-</head>
-<body>
-<h2>Movies</h2>
-<a href="Z:\HTML Generator\json\movies.JSON">Data</a>
-<div class="list"></div>
-<div class="load_more">Load More</div>
-</body>
-<script>
-        const OBJ=new LoadMovies()
-        OBJ.construct()
-        document.querySelector(OBJ.loadMoreSelector).click()
-
-</script>
-</html>
--->

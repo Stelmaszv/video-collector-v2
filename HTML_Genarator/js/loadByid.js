@@ -25,44 +25,14 @@ class LoadID{
         }
     }
 
-    get_series(array,page){
-        
-        let series=document.querySelector('.series-movies-output')
-        if (array.hasOwnProperty(page)){
-            let new_array=array[page].Objets;
-            for (let serie of new_array){
-                let str=''
-                str+='<div class="card series-cart">'
-                str+='<img src="'+serie.avatar+'" class="card-img-top">'
-                str+='<div class="card-body">'
-                str+='</div>'
-                str+='<h5 class="card-title">'+serie.name+'</h5>'
-                str+='<p class="card-text">'+serie.description+'</p>'
-                str+='<a href="'+serie.dir+'/series_id.html" class="btn btn-primary">'+serie.name+'</a>'
-                str+='</div>'
-                series.innerHTML+=str
-            }
-        }
+    get_series(div,array,page){
+        const series = new SeriesList(div,array)
+        series.return_series(page)
     }
 
     get_top_stars(array,page){
-        let top_stars=document.querySelector('.top-stars-otput')
-        if (array.hasOwnProperty(page)){
-            let new_array=array[page].Objets;
-            for (let star of new_array){
-                let str='<div class="col col-star">'
-                str+='<a href="'+star.dir+'/stars_id.html">'
-                str+='<div class="card star-cart">'
-                str+='<img src="'+star.avatar+'" class="card-img-top star-cart-img">'
-                str+='<div class="card-body">'
-                str+=star.name
-                str+='</div>'
-                str+='</div>'
-                str+='</a>'
-                str+='</div>'
-                top_stars.innerHTML+=str
-            }
-        }
+        const series = new StarsList('.top-stars-otput',array)
+        series.return_stars(page)
     }
 
     get_banner(){
@@ -105,7 +75,7 @@ let producet_movies_page=0
 let producet_series_page=0
 let producet_stars_page=0
 class Producnet extends LoadID{
-    
+    series_output_div='.series-movies-output' 
     set_elements(){
         this.create_table_information()
         this.set_tags()
@@ -116,7 +86,7 @@ class Producnet extends LoadID{
         this.get_top_stars(this.stars,producet_stars_page)
         producet_stars_page++
 
-        this.get_series(this.series,producet_series_page)
+        this.get_series('.series-movies-output',this.series,producet_series_page)
         producet_series_page++
 
         this.load_movies(producet_movies_page)
@@ -385,3 +355,4 @@ class Movie extends LoadID{
         }
     }
 }
+

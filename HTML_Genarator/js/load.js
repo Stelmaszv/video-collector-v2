@@ -11,7 +11,7 @@ class LoadMovies{
         let movies_div=document.querySelector('.movies-output')
         movies_div.innerHTML=''
 
-        this.load_movies(page)
+        this.load(page)
         page++
 
     }
@@ -22,9 +22,59 @@ class LoadMovies{
     
     }
 
-    load_movies(page){
+    load(page){
         let ObjMovieList = new MovieList('.movies-output',this.movies)
         ObjMovieList.return_movies(page)
+    }
+}
+
+class LoadSeries{
+
+    limit=5
+
+    constructor(){
+        this.set_list(this.limit)
+
+        let series_div=document.querySelector('.series-output')
+        series_div.innerHTML=''
+
+        this.load(page)
+        page++
+    }
+
+    set_list(limit){
+        const PaginatorMovies = new Paginator(series,limit)
+        this.series=PaginatorMovies.genrate_pages()
+    }
+
+    load(page){
+        const series = new SeriesList('.series-output',this.series)
+        series.return_series(page)
+    }
+}
+class LoadStars{
+
+    limit=10
+
+    constructor(){
+        this.set_list(this.limit)
+
+        let stars_otput=document.querySelector('.stars-otput')
+        stars_otput.innerHTML=''
+
+        this.load(page)
+        page++
+    }
+
+
+    set_list(limit){
+        const PaginatorStars = new Paginator(stars,limit)
+        this.stars=PaginatorStars.genrate_pages()
+    }
+
+    load(page){
+        const series = new StarsList('.stars-otput',this.stars)
+        series.return_stars(page)
     }
 }
 /*
@@ -34,7 +84,8 @@ class LoadContet{
     end=false
 
     construct(){
-        this.load_more(this)
+   
+     this.load_more(this)
     }
 
     add_list(list,on_list){

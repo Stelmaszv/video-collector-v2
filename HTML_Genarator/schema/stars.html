@@ -1,21 +1,48 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="Z:/HTML Generator/css/bootstrap.min.css" rel="stylesheet">
+    <link href="Z:/HTML Generator/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="Z:/HTML Generator/css/baguetteBox.css">
+    <script src="Z:/HTML Generator/js/baguetteBox.js" async></script>
     <title>Stars</title>
-    <script src="Z:\HTML Generator\js\stars_paginated.js"></script>
-    <script src="Z:\HTML Generator\js\load.js"></script>
 </head>
 <body>
-<h2>Stars</h2>
-<a href="Z:\HTML Generator\json\stars_paginated.JSON">Data</a>
-<div class="list">
-    Wczytywanie
-</div>
-<div class="load_more">Load More</div>
+<nav>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="Z:/HTML Generator/sites/movies.html">Movies</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="Z:/HTML Generator/sites/series.html">Series</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="Z:/HTML Generator/sites/stars.html">Stars</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="Z:/HTML Generator/sites/producent.html">Producent</a>
+        </li>
+    </ul>
+</nav>
+<main class='content container'>
+    <div class="row stars-otput">[#StarsOputs#]</div>
+</main>
 </body>
-<script>
-        const OBJ=new LoadStars()
-        OBJ.construct()
-        document.querySelector(OBJ.loadMoreSelector).click()
 
+<script src="Z:\HTML Generator\js\lists.js"></script>
+<script src="Z:\HTML Generator\js\paginator.js"></script>
+<script src="Z:\HTML Generator\js\stars.js"></script>
+<script src="Z:\HTML Generator\js\load.js"></script>
+<script>
+    const LoadStarsObj=new LoadStars()
+    window.addEventListener("scroll", (event) => {
+        var limit = document.body.offsetHeight - window.innerHeight;
+        let scrol_pos=90/100*limit
+        if (window.scrollY>scrol_pos){
+            LoadStarsObj.load(page++)
+        }
+    });
 </script>
 </html>

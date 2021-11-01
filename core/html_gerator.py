@@ -129,6 +129,16 @@ class HTMLGenaratorMain:
 
         self.create_file(
             self.js,
+            'series.js',
+            data_JSON['project_url'] + '\OUTPUT\js')
+
+        self.create_file(
+            self.js,
+            'stars.js',
+            data_JSON['project_url'] + '\OUTPUT\js')
+
+        self.create_file(
+            self.js,
             'bootstrap.bundle.min.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
