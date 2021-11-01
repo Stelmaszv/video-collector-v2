@@ -58,7 +58,7 @@
             <li class="nav-item" role="presentation">
                 <button class="nav-link name_js series_name_js" id="pills-stars-movies" data-bs-toggle="pill"
                         data-bs-target="#movis-stars" type="button" role="tab" aria-controls="pills-contact"
-                        aria-selected="false">Galery
+                        aria-selected="false">[#MoviesInSeries#]
                 </button>
             </li>
 
@@ -73,14 +73,15 @@
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="galery-tab" role="tabpanel"
+            <div class="tab-pane fade show active" id="galery-tab" type="Galery" role="tabpanel"
                  aria-labelledby="pills-galery-tab">
                 <div class="container">
                     <div class="row galery galery-run">[#Galery#]</div>
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="movis-stars" role="tabpanel" aria-labelledby="pills-stars-movies">
+            <div class="tab-pane fade" id="movis-stars" role="tabpanel" type="top-stars"
+                 aria-labelledby="pills-stars-movies">
                 <div class="container">
                     <div class="row series-movies-output">[#SeriesOutPut#]
 
@@ -89,7 +90,7 @@
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="stars-tab" role="tabpanel"
+            <div class="tab-pane fade" id="stars-tab" role="tabpanel" type="movies_in_series"
                  aria-labelledby="pills-stars-tab">
                 <div class="container">
                     <div class="row top-stars-otput">
@@ -97,8 +98,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -107,8 +106,37 @@
 <script src="db.js"></script>
 <script src="Z:/HTML Generator/js/LoadByid.js"></script>
 <script>
-    const star=new Series()
+    const SeriesObj=new Series()
     baguetteBox.run('.galery-run');
+    let type=''
+    window.addEventListener("scroll", (event) => {
+        var limit = document.body.offsetHeight - window.innerHeight;
+        let scrol_pos=90/100*limit
+        let all=document.querySelectorAll('.tab-pane')
+
+        for (let tab of all){
+            if (tab.classList.contains('active')){
+                type = tab.getAttribute('type')
+            }
+        }
+
+        if (window.scrollY>scrol_pos){
+
+            if (type == "Galery"){
+                SeriesObj.load_galery(SeriesObj.photos,movie_galery_page++)
+                baguetteBox.run('.galery-run');
+            }
+                
+            if (type == "all_movies_with_star"){
+                SeriesObj.all_movies_with_star(movies_with_star++)
+            }
+
+            if (type == "top-stars"){
+                SeriesObj.add_series_movies(movies_in_series++)
+            }
+        
+        }
+    });
 </script>
 </body>
 </html>

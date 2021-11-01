@@ -236,7 +236,7 @@ class Series extends LoadID{
     }
 
     paginators(){
-        const PaginatorPhoto  = new Paginator(this.data.photos,20)
+        const PaginatorPhoto  = new Paginator(this.data.photos,10)
         this.photos=PaginatorPhoto.genrate_pages()
 
         const PaginatorMovies = new Paginator(this.data.movies,20)
