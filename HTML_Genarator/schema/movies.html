@@ -35,15 +35,14 @@
 <script src="Z:\HTML Generator\js\movies.js"></script>
 <script src="Z:\HTML Generator\js\load.js"></script>
 <script>
-        const LoadMoviesObj=new LoadMovies()
-        window.addEventListener("scroll", (event) => {
-            var limit = document.body.offsetHeight - window.innerHeight;
-            let scrol_pos=90/100*limit
-            if (window.scrollY>scrol_pos){
-                LoadMoviesObj.load(page++)
-            }
-        });
-
+    const LoadMoviesObj=new LoadMovies()
+    window.addEventListener("scroll", (event) => {
+        var limit = document.body.offsetHeight - window.innerHeight;
+        let scrol_pos=90/100*limit
+        if (window.scrollY>scrol_pos){
+            LoadMoviesObj.ListOBJ.return_data(page++)
+        }
+    });
 </script>
 </html>
 

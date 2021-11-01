@@ -1,107 +1,71 @@
 let page=0
-class LoadContet{}
-
-class LoadMovies{
-
-    limit=20
+class LoadContet{
 
     constructor(){
-        this.set_list(this.limit)
-
-        let movies_div=document.querySelector('.movies-output')
-        movies_div.innerHTML=''
-
-        this.load(page)
+        this.set_data()
+        this.set_list()
+        let div_output=document.querySelector(this.div_output)
+        div_output.innerHTML=''
+        this.ListOBJ = this.set_obj()
+        this.ListOBJ.return_data(page)
         page++
-
-    }
-    
-    set_list(limit){
-        const PaginatorMovies = new Paginator(movies,limit)
-        this.movies=PaginatorMovies.genrate_pages()
-    
     }
 
-    load(page){
-        let ObjMovieList = new MovieList('.movies-output',this.movies)
-        ObjMovieList.return_movies(page)
+    set_list(){
+        const PaginatorMovies = new Paginator(this.data,this.limit)
+        this.pagineted_data=PaginatorMovies.genrate_pages()
     }
 }
 
-class LoadSeries{
+class LoadMovies extends LoadContet{
 
-    limit=5
-
-    constructor(){
-        this.set_list(this.limit)
-
-        let series_div=document.querySelector('.series-output')
-        series_div.innerHTML=''
-
-        this.load(page)
-        page++
+    set_obj(){
+        return new MovieList(this.div_output,this.pagineted_data)
     }
 
-    set_list(limit){
-        const PaginatorMovies = new Paginator(series,limit)
-        this.series=PaginatorMovies.genrate_pages()
-    }
-
-    load(page){
-        const series = new SeriesList('.series-output',this.series)
-        series.return_series(page)
+    set_data(){
+        this.div_output='.movies-output'
+        this.data=movies
+        this.limit=20
     }
 }
 
-class LoadStars{
+class LoadSeries extends LoadContet{
 
-    limit=15
-
-    constructor(){
-        this.set_list(this.limit)
-
-        let stars_otput=document.querySelector('.stars-otput')
-        stars_otput.innerHTML=''
-
-        this.load(page)
-        page++
+    set_obj(){
+        return new SeriesList(this.div_output,this.pagineted_data)
     }
 
+    set_data(){
+        this.div_output='.series-output'
+        this.data=series
+        this.limit=5
+    }
+}
 
-    set_list(limit){
-        const PaginatorStars = new Paginator(stars,limit)
-        this.stars=PaginatorStars.genrate_pages()
+class LoadStars extends LoadContet{
+
+    set_obj(){
+        return new StarsList(this.div_output,this.pagineted_data)
     }
 
-    load(page){
-        const series = new StarsList('.stars-otput',this.stars)
-        series.return_stars(page)
+    set_data(){
+        this.div_output='.stars-otput'
+        this.data=stars
+        this.limit=15
     }
 }
 
 
-class LoadProducents{
+class LoadProducents extends LoadContet{
 
-    limit=10
-
-    constructor(){
-        this.set_list(this.limit)
-
-        let producent_otput=document.querySelector('.producent-otput')
-        producent_otput.innerHTML=''
-
-        this.load(page)
-        page++
+    set_obj(){
+        return new ProducentsList(this.div_output,this.pagineted_data)
     }
 
-
-    set_list(limit){
-        const PaginatorStars = new Paginator(producents,limit)
-        this.producents=PaginatorStars.genrate_pages()
-    }
-
-    load(page){
-        const producents = new ProducentsList('.producent-otput',this.producents)
-        producents.return_pages(page)
+    set_data(){
+        this.div_output='.producent-otput'
+        this.data=producents
+        this.limit=15
     }
 }
