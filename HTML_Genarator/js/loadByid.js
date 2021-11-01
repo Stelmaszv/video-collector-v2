@@ -194,17 +194,57 @@ class Star extends LoadID{
         table.innerHTML+='</tr>'
     }
 }
-
+let photos_galery_page=0
+let series_movies_page=0
+let series_stars_page=0
 class Series extends LoadID{
     set_elements(){
         this.create_table_information()
         this.set_tags()
+
+        this.paginators()
+        this.reset_tabs()
         this.get_banner()
-        
-        this.load_galery(this.data.photos)
-        this.get_top_stars()
-        let ObjMovieList = new MovieList(this.data,'.series_name','.series-movies-output',this.data.movies,this.data.name)
-        ObjMovieList.return_movies()
+
+        this.load_galery(this.photos,photos_galery_page)
+        photos_galery_page++
+
+        this.load_movies(series_movies_page)
+        series_movies_page++
+
+        this.get_top_stars(this.stars,series_stars_page)
+        series_stars_page++
+
+    }
+
+    load_movies(series_movies_page){
+        let ObjMovieList = new MovieList(this.data,'.series_name_js','.series-movies-output',this.series_movies,this.data.name)
+        ObjMovieList.return_movies(series_movies_page)
+    }
+
+    reset_tabs(){
+
+        let galery=document.querySelector('.galery')
+        galery.innerHTML=''
+
+        let series=document.querySelector('.series-movies-output')
+        series.innerHTML=''
+
+        let top_stars=document.querySelector('.top-stars-otput')
+        top_stars.innerHTML=''
+
+    }
+
+    paginators(){
+        const PaginatorPhoto  = new Paginator(this.data.photos,20)
+        this.photos=PaginatorPhoto.genrate_pages()
+
+        const PaginatorMovies = new Paginator(this.data.movies,20)
+        this.series_movies=PaginatorMovies.genrate_pages()
+
+        const PaginatorStars  = new Paginator(this.data.stars,4)
+        this.stars=PaginatorStars.genrate_pages()
+
     }
 
     create_table_information(){
@@ -274,7 +314,7 @@ class MovieList{
         str+='<ul class="list-group list-group-flush">'
         str+='<li class="list-group-item"><a href="'+movie.short_series.dir+'/series_id.html" class="card-link">'+movie.short_series.name+'</a></li>'
         if (movie.short_stars.length>0){
-            str+='<li class="list-group-item"><a href="'+index_round.dir+'/movies_id.html" class="card-link">'+index_round.name+'</a></li>'
+            str+='<li class="list-group-item"><a href="'+index_round.dir+'/stars_id.html" class="card-link">'+index_round.name+'</a></li>'
         }
         str+='</ul>'
         return str

@@ -14,7 +14,7 @@ class Paginator{
         let new_array = []
         let index = 0
         for (let i = 0; i < pages; i++){
-            movies = []
+            let movies = []
             let elments = 0
             for (let item of this.data){
                 if (elments < this.limit && index < count){
