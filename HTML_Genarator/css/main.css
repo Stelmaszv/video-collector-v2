@@ -49,6 +49,31 @@
   margin: 1rem;
 }
 
+.cart-item .card-body a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  margin-top: -25px;
+  margin-bottom: -30px;
+}
+
+.cart-item .card-body a:hover {
+  color: blue;
+}
+
+.cart-item .list-group-item a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cart-item .list-group-item a:hover {
+  color: blue;
+}
+
 .cart-item .cover {
   width: 13rem;
   height: 20rem;

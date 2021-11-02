@@ -17,7 +17,7 @@ class MovieList{
     }
 
     img(movie){
-        return '<img src="'+movie.avatar+'" class="card-img-top cover" alt="...">'
+        return '<a href="'+movie.dir+'/movies_id.html"><img src="'+movie.avatar+'" class="card-img-top cover" alt="..."></a>'
     }
 
     body(movie){
@@ -34,14 +34,16 @@ class MovieList{
 
     action_grup(movie){
         let str=''
-        let index_round=''
-        if (movie.short_stars.length>0){
+        let more=''
+        let index_round=movie.short_stars[0]
+        if (movie.short_stars.length>1){
             index_round = movie.short_stars[Math.floor(Math.random()* movie.short_stars.length)];
+            more='<i> + '+movie.short_stars.length+'</i>'
         }
         str+='<ul class="list-group list-group-flush">'
         str+='<li class="list-group-item"><a href="'+movie.short_series.dir+'/series_id.html" class="card-link">'+movie.short_series.name+'</a></li>'
         if (movie.short_stars.length>0){
-            str+='<li class="list-group-item"><a href="'+index_round.dir+'/stars_id.html" class="card-link">'+index_round.name+'</a></li>'
+            str+='<li class="list-group-item"><a href="'+index_round.dir+'/stars_id.html" class="card-link">'+index_round.name+'</a>'+more+'</li>'
         }
         str+='</ul>'
         return str
