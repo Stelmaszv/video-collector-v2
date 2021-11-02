@@ -147,6 +147,11 @@ class HTMLGenaratorMain:
             'bootstrap.bundle.min.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
+        self.create_file(
+            self.js,
+            'cunter.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
 
     def create_file(self, dir, file_name, shema_url):
         return HtmlGenaratorBase().create_file(dir, file_name, shema_url)

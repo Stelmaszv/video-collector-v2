@@ -156,7 +156,7 @@ class Star extends LoadID{
 
     load_movies(stars_movies){
         let ObjMovieList = new MovieList('.stars-movies-output',this.starsmovies)
-        ObjMovieList.return_movies(stars_movies)
+        ObjMovieList.return_data(stars_movies)
     }
 
     reset_tabs(){
