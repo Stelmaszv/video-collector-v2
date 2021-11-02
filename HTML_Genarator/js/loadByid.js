@@ -27,6 +27,36 @@ class LoadID{
         }
     }
 
+    set_tabs(arry,div){
+        if (arry.length>0){
+            let movis_tab =document.querySelectorAll(div)
+            for (let tab of movis_tab){
+                tab.style.visibility='visible'
+            }
+        }
+    }
+
+    set_active_tabs(){
+
+        let nav_tab =document.querySelectorAll('.nav_tab')
+        for (let tab of nav_tab){
+            if (tab.style.visibility =='visible'){
+                tab.querySelector('button').classList.add('active')
+                break;
+            }
+        }
+        let tab_content =document.querySelectorAll('.tab_content')
+        for (let tab of tab_content){
+            if (tab.style.visibility =='visible'){
+                tab.classList.add('active')
+                tab.classList.add('show')
+                break;
+            }
+        }
+
+
+    }
+
     get_series(div,array,page){
         const series = new SeriesList(div,array)
         series.return_data(page)
@@ -54,18 +84,11 @@ class LoadID{
     }
 
     load_galery(array,corent_page){
-        function getExt(filename){
-            var ext = filename.split('.').pop();
-            if(ext == filename) return "";
-            return ext;
-        }
         let galery=document.querySelector('.galery')
 
         if (array.hasOwnProperty(corent_page)){
             let new_array=array[corent_page].Objets
             for (let photo of new_array){
-                let ext= getExt(photo.photo)
-                if (ext==="png" || ext==="jpg")
                 galery.innerHTML+='<div class="col"><a href="'+photo.photo+'" data-caption="'+photo.name+'"><img class="galery-item" src="'+photo.photo+'"></a></div>'
             }
         }  
@@ -158,35 +181,9 @@ class Star extends LoadID{
     }
 
     set_div(){
-        if (this.data.movies.length>0){
-            let movis_tab =document.querySelectorAll('.movies_tab')
-            for (let tab of movis_tab){
-                tab.style.visibility='visible'
-            }
-        }
-
-        if (this.data.photos.length>0){
-            let galery_tab =document.querySelectorAll('.galery_tab')
-            for (let tab of galery_tab){
-                tab.style.visibility='visible'
-            }
-        }
-        let nav_tab =document.querySelectorAll('.nav_tab')
-        for (let tab of nav_tab){
-            if (tab.style.visibility =='visible'){
-                tab.querySelector('button').classList.add('active')
-                break;
-            }
-        }
-        let tab_content =document.querySelectorAll('.tab_content')
-        for (let tab of tab_content){
-            if (tab.style.visibility =='visible'){
-                tab.classList.add('active')
-                tab.classList.add('show')
-                break;
-            }
-        }
-
+        this.set_tabs(this.data.movies,'.movies_tab')
+        this.set_tabs(this.data.photos,'.galery_tab')
+        this.set_active_tabs()
     }
 
     load_movies(stars_movies){
@@ -206,7 +203,7 @@ class Star extends LoadID{
         const PaginatorPhoto = new Paginator(this.data.photos,10)
         this.photos=PaginatorPhoto.genrate_pages()
 
-        const PaginatorStars = new Paginator(this.data.movies,1)
+        const PaginatorStars = new Paginator(this.data.movies,8)
         this.starsmovies=PaginatorStars.genrate_pages()
     }
 
@@ -383,29 +380,41 @@ class Movie extends LoadID{
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
         if (this.data.series[0].producent.hasOwnProperty('dir')){
-            table.innerHTML+='<td>Producent</td><td><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
+            table.innerHTML+='<td>Producent</td><td class="producent_item"><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
         }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Serie</td><td><a href="'+this.data.series[0].dir+'/series_id.html">'+this.data.series[0].name+'</a></td>'
+        table.innerHTML+='<td>Serie</td><td class="series_item"><a href="'+this.data.series[0].dir+'/series_id.html">'+this.data.series[0].name+'</a></td>'
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Stars</td><td class="stars_strig_js"></td>'
+        if (this.data.short_stars.length>0){
+            table.innerHTML+='<td>Stars</td><td class="stars_strig_js"></td>'
+        }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        if (this.data.tags.length > 0){
+            table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
+        if (this.data.country){
+            table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
+        }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
+        if (this.data.year != 'None'){
+            table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
+        }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
+        if (this.data.views > 0){
+            table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
+        }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
+        if (this.data.likes > 0){
+            table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
+        }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
         table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
@@ -414,9 +423,16 @@ class Movie extends LoadID{
     set_stars(){
         let stars=document.querySelector('.stars_js')
         let stars_strig_js=document.querySelector('.stars_strig_js')
+        let counter=1
+        let next=''
         for (let star of data.short_stars){
+            if (counter<data.short_stars.length){
+                next=" , "
+            }
+
             stars.innerHTML+='<a href="'+star.dir+'/stars_id.html"><img src="'+star.avatar+'" class="img-thumbnail star_src"></a>'
-            stars_strig_js.innerHTML+="<spam class='star-string'><a href='"+star.dir+"/stars_id.html'>"+star.name+"</a></spam>, "
+            stars_strig_js.innerHTML+="<spam class='star-string'><a href='"+star.dir+"/stars_id.html'>"+star.name+"</a></spam>"+next+""
+            counter++
         }
     }
 }

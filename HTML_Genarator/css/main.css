@@ -1,6 +1,6 @@
 .tag {
   margin-left: 5px;
-  font-weight: bold;
+  font-style: italic;
 }
 
 .galery {
@@ -214,5 +214,15 @@
 
 .ditels-section .movie_description {
   text-align: justify;
+}
+
+.ditels-section .star-string a, .ditels-section .producent_item a, .ditels-section .series_item a {
+  color: black;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+.ditels-section .star-string a:hover, .ditels-section .producent_item a:hover, .ditels-section .series_item a:hover {
+  color: #3131e4;
 }
 /*# sourceMappingURL=main.css.map */
