@@ -1,9 +1,8 @@
 from core.custum_errors import Error
-from core.setings import data_JSON
 from pathlib import Path
+from core.setings import data_JSON
 import json
 import os
-
 
 class HtmlGenaratorBase:
     def return_html_as_string(self, shema_url):
@@ -13,9 +12,11 @@ class HtmlGenaratorBase:
         if Path(dir + '\\' + file_name).is_file() is True:
             os.remove(dir + '\\' + file_name)
         f = open(dir + '\\' + file_name, "w")
-        f.write(self.return_html_as_string(shema_url + '\\' + str(file_name)))
+        file = shema_url + '\\' + str(file_name)
+        html = self.return_html_as_string(file)
+        htmloutput = html.replace("[#HTMLOUTPUT#]", data_JSON['html_output'])
+        f.write(htmloutput)
         f.close()
-
 
 class HTMLGenaratorMain:
     dir = data_JSON['html_output'] + '\HTML Generator'
@@ -152,10 +153,21 @@ class HTMLGenaratorMain:
             'cunter.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
+        self.get_all_files_js_list()
+
+    def get_all_files_js_list(self):
+        scripts = os.listdir(data_JSON['html_output'] + '/HTML Generator/js')
+        scripts_json = []
+        for dir in scripts:
+            scripts_json.append({"file": dir, "url": data_JSON['html_output'] + '/HTML Generator/js/' + dir})
+
+        scripts = os.listdir(data_JSON['html_output'] + '/HTML Generator/css')
+        css_json = []
+        for dir in scripts:
+            css_json.append({"file": dir, "url": data_JSON['html_output'] + '/HTML Generator/css/' + dir})
 
     def create_file(self, dir, file_name, shema_url):
         return HtmlGenaratorBase().create_file(dir, file_name, shema_url)
-
 
 class AbstractGenarta:
     input = ""
