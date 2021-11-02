@@ -48,6 +48,7 @@ class LoadID{
         let tab_content =document.querySelectorAll('.tab_content')
         for (let tab of tab_content){
             if (tab.style.visibility =='visible'){
+                console.log(tab)
                 tab.classList.add('active')
                 tab.classList.add('show')
                 break;
@@ -334,6 +335,7 @@ class Movie extends LoadID{
         this.set_stars()
         this.set_tags()
         this.paginators()
+        this.set_div()
 
         this.load_galery(this.photos,movie_galery_page)
         movie_galery_page++
@@ -343,6 +345,13 @@ class Movie extends LoadID{
 
         this.add_series_movies(movies_in_series)
         movies_in_series++
+    }
+
+    set_div(){
+        this.set_tabs(this.photos,'.galery_tab_js')
+        this.set_tabs(this.series_movies,'.movies_series_tab')
+        this.set_tabs(this.movies,'.movies_with_stars_tab')
+        this.set_active_tabs()
     }
 
     reset_tabs(){
