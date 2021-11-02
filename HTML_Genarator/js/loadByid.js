@@ -475,10 +475,11 @@ class Movie extends LoadID{
     set_stars(){
         let stars=document.querySelector('.stars_js')
         let stars_strig_js=document.querySelector('.stars_strig_js')
-        let counter=1
+        let counter=2
         let next=''
         for (let star of data.short_stars){
-            if (counter<data.short_stars.length){
+            next=""
+            if (counter<=data.short_stars.length){
                 next=" , "
             }
 

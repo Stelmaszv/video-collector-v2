@@ -38,7 +38,8 @@ class MovieList{
         let index_round=movie.short_stars[0]
         if (movie.short_stars.length>1){
             index_round = movie.short_stars[Math.floor(Math.random()* movie.short_stars.length)];
-            more='<i> + '+movie.short_stars.length+'</i>'
+            let number = movie.short_stars.length-1
+            more='<i> + '+number+'</i>'
         }
         str+='<ul class="list-group list-group-flush">'
         str+='<li class="list-group-item"><a href="'+movie.short_series.dir+'/series_id.html" class="card-link">'+movie.short_series.name+'</a></li>'
