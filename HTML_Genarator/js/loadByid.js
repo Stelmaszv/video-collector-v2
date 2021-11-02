@@ -262,8 +262,8 @@ class Series extends LoadID{
     set_elements(){
         this.create_table_information()
         this.set_tags()
-
         this.paginators()
+        this.set_div()
         this.reset_tabs()
         this.get_banner()
 
@@ -277,6 +277,14 @@ class Series extends LoadID{
         series_stars_page++
 
     }
+
+    set_div(){
+        this.set_tabs(this.photos,'.galery_tab_js')
+        this.set_tabs(this.series_movies,'.movies_series_tab')
+        this.set_tabs(this.stars,'.movies_series_stars_tab')
+        this.set_active_tabs()
+    }
+
 
     load_movies(series_movies_page){
         let ObjMovieList = new MovieList('.series-movies-output',this.series_movies)
@@ -312,15 +320,28 @@ class Series extends LoadID{
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
         if (this.data.producent.hasOwnProperty('dir')){
-            table.innerHTML+='<td>Producent</td><td><a href="'+this.data.producent.dir+'/producent_id.html">'+this.data.producent.name+'</a></td>'
+            table.innerHTML+='<td>Producent</td><td class="producent_item"><a href="'+this.data.producent.dir+'/producent_id.html">'+this.data.producent.name+'</a></td>'
         }
-        table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
-        table.innerHTML+='<td>Years</td><td>'+this.data.years+'</td>'
+        if (this.data.country){
+            table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
+        }
+        if (this.data.years){
+            table.innerHTML+='<td>Years</td><td>'+this.data.years+'</td>'
+        }
         table.innerHTML+='<td>Number of sezons</td><td>'+this.data.number_of_sezons+'</td>'
         table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
-        table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
-        table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
-        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        
+        if (this.data.views>0){
+            table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
+        }
+
+        if (this.data.likes>0){
+            table.innerHTML+='<td>Views</td><td>'+this.data.likes+'</td>'
+        }
+
+        if (this.data.tags.length > 0){
+            table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        }
         table.innerHTML+='</tr>'
     }
 }

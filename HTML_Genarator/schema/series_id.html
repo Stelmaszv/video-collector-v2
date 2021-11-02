@@ -52,14 +52,14 @@
     </div>
     <div class="tabs_nav">
         <ul class="nav nav-pills mb-3 tab_nav d-flex justify-content-center" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="pills-galery-tab" data-bs-toggle="pill"
+            <li class="nav-item galery_tab_js nav_tab" role="presentation nav_tab">
+                <button class="nav-link" id="pills-galery-tab" data-bs-toggle="pill"
                         data-bs-target="#galery-tab" type="button" role="tab" aria-controls="pills-contact"
                         aria-selected="false">Galery
                 </button>
             </li>
 
-            <li class="nav-item" role="presentation">
+            <li class="nav-item nav_tab movies_series_tab" role="presentation nav_tab">
                 <button class="nav-link name_js series_name_js" id="pills-stars-movies" data-bs-toggle="pill"
                         data-bs-target="#movis-stars" type="button" role="tab" aria-controls="pills-contact"
                         aria-selected="false">[#MoviesInSeries#]
@@ -67,7 +67,7 @@
             </li>
 
 
-            <li class="nav-item" role="presentation">
+            <li class="nav-item nav_tab movies_series_stars_tab" role="presentation">
                 <button class="nav-link" id="pills-stars-tab" data-bs-toggle="pill"
                         data-bs-target="#stars-tab" type="button" role="tab" aria-controls="pills-contact"
                         aria-selected="false">Top Stars
@@ -77,24 +77,22 @@
         </ul>
 
         <div class="tab-content" id="pills-tabContent">
-            <div class="tab-pane fade show active" id="galery-tab" type="Galery" role="tabpanel"
+            <div class="tab-pane fade galery_tab_js tab_content" id="galery-tab" type="Galery" role="tabpanel"
                  aria-labelledby="pills-galery-tab">
                 <div class="container">
                     <div class="row galery galery-run">[#Galery#]</div>
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="movis-stars" role="tabpanel" type="top-stars"
+            <div class="tab-pane fade tab_content movies_series_tab" id="movis-stars" role="tabpanel" type="top-stars"
                  aria-labelledby="pills-stars-movies">
                 <div class="container">
-                    <div class="row series-movies-output">[#SeriesOutPut#]
-
-
-                    </div>
+                    <div class="row series-movies-output">[#SeriesOutPut#]</div>
                 </div>
             </div>
 
-            <div class="tab-pane fade" id="stars-tab" role="tabpanel" type="movies_in_series"
+            <div class="tab-pane fade tab_content movies_series_stars_tab" id="stars-tab" role="tabpanel"
+                 type="movies_in_series"
                  aria-labelledby="pills-stars-tab">
                 <div class="container">
                     <div class="row top-stars-otput">

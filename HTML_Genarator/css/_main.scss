@@ -84,7 +84,12 @@
 .only-photo-js{
     display: none;
 }
-.galery_tab,.movies_tab,.galery_tab_js,.movies_series_tab.movies_with_stars_tab{
+.galery_tab,.movies_tab,
+.galery_tab_js,
+.movies_series_tab,
+.movies_with_stars_tab,
+.movies_series_tab,
+.movies_series_stars_tab{
     visibility: hidden;
 }
 .baner{
