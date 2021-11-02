@@ -81,6 +81,12 @@
         text-align: justify;
     }
 }
+.only-photo-js{
+    display: none;
+}
+.galery_tab,.movies_tab{
+    visibility: hidden;
+}
 .baner{
     img{
         width: 100%;

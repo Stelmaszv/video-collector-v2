@@ -14,7 +14,9 @@ class LoadID{
             avatar.setAttribute('src',this.data.avatar)
         }
         let movie_description=document.querySelector('.description_js')
-        movie_description.innerHTML=data.description
+        if (data.description){
+            movie_description.innerHTML=data.description
+        }
         this.set_elements()    
     }
 
@@ -141,6 +143,7 @@ let stars_galery_page=0
 let stars_movies=0
 class Star extends LoadID{
     set_elements(){
+        this.set_div()
         this.create_table_information()
         this.set_tags()
         this.paginators()
@@ -151,6 +154,38 @@ class Star extends LoadID{
 
         this.load_movies(stars_movies)
         stars_movies++
+
+    }
+
+    set_div(){
+        if (this.data.movies.length>0){
+            let movis_tab =document.querySelectorAll('.movies_tab')
+            for (let tab of movis_tab){
+                tab.style.visibility='visible'
+            }
+        }
+
+        if (this.data.photos.length>0){
+            let galery_tab =document.querySelectorAll('.galery_tab')
+            for (let tab of galery_tab){
+                tab.style.visibility='visible'
+            }
+        }
+        let nav_tab =document.querySelectorAll('.nav_tab')
+        for (let tab of nav_tab){
+            if (tab.style.visibility =='visible'){
+                tab.querySelector('button').classList.add('active')
+                break;
+            }
+        }
+        let tab_content =document.querySelectorAll('.tab_content')
+        for (let tab of tab_content){
+            if (tab.style.visibility =='visible'){
+                tab.classList.add('active')
+                tab.classList.add('show')
+                break;
+            }
+        }
 
     }
 
@@ -176,20 +211,50 @@ class Star extends LoadID{
     }
 
     create_table_information(){
-        function count_age(){
-            return '25'
+        function count_age(date_of_birth){            
+            var birthdate = new Date(date_of_birth);
+            var cur = new Date();
+            var diff = cur-birthdate;
+            var age = Math.floor(diff/31557600000);
+            return age
         }
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Nationality</td><td>'+this.data.nationality+'</td>'
-        table.innerHTML+='<td>Birth place</td><td>'+this.data.birth_place+'</td>'
-        table.innerHTML+='<td>Date of birth</td><td>'+this.data.date_of_birth+', <b>age '+count_age(this.data.date_of_birth)+' years old</b></td>'
-        table.innerHTML+='<td>Ethnicity</td><td>'+this.data.ethnicity+'</td>'
-        table.innerHTML+='<td>Hair color</td><td>'+this.data.hair_color+'</td>'
-        table.innerHTML+='<td>Height</td><td>'+this.data.height+' cm</td>'
-        table.innerHTML+='<td>Weight</td><td>'+this.data.weight+' kg</td>'
-        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+
+        if (this.data.nationality){
+            table.innerHTML+='<td>Nationality</td><td>'+this.data.nationality+'</td>'
+        }
+
+        if (this.data.birth_place){
+            table.innerHTML+='<td>Birth place</td><td>'+this.data.birth_place+'</td>'
+            table.innerHTML+='<td>Date of birth</td><td>'+this.data.date_of_birth+', <b>age '+count_age(this.data.date_of_birth)+' years old</b></td>'
+        }
+
+        if (this.data.ethnicity){
+            table.innerHTML+='<td>Ethnicity</td><td>'+this.data.ethnicity+'</td>'
+        }
+
+        if (this.data.hair_color){
+             table.innerHTML+='<td>Hair color</td><td>'+this.data.hair_color+'</td>'
+        }
+
+        if (this.data.height > 0){
+            table.innerHTML+='<td>Height</td><td>'+this.data.height+' cm</td>'
+        }
+
+        if (this.data.weight > 0){
+            table.innerHTML+='<td>Weight</td><td>'+this.data.weight+' kg</td>'
+        }
+
+        if (this.data.tags.length){
+            table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        }
+
         table.innerHTML+='</tr>'
+        if (this.data.tags.length == 0 && !this.data.nationality && !this.data.birth_place && !this.data.ethnicity && !this.data.hair_color && this.data.height == 0 && this.data.weight == 0){
+            document.querySelector('.tabel-info-js').style.display='none'
+            document.querySelector('.only-photo-js').style.display='block'
+        }
     }
 }
 let photos_galery_page=0

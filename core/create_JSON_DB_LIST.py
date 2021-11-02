@@ -3,10 +3,11 @@ from app.db.models import session
 from app.db.models import Producent, Stars, Movies, Series
 from core.custum_errors import Error
 from pathlib import Path
+from core.setings import photo_ext
 import os.path
-import math
 import json
 import os
+
 
 producent_fields_defult = ['country', "views", "likes", "favourite",
                            "baner", "year"]
@@ -255,7 +256,8 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
     def return_galery(self, JSON):
         photos = []
         for item in os.listdir(JSON['dir']):
-            photos.append({"photo": item, "name": JSON['name']})
+            if item.endswith(photo_ext):
+                photos.append({"photo": item, "name": JSON['name']})
         return photos
 
 class GenerateJSONOtputsStars((AbstratJSONOtpus)):
@@ -276,16 +278,18 @@ class GenerateJSONOtputsStars((AbstratJSONOtpus)):
         photos = []
         dir = os.listdir(JSON['dir'] + '\\photo\DATA')
         for item in dir:
-            new_item = JSON['dir'] + '\\photo\DATA\\' + item
-            photos.append({"photo": new_item, "name": JSON['name']})
+            if item.endswith(photo_ext):
+                new_item = JSON['dir'] + '\\photo\DATA\\' + item
+                photos.append({"photo": new_item, "name": JSON['name']})
 
         for movie in JSON['movies']:
             for star in movie['short_stars']:
                 if star['name'] == JSON['name']:
                     for item in os.listdir(movie['dir']):
-                        new_item = movie['dir'] + '\\' + item
-                        name = movie['short_series']['name'] + ' - ' + movie['name']
-                        photos.append({"photo": new_item, "name": name})
+                        if item.endswith(photo_ext):
+                            new_item = movie['dir'] + '\\' + item
+                            name = movie['short_series']['name'] + ' - ' + movie['name']
+                            photos.append({"photo": new_item, "name": name})
         return photos
 
 class GenerateJSONOtputsSeries(AbstratJSONOtpus):
@@ -311,7 +315,8 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
             for item in os.listdir(movie['dir']):
                 new_item = movie['dir'] + '\\' + item
                 name = JSON['name'] + ' - ' + movie['name']
-                photos.append({"photo": new_item, "name": name})
+                if item.endswith(photo_ext):
+                    photos.append({"photo": new_item, "name": name})
         return photos
 
 class GenerateJSONOtputsProducent(AbstratJSONOtpus):
@@ -328,7 +333,8 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
             for dir in os.listdir(movie['dir']):
                 new_item = movie['dir'] + '\\' + dir
                 name = movie['short_series']['name'] + ' - ' + movie['name']
-                photos.append({"photo": new_item, "name": name})
+                if dir.endswith(movie_ext):
+                    photos.append({"photo": new_item, "name": name})
         return photos
 
     def add_movies(self, data):
