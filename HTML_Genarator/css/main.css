@@ -97,6 +97,7 @@
 .movies_series_tab,
 .movies_with_stars_tab,
 .movies_series_tab,
+.series_tab,
 .movies_series_stars_tab {
   visibility: hidden;
 }

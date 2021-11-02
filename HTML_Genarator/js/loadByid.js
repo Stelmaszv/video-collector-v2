@@ -107,6 +107,7 @@ class Producnet extends LoadID{
         this.set_tags()
         this.get_banner()
         this.paginators()
+        this.set_div()
         this.reset_tabs()
 
         this.get_top_stars(this.stars,producet_stars_page)
@@ -120,6 +121,14 @@ class Producnet extends LoadID{
  
         this.load_galery(this.photos,producet_galery_page)
         producet_galery_page++
+    }
+
+    set_div(){
+        this.set_tabs(this.photos,'.galery_tab_js')
+        this.set_tabs(this.producent_movies,'.movies_series_tab')
+        this.set_tabs(this.series,'.series_tab')
+        this.set_tabs(this.stars,'.movies_series_stars_tab')
+        this.set_active_tabs()
     }
 
     reset_tabs(){
@@ -154,12 +163,24 @@ class Producnet extends LoadID{
 
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
-        table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
+        if (this.data.country){
+            table.innerHTML+='<td>Country</td><td>'+this.data.country+'</td>'
+        }
+        if (this.data.country){
+            table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
+        }
+        table.innerHTML+='<td>Series</td><td>'+this.data.series.length+'</td>'
+        table.innerHTML+='<td>Movies</td><td>'+this.data.movies.length+'</td>'
         table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
-        table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
-        table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
-        table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        if (this.data.views>0){
+            table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
+        }
+        if (this.data.likes>0){
+            table.innerHTML+='<td>Likes</td><td>'+this.data.likes+'</td>'
+        }
+        if (this.data.tags.length>0){
+            table.innerHTML+='<td>Tags</td><td class="tags_js"></td>'
+        }
         table.innerHTML+='</tr>'
     }
 }
@@ -328,6 +349,7 @@ class Series extends LoadID{
         if (this.data.years){
             table.innerHTML+='<td>Years</td><td>'+this.data.years+'</td>'
         }
+        table.innerHTML+='<td>Movies</td><td>'+this.data.movies.length+'</td>'
         table.innerHTML+='<td>Number of sezons</td><td>'+this.data.number_of_sezons+'</td>'
         table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
         
