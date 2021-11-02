@@ -31,12 +31,12 @@
     }
 }
 .series-cart{
-    width:18rem;
+    width:14rem;
     padding: 1rem;
     margin: 1rem;
     .card-img-top{
-        width: 16rem; 
-        height: 20rem;
+        width: 12rem; 
+        height: 14rem;
     }
 }
 .cart-item{
@@ -88,13 +88,27 @@
 }
 .col-star{
     margin: 5px;
+
+    a{
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        margin-top: -25px;
+        margin-bottom: -30px;
+    }
+
+    a:hover{
+        color: blue;
+    }
+
     .star-cart{
-        width: 10rem; 
+        width: 12rem; 
         height: 20rem;
         padding: 1rem;
         .star-cart-img{
-            width: 8rem; 
-            height: 14rem; 
+            width: 10rem; 
+            height: 18rem; 
         }
     }
 }

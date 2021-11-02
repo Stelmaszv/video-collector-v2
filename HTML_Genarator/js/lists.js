@@ -17,7 +17,7 @@ class MovieList{
     }
 
     img(movie){
-        return '<a href="'+movie.dir+'/movies_id.html"><img src="'+movie.avatar+'" class="card-img-top cover" alt="..."></a>'
+        return '<a href="'+movie.dir+'/movies_id.html"><img src="'+movie.avatar+'" class="card-img-top cover"></a>'
     }
 
     body(movie){

@@ -34,14 +34,14 @@
 }
 
 .series-cart {
-  width: 18rem;
+  width: 14rem;
   padding: 1rem;
   margin: 1rem;
 }
 
 .series-cart .card-img-top {
-  width: 16rem;
-  height: 20rem;
+  width: 12rem;
+  height: 14rem;
 }
 
 .cart-item {
@@ -96,15 +96,28 @@
   margin: 5px;
 }
 
+.col-star a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  margin-top: -25px;
+  margin-bottom: -30px;
+}
+
+.col-star a:hover {
+  color: blue;
+}
+
 .col-star .star-cart {
-  width: 10rem;
+  width: 12rem;
   height: 20rem;
   padding: 1rem;
 }
 
 .col-star .star-cart .star-cart-img {
-  width: 8rem;
-  height: 14rem;
+  width: 10rem;
+  height: 18rem;
 }
 
 .nav {
