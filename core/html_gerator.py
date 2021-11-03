@@ -153,18 +153,10 @@ class HTMLGenaratorMain:
             'cunter.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
-        self.get_all_files_js_list()
-
-    def get_all_files_js_list(self):
-        scripts = os.listdir(data_JSON['html_output'] + '/HTML Generator/js')
-        scripts_json = []
-        for dir in scripts:
-            scripts_json.append({"file": dir, "url": data_JSON['html_output'] + '/HTML Generator/js/' + dir})
-
-        scripts = os.listdir(data_JSON['html_output'] + '/HTML Generator/css')
-        css_json = []
-        for dir in scripts:
-            css_json.append({"file": dir, "url": data_JSON['html_output'] + '/HTML Generator/css/' + dir})
+        self.create_file(
+            self.js,
+            'filters.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
 
     def create_file(self, dir, file_name, shema_url):
         return HtmlGenaratorBase().create_file(dir, file_name, shema_url)
