@@ -6,6 +6,7 @@ class Form{
         this.series_serach=document.querySelector(this.div_series)
         this.producent_serach=document.querySelector(this.div_producets)
         this.stars_serach=document.querySelector(this.div_stars)
+        this.tag_serach=document.querySelector(this.div_tag)
     }
 
     if_exist(name,array){
@@ -22,6 +23,22 @@ class Form{
         this.set_series(data)
         this.set_producent(data)
         this.set_stars(data)
+        this.set_tag(data)
+    }
+
+    set_tag(data){
+        let array=[]
+        for (let el of data){
+            for (let tag of el['tags']){
+                if (!this.if_exist(tag.name,array) && tag.name!==undefined) { 
+                    array.push(tag.name)
+                }
+            }
+        }
+
+        for (let option of array){
+            this.tag_serach.innerHTML+='<option value="'+option+'">'+option+'</option>'
+        }
     }
 
     set_stars(data){
@@ -81,6 +98,7 @@ class FilterMovies extends Form{
         this.div_series='.series-search'
         this.div_producets='.producent-search'
         this.div_stars='.stars-search'
+        this.div_tag='.tag-search'
     }
 
     html(){
