@@ -51,11 +51,8 @@
             Series
         </div>
         <div class="col">
-            <select aria-label="Default select example">
-                <option selected>Select Series</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+            <select class="series-search" aria-label="Default select example">
+                <option selected>Select series</option>
             </select>
         </div>
         <div class="col">
@@ -103,29 +100,49 @@
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
 <script>
+    movies_results=[]
     movies_filter=[]
-    const LoadMoviesObjInit=new LoadMovies(movies_filter)
+    let paginate = true
+    const LoadMoviesObjInit=new LoadMovies()
     window.addEventListener("scroll", (event) => {
-        var limit = document.body.offsetHeight - window.innerHeight;
-        let scrol_pos=90/100*limit
-        if (window.scrollY>scrol_pos){
-            const LoadMoviesObj=new LoadMovies(movies_filter)
-            LoadMoviesObj.ListOBJ.return_data(page++)
+        if (paginate){
+            var limit = document.body.offsetHeight - window.innerHeight;
+            let scrol_pos=90/100*limit
+            if (window.scrollY>scrol_pos){
+                const LoadMoviesObj=new LoadMovies(movies_results)
+                LoadMoviesObj.ListOBJ.return_data(page++)
+            }
         }
     });
     const form=new FilterMovies()
-    //form.return_form()
+    form.set_form(movies_results)
     let search =document.querySelector('.name-search')
     search.addEventListener("keyup", function(){
-        movies_filter["name"] = this.value
-        new LoadMovies(movies_filter)
+        if (this.value.length>3){
+            movies_filter["name"] = this.value
+            paginate = false
+            new LoadMovies(movies_filter)
+        
+        }
     });
 
     let search_raiting =document.querySelector('.raiting-search')
-    search_raiting.addEventListener("keyup", function(){
+    search_raiting.addEventListener("change", function(){
         movies_filter["raiting"] = this.value
+        paginate = false
+        new LoadMovies(movies_filter)
+        //form.set_form(movies_results)
+    });
+
+    let series_search =document.querySelector('.series-search')
+
+    series_search.addEventListener("change", function(){
+        //form.set_form(movies_results)
+        movies_filter["series"] = this.value
+        paginate = false
         new LoadMovies(movies_filter)
     });
+    
 </script>
 </html>
 

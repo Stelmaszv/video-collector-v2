@@ -54,40 +54,36 @@ class MovieList{
         if (filter.hasOwnProperty('name')){
             let value   = filter['name']
             let result=[]
-            if (value.length>2){
-                for (let data of array) {
-                    let re = new RegExp(value);
-                    let req_exp = re.test(data.name);
-                    if (req_exp){
-                        result.push(data)
-                    }
+            for (let data of array) {
+                let re = new RegExp(value);
+                let req_exp = re.test(data.name);
+                if (req_exp){
+                    result.push(data)
                 }
-            }else{
-                console.log("Min 3 leters")
             }
             this.array=result
         }
-        /*
-        console.log(this.array)
-
-
-        results.innerHTML=""
-        let length=Obj.data.length
-        let value=search.value
-        if (value.length>2){
-            for (let page = 0; page < length; page++) {
-                for (let objetc of Obj.data[page]['Objets']){
-                    let re = new RegExp(value);
-                    let req_exp = re.test(objetc.name);
-                    if (req_exp){
-                        Obj.on_result(results,objetc)
-                    }
+        if (filter.hasOwnProperty('raiting')){
+            let value   = filter['raiting']
+            let result=[]
+            for (let data of array) {
+                if (data["rating"]==value){
+                    result.push(data)
                 }
             }
-        }else{
-            results.innerHTML="Min 3 leters"
+            this.array=result
         }
-        */
+
+        if (filter.hasOwnProperty('series')){
+            let value   = filter['series']
+            let result=[]
+            for (let data of array) {
+                if (data['short_series'].name == value){
+                    result.push(data)
+                }
+            }
+            this.array=result
+        }
     }
 
     

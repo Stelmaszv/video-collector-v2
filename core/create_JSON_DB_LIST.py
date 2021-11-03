@@ -74,6 +74,7 @@ class CreateJSONDBLIST:
         array = []
         for item_db in item_db.stars:
             tag_json = {
+                "id": item_db.id,
                 "name": item_db.name,
                 "dir": self.escepe_string(item_db.dir),
                 "avatar": item_db.avatar,
@@ -84,6 +85,7 @@ class CreateJSONDBLIST:
     def return_short_series(self, item_db):
         if len(item_db.series):
             return {
+                "id": item_db.series[0].id,
                 "name": item_db.series[0].show_name,
                 "dir": self.escepe_string(item_db.series[0].dir),
                 "avatar": item_db.series[0].avatar,
