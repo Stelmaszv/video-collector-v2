@@ -84,6 +84,17 @@ class MovieList{
             }
             this.array=result
         }
+
+        if (filter.hasOwnProperty('producent')){
+            let value   = filter['producent']
+            let result=[]
+            for (let data of array) {
+                if (data['producent'].name == value){
+                    result.push(data)
+                }
+            }
+            this.array=result
+        }
     }
 
     

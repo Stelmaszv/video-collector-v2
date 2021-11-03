@@ -30,7 +30,8 @@ class LoadContet{
         let name= filter.hasOwnProperty('name')
         let raiting= filter.hasOwnProperty('raiting')
         let series= filter.hasOwnProperty('series')
-        return (name || raiting || series)
+        let producent= filter.hasOwnProperty('producent')
+        return (name || raiting || series || producent)
     }
 
     set_list(){

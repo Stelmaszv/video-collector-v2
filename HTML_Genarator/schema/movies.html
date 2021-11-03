@@ -59,11 +59,8 @@
             Producent
         </div>
         <div class="col">
-            <select aria-label="Default select example">
+            <select class="producent-search" aria-label="Default select example">
                 <option selected>Select Producent</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
             </select>
         </div>
         <div class="col">
@@ -104,18 +101,20 @@
     movies_filter=[]
     let paginate = true
     const LoadMoviesObjInit=new LoadMovies()
+    const form=new FilterMovies()
+    form.set_form(movies_results)
+
     window.addEventListener("scroll", (event) => {
         if (paginate){
             var limit = document.body.offsetHeight - window.innerHeight;
             let scrol_pos=90/100*limit
             if (window.scrollY>scrol_pos){
-                const LoadMoviesObj=new LoadMovies(movies_results)
+                const LoadMoviesObj=new LoadMovies()
                 LoadMoviesObj.ListOBJ.return_data(page++)
             }
         }
     });
-    const form=new FilterMovies()
-    form.set_form(movies_results)
+
     let search =document.querySelector('.name-search')
     search.addEventListener("keyup", function(){
         if (this.value.length>3){
@@ -135,13 +134,22 @@
     });
 
     let series_search =document.querySelector('.series-search')
-
     series_search.addEventListener("change", function(){
         //form.set_form(movies_results)
         movies_filter["series"] = this.value
         paginate = false
         new LoadMovies(movies_filter)
     });
+
+    let producent_search =document.querySelector('.producent-search')
+    producent_search.addEventListener("change", function(){
+        //form.set_form(movies_results)
+        movies_filter["producent"] = this.value
+        paginate = false
+        new LoadMovies(movies_filter)
+    });
+
+ 
     
 </script>
 </html>

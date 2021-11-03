@@ -11,7 +11,7 @@ import os
 producent_fields_defult = ['country', "baner", "year"]
 producent_fields_defult2 = ['country', 'series', "baner", "year"]
 series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "baner"]
-movies_fields_defults = ["src", "short_stars", "sezon", "year", "country", "short_series"]
+movies_fields_defults = ["src", "short_stars", "sezon", "year", "country", "short_series", "producent"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series', 'nationality', 'birth_place',
                         'date_of_birth']
 defult_producents_pages = 1
@@ -60,14 +60,22 @@ class CreateJSONDBLIST:
         return array_return
 
     def return_producent(self, item_db):
-
-        if len(item_db.producent):
+        if hasattr(item_db, "producent"):
             if len(item_db.producent):
                 return {
                     "name": item_db.producent[0].show_name,
                     "dir": self.escepe_string(item_db.producent[0].dir),
                     "avatar": item_db.producent[0].avatar,
                 }
+        if hasattr(item_db, "series"):
+            if len(item_db.series):
+                if hasattr(item_db.series[0], "producent"):
+                    if len(item_db.series[0].producent):
+                        return {
+                            "name": item_db.series[0].producent[0].show_name,
+                            "dir": self.escepe_string(item_db.series[0].producent[0].dir),
+                            "avatar": item_db.series[0].producent[0].avatar,
+                        }
         return {}
 
     def return_short_stars(self, item_db):
@@ -233,7 +241,8 @@ class AbstratJSONOtpus(ABC):
 
     def add_index(self, fields, data_JSON, Movie):
         for el in fields:
-            data_JSON[el] = Movie[el]
+            if el != "producent":
+                data_JSON[el] = Movie[el]
 
 class GenerateJSONOtputsMovies(AbstratJSONOtpus):
     input = "OUTPUT/json/movies.JSON"
