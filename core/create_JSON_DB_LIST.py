@@ -8,15 +8,10 @@ import os.path
 import json
 import os
 
-
-producent_fields_defult = ['country', "views", "likes", "favourite",
-                           "baner", "year"]
-producent_fields_defult2 = ['country', 'series', "views", "likes", "favourite",
-                            "baner", "year"]
-series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "views", "likes", "favourite",
-                         "baner"]
-movies_fields_defults = ["src", "short_stars", "sezon", "year", "likes", "views", "favourite", "country",
-                         "short_series"]
+producent_fields_defult = ['country', "baner", "year"]
+producent_fields_defult2 = ['country', 'series', "baner", "year"]
+series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "baner"]
+movies_fields_defults = ["src", "short_stars", "sezon", "year", "country", "short_series"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series', 'nationality', 'birth_place',
                         'date_of_birth']
 defult_producents_pages = 1
@@ -47,8 +42,6 @@ class CreateJSONDBLIST:
                         item[atter] = str(getattr(item_db, self.escepe_string(atter)))
                 if atter == "producent":
                     item["producent"] = self.return_producent(item_db)
-                if atter == "favourite":
-                    item[atter] = str(getattr(item_db, self.escepe_string(atter)))
                 if atter == "src":
                     item[atter] = self.escepe_string(getattr(item_db, self.escepe_string(atter)))
                 if atter == "series":
@@ -136,6 +129,10 @@ class CreateJSONDBLIST:
             "dir": self.escepe_string(item.dir),
             "description": item.description,
             "avatar": item.avatar,
+            "rating": item.rating,
+            "likes": item.likes,
+            "views": item.likes,
+            "favourite": str(getattr(item, self.escepe_string("favourite"))),
             "tags": self.return_tags(item.tags)
         }
         return data_JSON
@@ -333,7 +330,7 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
             for dir in os.listdir(movie['dir']):
                 new_item = movie['dir'] + '\\' + dir
                 name = movie['short_series']['name'] + ' - ' + movie['name']
-                if dir.endswith(movie_ext):
+                if dir.endswith(photo_ext):
                     photos.append({"photo": new_item, "name": name})
         return photos
 
