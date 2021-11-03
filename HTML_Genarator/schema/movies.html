@@ -94,7 +94,7 @@
     movies_results=[]
     movies_filter=[]
     let paginate = true
-    const LoadMoviesObjInit=new LoadMovies()
+    let LoadMoviesObjInit=new LoadMovies()
     const form=new FilterMovies()
     form.set_form(movies_results)
 
@@ -103,60 +103,65 @@
             var limit = document.body.offsetHeight - window.innerHeight;
             let scrol_pos=90/100*limit
             if (window.scrollY>scrol_pos){
-                const LoadMoviesObj=new LoadMovies()
-                LoadMoviesObj.ListOBJ.return_data(page++)
+                LoadMoviesObjInit.ListOBJ.return_data(page++)
             }
         }
     });
 
     let search =document.querySelector('.name-search')
     search.addEventListener("keyup", function(){
+        LoadMoviesObjInit.div_output.innerHTML=''
         if (this.value.length>3){
+            page=0
+            LoadMoviesObjInit.div_output.innerHTML=''
             movies_filter["name"] = this.value
             paginate = false
-            new LoadMovies(movies_filter)
-        
+            LoadMoviesObjInit = new LoadMovies(movies_filter)
         }
     });
 
     let search_raiting =document.querySelector('.raiting-search')
     search_raiting.addEventListener("change", function(){
+        page=0
+        LoadMoviesObjInit.div_output.innerHTML=''
         movies_filter["raiting"] = this.value
         paginate = false
-        new LoadMovies(movies_filter)
-        //form.set_form(movies_results)
+        LoadMoviesObjInit = new LoadMovies(movies_filter)
     });
 
     let series_search =document.querySelector('.series-search')
     series_search.addEventListener("change", function(){
-        //form.set_form(movies_results)
+        page=0
+        LoadMoviesObjInit.div_output.innerHTML=''
         movies_filter["series"] = this.value
-        paginate = false
-        new LoadMovies(movies_filter)
+        LoadMoviesObjInit=new LoadMovies(movies_filter)
     });
 
     let producent_search =document.querySelector('.producent-search')
     producent_search.addEventListener("change", function(){
-        //form.set_form(movies_results)
+        page=0
+        LoadMoviesObjInit.div_output.innerHTML=''
         movies_filter["producent"] = this.value
         paginate = false
-        new LoadMovies(movies_filter)
+        LoadMoviesObjInit = new LoadMovies(movies_filter)
     });
 
     let stars_search =document.querySelector('.stars-search')
     stars_search.addEventListener("change", function(){
-        //form.set_form(movies_results)
+        page=0
+        LoadMoviesObjInit.div_output.innerHTML=''
         movies_filter["star"] = this.value
         paginate = false
-        new LoadMovies(movies_filter)
+        LoadMoviesObjInit = new LoadMovies(movies_filter)
     });
 
     let tag_search =document.querySelector('.tag-search')
     tag_search.addEventListener("change", function(){
-        //form.set_form(movies_results)
+        page=0
+        LoadMoviesObjInit.div_output.innerHTML=''
         movies_filter["tag"] = this.value
         paginate = false
-        new LoadMovies(movies_filter)
+        LoadMoviesObjInit = new LoadMovies(movies_filter)
     });
 
     
