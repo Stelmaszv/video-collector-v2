@@ -92,6 +92,17 @@
   display: none;
 }
 
+.filter {
+  padding: 10px;
+  background-color: #d3cbcb;
+  border-bottom: 5px solid black;
+  font-size: 20px;
+}
+
+.filter input, .filter select {
+  height: 30px;
+}
+
 .galery_tab, .movies_tab,
 .galery_tab_js,
 .movies_series_tab,

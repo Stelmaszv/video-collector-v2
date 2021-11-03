@@ -32,8 +32,67 @@
                href="[#HTMLOUTPUT#]/HTML Generator/sites/producent.html">Producent</a>
         </li>
     </ul>
-    <div class="filter movies-filter"></div>
 </nav>
+<div class="filter movies-filter">
+    <div class="row g-3">
+        <div class="col">
+            Search
+        </div>
+        <div class="col">
+            <input type="text" placeholder="Search" aria-label="Last name">
+        </div>
+        <div class="col">
+            Raiting
+        </div>
+        <div class="col">
+            <input type="number" max="10" min="0" aria-label="Last name">
+        </div>
+        <div class="col">
+            Series
+        </div>
+        <div class="col">
+            <select aria-label="Default select example">
+                <option selected>Select Series</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+        <div class="col">
+            Producent
+        </div>
+        <div class="col">
+            <select aria-label="Default select example">
+                <option selected>Select Producent</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+        <div class="col">
+            Tag
+        </div>
+        <div class="col">
+            <select aria-label="Default select example">
+                <option selected>Select Tag</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+        <div class="col">
+            Star
+        </div>
+        <div class="col">
+            <select aria-label="Default select example">
+                <option selected>Select Star</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+            </select>
+        </div>
+    </div>
+</div>
 <main class='content container'>
     <div class="row movies-output">[#MoviesOputs#]</div>
 </main>
@@ -42,6 +101,7 @@
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\paginator.js"></script>
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\movies.js"></script>
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
+<script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
 <script>
     const LoadMoviesObj=new LoadMovies()
     window.addEventListener("scroll", (event) => {
@@ -51,6 +111,8 @@
             LoadMoviesObj.ListOBJ.return_data(page++)
         }
     });
+    const form=new FilterMovies()
+    //form.return_form()
 </script>
 </html>
 
