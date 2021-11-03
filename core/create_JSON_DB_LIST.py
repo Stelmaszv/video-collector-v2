@@ -201,7 +201,10 @@ class AbstratJSONOtpus(ABC):
             "dir": Movie["dir"],
             "description": Movie["description"],
             "avatar": Movie["avatar"],
-            "tags": Movie['tags']
+            "tags": Movie['tags'],
+            "rating": Movie['rating'],
+            "likes": Movie['likes'],
+            "views": Movie['views'],
         }
         return self.add_fields(data_JSON, Movie)
 

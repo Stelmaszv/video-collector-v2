@@ -3,7 +3,7 @@ class Form{
     constructor(){
         this.on_init()
         this.form=document.querySelector(this.div)
-        console.log(this.form)
+        //console.log(this.form)
     }
 
     return_form(){

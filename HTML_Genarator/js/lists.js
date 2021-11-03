@@ -49,6 +49,47 @@ class MovieList{
         str+='</ul>'
         return str
     }
+
+    return_data_filter(filter,array){
+        if (filter.hasOwnProperty('name')){
+            let value   = filter['name']
+            let result=[]
+            if (value.length>2){
+                for (let data of array) {
+                    let re = new RegExp(value);
+                    let req_exp = re.test(data.name);
+                    if (req_exp){
+                        result.push(data)
+                    }
+                }
+            }else{
+                console.log("Min 3 leters")
+            }
+            this.array=result
+        }
+        /*
+        console.log(this.array)
+
+
+        results.innerHTML=""
+        let length=Obj.data.length
+        let value=search.value
+        if (value.length>2){
+            for (let page = 0; page < length; page++) {
+                for (let objetc of Obj.data[page]['Objets']){
+                    let re = new RegExp(value);
+                    let req_exp = re.test(objetc.name);
+                    if (req_exp){
+                        Obj.on_result(results,objetc)
+                    }
+                }
+            }
+        }else{
+            results.innerHTML="Min 3 leters"
+        }
+        */
+    }
+
     
     return_data(page){
         if (this.array.hasOwnProperty(page)){
