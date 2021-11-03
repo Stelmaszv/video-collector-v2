@@ -95,6 +95,20 @@ class MovieList{
             }
             this.array=result
         }
+
+        if (filter.hasOwnProperty('star')){
+            let value   = filter['star']
+            let result=[]
+            for (let data of array) {
+                for (let star of data['short_stars']){
+                    if (star.name == value){
+                        result.push(data)
+                    }
+                }
+            }
+            console.log(this.array)
+            this.array=result
+        } 
     }
 
     
