@@ -3,18 +3,16 @@ class LoadContet{
 
     constructor(filter=[]){
         this.set_data()
-        movies_results=this.data
         this.set_list()
         let div_output=document.querySelector(this.div_output)
         div_output.innerHTML=''
         this.ListOBJ = this.set_obj()
         if (this.filter_is_not_empty(filter)){
-            this.ListOBJ.return_data_filter(filter,this.data)
-            movies_results=this.data
-            this.data=this.ListOBJ.array
+            let result=this.ListOBJ.return_data_filter(filter,movies_results)
+            console.log(result)
+            movies_results=result
             this.set_list()
             this.ListOBJ = this.set_obj()
-            movies_results=this.ListOBJ.array
         }
         this.ListOBJ.return_data(page)
         page++
@@ -31,7 +29,7 @@ class LoadContet{
     }
 
     set_list(){
-        const PaginatorMovies = new Paginator(this.data,this.limit)
+        const PaginatorMovies = new Paginator(movies_results,this.limit)
         this.pagineted_data=PaginatorMovies.genrate_pages()
     }
 }

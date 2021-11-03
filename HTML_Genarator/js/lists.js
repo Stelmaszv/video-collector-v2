@@ -51,6 +51,29 @@ class MovieList{
     }
 
     return_data_filter(filter,array){
+        if (filter.hasOwnProperty('series') && filter.hasOwnProperty('raiting')){
+            let value   = filter['raiting']
+            let result=[]
+            for (let data of array) {
+                console.log(data["rating"],value*1)
+                if (data["rating"]==value){
+                    result.push(data)
+                }
+            }
+            return result
+
+        }else if(filter.hasOwnProperty('series')){
+            let value   = filter['series']
+            let result=[]
+            for (let data of array) {
+                if (data['short_series'].name == value){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        /*
         if (filter.hasOwnProperty('name')){
             let value   = filter['name']
             let result=[]
@@ -71,6 +94,7 @@ class MovieList{
                     result.push(data)
                 }
             }
+            console.log(this.array)
             this.array=result
         }
 
@@ -121,6 +145,7 @@ class MovieList{
             }
             this.array=result
         } 
+        */
     }
 
     
