@@ -130,6 +130,51 @@ class FilterMovies extends Form{
 
 }
 
+
+class FilterMoviesID extends Form{ 
+
+    on_init(){
+        this.div='.movies-filter'
+        this.div_series='.series-search'
+        this.div_producets='.producent-search'
+        this.div_stars='.stars-search'
+        this.div_tag='.tag-search'
+        this.div_sezon='.season-search'
+    }
+
+    set_form(data){
+        this.set_sezons(data)
+        this.set_stars(data)
+        this.set_tag(data)
+    }
+
+    set_sezons(data){
+        this.div_sezon_html=document.querySelector(this.div_sezon)
+        this.div_sezon_html.innerHTML='<option selected>Select series</option>'
+        if (this.filter.hasOwnProperty('sezon')){
+            this.div_sezon_html.innerHTML='<option selected>'+this.filter['sezon']+'</option>'
+        }
+        let array=[]
+        for (let el of data){
+            if (!this.if_exist(el.sezon,array)) { 
+                array.push(el.sezon)
+            }
+        }
+        
+        for (let option of array){
+            if (option!==this.filter['sezon']){
+                this.div_sezon_html.innerHTML+='<option value="'+option+'">'+option+'</option>'
+            }
+        }
+    }
+
+    html(){
+        let form ='<input type="text" class="form-control" placeholder="First name" aria-label="First name">'
+        return form
+    }
+
+}
+
 class FilterStars extends Form{ 
 
     on_init(){

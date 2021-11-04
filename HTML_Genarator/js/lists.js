@@ -67,8 +67,21 @@ class MovieList{
         if (filter.hasOwnProperty('raiting')){
             let raiting   = filter['raiting']
             let result=[]
+
             for (let data of array) {
-                if (data["rating"]<=raiting*1){
+                if (data.rating==raiting){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if (filter.hasOwnProperty('sezon')){
+            let value   = filter['sezon']
+            let result=[]
+
+            for (let data of array) {
+                if (data.sezon==value){
                     result.push(data)
                 }
             }
@@ -167,7 +180,7 @@ class SeriesList{
             let raiting   = filter['raiting']
             let result=[]
             for (let data of array) {
-                if (data["rating"]<=raiting){
+                if (data.rating==raiting){
                     result.push(data)
                 }
             }

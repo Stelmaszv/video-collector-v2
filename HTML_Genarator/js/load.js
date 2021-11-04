@@ -2,7 +2,6 @@ let page=0
 class LoadContet{
 
     constructor(filter=[]){
-        console.log(filter)
         this.set_data()
         this.set_list()
         let div_output=document.querySelector(this.div_output)
@@ -47,6 +46,28 @@ class LoadMovies extends LoadContet{
         let star= filter.hasOwnProperty('star')
         let tag= filter.hasOwnProperty('tag')
         return (name || raiting || series || producent || star || tag)
+    }
+}
+
+class LoadMoviesID extends LoadContet{
+
+    set_obj(){
+        return new MovieList(this.div_output,this.pagineted_data)
+    }
+
+    set_data(data=[]){
+        this.results=movies_results
+        this.div_output='.series-movies-output'
+        this.limit=20
+    }
+
+    filter_is_not_empty(filter){
+        let name= filter.hasOwnProperty('name')
+        let raiting= filter.hasOwnProperty('raiting')
+        let star= filter.hasOwnProperty('star')
+        let tag= filter.hasOwnProperty('tag')
+        let sezon= filter.hasOwnProperty('sezon')
+        return (name || raiting || star || tag || sezon)
     }
 }
 

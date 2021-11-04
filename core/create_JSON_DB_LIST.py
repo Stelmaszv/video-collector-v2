@@ -314,6 +314,7 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
         data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
         data_JSON['photos'] = self.return_galery(data_JSON, Movie)
+        data_JSON['producent'] = self.CreateJSONDBLISTObj.return_producent(data_JSON)
         return data_JSON
 
     def return_galery(self, JSON, Movie):

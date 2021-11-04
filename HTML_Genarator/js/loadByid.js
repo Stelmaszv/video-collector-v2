@@ -48,7 +48,6 @@ class LoadID{
         let tab_content =document.querySelectorAll('.tab_content')
         for (let tab of tab_content){
             if (tab.style.visibility =='visible'){
-                console.log(tab)
                 tab.classList.add('active')
                 tab.classList.add('show')
                 break;
