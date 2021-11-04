@@ -18,15 +18,7 @@ class LoadContet{
         page++
     }
 
-    filter_is_not_empty(filter){
-        let name= filter.hasOwnProperty('name')
-        let raiting= filter.hasOwnProperty('raiting')
-        let series= filter.hasOwnProperty('series')
-        let producent= filter.hasOwnProperty('producent')
-        let star= filter.hasOwnProperty('star')
-        let tag= filter.hasOwnProperty('tag')
-        return (name || raiting || series || producent || star || tag)
-    }
+
 
     set_list(){
         const PaginatorMovies = new Paginator(this.results,this.limit)
@@ -46,6 +38,16 @@ class LoadMovies extends LoadContet{
         this.data=movies
         this.limit=20
     }
+
+    filter_is_not_empty(filter){
+        let name= filter.hasOwnProperty('name')
+        let raiting= filter.hasOwnProperty('raiting')
+        let series= filter.hasOwnProperty('series')
+        let producent= filter.hasOwnProperty('producent')
+        let star= filter.hasOwnProperty('star')
+        let tag= filter.hasOwnProperty('tag')
+        return (name || raiting || series || producent || star || tag)
+    }
 }
 
 class LoadSeries extends LoadContet{
@@ -56,8 +58,18 @@ class LoadSeries extends LoadContet{
 
     set_data(){
         this.div_output='.series-output'
+        this.results=series_result
         this.data=series
         this.limit=5
+    }
+
+    filter_is_not_empty(filter){
+        let name= filter.hasOwnProperty('name')
+        let raiting= filter.hasOwnProperty('raiting')
+        let producent= filter.hasOwnProperty('producent')
+        let star= filter.hasOwnProperty('star')
+        let tag= filter.hasOwnProperty('tag')
+        return (name || raiting || producent || star || tag)
     }
 }
 

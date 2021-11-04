@@ -111,7 +111,7 @@
     let search =document.querySelector('.name-search')
     search.addEventListener("keyup", function(){
         LoadMoviesObjInit.div_output.innerHTML=''
-        if (this.value.length>3){
+        if (this.value.length>2){
             page=0
             LoadMoviesObjInit.div_output.innerHTML=''
             movies_filter["name"] = this.value

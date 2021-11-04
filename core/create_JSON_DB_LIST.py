@@ -9,8 +9,8 @@ import json
 import os
 
 producent_fields_defult = ['country', "baner", "year"]
-producent_fields_defult2 = ['country', 'series', "baner", "year"]
-series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "baner"]
+producent_fields_defult2 = ['country', 'series', "baner", "year", "top_stars"]
+series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "baner", "short_stars"]
 movies_fields_defults = ["src", "short_stars", "sezon", "year", "country", "short_series", "producent"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series', 'nationality', 'birth_place',
                         'date_of_birth']

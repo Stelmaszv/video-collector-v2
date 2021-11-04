@@ -116,57 +116,7 @@ class MovieList{
             }
             return result
         } 
-    
 
-
-
-        /*
-        if (filter.hasOwnProperty('name')){
-            let value   = filter['name']
-            let result=[]
-            for (let data of array) {
-                let re = new RegExp(value);
-                let req_exp = re.test(data.name);
-                if (req_exp){
-                    result.push(data)
-                }
-            }
-            this.array=result
-        }
-        if (filter.hasOwnProperty('raiting')){
-            let value   = filter['raiting']
-            let result=[]
-            for (let data of array) {
-                if (data["rating"]==value){
-                    result.push(data)
-                }
-            }
-            console.log(this.array)
-            this.array=result
-        }
-
-        if (filter.hasOwnProperty('series')){
-            let value   = filter['series']
-            let result=[]
-            for (let data of array) {
-                if (data['short_series'].name == value){
-                    result.push(data)
-                }
-            }
-            this.array=result
-        }
-
-        if (filter.hasOwnProperty('producent')){
-            let value   = filter['producent']
-            let result=[]
-            for (let data of array) {
-                if (data['producent'].name == value){
-                    result.push(data)
-                }
-            }
-            this.array=result
-        }
-        */
     }
 
     
@@ -182,6 +132,7 @@ class MovieList{
                 this.movies_series.innerHTML+=str
             }
         }
+
     }
 }
 class SeriesList{
@@ -199,6 +150,71 @@ class SeriesList{
             return str+' ...'
         }
         return string
+    }
+
+    return_data_filter(filter,array){
+
+        if (filter.hasOwnProperty('raiting')){
+            let raiting   = filter['raiting']
+            let result=[]
+            for (let data of array) {
+                if (data["rating"]==raiting){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if(filter.hasOwnProperty('name')){
+            let value   = filter['name']
+            let result=[]
+            for (let data of array) {
+                let re = new RegExp(value);
+                let req_exp = re.test(data.name);
+                if (req_exp){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if(filter.hasOwnProperty('producent')){
+            let value   = filter['producent']
+            let result=[]
+            for (let data of array) {
+                if (data['producent'].name == value){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if (filter.hasOwnProperty('tag')){
+            let value   = filter['tag']
+            let result=[]
+            for (let data of array) {
+                for (let tag of data['tags']){
+                    if (tag.name == value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        } 
+
+        if(filter.hasOwnProperty('star')){
+            let value   = filter['star']
+            let result=[]
+            for (let data of array) {
+                for (let star of data['short_stars']){
+                    if (star.name == value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        }
+
     }
 
     return_description(description){

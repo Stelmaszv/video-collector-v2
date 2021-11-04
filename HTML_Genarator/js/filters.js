@@ -20,13 +20,6 @@ class Form{
         return count
     }
 
-    set_form(data){
-        this.set_series(data)
-        this.set_producent(data)
-        this.set_stars(data)
-        this.set_tag(data)
-    }
-
     set_tag(data){
         let array=[]
         this.tag_serach.innerHTML='<option selected>Select Tag</option>'
@@ -66,8 +59,6 @@ class Form{
                 this.stars_serach.innerHTML+='<option value="'+option+'">'+option+'</option>'
             }
         }
-
-
     }
 
     set_producent(data){
@@ -123,6 +114,36 @@ class FilterMovies extends Form{
         this.div_producets='.producent-search'
         this.div_stars='.stars-search'
         this.div_tag='.tag-search'
+    }
+
+    set_form(data){
+        this.set_series(data)
+        this.set_producent(data)
+        this.set_stars(data)
+        this.set_tag(data)
+    }
+
+    html(){
+        let form ='<input type="text" class="form-control" placeholder="First name" aria-label="First name">'
+        return form
+    }
+
+}
+
+class FilterSeries extends Form{ 
+
+    on_init(){
+        this.div='.movies-filter'
+        this.div_series='.series-search'
+        this.div_producets='.producent-search'
+        this.div_stars='.stars-search'
+        this.div_tag='.tag-search'
+    }
+
+    set_form(data){
+        this.set_producent(data)
+        this.set_stars(data)
+        this.set_tag(data)
     }
 
     html(){
