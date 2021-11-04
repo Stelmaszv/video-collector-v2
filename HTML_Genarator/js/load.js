@@ -81,8 +81,20 @@ class LoadStars extends LoadContet{
 
     set_data(){
         this.div_output='.stars-otput'
+        this.results=stars_result
         this.data=stars
         this.limit=15
+    }
+
+    
+    filter_is_not_empty(filter){
+        let name= filter.hasOwnProperty('name')
+        let raiting= filter.hasOwnProperty('raiting')
+        let series= filter.hasOwnProperty('series')
+        let hair_color = filter.hasOwnProperty('hair-color')
+        let tag= filter.hasOwnProperty('tag')
+        let age= filter.hasOwnProperty('age')
+        return (name || raiting || hair_color || tag || series || age)
     }
 }
 

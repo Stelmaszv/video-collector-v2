@@ -260,6 +260,78 @@ class StarsList{
         this.stars_output=document.querySelector(div)
         this.array=array
     }
+
+    return_data_filter(filter,array){
+
+        if(filter.hasOwnProperty('name')){
+            let value   = filter['name']
+            let result=[]
+            for (let data of array) {
+                let re = new RegExp(value);
+                let req_exp = re.test(data.name);
+                if (req_exp){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if (filter.hasOwnProperty('raiting')){
+            let raiting   = filter['raiting']
+            let result=[]
+            for (let data of array) {
+                if (data["rating"]==raiting){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if(filter.hasOwnProperty('series')){
+            let value   = filter['series']
+            let result=[]
+            for (let data of array) {
+                if (data['short_series'].name == value){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        
+        if(filter.hasOwnProperty('hair-color')){
+            let value   = filter['hair-color']
+            let result  =[]
+
+            for (let data of array) {
+                if (data.hair_color == value){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if(filter.hasOwnProperty('age')){
+            function count_age(date_of_birth){            
+                var birthdate = new Date(date_of_birth);
+                var cur = new Date();
+                var diff = cur-birthdate;
+                var age = Math.floor(diff/31557600000);
+                return age
+            }
+            let value   = filter['age']
+            let result  =[]
+            for (let data of array) {
+                if (data.date_of_birth!="None"){
+                    if (count_age(data.date_of_birth)==value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        }
+
+    }
     
     return_data(page){
         if (this.array.hasOwnProperty(page)){

@@ -130,8 +130,51 @@ class FilterMovies extends Form{
 
 }
 
-class FilterSeries extends Form{ 
+class FilterStars extends Form{ 
 
+    on_init(){
+        this.div='.movies-filter'
+        this.div_series='.series-search'
+        this.div_producets='.producent-search'
+        this.div_stars='.stars-search'
+        this.div_tag='.tag-search'
+        this.hair_color_div=".hair-color-search"
+    }
+
+    set_form(data){
+        this.set_tag(data)
+        this.set_series(data)
+        this.set_hair_color(data)
+    }
+
+    set_hair_color(data){
+        this.hair_color_search=document.querySelector(this.hair_color_div)
+        this.hair_color_search.innerHTML='<option selected>Select series</option>'
+        if (this.filter.hasOwnProperty('hair_color')){
+            this.hair_color_search.innerHTML='<option selected>'+this.filter['hair_color']+'</option>'
+        }
+        let array=[]
+        for (let el of data){
+            if (!this.if_exist(el.hair_color,array)) { 
+                array.push(el.hair_color)
+            }
+        }
+        
+        for (let option of array){
+            if (option!==this.filter['hair_color'] && option!=''){
+                this.hair_color_search.innerHTML+='<option value="'+option+'">'+option+'</option>'
+            }
+        }
+    }
+
+    html(){
+        let form ='<input type="text" class="form-control" placeholder="First name" aria-label="First name">'
+        return form
+    }
+
+}
+
+class FilterSeries extends FilterStars{ 
     on_init(){
         this.div='.movies-filter'
         this.div_series='.series-search'
@@ -150,5 +193,5 @@ class FilterSeries extends Form{
         let form ='<input type="text" class="form-control" placeholder="First name" aria-label="First name">'
         return form
     }
-
 }
+
