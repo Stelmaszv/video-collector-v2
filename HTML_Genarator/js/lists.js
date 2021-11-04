@@ -52,12 +52,14 @@ class MovieList{
 
     return_data_filter(filter,array){
         if (filter.hasOwnProperty('series') && filter.hasOwnProperty('raiting')){
-            let value   = filter['raiting']
+            let raiting   = filter['raiting']
+            let series    = filter['series']
             let result=[]
             for (let data of array) {
-                console.log(data["rating"],value*1)
-                if (data["rating"]==value){
-                    result.push(data)
+                if (data['short_series'].name == series){
+                    if (data["rating"]==raiting){
+                        result.push(data)
+                    }
                 }
             }
             return result
@@ -71,7 +73,52 @@ class MovieList{
                 }
             }
             return result
-        }
+        }else if(filter.hasOwnProperty('producent')){
+            let value   = filter['producent']
+            let result=[]
+            for (let data of array) {
+                if (data['producent'].name == value){
+                    result.push(data)
+                }
+            }
+            return result
+        }else if(filter.hasOwnProperty('star')){
+            let value   = filter['star']
+            let result=[]
+            for (let data of array) {
+                for (let star of data['short_stars']){
+                    if (star.name == value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        }else if(filter.hasOwnProperty('name')){
+            let value   = filter['name']
+            let result=[]
+            for (let data of array) {
+                let re = new RegExp(value);
+                let req_exp = re.test(data.name);
+                if (req_exp){
+                    result.push(data)
+                }
+            }
+            return result
+        }else if (filter.hasOwnProperty('tag')){
+            let value   = filter['tag']
+            let result=[]
+            for (let data of array) {
+                for (let tag of data['tags']){
+                    if (tag.name == value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        } 
+    
+
+
 
         /*
         if (filter.hasOwnProperty('name')){
@@ -119,32 +166,6 @@ class MovieList{
             }
             this.array=result
         }
-
-        if (filter.hasOwnProperty('star')){
-            let value   = filter['star']
-            let result=[]
-            for (let data of array) {
-                for (let star of data['short_stars']){
-                    if (star.name == value){
-                        result.push(data)
-                    }
-                }
-            }
-            this.array=result
-        }
-        
-        if (filter.hasOwnProperty('tag')){
-            let value   = filter['tag']
-            let result=[]
-            for (let data of array) {
-                for (let tag of data['tags']){
-                    if (tag.name == value){
-                        result.push(data)
-                    }
-                }
-            }
-            this.array=result
-        } 
         */
     }
 

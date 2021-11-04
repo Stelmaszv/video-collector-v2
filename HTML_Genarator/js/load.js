@@ -2,6 +2,7 @@ let page=0
 class LoadContet{
 
     constructor(filter=[]){
+        console.log(filter)
         this.set_data()
         this.set_list()
         let div_output=document.querySelector(this.div_output)
@@ -9,7 +10,6 @@ class LoadContet{
         this.ListOBJ = this.set_obj()
         if (this.filter_is_not_empty(filter)){
             let result=this.ListOBJ.return_data_filter(filter,movies_results)
-            console.log(result)
             movies_results=result
             this.set_list()
             this.ListOBJ = this.set_obj()
