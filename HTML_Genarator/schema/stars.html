@@ -117,7 +117,7 @@
     search_raiting.addEventListener("change", function(){
         page=0
         LoadMoviesObjInit.div_output.innerHTML=''
-        stars_filter["raiting"] = this.value
+        stars_filter["raiting"] = this.value*1
         LoadMoviesObjInit = new LoadStars(stars_filter)
         stars_result = LoadMoviesObjInit.data
     });
@@ -138,8 +138,6 @@
         stars_filter["hair-color"] = this.value
         LoadMoviesObjInit = new LoadStars(stars_filter)
         form.set_tag(LoadMoviesObjInit.results)
-        form.set_tag(LoadMoviesObjInit.results)
-        form.set_series(LoadMoviesObjInit.results)
     });
 
     let age_search =document.querySelector('.age-search')
@@ -149,8 +147,6 @@
         stars_filter["age"] = this.value
         LoadMoviesObjInit = new LoadStars(stars_filter)
         form.set_tag(LoadMoviesObjInit.results)
-        form.set_tag(LoadMoviesObjInit.results)
-        form.set_series(LoadMoviesObjInit.results)
     });
 
 </script>

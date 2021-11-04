@@ -174,7 +174,7 @@ class FilterStars extends Form{
 
 }
 
-class FilterSeries extends FilterStars{ 
+class FilterSeries extends Form{ 
     on_init(){
         this.div='.movies-filter'
         this.div_series='.series-search'
@@ -184,8 +184,6 @@ class FilterSeries extends FilterStars{
     }
 
     set_form(data){
-        this.set_producent(data)
-        this.set_stars(data)
         this.set_tag(data)
     }
 
@@ -193,5 +191,21 @@ class FilterSeries extends FilterStars{
         let form ='<input type="text" class="form-control" placeholder="First name" aria-label="First name">'
         return form
     }
+}
+
+class FilterProducent extends Form{ 
+
+    on_init(){
+        this.div='.movies-filter'
+        this.div_series='.series-search'
+        this.div_producets='.producent-search'
+        this.div_stars='.stars-search'
+        this.div_tag='.tag-search'
+    }
+
+    set_form(data){
+        this.set_tag(data)
+    }
+
 }
 
