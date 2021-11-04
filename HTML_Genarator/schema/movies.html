@@ -117,8 +117,8 @@
             movies_filter["name"] = this.value
             paginate = false
             LoadMoviesObjInit = new LoadMovies(movies_filter)
-            form.set_tag(movies_results)
-            form.set_series(movies_results)
+            form.set_tag(LoadMoviesObjInit.results)
+            form.set_series(LoadMoviesObjInit.results)
         }
     });
 
@@ -138,9 +138,9 @@
         LoadMoviesObjInit.div_output.innerHTML=''
         movies_filter["series"] = this.value
         LoadMoviesObjInit=new LoadMovies(movies_filter)
-        form.set_producent(movies_results)
-        form.set_stars(movies_results)
-        form.set_tag(movies_results)
+        form.set_producent(LoadMoviesObjInit.results)
+        form.set_stars(LoadMoviesObjInit.results)
+        form.set_tag(LoadMoviesObjInit.results)
     });
 
     let producent_search =document.querySelector('.producent-search')
@@ -149,10 +149,10 @@
         LoadMoviesObjInit.div_output.innerHTML=''
         movies_filter["producent"] = this.value
         LoadMoviesObjInit = new LoadMovies(movies_filter)
-        form.set_producent(movies_results)
-        form.set_series(movies_results)
-        form.set_stars(movies_results)
-        form.set_tag(movies_results)
+        form.set_producent(LoadMoviesObjInit.results)
+        form.set_series(LoadMoviesObjInit.results)
+        form.set_stars(LoadMoviesObjInit.results)
+        form.set_tag(LoadMoviesObjInit.results)
     });
 
     let stars_search =document.querySelector('.stars-search')
@@ -162,10 +162,10 @@
         movies_filter["star"] = this.value
         paginate = false
         LoadMoviesObjInit = new LoadMovies(movies_filter)
-        form.set_producent(movies_results)
-        form.set_series(movies_results)
-        form.set_stars(movies_results)
-        form.set_tag(movies_results)
+        form.set_producent(LoadMoviesObjInit.results)
+        form.set_series(LoadMoviesObjInit.results)
+        form.set_stars(LoadMoviesObjInit.results)
+        form.set_tag(LoadMoviesObjInit.results)
     });
 
     let tag_search =document.querySelector('.tag-search')
@@ -175,10 +175,10 @@
         movies_filter["tag"] = this.value
         paginate = false
         LoadMoviesObjInit = new LoadMovies(movies_filter)
-        form.set_producent(movies_results)
-        form.set_series(movies_results)
-        form.set_stars(movies_results)
-        form.set_tag(movies_results)
+        form.set_producent(LoadMoviesObjInit.results)
+        form.set_series(LoadMoviesObjInit.results)
+        form.set_stars(LoadMoviesObjInit.results)
+        form.set_tag(LoadMoviesObjInit.results)
     });
     
 </script>
