@@ -71,6 +71,33 @@ class LoadMoviesID extends LoadContet{
     }
 }
 
+class LoadMoviesSeriesID extends LoadMoviesID{
+
+    set_data(data=[]){
+        this.results=movies_results
+        this.div_output='.all-in-series'
+        this.limit=20
+    }
+}
+
+class LoadMoviesSeriesWithStarsID extends LoadMoviesSeriesID{
+    set_data(data=[]){
+        this.results=movies_results
+        this.div_output='.all_stars_output'
+        this.limit=20
+    }
+
+    filter_is_not_empty(filter){
+        let name= filter.hasOwnProperty('name')
+        let raiting= filter.hasOwnProperty('raiting')
+        let tag= filter.hasOwnProperty('tag')
+        let series= filter.hasOwnProperty('series')
+        let producent= filter.hasOwnProperty('producent')
+        let sezon= filter.hasOwnProperty('sezon')
+        return (name || raiting || tag || sezon || series || producent)
+    }
+
+}
 
 
 class LoadSeries extends LoadContet{

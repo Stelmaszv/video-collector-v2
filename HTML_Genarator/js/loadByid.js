@@ -408,13 +408,13 @@ class Movie extends LoadID{
     }
 
     paginators(){
-        const PaginatorPhoto  = new Paginator(this.data.photos,10)
+        const PaginatorPhoto  = new Paginator(this.data.photos,20)
         this.photos=PaginatorPhoto.genrate_pages()
 
-        const PaginatorMovies = new Paginator(this.data.movies_with_stars,1)
+        const PaginatorMovies = new Paginator(this.data.movies_with_stars,20)
         this.movies=PaginatorMovies.genrate_pages()
 
-        const PaginatorMoviesSeries = new Paginator(this.data.series[0].movies,5)
+        const PaginatorMoviesSeries = new Paginator(this.data.series[0].movies,20)
         this.series_movies=PaginatorMoviesSeries.genrate_pages()
     }
 

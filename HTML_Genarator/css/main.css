@@ -145,11 +145,11 @@
   height: 18rem;
 }
 
-.series-filter {
+.series-filter, .movies-filter {
   margin-top: -20px;
 }
 
-.series-filter .age-search {
+.series-filter .age-search, .movies-filter .age-search {
   width: 50px;
 }
 

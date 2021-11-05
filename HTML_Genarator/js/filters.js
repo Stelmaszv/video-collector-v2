@@ -16,6 +16,7 @@ let keyup = function(form,methods,object,defult){
         search =document.querySelector(defult)
     }
     search.addEventListener("keyup", function(){
+        console.log(this)
         if (this.value.length>2){
             page=0
             filter["name"] = this.value
@@ -49,6 +50,7 @@ let keyup = function(form,methods,object,defult){
 let change = function (selector,key,form,methods,object){
     let search_raiting =document.querySelector(selector)
     search_raiting.addEventListener("change", function(){
+        console.log(this)
         page=0
         filter[key] = this.value
         LoadMoviesObjInit = new object(filter)
@@ -265,6 +267,18 @@ class FilterMoviesID extends Form{
 
 }
 
+class FilterMoviesSeriesID extends FilterMoviesID{
+    
+}
+
+class FilterWithStarsID extends FilterMoviesSeriesID{
+    set_form(data){
+        this.set_series(data)
+        this.set_producent(data)
+        this.set_tag(data)
+    }
+}
+
 class FilterStars extends Form{ 
 
     on_init(){
@@ -312,6 +326,7 @@ class FilterStarsID extends FilterStars{
 
     set_form(data){
         this.set_hair_color(data)
+
     }
 }
 class FilterSeries extends Form{ 

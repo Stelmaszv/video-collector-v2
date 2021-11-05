@@ -76,19 +76,19 @@
             </div>
             <div class="tabs_nav">
                 <ul class="nav nav-pills mb-3 tab_nav d-flex justify-content-center" id="pills-tab" role="tablist">
-                    <li class="nav-item galery_tab_js nav_tab" role="presentation">
+                    <li class="nav-item galery_tab_js nav_tab" name="galery" role="presentation">
                         <button class="nav-link" id="pills-galery-tab" data-bs-toggle="pill"
                                 data-bs-target="#galery-tab" type="button" role="tab" aria-controls="pills-contact"
                                 aria-selected="false">Galery
                         </button>
                     </li>
-                    <li class="nav-item movies_series_tab nav_tab" role="presentation">
+                    <li class="nav-item movies_series_tab nav_tab" name="movies_series" role="presentation">
                         <button class="nav-link all-series-name" id="pills-home-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
                                 aria-selected="false">All movies in series
                         </button>
                     </li>
-                    <li class="nav-item movies_with_stars_tab nav_tab" role="presentation">
+                    <li class="nav-item movies_with_stars_tab nav_tab" name="movies_with_stars" role="presentation">
                         <button class="nav-link all-with-star-name" id="pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
                                 aria-selected="false">All movies with star 
@@ -108,6 +108,47 @@
                     <div class="tab-pane fade movies_series_tab tab_content" id="pills-home" role="tabpanel"
                          type="movies_in_series"
                          aria-labelledby="pills-home-tab">
+                        <div class="filter movies-filter">
+                            <div class="row g-3">
+                                <div class="col">
+                                    Search
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="name-search" placeholder="Search name"
+                                           aria-label="Last name">
+                                </div>
+                                <div class="col">
+                                    Raiting
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="raiting-search" max="10" min="0" aria-label="Last name">
+                                </div>
+                                <div class="col">
+                                    Seazon
+                                </div>
+                                <div class="col">
+                                    <select class="season-search" aria-label="Default select example">
+                                        <option selected>Select Tag</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    Tag
+                                </div>
+                                <div class="col">
+                                    <select class="tag-search" aria-label="Default select example">
+                                        <option selected>Select Tag</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    Star
+                                </div>
+                                <div class="col">
+                                    <select class="stars-search" aria-label="Default select example">
+                                        <option selected>Select Star</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="container">
                             <div class="row all-in-series">
                             </div>
@@ -117,12 +158,51 @@
                     <div class="tab-pane fade movies_with_stars_tab tab_content" id="pills-profile" role="tabpanel"
                          type="all_movies_with_star"
                          aria-labelledby="pills-profile-tab">
+                        <div class="filter movies-filter">
+                            <div class="row g-3">
+                                <div class="col">
+                                    Search
+                                </div>
+                                <div class="col">
+                                    <input type="text" class="search_by_name" placeholder="Search name"
+                                           aria-label="Last name">
+                                </div>
+                                <div class="col">
+                                    Series
+                                </div>
+                                <div class="col">
+                                    <select class="series-search" aria-label="Default select example">
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    Producent
+                                </div>
+                                <div class="col">
+                                    <select class="producent-search" aria-label="Default select example">
+                                        <option selected>Select Producent</option>
+                                    </select>
+                                </div>
+                                <div class="col">
+                                    Raiting
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="raiting-search2" max="10" min="0"
+                                           aria-label="Last name">
+                                </div>
+                                <div class="col">
+                                    Tag
+                                </div>
+                                <div class="col">
+                                    <select class="tag-search" aria-label="Default select example">
+                                        <option selected>Select Tag</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="container">
                             <div class="row all_stars_output"></div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -130,8 +210,10 @@
   <script src="[#HTMLOUTPUT#]\HTML Generator\js\lists.js"></script>
   <script src="[#HTMLOUTPUT#]/HTML Generator/js/paginator.js"></script>
   <script src="[#HTMLOUTPUT#]/HTML Generator/js/bootstrap.bundle.min.js"></script>
-    <script src="db.js"></script>
+  <script src="db.js"></script>
   <script src="[#HTMLOUTPUT#]/HTML Generator/js/LoadByid.js"></script>
+  <script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
+  <script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
     <script>
         const MovieObj=new Movie()
         baguetteBox.run('.galery-run');
@@ -163,6 +245,38 @@
             
             }
         });
+        let all=document.querySelectorAll('.nav_tab')
+        for (let tab of all){
+            tab.addEventListener("click", function(){
+                let name = tab.getAttribute('name')
+                if (name == "movies_series"){ 
+                    movies_results=MovieObj.data.series[0]["movies"]
+                    filter=[]
+                    let LoadMoviesObjInit=new LoadMoviesSeriesID()
+                    const form  =new FilterMoviesSeriesID(filter)
+                    form.set_form(movies_results)
+                    let LM = LoadMoviesSeriesID
+                    keyup(form,['set_tag'],LM)
+                    change('.raiting-search','raiting',form,[],LM)
+                    change('.stars-search','star',form,['set_tag'],LM)
+                    change('.tag-search','tag',form,['set_stars','set_tag'],LM)
+                }
+                if (name == "movies_with_stars"){ 
+                    movies_results=MovieObj.data['movies_with_stars']
+                    filter=[]
+                    let LoadMoviesObjInit=new LoadMoviesSeriesWithStarsID()
+                    const form  =new FilterWithStarsID(filter)
+                    form.set_form(movies_results)
+                    LM=LoadMoviesSeriesWithStarsID
+                    keyup(form,['set_tag','set_producent','set_series'],LM,'.search_by_name')
+                    change('.raiting-search2','raiting',form,[],LM)
+                    change('.series-search','series',form,['set_producent','set_tag'],LM)
+                    change('.producent-search','producent',form,['set_tag','set_series'],LM)
+                }
+            });
+        }
+
+
     </script>
   </body>
 </html>
