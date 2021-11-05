@@ -65,48 +65,15 @@
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
 <script>
-
-    let producent_filter=[]
     producent_result=producents
+    let  filter=[]
     let LoadMoviesObjInit=new LoadProducents()
     const form=new FilterProducent(producent_result)
     form.set_form(producent_result)
-    window.addEventListener("scroll", (event) => {
-        var limit = document.body.offsetHeight - window.innerHeight;
-        let scrol_pos=90/100*limit
-        if (window.scrollY>scrol_pos){
-            LoadMoviesObjInit.ListOBJ.return_data(page++)
-        }
-    });
-
-    let search =document.querySelector('.name-search')
-    search.addEventListener("keyup", function(){
-        LoadMoviesObjInit.div_output.innerHTML=''
-        if (this.value.length>2){
-            page=0
-            LoadMoviesObjInit.div_output.innerHTML=''
-            producent_filter["name"] = this.value
-            LoadMoviesObjInit = new LoadProducents(producent_filter)
-            form.set_tag(LoadMoviesObjInit.results)
-        }
-    });
-
-    let search_raiting =document.querySelector('.raiting-search')
-    search_raiting.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        producent_filter["raiting"] = this.value
-        LoadMoviesObjInit = new LoadProducents(producent_filter)
-        producent_result = LoadMoviesObjInit.data
-    });
-
-    let tag_search =document.querySelector('.tag-search')
-    tag_search.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        producent_filter["tag"] = this.value
-        LoadMoviesObjInit = new LoadProducents(producent_filter)
-    });
-    
+    scroller()
+    let LP = LoadProducents
+    keyup(form,['set_tag'],LP)
+    change('.raiting-search','raiting',form,[],LP)
+    change('.tag-search','tag',form,[],LP)
 </script>
 </html>
