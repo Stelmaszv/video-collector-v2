@@ -96,90 +96,13 @@
     let LoadMoviesObjInit=new LoadMovies()
     const form=new FilterMovies(movies_filter)
     form.set_form(movies_results)
-
-    window.addEventListener("scroll", (event) => {
-        if (paginate){
-            var limit = document.body.offsetHeight - window.innerHeight;
-            let scrol_pos=90/100*limit
-            if (window.scrollY>scrol_pos){
-                LoadMoviesObjInit.ListOBJ.return_data(page++)
-               
-            }
-        }
-    });
-
-    let search =document.querySelector('.name-search')
-    search.addEventListener("keyup", function(){
-        LoadMoviesObjInit.div_output.innerHTML=''
-        if (this.value.length>2){
-            page=0
-            LoadMoviesObjInit.div_output.innerHTML=''
-            movies_filter["name"] = this.value
-            paginate = false
-            LoadMoviesObjInit = new LoadMovies(movies_filter)
-            form.set_tag(LoadMoviesObjInit.results)
-            form.set_series(LoadMoviesObjInit.results)
-        }
-    });
-
-    let search_raiting =document.querySelector('.raiting-search')
-    search_raiting.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        movies_filter["raiting"] = this.value
-        paginate = false
-        LoadMoviesObjInit = new LoadMovies(movies_filter)
-        movies_results = LoadMoviesObjInit.data
-    });
-
-    let series_search =document.querySelector('.series-search')
-    series_search.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        movies_filter["series"] = this.value
-        LoadMoviesObjInit=new LoadMovies(movies_filter)
-        form.set_producent(LoadMoviesObjInit.results)
-        form.set_stars(LoadMoviesObjInit.results)
-        form.set_tag(LoadMoviesObjInit.results)
-    });
-
-    let producent_search =document.querySelector('.producent-search')
-    producent_search.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        movies_filter["producent"] = this.value
-        LoadMoviesObjInit = new LoadMovies(movies_filter)
-        form.set_producent(LoadMoviesObjInit.results)
-        form.set_series(LoadMoviesObjInit.results)
-        form.set_stars(LoadMoviesObjInit.results)
-        form.set_tag(LoadMoviesObjInit.results)
-    });
-
-    let stars_search =document.querySelector('.stars-search')
-    stars_search.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        movies_filter["star"] = this.value
-        paginate = false
-        LoadMoviesObjInit = new LoadMovies(movies_filter)
-        form.set_producent(LoadMoviesObjInit.results)
-        form.set_series(LoadMoviesObjInit.results)
-        form.set_tag(LoadMoviesObjInit.results)
-    });
-
-    let tag_search =document.querySelector('.tag-search')
-    tag_search.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        movies_filter["tag"] = this.value
-        paginate = false
-        LoadMoviesObjInit = new LoadMovies(movies_filter)
-        form.set_producent(LoadMoviesObjInit.results)
-        form.set_series(LoadMoviesObjInit.results)
-        form.set_stars(LoadMoviesObjInit.results)
-        form.set_tag(LoadMoviesObjInit.results)
-    });
-    
+    scroller()
+    keyup()
+    change('.raiting-search','raiting')
+    change('.series-search','series',form,['set_producent','set_stars','set_tag'])
+    change('.producent-search','producent',form,['set_producent','set_stars','set_tag','set_series'])
+    change('.stars-search','star',form,['set_tag','set_series'])
+    change('.tag-search','tag',form,['set_producent','set_series','set_tag','set_series'])
 </script>
 </html>
 

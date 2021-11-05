@@ -1,3 +1,62 @@
+let scroller = function(){
+    window.addEventListener("scroll", (event) => {
+        var limit = document.body.offsetHeight - window.innerHeight;
+        let scrol_pos=90/100*limit
+        if (window.scrollY>scrol_pos){
+            LoadMoviesObjInit.ListOBJ.return_data(page++)
+        }
+    });
+}
+
+let keyup = function(){
+    let search =document.querySelector('.name-search')
+    search.addEventListener("keyup", function(){
+        LoadMoviesObjInit.div_output.innerHTML=''
+        if (this.value.length>2){
+            page=0
+            LoadMoviesObjInit.div_output.innerHTML=''
+            movies_filter["name"] = this.value
+            paginate = false
+            LoadMoviesObjInit = new LoadMovies(movies_filter)
+            form.set_tag(LoadMoviesObjInit.results)
+            form.set_series(LoadMoviesObjInit.results)
+        }
+    });
+}
+
+let change = function (selector,key,form,methods){
+    let search_raiting =document.querySelector(selector)
+    search_raiting.addEventListener("change", function(){
+        page=0
+        LoadMoviesObjInit.div_output.innerHTML=''
+        movies_filter[key] = this.value
+        LoadMoviesObjInit = new LoadMovies(movies_filter)
+        movies_results = LoadMoviesObjInit.data
+        for (let method of methods){
+
+            if (method=='set_producent'){
+                form.set_producent(LoadMoviesObjInit.results)
+            }
+
+            if (method=='set_stars'){
+                form.set_stars(LoadMoviesObjInit.results)
+            }
+
+            if (method=='set_tag'){
+                form.set_tag(LoadMoviesObjInit.results)
+            }
+
+            if (method == 'set_series'){
+                form.set_series(LoadMoviesObjInit.results)
+            }
+        }
+
+
+    });
+}
+
+
+
 class Form{
     div= ''
     constructor(filter){
@@ -39,7 +98,7 @@ class Form{
             this.tag_serach.innerHTML+='<option value="'+option+'">'+option+'</option>'
         }
     }
-
+    
     set_stars(data){
         this.stars_serach.innerHTML='<option selected>Select Star</option>'
         if (this.filter.hasOwnProperty('star')){
@@ -193,7 +252,6 @@ class FilterStars extends Form{
     }
 
     set_hair_color(data){
-        this.hair_color_search=document.querySelector(this.hair_color_div)
         this.hair_color_search.innerHTML='<option selected>Select series</option>'
         if (this.filter.hasOwnProperty('hair_color')){
             this.hair_color_search.innerHTML='<option selected>'+this.filter['hair_color']+'</option>'
