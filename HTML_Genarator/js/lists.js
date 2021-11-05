@@ -1,9 +1,132 @@
-class MovieList{
+class List{
 
     constructor(div_output,array){
         this.array=array
-        this.movies_series=document.querySelector(div_output)
+        this.div_output=document.querySelector(div_output)
     }
+
+    return_data_filter(filter,array){
+
+        if(filter.hasOwnProperty('hair-color')){
+            let value   = filter['hair-color']
+            let result  =[]
+
+            for (let data of array) {
+                if (data['hair_color'] == value){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if (filter.hasOwnProperty('raiting')){
+            let raiting   = filter['raiting']
+            let result=[]
+
+            for (let data of array) {
+                if (data.rating==raiting){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if (filter.hasOwnProperty('sezon')){
+            let value   = filter['sezon']
+            let result=[]
+
+            for (let data of array) {
+                if (data.sezon==value){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if(filter.hasOwnProperty('age')){
+            function count_age(date_of_birth){            
+                var birthdate = new Date(date_of_birth);
+                var cur = new Date();
+                var diff = cur-birthdate;
+                var age = Math.floor(diff/31557600000);
+                return age
+            }
+            let value   = filter['age']
+            let result  =[]
+            for (let data of array) {
+                if (data.date_of_birth!="None"){
+                    if (count_age(data.date_of_birth)<=value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        }
+
+        if(filter.hasOwnProperty('series')){
+            let value   = filter['series']
+            let result=[]
+            for (let data of array) {
+                if (data['short_series'].name == value){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if(filter.hasOwnProperty('name')){
+            let value   = filter['name']
+            let result=[]
+            for (let data of array) {
+                let re = new RegExp(value);
+                let req_exp = re.test(data.name);
+                if (req_exp){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if(filter.hasOwnProperty('producent')){
+            let value   = filter['producent']
+            let result=[]
+            for (let data of array) {
+                if (data['producent'].name == value){
+                    result.push(data)
+                }
+            }
+            return result
+        }
+
+        if (filter.hasOwnProperty('tag')){
+            let value   = filter['tag']
+            let result=[]
+            for (let data of array) {
+                for (let tag of data['tags']){
+                    if (tag.name == value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        } 
+
+        if(filter.hasOwnProperty('star')){
+            let value   = filter['star']
+            let result=[]
+            for (let data of array) {
+                for (let star of data['short_stars']){
+                    if (star.name == value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        }
+    }
+}
+
+class MovieList extends List{
 
     sort_string(string,limit){
         let str=''
@@ -49,98 +172,6 @@ class MovieList{
         str+='</ul>'
         return str
     }
-
-    return_data_filter(filter,array){
-
-
-        if(filter.hasOwnProperty('series')){
-            let value   = filter['series']
-            let result=[]
-            for (let data of array) {
-                if (data['short_series'].name == value){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if (filter.hasOwnProperty('raiting')){
-            let raiting   = filter['raiting']
-            let result=[]
-
-            for (let data of array) {
-                if (data.rating==raiting){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if (filter.hasOwnProperty('sezon')){
-            let value   = filter['sezon']
-            let result=[]
-
-            for (let data of array) {
-                if (data.sezon==value){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if(filter.hasOwnProperty('name')){
-            let value   = filter['name']
-            let result=[]
-            for (let data of array) {
-                let re = new RegExp(value);
-                let req_exp = re.test(data.name);
-                if (req_exp){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if(filter.hasOwnProperty('producent')){
-            let value   = filter['producent']
-            let result=[]
-            for (let data of array) {
-                if (data['producent'].name == value){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if (filter.hasOwnProperty('tag')){
-            let value   = filter['tag']
-            let result=[]
-            for (let data of array) {
-                for (let tag of data['tags']){
-                    if (tag.name == value){
-                        result.push(data)
-                    }
-                }
-            }
-            return result
-        } 
-
-        if(filter.hasOwnProperty('star')){
-            let value   = filter['star']
-            let result=[]
-            for (let data of array) {
-                for (let star of data['short_stars']){
-                    if (star.name == value){
-                        result.push(data)
-                    }
-                }
-            }
-            return result
-        }
-
-
-    }
-
     
     return_data(page){
         if (this.array.hasOwnProperty(page)){
@@ -151,17 +182,13 @@ class MovieList{
                 str+=this.img(movie)+'<div class="card-body">'+this.body(movie)+'</div>'+this.action_grup(movie)
                 str+='</div>'
                 str+='</div>'
-                this.movies_series.innerHTML+=str
+                this.div_output.innerHTML+=str
             }
         }
 
     }
 }
-class SeriesList{
-    constructor(div,array){
-        this.series_output=document.querySelector(div)
-        this.array=array
-    }
+class SeriesList extends List{
 
     sort_string(string,limit){
         let str=''
@@ -173,72 +200,7 @@ class SeriesList{
         }
         return string
     }
-
-    return_data_filter(filter,array){
-
-        if (filter.hasOwnProperty('raiting')){
-            let raiting   = filter['raiting']
-            let result=[]
-            for (let data of array) {
-                if (data.rating==raiting){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if(filter.hasOwnProperty('name')){
-            let value   = filter['name']
-            let result=[]
-            for (let data of array) {
-                let re = new RegExp(value);
-                let req_exp = re.test(data.name);
-                if (req_exp){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if(filter.hasOwnProperty('producent')){
-            let value   = filter['producent']
-            let result=[]
-            for (let data of array) {
-                if (data['producent'].name == value){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if (filter.hasOwnProperty('tag')){
-            let value   = filter['tag']
-            let result=[]
-            for (let data of array) {
-                for (let tag of data['tags']){
-                    if (tag.name == value){
-                        result.push(data)
-                    }
-                }
-            }
-            return result
-        } 
-
-        if(filter.hasOwnProperty('star')){
-            let value   = filter['star']
-            let result=[]
-            for (let data of array) {
-                for (let star of data['short_stars']){
-                    if (star.name == value){
-                        result.push(data)
-                    }
-                }
-            }
-            return result
-        }
-
-    }
-
+    
     return_description(description){
         let str=''
         if (description.length==0){
@@ -262,102 +224,14 @@ class SeriesList{
                 str+='<p class="card-text">'+this.return_description(serie.description)+'</p>'
                 str+='<a href="'+serie.dir+'/series_id.html" class="btn btn-primary">'+serie.name+'</a>'
                 str+='</div>'
-                this.series_output.innerHTML+=str
+                this.div_output.innerHTML+=str
             }
         }
     }
 }
 
-class StarsList{
-    constructor(div,array){
-        this.stars_output=document.querySelector(div)
-        this.array=array
-    }
+class StarsList extends List{
 
-    return_data_filter(filter,array){
-
-        if(filter.hasOwnProperty('name')){
-            let value   = filter['name']
-            let result=[]
-            for (let data of array) {
-                let re = new RegExp(value);
-                let req_exp = re.test(data.name);
-                if (req_exp){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if (filter.hasOwnProperty('raiting')){
-            let raiting   = filter['raiting']
-            let result=[]
-            for (let data of array) {
-                if (data.rating==raiting){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if(filter.hasOwnProperty('series')){
-            let value   = filter['series']
-            let result=[]
-            for (let data of array) {
-                if (data['short_series'].name == value){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if(filter.hasOwnProperty('hair-color')){
-            let value   = filter['hair-color']
-            let result  =[]
-
-            for (let data of array) {
-                if (data.hair_color == value){
-                    result.push(data)
-                }
-            }
-            return result
-        }
-
-        if(filter.hasOwnProperty('age')){
-            function count_age(date_of_birth){            
-                var birthdate = new Date(date_of_birth);
-                var cur = new Date();
-                var diff = cur-birthdate;
-                var age = Math.floor(diff/31557600000);
-                return age
-            }
-            let value   = filter['age']
-            let result  =[]
-            for (let data of array) {
-                if (data.date_of_birth!="None"){
-                    if (count_age(data.date_of_birth)<=value){
-                        result.push(data)
-                    }
-                }
-            }
-            return result
-        }
-
-        if (filter.hasOwnProperty('tag')){
-            let value   = filter['tag']
-            let result=[]
-            for (let data of array) {
-                for (let tag of data['tags']){
-                    if (tag.name == value){
-                        result.push(data)
-                    }
-                }
-            }
-            return result
-        } 
-
-    }
-    
     return_data(page){
         if (this.array.hasOwnProperty(page)){
             let new_array=this.array[page].Objets;
@@ -372,17 +246,13 @@ class StarsList{
                 str+='</div>'
                 str+='</a>'
                 str+='</div>'
-                this.stars_output.innerHTML+=str
+                this.div_output.innerHTML+=str
             }
         }
     }
 }
 
-class ProducentsList{
-    constructor(div,array){
-        this.producent_output=document.querySelector(div)
-        this.array=array
-    }
+class ProducentsList extends List{
 
     sort_string(string,limit){
         let str=''
@@ -470,7 +340,7 @@ class ProducentsList{
                 str+='<p class="card-text">'+this.return_description(producent.description)+'</p>'
                 str+='<a href="'+producent.dir+'/producent_id.html" class="btn btn-primary">'+producent.name+'</a>'
                 str+='</div>'
-                this.producent_output.innerHTML+=str
+                this.div_output.innerHTML+=str
             }
         }
     }
