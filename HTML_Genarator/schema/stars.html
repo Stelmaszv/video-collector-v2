@@ -85,69 +85,18 @@
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
 <script>
-
     stars_result=stars
-    let stars_filter=[]
+    let filter=[]
     let LoadMoviesObjInit=new LoadStars()
     const form=new FilterStars(stars_result)
     form.set_form(stars_result)
-    window.addEventListener("scroll", (event) => {
-        var limit = document.body.offsetHeight - window.innerHeight;
-        let scrol_pos=90/100*limit
-        if (window.scrollY>scrol_pos){
-            LoadMoviesObjInit.ListOBJ.return_data(page++)
-        }
-    });
-
-    let search =document.querySelector('.name-search')
-    search.addEventListener("keyup", function(){
-        LoadMoviesObjInit.div_output.innerHTML=''
-        if (this.value.length>2){
-            page=0
-            LoadMoviesObjInit.div_output.innerHTML=''
-            stars_filter["name"] = this.value
-            LoadMoviesObjInit = new LoadStars(stars_filter)
-            form.set_tag(LoadMoviesObjInit.results)
-            form.set_series(LoadMoviesObjInit.results)
-            form.set_hair_color(LoadMoviesObjInit.results)
-        }
-    });
-
-    let search_raiting =document.querySelector('.raiting-search')
-    search_raiting.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        stars_filter["raiting"] = this.value*1
-        LoadMoviesObjInit = new LoadStars(stars_filter)
-        stars_result = LoadMoviesObjInit.data
-    });
-
-    let series_search =document.querySelector('.series-search')
-    series_search.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        stars_filter["series"] = this.value
-        LoadMoviesObjInit = new LoadStars(stars_filter)
-        form.set_tag(LoadMoviesObjInit.results)
-    });
-
-    let hair_color_search =document.querySelector('.hair-color-search')
-    hair_color_search.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        stars_filter["hair-color"] = this.value
-        LoadMoviesObjInit = new LoadStars(stars_filter)
-        form.set_tag(LoadMoviesObjInit.results)
-    });
-
-    let age_search =document.querySelector('.age-search')
-    age_search.addEventListener("change", function(){
-        page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
-        stars_filter["age"] = this.value
-        LoadMoviesObjInit = new LoadStars(stars_filter)
-        form.set_tag(LoadMoviesObjInit.results)
-    });
-
+    scroller()
+    let LS = LoadStars
+    keyup(form,['set_tag','set_series','set_hair_color'],LS)
+    change('.raiting-search','raiting',form,[],LS)
+    change('.series-search','series',form,['set_hair_color','set_tag'],LS)
+    change('.tag-search','tag',form,['set_series'],LS)
+    change('.age-search','age',form,['set_series','set_tag'],LS)
+    change('.hair-color-search','hair-color',form,['set_series','set_tag'],LS)
 </script>
 </html>

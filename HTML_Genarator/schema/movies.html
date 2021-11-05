@@ -92,17 +92,16 @@
 <script>
     movies_results=movies
     filter=[]
-    let paginate = true
     let LoadMoviesObjInit=new LoadMovies()
     const form=new FilterMovies(filter)
     form.set_form(movies_results)
     scroller()
     let LM = LoadMovies
     keyup(form,['set_tag','set_series','set_producent'],LM)
-    change('.raiting-search','raiting',LM)
+    change('.raiting-search','raiting',form,[],LM)
     change('.series-search','series',form,['set_producent','set_stars','set_tag'],LM)
     change('.producent-search','producent',form,['set_producent','set_stars','set_tag','set_series'],LM)
-    change('.stars-search','star',form,['set_tag','set_series'])
+    change('.stars-search','star',form,['set_tag','set_series'],LM)
     change('.tag-search','tag',form,['set_producent','set_series','set_tag','set_series'],LM)
 </script>
 </html>

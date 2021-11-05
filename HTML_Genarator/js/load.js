@@ -107,7 +107,6 @@ class LoadStars extends LoadContet{
         this.limit=15
     }
 
-    
     filter_is_not_empty(filter){
         let name= filter.hasOwnProperty('name')
         let raiting= filter.hasOwnProperty('raiting')

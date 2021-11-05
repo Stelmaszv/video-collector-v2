@@ -343,6 +343,19 @@ class StarsList{
             return result
         }
 
+        if (filter.hasOwnProperty('tag')){
+            let value   = filter['tag']
+            let result=[]
+            for (let data of array) {
+                for (let tag of data['tags']){
+                    if (tag.name == value){
+                        result.push(data)
+                    }
+                }
+            }
+            return result
+        } 
+
     }
     
     return_data(page){

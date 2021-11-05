@@ -12,6 +12,7 @@ let keyup = function(form,methods,object){
     let search =document.querySelector('.name-search')
     search.addEventListener("keyup", function(){
         LoadMoviesObjInit.div_output.innerHTML=''
+
         if (this.value.length>2){
             page=0
             LoadMoviesObjInit.div_output.innerHTML=''
@@ -38,17 +39,20 @@ let keyup = function(form,methods,object){
             }
 
         }
+
     });
 }
 
 let change = function (selector,key,form,methods,object){
     let search_raiting =document.querySelector(selector)
     search_raiting.addEventListener("change", function(){
+
         page=0
         LoadMoviesObjInit.div_output.innerHTML=''
         filter[key] = this.value
         LoadMoviesObjInit = new object(filter)
         movies_results = LoadMoviesObjInit.data
+
         for (let method of methods){
 
             if (method=='set_producent'){
@@ -66,6 +70,11 @@ let change = function (selector,key,form,methods,object){
             if (method == 'set_series'){
                 form.set_series(LoadMoviesObjInit.results)
             }
+
+            if (method == 'set_hair_color'){
+                form.set_hair_color(LoadMoviesObjInit.results)
+            }
+
         }
 
     });
@@ -153,7 +162,6 @@ class Form{
                 this.producent_serach.innerHTML+='<option value="'+option+'">'+option+'</option>'
             }
         }
-        
 
     }
 
@@ -268,6 +276,7 @@ class FilterStars extends Form{
     }
 
     set_hair_color(data){
+        this.hair_color_search = document.querySelector(this.hair_color_div)
         this.hair_color_search.innerHTML='<option selected>Select series</option>'
         if (this.filter.hasOwnProperty('hair_color')){
             this.hair_color_search.innerHTML='<option selected>'+this.filter['hair_color']+'</option>'
@@ -304,6 +313,8 @@ class FilterSeries extends Form{
 
     set_form(data){
         this.set_tag(data)
+        this.set_producent(data)
+        this.set_stars(data)
     }
 
     html(){
