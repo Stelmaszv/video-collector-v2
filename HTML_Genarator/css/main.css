@@ -145,6 +145,14 @@
   height: 18rem;
 }
 
+.series-filter {
+  margin-top: -20px;
+}
+
+.series-filter .age-search {
+  width: 50px;
+}
+
 .nav {
   background-color: black;
 }

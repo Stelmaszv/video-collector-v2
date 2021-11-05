@@ -97,6 +97,7 @@ class CreateJSONDBLIST:
                 "name": item_db.series[0].show_name,
                 "dir": self.escepe_string(item_db.series[0].dir),
                 "avatar": item_db.series[0].avatar,
+                "tag": self.return_tags(item_db.tags)
             }
         return {}
 

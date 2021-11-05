@@ -8,16 +8,19 @@ let scroller = function(){
     });
 }
 
-let keyup = function(form,methods,object){
-    let search =document.querySelector('.name-search')
+let keyup = function(form,methods,object,defult){
+    let search = ''
+    if (!defult){
+        search =document.querySelector('.name-search')
+    }else{
+        search =document.querySelector(defult)
+    }
     search.addEventListener("keyup", function(){
-        LoadMoviesObjInit.div_output.innerHTML=''
-
         if (this.value.length>2){
             page=0
-            LoadMoviesObjInit.div_output.innerHTML=''
             filter["name"] = this.value
             LoadMoviesObjInit = new object(filter)
+            LoadMoviesObjInit.div_output.innerHTML=''
 
             for (let method of methods){
 
@@ -46,12 +49,10 @@ let keyup = function(form,methods,object){
 let change = function (selector,key,form,methods,object){
     let search_raiting =document.querySelector(selector)
     search_raiting.addEventListener("change", function(){
-
         page=0
-        LoadMoviesObjInit.div_output.innerHTML=''
         filter[key] = this.value
         LoadMoviesObjInit = new object(filter)
-        movies_results = LoadMoviesObjInit.data
+        LoadMoviesObjInit.div_output.innerHTML=''
 
         for (let method of methods){
 
@@ -239,14 +240,20 @@ class FilterMoviesID extends Form{
         }
         let array=[]
         for (let el of data){
-            if (!this.if_exist(el.sezon,array)) { 
-                array.push(el.sezon)
+            if (!this.if_exist(el.sezon*1,array)) { 
+                array.push(el.sezon*1)
             }
         }
-        
+        array.sort(function(a, b){return a-b})
         for (let option of array){
+            let end_option = ''
             if (option!==this.filter['sezon']){
-                this.div_sezon_html.innerHTML+='<option value="'+option+'">'+option+'</option>'
+                if (option<10){
+                    end_option=option
+                }else{
+                    end_option=option
+                }
+                this.div_sezon_html.innerHTML+='<option value="'+option+'">'+end_option+'</option>'
             }
         }
     }
@@ -301,7 +308,12 @@ class FilterStars extends Form{
     }
 
 }
+class FilterStarsID extends FilterStars{ 
 
+    set_form(data){
+        this.set_hair_color(data)
+    }
+}
 class FilterSeries extends Form{ 
     on_init(){
         this.div='.movies-filter'
@@ -315,11 +327,6 @@ class FilterSeries extends Form{
         this.set_tag(data)
         this.set_producent(data)
         this.set_stars(data)
-    }
-
-    html(){
-        let form ='<input type="text" class="form-control" placeholder="First name" aria-label="First name">'
-        return form
     }
 }
 

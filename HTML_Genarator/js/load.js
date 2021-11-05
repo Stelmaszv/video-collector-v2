@@ -71,6 +71,8 @@ class LoadMoviesID extends LoadContet{
     }
 }
 
+
+
 class LoadSeries extends LoadContet{
 
     set_obj(){
@@ -103,7 +105,6 @@ class LoadStars extends LoadContet{
     set_data(){
         this.div_output='.stars-otput'
         this.results=stars_result
-        this.data=stars
         this.limit=15
     }
 
@@ -115,6 +116,15 @@ class LoadStars extends LoadContet{
         let tag= filter.hasOwnProperty('tag')
         let age= filter.hasOwnProperty('age')
         return (name || raiting || hair_color || tag || series || age)
+    }
+}
+
+class LoadStarsID extends LoadStars{
+    set_data(){
+        this.div_output='.top-stars-otput'
+        this.results=stars_result
+        this.data=stars_result
+        this.limit=15
     }
 }
 

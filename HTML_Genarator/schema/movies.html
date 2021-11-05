@@ -96,7 +96,6 @@
     const form=new FilterMovies(filter)
     form.set_form(movies_results)
     scroller()
-    let LM = LoadMovies
     keyup(form,['set_tag','set_series','set_producent'],LM)
     change('.raiting-search','raiting',form,[],LM)
     change('.series-search','series',form,['set_producent','set_stars','set_tag'],LM)
