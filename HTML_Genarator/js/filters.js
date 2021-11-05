@@ -49,7 +49,6 @@ let keyup = function(form,methods,object,defult){
 let change = function (selector,key,form,methods,object){
     let search_raiting =document.querySelector(selector)
     search_raiting.addEventListener("change", function(){
-        console.log(this)
         page=0
         filter[key] = this.value
         LoadMoviesObjInit = new object(filter)
