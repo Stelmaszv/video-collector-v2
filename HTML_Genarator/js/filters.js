@@ -8,29 +8,46 @@ let scroller = function(){
     });
 }
 
-let keyup = function(){
+let keyup = function(form,methods,object){
     let search =document.querySelector('.name-search')
     search.addEventListener("keyup", function(){
         LoadMoviesObjInit.div_output.innerHTML=''
         if (this.value.length>2){
             page=0
             LoadMoviesObjInit.div_output.innerHTML=''
-            movies_filter["name"] = this.value
-            paginate = false
-            LoadMoviesObjInit = new LoadMovies(movies_filter)
-            form.set_tag(LoadMoviesObjInit.results)
-            form.set_series(LoadMoviesObjInit.results)
+            filter["name"] = this.value
+            LoadMoviesObjInit = new object(filter)
+
+            for (let method of methods){
+
+                if (method=='set_producent'){
+                    form.set_producent(LoadMoviesObjInit.results)
+                }
+    
+                if (method=='set_stars'){
+                    form.set_stars(LoadMoviesObjInit.results)
+                }
+    
+                if (method=='set_tag'){
+                    form.set_tag(LoadMoviesObjInit.results)
+                }
+    
+                if (method == 'set_series'){
+                    form.set_series(LoadMoviesObjInit.results)
+                }
+            }
+
         }
     });
 }
 
-let change = function (selector,key,form,methods){
+let change = function (selector,key,form,methods,object){
     let search_raiting =document.querySelector(selector)
     search_raiting.addEventListener("change", function(){
         page=0
         LoadMoviesObjInit.div_output.innerHTML=''
-        movies_filter[key] = this.value
-        LoadMoviesObjInit = new LoadMovies(movies_filter)
+        filter[key] = this.value
+        LoadMoviesObjInit = new object(filter)
         movies_results = LoadMoviesObjInit.data
         for (let method of methods){
 
@@ -50,7 +67,6 @@ let change = function (selector,key,form,methods){
                 form.set_series(LoadMoviesObjInit.results)
             }
         }
-
 
     });
 }

@@ -91,18 +91,19 @@
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
 <script>
     movies_results=movies
-    movies_filter=[]
+    filter=[]
     let paginate = true
     let LoadMoviesObjInit=new LoadMovies()
-    const form=new FilterMovies(movies_filter)
+    const form=new FilterMovies(filter)
     form.set_form(movies_results)
     scroller()
-    keyup()
-    change('.raiting-search','raiting')
-    change('.series-search','series',form,['set_producent','set_stars','set_tag'])
-    change('.producent-search','producent',form,['set_producent','set_stars','set_tag','set_series'])
+    let LM = LoadMovies
+    keyup(form,['set_tag','set_series','set_producent'],LM)
+    change('.raiting-search','raiting',LM)
+    change('.series-search','series',form,['set_producent','set_stars','set_tag'],LM)
+    change('.producent-search','producent',form,['set_producent','set_stars','set_tag','set_series'],LM)
     change('.stars-search','star',form,['set_tag','set_series'])
-    change('.tag-search','tag',form,['set_producent','set_series','set_tag','set_series'])
+    change('.tag-search','tag',form,['set_producent','set_series','set_tag','set_series'],LM)
 </script>
 </html>
 
