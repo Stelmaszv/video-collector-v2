@@ -97,7 +97,8 @@ class CreateJSONDBLIST:
                 "name": item_db.series[0].show_name,
                 "dir": self.escepe_string(item_db.series[0].dir),
                 "avatar": item_db.series[0].avatar,
-                "tag": self.return_tags(item_db.tags)
+                "tag": self.return_tags(item_db.tags),
+                "short_stars": self.return_short_stars(item_db.series[0])
             }
         return {}
 
@@ -363,7 +364,7 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
     def add_fields(self, data_JSON, Movie):
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         self.add_index(self.fields, data_JSON, Movie)
-        data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, self.fields)
+        data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, series_fields_defults)
         data_JSON['movies'] = self.add_movies(data.series)
         data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
         data_JSON['photos'] = self.return_galery(data_JSON, Movie)

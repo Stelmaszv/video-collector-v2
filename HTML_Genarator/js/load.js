@@ -49,6 +49,16 @@ class LoadMovies extends LoadContet{
     }
 }
 
+
+class LoadProducentMovies extends LoadMovies{
+
+    set_data(data=[]){
+        this.results=movies_results
+        this.div_output='.movies-output'
+        this.limit=20
+    }
+}
+
 class LoadMoviesID extends LoadContet{
 
     set_obj(){
@@ -79,6 +89,8 @@ class LoadMoviesSeriesID extends LoadMoviesID{
         this.limit=20
     }
 }
+
+
 
 class LoadMoviesSeriesWithStarsID extends LoadMoviesSeriesID{
     set_data(data=[]){
@@ -120,6 +132,15 @@ class LoadSeries extends LoadContet{
         let star= filter.hasOwnProperty('star')
         let tag= filter.hasOwnProperty('tag')
         return (name || raiting || producent || star || tag)
+    }
+}
+
+class LoadSeriesID extends LoadSeries{
+    
+    set_data(){
+        this.div_output='.series-movies-output'
+        this.results=series
+        this.limit=20
     }
 }
 
