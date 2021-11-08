@@ -93,6 +93,13 @@ class AbstractConfigItem(ABC):
             if Path(dir).stem == 'avatar':
                 Item.avatar=dir
 
+    def set_baner(self, Item):
+        for logo in os.listdir(Item.dir + '\photo\DATA\\'):
+            print(logo)
+            dir = Item.dir + "\photo\DATA\\" + logo;
+            if Path(dir).stem == 'banner':
+                Item.baner = dir
+
     def add_stars(self,stars,Obj):
 
         for star in stars:
@@ -248,6 +255,7 @@ class SeriesConfigData(AbstractConfigItem):
         self.stars_counter()
         self.dir_for_stars()
         self.movies_list()
+
         with open(self.config) as json_file:
             data = json.load(json_file)
             if 'fields' in data:
@@ -264,6 +272,7 @@ class SeriesConfigData(AbstractConfigItem):
                 self.config_sezons(data['sezons'])
                 self.set_for_sezon(data['sezons'])
             self.set_avatar(self.data)
+            self.set_baner(self.data)
 
 class CreateXML(AbstractConfigItem):
 
@@ -423,6 +432,9 @@ class ProducentConfigData(AbstractConfigItem):
 
             if "tags" in data:
                 self.add_tags(data['tags'], self.data)
+
+            self.set_baner(self.data)
+            self.set_avatar(self.data)
 
 class ConfigMovies(AbstractConfigItem):
 

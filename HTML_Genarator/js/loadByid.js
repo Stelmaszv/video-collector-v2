@@ -22,8 +22,15 @@ class LoadID{
 
     set_tags(){
         let stars=document.querySelector('.tags_js')
+        let counter=2
+        let next=''
         for (let tag of this.data.tags){
-            stars.innerHTML+='<spam class="tag">'+tag.name+'</spam>'
+            next=""
+            if (counter<=this.data.tags.length){
+                next=" , "
+            }
+            stars.innerHTML+='<spam class="tag">'+tag.name+''+next+'</spam>'
+            counter++
         }
     }
 
@@ -350,7 +357,10 @@ class Series extends LoadID{
         }
         table.innerHTML+='<td>Movies</td><td>'+this.data.movies.length+'</td>'
         table.innerHTML+='<td>Number of sezons</td><td>'+this.data.number_of_sezons+'</td>'
-        table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
+
+        if (this.data.favourite != undefined){
+            table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
+        }
         
         if (this.data.views>0){
             table.innerHTML+='<td>Views</td><td>'+this.data.views+'</td>'
@@ -468,7 +478,9 @@ class Movie extends LoadID{
         }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
+        if (this.data.favourite != undefined){
+            table.innerHTML+='<td>Favourite</td><td>'+this.data.favourite+'</td>'
+         }
         table.innerHTML+='</tr>'
     }
     set_stars(){
