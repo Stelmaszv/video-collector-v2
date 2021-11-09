@@ -273,8 +273,6 @@ class AbstractAddViaDir(ABC):
 
     def set_dir_for_star(self,name):
         dir=set_dir_for_star(name)
-        if os.path.isdir(dir + '\\photo\DATA') is False:
-            os.mkdir(dir + '\\photo\DATA')
         if os.path.isdir(dir) is False:
             os.mkdir(dir)
             os.mkdir(dir+'\\none')
@@ -282,6 +280,8 @@ class AbstractAddViaDir(ABC):
             f = open(dir+'\\config.JSON', "x")
             f.write('{}')
             f.close()
+        if os.path.isdir(dir + '\\photo\DATA') is False:
+            os.mkdir(dir + '\\photo\DATA')
         return self.dir
 
     def set_none(self):
@@ -604,9 +604,9 @@ class LoadFilesFromJson:
     def __init__(self,json_data):
         self.json_data=json_data
         self.object={
-            "stars"      :  LoadStarFromJSON,
             "series"     :  LoadSeriesFromJSON,
-            "producents" :  LoadProducentsFromJSON
+            "producents": LoadProducentsFromJSON,
+            "stars": LoadStarFromJSON
         }
 
     def add_files(self):

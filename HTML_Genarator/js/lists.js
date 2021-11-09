@@ -152,7 +152,7 @@ class MovieList extends List{
         }
         let name='<a href="'+movie.dir+'/movies_id.html" >'+movie.name+'</a>'
         let string=name+'<br>'+str
-        return '<p class="card-text">'+this.sort_string(string,250)+'</p>'
+        return '<p class="card-text">'+this.sort_string(string,220)+'</p>'
     }
 
     action_grup(movie){

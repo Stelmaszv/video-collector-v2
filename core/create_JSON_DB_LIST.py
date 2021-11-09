@@ -252,6 +252,7 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
     Model = Movies
 
     def add_fields(self, data_JSON, Movie):
+        print("creating JSON OUTPUT for movie " + data_JSON['name'])
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['photos'] = self.return_galery(data_JSON)
@@ -269,8 +270,10 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
     def return_galery(self, JSON):
         photos = []
         for item in os.listdir(JSON['dir']):
-            if item.endswith(photo_ext):
-                photos.append({"photo": item, "name": JSON['name']})
+            with open(JSON['dir'] + '\\skip_galery.JSON') as json_file:
+                data = json.load(json_file)
+                if item.endswith(photo_ext) and item not in data:
+                    photos.append({"photo": item, "name": JSON['name']})
         return photos
 
 class GenerateJSONOtputsStars((AbstratJSONOtpus)):
@@ -279,6 +282,7 @@ class GenerateJSONOtputsStars((AbstratJSONOtpus)):
     Model = Stars
 
     def add_fields(self, data_JSON, Movie):
+        print("creating JSON OUTPUT for Star " + data_JSON['name'])
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
@@ -290,8 +294,13 @@ class GenerateJSONOtputsStars((AbstratJSONOtpus)):
         name = JSON['name']
         photos = []
         dir = os.listdir(JSON['dir'] + '\\photo\DATA')
+
         for item in dir:
-            if item.endswith(photo_ext):
+
+            with open(JSON['dir'] + '\\skip_galery.JSON') as json_file:
+                data = json.load(json_file)
+
+            if item.endswith(photo_ext) and item not in data:
                 new_item = JSON['dir'] + '\\photo\DATA\\' + item
                 photos.append({"photo": new_item, "name": JSON['name']})
 
@@ -299,7 +308,9 @@ class GenerateJSONOtputsStars((AbstratJSONOtpus)):
             for star in movie['short_stars']:
                 if star['name'] == JSON['name']:
                     for item in os.listdir(movie['dir']):
-                        if item.endswith(photo_ext):
+                        with open(movie['dir'] + '\\skip_galery.JSON') as json_file:
+                            data = json.load(json_file)
+                        if item.endswith(photo_ext) and item not in data:
                             new_item = movie['dir'] + '\\' + item
                             name = movie['short_series']['name'] + ' - ' + movie['name']
                             photos.append({"photo": new_item, "name": name})
@@ -311,6 +322,7 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
     Model = Series
 
     def add_fields(self, data_JSON, Movie):
+        print("creating JSON OUTPUT for Series " + data_JSON['name'])
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
@@ -321,15 +333,25 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
 
     def return_galery(self, JSON, Movie):
         photos = []
-        for item in os.listdir(JSON['dir'] + '\\photo\DATA'):
-            new_item = JSON['dir'] + '\\photo\DATA\\' + item
-            photos.append({"photo": new_item, "name": JSON['name']})
+        dir = os.listdir(JSON['dir'] + '\\photo\DATA')
+        for item in dir:
+
+            with open(JSON['dir'] + '\\skip_galery.JSON') as json_file:
+                data = json.load(json_file)
+
+            if item.endswith(photo_ext) and item not in data:
+                new_item = JSON['dir'] + '\\photo\DATA\\' + item
+                photos.append({"photo": new_item, "name": JSON['name']})
 
         for movie in JSON['movies']:
             for item in os.listdir(movie['dir']):
-                new_item = movie['dir'] + '\\' + item
-                name = JSON['name'] + ' - ' + movie['name']
-                if item.endswith(photo_ext):
+
+                with open(movie['dir'] + '\\skip_galery.JSON') as json_file:
+                    data = json.load(json_file)
+
+                if item.endswith(photo_ext) and item not in data:
+                    new_item = movie['dir'] + '\\' + item
+                    name = JSON['name'] + ' - ' + movie['name']
                     photos.append({"photo": new_item, "name": name})
         return photos
 
@@ -340,15 +362,28 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
 
     def return_galery(self, JSON, Movie):
         photos = []
-        for item in os.listdir(JSON['dir'] + '\\photo\DATA'):
-            new_item = JSON['dir'] + '\\photo\DATA' + '\\' + item
-            photos.append({"photo": new_item, "name": JSON['name']})
+
+        dir = os.listdir(JSON['dir'] + '\\photo\DATA')
+        for item in dir:
+
+            with open(JSON['dir'] + '\\skip_galery.JSON') as json_file:
+                data = json.load(json_file)
+
+            if item.endswith(photo_ext) and item not in data:
+                new_item = JSON['dir'] + '\\photo\DATA\\' + item
+                photos.append({"photo": new_item, "name": JSON['name']})
+
         for movie in JSON['movies']:
             for dir in os.listdir(movie['dir']):
-                new_item = movie['dir'] + '\\' + dir
-                name = movie['short_series']['name'] + ' - ' + movie['name']
-                if dir.endswith(photo_ext):
+
+                with open(movie['dir'] + '\\skip_galery.JSON') as json_file:
+                    data = json.load(json_file)
+
+                if dir.endswith(photo_ext) and item not in data:
+                    new_item = movie['dir'] + '\\' + dir
+                    name = movie['short_series']['name'] + ' - ' + movie['name']
                     photos.append({"photo": new_item, "name": name})
+
         return photos
 
     def add_movies(self, data):
@@ -362,6 +397,7 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
         return movies
 
     def add_fields(self, data_JSON, Movie):
+        print("creating JSON OUTPUT for Producent " + data_JSON['name'])
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         self.add_index(self.fields, data_JSON, Movie)
         data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, series_fields_defults)

@@ -95,15 +95,14 @@ class AbstractConfigItem(ABC):
 
     def set_baner(self, Item):
         for logo in os.listdir(Item.dir + '\photo\DATA\\'):
-            print(logo)
             dir = Item.dir + "\photo\DATA\\" + logo;
             if Path(dir).stem == 'banner':
                 Item.baner = dir
 
     def add_stars(self,stars,Obj):
-
         for star in stars:
             StarObj = if_star_exist(AddStarViaDir(set_dir_for_star(star)), star)
+            print(StarObj)
             Obj.stars.append(StarObj)
             if hasattr(self, 'data'):
                 StarObj.movies.append(self.data)
@@ -258,10 +257,13 @@ class SeriesConfigData(AbstractConfigItem):
 
         with open(self.config) as json_file:
             data = json.load(json_file)
+
             if 'fields' in data:
                 self.set_data_form_json(data['fields'], self.data)
+
             if "tags" in data:
                 self.add_tags(data['tags'], self.data)
+
             if "stars" in data:
                 self.add_stars(data['stars'], self.data)
 
@@ -271,6 +273,7 @@ class SeriesConfigData(AbstractConfigItem):
             if "sezons" in data:
                 self.config_sezons(data['sezons'])
                 self.set_for_sezon(data['sezons'])
+
             self.set_avatar(self.data)
             self.set_baner(self.data)
 
@@ -616,9 +619,9 @@ class ConfigLoop:
     def __init__(self, json_data):
         self.json_data = json_data
         self.object = {
-            "stars":  ConfigStars,
             "series": ConfigSeries,
-            "producents":ConfigProducent
+            "producents": ConfigProducent,
+            "stars": ConfigStars
         }
 
     def load(self):

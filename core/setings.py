@@ -246,7 +246,7 @@ singles_movies_defult   ='D:/project/video-collector-v2/icon/singles.jpg'
 movie_cover_defulut = 'D:/project/video-collector-v2/icon/movie.jpg'
 search_in_defult= 'movies';
 start_page=0
-photo_ext= ('.png', '.jpg', '.jpeg','.jfif')
+photo_ext = ('.png', '.jpg', '.jpeg', '.jfif', ".JPG")
 movie_ext= ('.avi','.mkv','.mp4','.wmv')
 search_faze_defult = ''
 #player
@@ -257,10 +257,10 @@ full_screen=True
 MODE = 'reset'
 # run_setings only when mode set to "normal"
 setings_array = {
-    "run_start_view": True,
+    "run_start_view": False,
     "scan_photos": False,
-    "scan_dir": False,
-    "config": False,
+    "scan_dir": True,
+    "config": True,
     "create_xml": False,
     "create_movie_list": False,
     "generate_json": False,
@@ -281,4 +281,4 @@ max_defult                        = ['views',0]
 min_defult                        = ['views',0]
 series_defult                     = ('')
 #list
-show_list_defult                  = 'full'
+show_list_defult = 'normal'

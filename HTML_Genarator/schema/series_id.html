@@ -197,7 +197,8 @@
         if (window.scrollY>scrol_pos){
 
             if (type == "Galery"){
-                SeriesObj.load_galery(SeriesObj.photos,movie_galery_page++)
+                SeriesObj.load_galery(SeriesObj.photos,photos_galery_page)
+                photos_galery_page++
                 baguetteBox.run('.galery-run');
             }
                 
