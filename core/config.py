@@ -453,6 +453,12 @@ class ConfigMovies(AbstractConfigItem):
             if Path(dir).stem == 'cover':
                 Movie.avatar=dir
 
+    def set_poster(self, Item):
+        for logo in os.listdir(Item.dir):
+            dir = Item.dir + '\\' + logo;
+            if Path(dir).stem == 'poster':
+                Item.poster = dir
+
     def config(self,Movie,dir):
         self.add_config_json(dir)
         with open(dir + '/config.JSON') as f:
@@ -467,6 +473,7 @@ class ConfigMovies(AbstractConfigItem):
                 self.add_stars(data['stars'], Movie)
 
             self.set_cover(Movie)
+            self.set_poster(Movie)
 
     def make_dir(self,Movie):
         if len(Movie.series):

@@ -7,9 +7,11 @@
       <link href="[#HTMLOUTPUT#]/HTML Generator/css/main.css" rel="stylesheet">
       <link rel="stylesheet" href="[#HTMLOUTPUT#]/HTML Generator/css/baguetteBox.css">
       <script src="[#HTMLOUTPUT#]/HTML Generator/js/baguetteBox.js" async></script>
+      <script defer src="[#HTMLOUTPUT#]/HTML Generator/js/font.all.min.js"></script> <!--load all styles -->
       <title></title>
   </head>
   <body>
+
   <a href="db.json"></a>
     <nav>
         <ul class="nav justify-content-center">
@@ -35,19 +37,33 @@
         <div class="video-section">
             <div clsas="movie" style="background-color: black;">
                 <h1 class="d-flex justify-content-center name name_js"></h1>
-                <div class="wideo-section d-flex justify-content-center">
-                    <img class="avatar_js">
+                <div class="if_poster">
+                    <video style="min-height:100%" controls
+                           src="Y:////DB////Series/A-D/Columbo/movies/1/DATA/04 Murder by the Book (Peter Falk).mp4"
+                           poster="Y:\\\\\\\\DB\\\\\\\\Photos\\series\\A-D\\Columbo\\1\\04 Murder by the Book\\poster.jpg"
+                           class="wideo_src" id="bgvid">
+                        <source type="video/mp4">
+                    </video>
+                </div>
+                <div class="cover_show d-flex justify-content-center">
+                    <img class="cover_js">
                 </div>
             </div>
             <script>
+                /*
                 let wideo_section=document.querySelector('.wideo-section')
                 wideo_section.addEventListener("click", function(){
                     wideo_section.innerHTML='<video style="min-height:100%"  class="wideo_src" autoplay controls muted loop id="bgvid"><source type="video/mp4"></video>'
                     let wideo_src=document.querySelector('.wideo_src')
                     wideo_src.src=data.src
                 });
+                */
             </script>
             <style>
+                .cover_show,.if_poster{
+                    visibility: hidden;
+                    display: none;
+                }
                 video#bgvid {
                     height: 100vh;
                     width: 100vw;

@@ -158,6 +158,21 @@ class HTMLGenaratorMain:
             'filters.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
+        self.create_file(
+            self.js,
+            'font.all.min.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
+            self.js,
+            'font.all.min.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
+            self.css,
+            'awsome.all.min.css',
+            data_JSON['project_url'] + '\HTML_Genarator\css')
+
     def create_file(self, dir, file_name, shema_url):
         return HtmlGenaratorBase().create_file(dir, file_name, shema_url)
 

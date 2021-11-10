@@ -382,7 +382,21 @@ let movie_galery_page=0
 let movies_with_star=0
 let movies_in_series=0
 class Movie extends LoadID{
+    set_poster(){
+        let poster=document.querySelector('.if_poster')
+        let avatar_show=document.querySelector('.cover_show')
+        if (this.data.poster){
+            poster.style.visibility='visible'
+            poster.style.display='block'
+        }else{
+            avatar_show.style.visibility='visible'
+            avatar_show.style.display='block'
+            let poster=document.querySelector('.cover_js')
+            poster.setAttribute('src',this.data.avatar)
+        }
+    }
     set_elements(){
+        this.set_poster()
         this.create_table_information()
         this.set_stars()
         this.set_tags()

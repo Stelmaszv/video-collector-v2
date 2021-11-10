@@ -283,6 +283,7 @@ class Movies(Base):
     show_name = Column('show_name', String, default='')
     description = Column('description', String, default='')
     rating = Column('rating', Integer, default=0)
+    poster = Column('poster', String, default='')
 
     tags = relationship(
         "Tags",
