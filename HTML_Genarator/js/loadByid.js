@@ -382,6 +382,94 @@ let movie_galery_page=0
 let movies_with_star=0
 let movies_in_series=0
 class Movie extends LoadID{
+    set_buttons(){
+      
+        let get_star_div = document.querySelector('.get_star')
+        get_star_div.innerHTML=this.data.short_stars[0].name
+        let get_series_div = document.querySelector('.get_series')
+        get_series_div.innerHTML=this.data.short_series.name
+        let next_star_div = document.querySelector('#next_star')
+        let next_series_div = document.querySelector('#next_series')
+        
+        let obj=this
+        function get_index(obj,array){
+            let index = 0
+            for(let movie of array){
+                if (obj.data['id'] == movie['id']){
+                    return index+1
+                }
+                index++
+            }
+        }
+        function next_video(obj,index,array){
+            console.log(index+1,array.length)
+            if (index +1  == obj.data.movies_with_stars.length){
+                return 0
+            }
+            return index
+        }
+        next_star_div.addEventListener("click", function(){
+            let index=get_index(obj,obj.data.movies_with_stars)
+            let movie=obj.data.movies_with_stars[next_video(obj,index,obj.data.movies_with_stars)]
+            window.location.href=movie.dir+'/movies_id.html'
+        });
+
+        next_series_div.addEventListener("click", function(){
+            let index=get_index(obj,obj.data['series'][0]['movies'])
+            let movie=obj.data.movies_with_stars[next_video(obj,index,obj.data['series'][0]['movies'])]
+            window.location.href=movie.dir+'/movies_id.html'
+        });
+    }
+    player(){
+        this.set_buttons()
+        let play = document.querySelector('#play')
+        let mute = document.querySelector('#mute')
+        let range = document.querySelector('#range')
+        let wideo = document.querySelector('#bgvid')
+        let wideoTime = document.querySelector('#wideoTime')
+        let wideoDuration = document.querySelector('#wideoDuration')
+        let fullScreen = document.querySelector('#fullScreen')
+        setTimeout(function(){
+            wideoTime.innerHTML=wideo.currentTime
+            wideoDuration.innerHTML=Math.floor(wideo.duration)
+        }, 500);
+        
+        play.addEventListener("click", function(){
+           if (wideo.paused){
+                wideo.play() 
+                document.querySelector('#playbtm').classList.replace('fa-play','fa-pause')
+           }else{
+                wideo.pause() 
+                document.querySelector('#playbtm').classList.replace('fa-pause','fa-play',)
+           }
+
+        });
+
+        mute.addEventListener("click", function(){
+            if (wideo.muted){
+                wideo.muted=false 
+                document.querySelector('#mutebtm').classList.replace('fa-volume-mute','fa-volume-up')
+            }else{
+                wideo.muted=true 
+                document.querySelector('#mutebtm').classList.replace('fa-volume-up','fa-volume-mute')
+                
+            }
+        });
+
+        fullScreen.addEventListener("click", function(){
+            wideo.requestFullscreen();
+        });
+
+        range.addEventListener("input", function(){
+            wideo.currentTime=range.value
+            range.max=Math.floor(wideo.duration)
+        });
+        wideo.addEventListener("timeupdate", function(){
+            wideoTime.innerHTML= Math.floor(wideo.currentTime)
+            range.value = wideo.currentTime
+            range.max = Math.floor(wideo.duration)
+        })
+    }
     set_wideo(){
         let wideo_src=document.querySelector('.wideo_src')
         wideo_src.src=this.data.src
@@ -389,18 +477,25 @@ class Movie extends LoadID{
     }
     set_poster(){
         let poster=document.querySelector('.if_poster')
+        poster.style.visibility='visible'
+        poster.style.display='block'
+        this.set_wideo()
+        this.player()
+        /*
+        let poster=document.querySelector('.if_poster')
         let avatar_show=document.querySelector('.cover_show')
         if (this.data.poster){
             poster.style.visibility='visible'
             poster.style.display='block'
             this.set_wideo()
+            this.player()
         }else{
             avatar_show.style.visibility='visible'
             avatar_show.style.display='block'
             let poster=document.querySelector('.cover_js')
             poster.setAttribute('src',this.data.avatar)
         }
-        let wideo=document.querySelector('.video-section')
+        let wideo=document.querySelector('.cover_show')
         let obj=this
         wideo.addEventListener("click", function(){
             poster.style.visibility='visible'
@@ -409,8 +504,9 @@ class Movie extends LoadID{
             poster_js.style.display='none'
             let wideo = document.querySelector('#bgvid')
             obj.set_wideo()
-            wideo.play()
+          
         });
+        */
     }
     set_elements(){
         this.set_poster()

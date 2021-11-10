@@ -38,13 +38,19 @@
             <div clsas="movie" style="background-color: black;">
                 <h1 class="d-flex justify-content-center name name_js"></h1>
                 <div class="if_poster">
-                    <video style="min-height:100%" controls
+                    <video style="min-height:100%"
                            class="wideo_src" id="bgvid">
                         <source type="video/mp4">
                     </video>
                 </div>
-                <div class="cover_show d-flex justify-content-center">
-                    <img class="cover_js">
+                <div class="controls d-flex align-items-stretch">
+                    <button id="play"><i id="playbtm" class="fas fa-play"></i></button>
+                    <button id="mute"><i id="mutebtm" class="fas fa-volume-up"></i></button>
+                    <button id="next_star"><span class="get_star"></span></button>
+                    <button id="next_series"><span class="get_series"></span></button>
+                    <input type="range" id="range" value="0"/>
+                    <span id="time"><span id="wideoTime"></span> / <span id="wideoDuration"></span></span>
+                    <button id="fullScreen"><i id="fullScreenbtm" class="fas fa-expand"></i></button>
                 </div>
             </div>
         </div>
@@ -220,6 +226,7 @@
   <script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
   <script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
     <script>
+        //player
         const MovieObj=new Movie()
         baguetteBox.run('.galery-run');
         let type=''
