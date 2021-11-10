@@ -421,6 +421,19 @@ class Movie extends LoadID{
         });
     }
     player(){
+        function convert_ends(houer_left){
+            if (houer_left<10){
+                return '0'+houer_left
+            }     
+            return houer_left
+        }
+        function convert_time(time){
+            let minuts = Math.floor(time/60)
+            let houer  =  Math.floor(minuts/60)
+            let houer_left  =  Math.floor(minuts % 60)
+            let str_time=houer+":"+convert_ends(houer_left)
+            return str_time
+        }
         this.set_buttons()
         let play = document.querySelector('#play')
         let mute = document.querySelector('#mute')
@@ -431,7 +444,7 @@ class Movie extends LoadID{
         let fullScreen = document.querySelector('#fullScreen')
         setTimeout(function(){
             wideoTime.innerHTML=wideo.currentTime
-            wideoDuration.innerHTML=Math.floor(wideo.duration)
+            wideoDuration.innerHTML=convert_time(Math.floor(wideo.duration))
         }, 500);
         
         play.addEventListener("click", function(){
@@ -465,7 +478,7 @@ class Movie extends LoadID{
             range.max=Math.floor(wideo.duration)
         });
         wideo.addEventListener("timeupdate", function(){
-            wideoTime.innerHTML= Math.floor(wideo.currentTime)
+            wideoTime.innerHTML= convert_time(Math.floor(wideo.currentTime))
             range.value = wideo.currentTime
             range.max = Math.floor(wideo.duration)
         })
