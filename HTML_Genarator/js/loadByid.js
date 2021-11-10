@@ -382,18 +382,35 @@ let movie_galery_page=0
 let movies_with_star=0
 let movies_in_series=0
 class Movie extends LoadID{
+    set_wideo(){
+        let wideo_src=document.querySelector('.wideo_src')
+        wideo_src.src=this.data.src
+        wideo_src.poster=this.data.poster
+    }
     set_poster(){
         let poster=document.querySelector('.if_poster')
         let avatar_show=document.querySelector('.cover_show')
         if (this.data.poster){
             poster.style.visibility='visible'
             poster.style.display='block'
+            this.set_wideo()
         }else{
             avatar_show.style.visibility='visible'
             avatar_show.style.display='block'
             let poster=document.querySelector('.cover_js')
             poster.setAttribute('src',this.data.avatar)
         }
+        let wideo=document.querySelector('.video-section')
+        let obj=this
+        wideo.addEventListener("click", function(){
+            poster.style.visibility='visible'
+            poster.style.display='block'
+            let poster_js=document.querySelector('.cover_js')
+            poster_js.style.display='none'
+            let wideo = document.querySelector('#bgvid')
+            obj.set_wideo()
+            wideo.play()
+        });
     }
     set_elements(){
         this.set_poster()
