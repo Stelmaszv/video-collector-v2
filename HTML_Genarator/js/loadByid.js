@@ -490,12 +490,6 @@ class Movie extends LoadID{
     }
     set_poster(){
         let poster=document.querySelector('.if_poster')
-        poster.style.visibility='visible'
-        poster.style.display='block'
-        this.set_wideo()
-        this.player()
-        /*
-        let poster=document.querySelector('.if_poster')
         let avatar_show=document.querySelector('.cover_show')
         if (this.data.poster){
             poster.style.visibility='visible'
@@ -517,9 +511,10 @@ class Movie extends LoadID{
             poster_js.style.display='none'
             let wideo = document.querySelector('#bgvid')
             obj.set_wideo()
+            obj.player()
+            wideo.play()
           
         });
-        */
     }
     set_elements(){
         this.set_poster()
