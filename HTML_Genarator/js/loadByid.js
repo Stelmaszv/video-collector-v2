@@ -391,11 +391,55 @@ let movies_with_star=0
 let movies_in_series=0
 class Movie extends LoadID{
     
+    found_star(stars,movies){
+        function star_found(count,star){
+            for (let star_el in count){
+                if (count[star_el]["name"]==star){
+                    count[star_el]["count"]=count[star_el]["count"]+1
+                    return true
+                }
+            }  
+            return false
+        }
+        function GetSortOrder(prop) {    
+            return function(a, b) {    
+                if (a[prop] > b[prop]) {    
+                    return 1;    
+                } else if (a[prop] < b[prop]) {    
+                    return -1;    
+                }    
+                return 0;    
+            }    
+        }  
+        
+        let counter = [ ]
+        for (let movie of movies){
+            for (let star_movie of movie['short_stars']){
+                for (let star of stars){
+                    if (star_movie.id == star.id){
+                        counter.push(star_movie.name)
+                    }
+                }
+            }
+
+        }
+        let count = []
+        for (let star of counter){ 
+            let star_indx = star_found(count,star) 
+            if (!star_indx){
+                count.push({"name":star,"count":1})
+            }
+        }
+        return count[count.length-1]['name']
+    }
+
     set_buttons(){
+       
         let next_star_div = document.querySelector('#next_star')
-        if (this.data.short_stars.length){
+        if (this.data.movies_with_stars.length>0){
+            let star_name=this.found_star(this.data.short_stars,this.data.movies_with_stars)
             let get_star_div = document.querySelector('.get_star')
-            get_star_div.innerHTML=this.data.short_stars[0].name
+            get_star_div.innerHTML=star_name
 
             next_star_div.addEventListener("click", function(){
                 let index=get_index(obj,obj.data.movies_with_stars)
