@@ -402,7 +402,7 @@ class Movie extends LoadID{
             }
         }
         function next_video(obj,index,array){
-            if (index == obj.data.movies_with_stars.length){
+            if (index == array.length){
                 return 0
             }
             return index
@@ -410,14 +410,12 @@ class Movie extends LoadID{
         next_star_div.addEventListener("click", function(){
             let index=get_index(obj,obj.data.movies_with_stars)
             let movie=obj.data.movies_with_stars[next_video(obj,index,obj.data.movies_with_stars)]
-            console.log(movie)
             window.location.href=movie.dir+'/movies_id.html'
         });
 
         next_series_div.addEventListener("click", function(){
             let index=get_index(obj,obj.data['series'][0]['movies'])
-            let movie=obj.data.movies_with_stars[next_video(obj,index,obj.data['series'][0]['movies'])]
-            console.log(movie)
+            let movie=obj.data['series'][0]['movies'][next_video(obj,index,obj.data['series'][0]['movies'])]
             window.location.href=movie.dir+'/movies_id.html'
         });
     }
