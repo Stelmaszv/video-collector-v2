@@ -382,13 +382,26 @@ let movie_galery_page=0
 let movies_with_star=0
 let movies_in_series=0
 class Movie extends LoadID{
+    
     set_buttons(){
-      
-        let get_star_div = document.querySelector('.get_star')
-        get_star_div.innerHTML=this.data.short_stars[0].name
+        let next_star_div = document.querySelector('#next_star')
+        if (this.data.short_stars.length){
+            let get_star_div = document.querySelector('.get_star')
+            get_star_div.innerHTML=this.data.short_stars[0].name
+
+            next_star_div.addEventListener("click", function(){
+                let index=get_index(obj,obj.data.movies_with_stars)
+                let movie=obj.data.movies_with_stars[next_video(obj,index,obj.data.movies_with_stars)]
+                window.location.href=movie.dir+'/movies_id.html'
+            });
+            
+        }else{
+            next_star_div.style.display='none'
+        }
+        
+
         let get_series_div = document.querySelector('.get_series')
         get_series_div.innerHTML=this.data.short_series.name
-        let next_star_div = document.querySelector('#next_star')
         let next_series_div = document.querySelector('#next_series')
         
         let obj=this
@@ -407,12 +420,6 @@ class Movie extends LoadID{
             }
             return index
         }
-        next_star_div.addEventListener("click", function(){
-            let index=get_index(obj,obj.data.movies_with_stars)
-            let movie=obj.data.movies_with_stars[next_video(obj,index,obj.data.movies_with_stars)]
-            window.location.href=movie.dir+'/movies_id.html'
-        });
-
         next_series_div.addEventListener("click", function(){
             let index=get_index(obj,obj.data['series'][0]['movies'])
             let movie=obj.data['series'][0]['movies'][next_video(obj,index,obj.data['series'][0]['movies'])]
