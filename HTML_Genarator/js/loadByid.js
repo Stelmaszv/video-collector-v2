@@ -430,14 +430,15 @@ class Movie extends LoadID{
                 count.push({"name":star,"count":1})
             }
         }
+        count.sort(GetSortOrder("count"));
+        console.log(count)
         return count[count.length-1]['name']
     }
 
     set_buttons(){
-       
         let next_star_div = document.querySelector('#next_star')
-        if (this.data.movies_with_stars.length>0){
-            let star_name=this.found_star(this.data.short_stars,this.data.movies_with_stars)
+        if (this.data.movies_with_stars.length>1){
+            let star_name = this.found_star(this.data.short_stars,this.data.movies_with_stars)
             let get_star_div = document.querySelector('.get_star')
             get_star_div.innerHTML=star_name
 

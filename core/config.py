@@ -102,7 +102,6 @@ class AbstractConfigItem(ABC):
     def add_stars(self,stars,Obj):
         for star in stars:
             StarObj = if_star_exist(AddStarViaDir(set_dir_for_star(star)), star)
-            print(StarObj)
             Obj.stars.append(StarObj)
             if hasattr(self, 'data'):
                 StarObj.movies.append(self.data)
