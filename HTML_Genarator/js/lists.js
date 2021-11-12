@@ -143,6 +143,13 @@ class MovieList extends List{
         return '<a href="'+movie.dir+'/movies_id.html"><img src="'+movie.avatar+'" class="card-img-top cover"></a>'
     }
 
+    show_movie_name(movie){
+        if (movie.show_name!=""){
+            return movie.show_name
+        }
+        return movie.name
+    }
+
     body(movie){
         let str=''
         if (movie.description.length==0){
@@ -150,7 +157,7 @@ class MovieList extends List{
         }else{
             str=movie.description
         }
-        let name='<a href="'+movie.dir+'/movies_id.html" >'+movie.name+'</a>'
+        let name='<a href="'+movie.dir+'/movies_id.html" >'+this.show_movie_name(movie)+'</a>'
         let string=name+'<br>'+str
         return '<p class="card-text">'+this.sort_string(string,220)+'</p>'
     }
@@ -324,7 +331,6 @@ class ProducentsList extends List{
             }
             return result
         } 
-
     }
 
     return_data(page){

@@ -4,10 +4,18 @@ class LoadID{
     content='.content'
     constructor(){
         this.content_slector=document.querySelector(this.content)
-        document.querySelector('title').innerHTML=this.data.name
+        if (this.show_name!=""){
+            document.querySelector('title').innerHTML=this.data.show_name
+        }else{
+            document.querySelector('title').innerHTML=this.data.name
+        }
         let names=this.content_slector.querySelectorAll('.name_js')
         for (let name of names){
-            name.innerHTML=this.data.name
+            if (this.show_name!=""){
+                name.innerHTML=this.data.show_name
+            }else{
+                name.innerHTML=this.data.name
+            }
         }
         let movie_avatars=document.querySelectorAll('.avatar_js')
         for (let avatar of movie_avatars){
@@ -399,7 +407,6 @@ class Movie extends LoadID{
             next_star_div.style.display='none'
         }
         
-
         let get_series_div = document.querySelector('.get_series')
         get_series_div.innerHTML=this.data.short_series.name
         let next_series_div = document.querySelector('#next_series')
