@@ -656,8 +656,8 @@ class Movie extends LoadID{
         }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        if (this.data.year != 'None'){
-            table.innerHTML+='<td>Year</td><td>'+this.data.year+'</td>'
+        if (this.data.date_relesed != 'None'){
+            table.innerHTML+='<td>Date relesed</td><td>'+this.data.date_relesed+'</td>'
         }
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'

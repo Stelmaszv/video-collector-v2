@@ -316,7 +316,7 @@ class CreateXML(AbstractConfigItem):
 
         self.worksheet.write(self.row, self.col, Movie.name)
         self.worksheet.write(self.row, self.col + 1, Movie.description)
-        self.worksheet.write(self.row, self.col + 2, Movie.year)
+        self.worksheet.write(self.row, self.col + 2, Movie.date_relesed)
         self.worksheet.write(self.row, self.col + 3, Movie.src)
         self.worksheet.write(self.row, self.col + 4, full_name(Movie))
         self.worksheet.write(self.row, self.col + 5, Movie.country)

@@ -274,7 +274,7 @@ class Movies(Base):
     sezon = Column('sezon', Integer)
     search_name = Column('search_name', String)
     avatar = Column('avatar', String, default=movie_cover_defulut)
-    year = Column('year', String)
+    date_relesed = Column(Date)
     dir = Column('dir', String, default='')
     likes = Column('likes', Integer, default=0)
     views = Column('views', Integer, default=0)

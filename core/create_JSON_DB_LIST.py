@@ -11,7 +11,8 @@ import os
 producent_fields_defult = ['country', "baner", "year"]
 producent_fields_defult2 = ['country', 'series', "baner", "year", "top_stars", "short_series"]
 series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "baner", "short_stars"]
-movies_fields_defults = ["src", "short_stars", "sezon", "year", "country", "short_series", "producent", "poster"]
+movies_fields_defults = ["src", "short_stars", "sezon", "date_relesed", "country", "short_series", "producent",
+                         "poster"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series', 'nationality', 'birth_place',
                         'date_of_birth']
 defult_producents_pages = 1
@@ -387,7 +388,7 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
                 with open(movie['dir'] + '\\skip_galery.JSON') as json_file:
                     data = json.load(json_file)
 
-                if dir.endswith(photo_ext) and item not in data:
+                if dir.endswith(photo_ext) and movie not in data:
                     new_item = movie['dir'] + '\\' + dir
                     name = movie['short_series']['name'] + ' - ' + movie['name']
                     photos.append({"photo": new_item, "name": name})
