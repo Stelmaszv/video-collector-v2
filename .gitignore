@@ -20,3 +20,6 @@ core/db/__pycache__/__init__.cpython-38.pyc
 core/db/__pycache__/config.cpython-38.pyc
 *.pyc
 core/db/__pycache__/config.cpython-38.pyc
+*.pyc
+core/db/__pycache__/__init__.cpython-38.pyc
+core/db/__pycache__/config.cpython-38.pyc
