@@ -253,7 +253,7 @@ search_faze_defult = ''
 muted=False
 auto_play=True
 full_screen=True
-# MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run" erroe
+# MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run"
 MODE = 'reset'
 # run_setings only when mode set to "normal"
 setings_array = {
