@@ -6,7 +6,7 @@ from core.config import ConfigLoop, ConfigMovies,SetTags,CreateXML,CreateMovieLi
 from core.dir import LoadFilesFromJson, PhotoMeaker
 from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTMLProducents, GenerateHTMLSeries, \
     GenerateHTMLStars
-from core.setings import data_JSON, setings_array, start_page
+from core.setings import data_JSON, setings_array, start_page,MODERUN
 from view.menu.menu import Menu
 from view.config.config_data_json import JSONConfigView
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
@@ -25,6 +25,9 @@ class LoopRun:
     def loop(self):
         for objet in self.objets:
             self.run_object(objet['obj'], objet['method'], objet['stan'], objet['start_mes'], objet['end_mees'])
+class JSONRun:
+    def start(self):
+        print("json")
 
 class Run:
     scan_photos = setings_array["scan_photos"]
@@ -141,8 +144,12 @@ class Run:
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    Run = Run(Menu(start_page), JSONConfigView())
-    Run.start()
-    if Run.config:
-        Run.show_start_view()
+    if MODERUN == "console":
+        Run = Run(Menu(start_page), JSONConfigView())
+        Run.start()
+        if Run.config:
+            Run.show_start_view()
+    if MODERUN == "config":
+        Run = JSONRun()
+        Run.start()
     sys.exit(app.exec_())
