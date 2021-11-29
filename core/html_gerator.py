@@ -60,11 +60,6 @@ class HTMLGenaratorMain:
 
         self.create_file(
             self.sites,
-            'search.html',
-            data_JSON['project_url'] + '\HTML_Genarator\schema')
-
-        self.create_file(
-            self.sites,
             'series.html',
             data_JSON['project_url'] + '\HTML_Genarator\schema')
 
