@@ -1,14 +1,10 @@
-import sys
-from PyQt5.QtWidgets import QApplication
 from pathlib import Path
 from app.db.models import session, Movies
 from core.config import ConfigLoop, ConfigMovies,SetTags,CreateXML,CreateMovieList
 from core.dir import LoadFilesFromJson, PhotoMeaker
 from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTMLProducents, GenerateHTMLSeries, \
     GenerateHTMLStars
-from core.setings import data_JSON, setings_array, start_page,MODERUN
-from view.menu.menu import Menu
-from view.config.config_data_json import JSONConfigView
+from core.setings import data_JSON, setings_array
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
     GenerateJSONOtputsSeries, GenerateJSONOtputsProducent
 
@@ -141,15 +137,3 @@ class Run:
             self.StartView.run_window()
         else:
             exit()
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    if MODERUN == "console":
-        Run = Run(Menu(start_page), JSONConfigView())
-        Run.start()
-        if Run.config:
-            Run.show_start_view()
-    if MODERUN == "config":
-        Run = JSONRun()
-        Run.start()
-    sys.exit(app.exec_())

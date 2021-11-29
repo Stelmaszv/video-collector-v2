@@ -23,3 +23,9 @@ core/db/__pycache__/config.cpython-38.pyc
 *.pyc
 core/db/__pycache__/__init__.cpython-38.pyc
 core/db/__pycache__/config.cpython-38.pyc
+*.pyc
+view/menu/__pycache__/menu.cpython-38.pyc
+view/menu/__pycache__/menu.cpython-38.pyc
+view/config/__pycache__/config_data_json.cpython-38.pyc
+data.JSON
+movies.xlsx
