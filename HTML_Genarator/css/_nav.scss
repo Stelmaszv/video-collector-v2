@@ -1,0 +1,21 @@
+$navbarBC:black;
+$navbarlinkcolor:rgba(233, 206, 55, 0.822);
+$navbarlinkcolorHover:rgba(255, 217, 0, 0.746);
+$navbarlinkcolorActieve:rgb(255, 217, 0);
+.nav{
+    background-color: $navbarBC;
+    li{
+        a{
+            color: $navbarlinkcolor;
+            &.active{
+                color: $navbarlinkcolorActieve;
+                font-weight: bolder;
+            }
+        }
+
+        :hover{
+            color: $navbarlinkcolorHover;
+            font-weight: bolder;
+        }
+    }
+}

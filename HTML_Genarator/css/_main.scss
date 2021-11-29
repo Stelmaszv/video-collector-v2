@@ -1,0 +1,141 @@
+.tag{
+    margin-left: 5px;
+    font-style: italic;
+}
+.galery{
+    padding-bottom: 20px;
+    width: 1500px;
+    .galery-item{
+        margin: 5px;
+        width: 250px;
+        height: 250px;
+    }
+}
+.header{
+    padding: 50px;
+}
+.tabs_nav{
+    margin-top:30px;
+    background-color: rgba(190, 186, 186, 0.609);
+    ul{
+        li{
+            .nav-link{
+                color: white;
+                &.active{
+                    color: gold;
+                    background-color:black;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+.series-cart{
+    width:14rem;
+    padding: 1rem;
+    margin: 1rem;
+    .card-img-top{
+        width: 12rem; 
+        height: 14rem;
+    }
+}
+.cart-item{
+    width:13rem; 
+    margin:1rem;
+    .card-body{
+        a{
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            text-align: center;
+            margin-top: -25px;
+            margin-bottom: -30px;
+        }
+
+        a:hover{
+            color: blue;
+        }
+    }
+    .list-group-item{
+        a{
+            color: black;
+            text-decoration: none;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        a:hover{
+            color: blue;
+        }
+    }
+    .cover{
+        width: 13rem; 
+        height: 20rem;
+    }
+    .card-text{
+        .card-title{
+            text-align: center;
+         }
+        height: 10rem;
+        text-align: justify;
+    }
+}
+.only-photo-js{
+    display: none;
+}
+.filter{
+    padding: 10px;
+    background-color: rgb(211, 203, 203);
+    border-bottom: 5px solid black;
+    font-size: 20px;
+    input,select{
+        height: 30px;
+    }
+}
+.galery_tab,.movies_tab,
+.galery_tab_js,
+.movies_series_tab,
+.movies_with_stars_tab,
+.movies_series_tab,
+.series_tab,
+.movies_series_stars_tab{
+    visibility: hidden;
+}
+.baner{
+    img{
+        width: 100%;
+    }
+}
+.col-star{
+    margin: 5px;
+
+    a{
+        color: black;
+        text-decoration: none;
+        font-weight: bold;
+        text-align: center;
+        margin-top: -25px;
+        margin-bottom: -30px;
+    }
+
+    a:hover{
+        color: blue;
+    }
+
+    .star-cart{
+        width: 12rem; 
+        height: 20rem;
+        padding: 1rem;
+        .star-cart-img{
+            width: 10rem; 
+            height: 18rem; 
+        }
+    }
+}
+.series-filter,.movies-filter{
+    margin-top: -20px;
+    .age-search{
+        width: 50px;
+    }
+}

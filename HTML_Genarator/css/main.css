@@ -1,0 +1,277 @@
+.tag {
+  margin-left: 5px;
+  font-style: italic;
+}
+
+.galery {
+  padding-bottom: 20px;
+  width: 1500px;
+}
+
+.galery .galery-item {
+  margin: 5px;
+  width: 250px;
+  height: 250px;
+}
+
+.header {
+  padding: 50px;
+}
+
+.tabs_nav {
+  margin-top: 30px;
+  background-color: rgba(190, 186, 186, 0.609);
+}
+
+.tabs_nav ul li .nav-link {
+  color: white;
+}
+
+.tabs_nav ul li .nav-link.active {
+  color: gold;
+  background-color: black;
+  font-weight: bold;
+}
+
+.series-cart {
+  width: 14rem;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.series-cart .card-img-top {
+  width: 12rem;
+  height: 14rem;
+}
+
+.cart-item {
+  width: 13rem;
+  margin: 1rem;
+}
+
+.cart-item .card-body a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  margin-top: -25px;
+  margin-bottom: -30px;
+}
+
+.cart-item .card-body a:hover {
+  color: blue;
+}
+
+.cart-item .list-group-item a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cart-item .list-group-item a:hover {
+  color: blue;
+}
+
+.cart-item .cover {
+  width: 13rem;
+  height: 20rem;
+}
+
+.cart-item .card-text {
+  height: 10rem;
+  text-align: justify;
+}
+
+.cart-item .card-text .card-title {
+  text-align: center;
+}
+
+.only-photo-js {
+  display: none;
+}
+
+.filter {
+  padding: 10px;
+  background-color: #d3cbcb;
+  border-bottom: 5px solid black;
+  font-size: 20px;
+}
+
+.filter input, .filter select {
+  height: 30px;
+}
+
+.galery_tab, .movies_tab,
+.galery_tab_js,
+.movies_series_tab,
+.movies_with_stars_tab,
+.movies_series_tab,
+.series_tab,
+.movies_series_stars_tab {
+  visibility: hidden;
+}
+
+.baner img {
+  width: 100%;
+}
+
+.col-star {
+  margin: 5px;
+}
+
+.col-star a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  margin-top: -25px;
+  margin-bottom: -30px;
+}
+
+.col-star a:hover {
+  color: blue;
+}
+
+.col-star .star-cart {
+  width: 12rem;
+  height: 20rem;
+  padding: 1rem;
+}
+
+.col-star .star-cart .star-cart-img {
+  width: 10rem;
+  height: 18rem;
+}
+
+.series-filter, .movies-filter {
+  margin-top: -20px;
+}
+
+.series-filter .age-search, .movies-filter .age-search {
+  width: 50px;
+}
+
+.nav {
+  background-color: black;
+}
+
+.nav li a {
+  color: rgba(233, 206, 55, 0.822);
+}
+
+.nav li a.active {
+  color: #ffd900;
+  font-weight: bolder;
+}
+
+.nav li :hover {
+  color: rgba(255, 217, 0, 0.746);
+  font-weight: bolder;
+}
+
+.active-section {
+  background-color: black;
+  padding: 10px;
+}
+
+.active-section a {
+  color: rgba(233, 206, 55, 0.897);
+  text-decoration: none;
+}
+
+.active-section a :hover {
+  color: gold;
+}
+
+.active-section a.active {
+  color: gold;
+  font-weight: bold;
+}
+
+.active-section .seperator_link {
+  color: white;
+  padding-left: 5;
+  padding-right: 5;
+}
+
+.movie {
+  background-color: black;
+}
+
+.movie .controls {
+  width: 100%;
+  cursor: pointer;
+}
+
+#time {
+  height: 15px;
+  width: 7%;
+  outline: none;
+  color: white;
+  margin-left: 10px;
+}
+
+#next_star, #next_series {
+  width: 20%;
+}
+
+#range {
+  width: 100%;
+  outline: none;
+  height: 25px;
+  padding: 20px;
+}
+
+.name {
+  color: white;
+}
+
+.ditels-section .stars {
+  padding-bottom: 10px;
+}
+
+.ditels-section .stars .star-name {
+  background-color: black;
+  color: white;
+}
+
+.ditels-section .stars .star_src {
+  width: 300px;
+  height: 300px;
+}
+
+.ditels-section .movie_avatar {
+  width: 500px;
+  height: 700px;
+}
+
+.ditels-section .movie_description {
+  text-align: justify;
+}
+
+.ditels-section .tag {
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.ditels-section .star_avatar {
+  width: 20rem;
+  height: 25rem;
+}
+
+.ditels-section .movie_description {
+  text-align: justify;
+}
+
+.ditels-section .star-string a, .ditels-section .producent_item a, .ditels-section .series_item a {
+  color: black;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+.ditels-section .star-string a:hover, .ditels-section .producent_item a:hover, .ditels-section .series_item a:hover {
+  color: #3131e4;
+}
+/*# sourceMappingURL=main.css.map */

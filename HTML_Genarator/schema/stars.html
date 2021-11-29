@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="[#HTMLOUTPUT#]/HTML Generator/css/bootstrap.min.css" rel="stylesheet">
+    <link href="[#HTMLOUTPUT#]/HTML Generator/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="[#HTMLOUTPUT#]/HTML Generator/css/baguetteBox.css">
+    <script src="[#HTMLOUTPUT#]/HTML Generator/js/baguetteBox.js" async></script>
+    <title>Stars</title>
+</head>
+<body>
+<nav>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="[#HTMLOUTPUT#]/HTML Generator/index.html">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="[#HTMLOUTPUT#]/HTML Generator/sites/movies.html">Movies</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="[#HTMLOUTPUT#]/HTML Generator/sites/series.html">Series</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page"
+               href="[#HTMLOUTPUT#]/HTML Generator/sites/stars.html">Stars</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page"
+               href="[#HTMLOUTPUT#]/HTML Generator/sites/producent.html">Producent</a>
+        </li>
+    </ul>
+</nav>
+<div class="filter">
+    <div class="row g-3">
+        <div class="col">
+            Search
+        </div>
+        <div class="col">
+            <input type="text" class="name-search" placeholder="Search name" aria-label="Last name">
+        </div>
+        <div class="col">
+            Raiting
+        </div>
+        <div class="col">
+            <input type="number" class="raiting-search" max="10" min="0" aria-label="Last name">
+        </div>
+        <div class="col">
+            Series
+        </div>
+        <div class="col">
+            <select class="series-search" aria-label="Default select example">
+            </select>
+        </div>
+        <div class="col">
+            Tag
+        </div>
+        <div class="col">
+            <select class="tag-search" aria-label="Default select example">
+            </select>
+        </div>
+        <div class="col">
+            Age
+        </div>
+        <div class="col">
+            <input type="number" class="age-search" min="18" aria-label="Last name">
+        </div>
+        <div class="col">
+            Hair color
+        </div>
+        <div class="col">
+            <select class="hair-color-search" aria-label="Default select example">
+            </select>
+        </div>
+    </div>
+</div>
+<main class='content container'>
+    <div class="row stars-otput">[#StarsOputs#]</div>
+</main>
+</body>
+
+<script src="[#HTMLOUTPUT#]\HTML Generator\js\lists.js"></script>
+<script src="[#HTMLOUTPUT#]\HTML Generator\js\paginator.js"></script>
+<script src="[#HTMLOUTPUT#]\HTML Generator\js\stars.js"></script>
+<script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
+<script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
+<script>
+    stars_result=stars
+    let filter=[]
+    let LoadMoviesObjInit=new LoadStars()
+    const form=new FilterStars(stars_result)
+    form.set_form(stars_result)
+    scroller()
+    let LS = LoadStars
+    keyup(form,['set_tag','set_series','set_hair_color'],LS)
+    change('.raiting-search','raiting',form,[],LS)
+    change('.series-search','series',form,['set_hair_color','set_tag'],LS)
+    change('.tag-search','tag',form,['set_series'],LS)
+    change('.age-search','age',form,['set_series','set_tag'],LS)
+    change('.hair-color-search','hair-color',form,['set_series','set_tag'],LS)
+</script>
+</html>

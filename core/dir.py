@@ -5,7 +5,6 @@ import random
 from app.db.models import Stars,Movies,Series,Photos,Sezons,Tags,Producent
 from app.db.models import session
 from abc import ABC,abstractmethod
-
 from core.custum_errors import Error
 from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
 from pathlib import Path
@@ -281,6 +280,8 @@ class AbstractAddViaDir(ABC):
             f = open(dir+'\\config.JSON', "x")
             f.write('{}')
             f.close()
+        if os.path.isdir(dir + '\\photo\DATA') is False:
+            os.mkdir(dir + '\\photo\DATA')
         return self.dir
 
     def set_none(self):
@@ -303,6 +304,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
         self.config = self.dir + '\\config.JSON'
         self.skip_galery = self.dir + '\\skip_galery.JSON'
         self.name=set_name(dir)
+        print("Scaning Series " + str(self.name))
         item=session.query(self.model).filter(self.model.name == self.name).first()
         if item is None:
             self.series=self.if_series_exist(self.name)
@@ -602,9 +604,9 @@ class LoadFilesFromJson:
     def __init__(self,json_data):
         self.json_data=json_data
         self.object={
-            "stars"      :  LoadStarFromJSON,
             "series"     :  LoadSeriesFromJSON,
-            "producents" :  LoadProducentsFromJSON
+            "producents": LoadProducentsFromJSON,
+            "stars": LoadStarFromJSON
         }
 
     def add_files(self):

@@ -1,5 +1,5 @@
 from core.db.config import Base,engine
-from sqlalchemy import Column,Integer, String,Table,ForeignKey,DateTime,Boolean
+from sqlalchemy import Column, Integer, String, Table, ForeignKey, DateTime, Boolean, Date, Text
 from sqlalchemy.orm import sessionmaker,relationship
 from core.setings import movie_cover_defulut
 from core.setings import singles_movies_defult,stars_avatar_defult,none_movies_defult
@@ -79,16 +79,19 @@ class Sezons(Base):
 class Producent(Base):
     __tablename__ = 'producent'
     id = Column('id', Integer, primary_key=True)
-    views =      Column('views', Integer,default=0)
-    likes = Column('likes', Integer,default=0)
+    views = Column('views', Integer, default=0)
+    likes = Column('likes', Integer, default=0)
     favourite = Column('favourite', Boolean, default=False)
-    name = Column('name',String)
+    name = Column('name', String)
+    baner = Column('baner', String)
+    year = Column('year', String)
     show_name = Column('show_name', String, default='')
-    avatar = Column('avatar', String )
+    avatar = Column('avatar', String)
     dir = Column('dir', String, default='')
     config = Column('config', String, default='')
     country = Column('country', String, default='')
     description = Column('description', String, default='')
+    rating = Column('rating', Integer, default=0)
 
     tags = relationship(
         "Tags",
@@ -107,19 +110,21 @@ class Producent(Base):
 
 class Series(Base):
     __tablename__ ='series'
-    id= Column('id',Integer,primary_key=True)
-    views =      Column('views', Integer,default=0)
-    likes = Column('likes', Integer,default=0)
+    id = Column('id', Integer, primary_key=True)
+    views = Column('views', Integer, default=0)
+    likes = Column('likes', Integer, default=0)
     favourite = Column('favourite', Boolean, default=False)
-    name = Column('name',String)
+    name = Column('name', String)
     show_name = Column('show_name', String, default='')
     avatar = Column('avatar', String)
+    baner = Column('baner', String)
     dir = Column('dir', String, default='')
     config = Column('config', String, default='')
     number_of_sezons = Column('sezons', Integer,default=1)
-    years       = Column('year', String,default='')
-    country      = Column('country', String,default='')
-    description  = Column('description', String,default='')
+    years = Column('year', String, default='')
+    country = Column('country', String, default='')
+    description = Column('description', String, default='')
+    rating = Column('rating', Integer, default=0)
 
     producent = relationship(
         "Producent",
@@ -166,8 +171,8 @@ class Series(Base):
 
 class Photos(Base):
     __tablename__ ='photos'
-    id= Column('id',Integer,primary_key=True)
-    src = Column('src',String)
+    id = Column('id', Integer, primary_key=True)
+    src = Column('src', String)
     stars = relationship(
         "Stars",
         secondary=photos_star,
@@ -214,24 +219,26 @@ class Tags(Base):
 
 class Stars(Base):
     __tablename__ ='stars'
-
-    id= Column('id',Integer,primary_key=True)
-    name = Column('name',String)
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String)
     show_name = Column('show_name', String, default='')
-    avatar = Column('avatar',String ,default=stars_avatar_defult)
-    description = Column('description', String,default="")
-    views =      Column('views', Integer,default=0)
-    likes = Column('likes', Integer,default=0)
-    favourite = Column('favourite', Boolean,default=False)
-    weight   = Column('weight ', Integer,default=0)
+    avatar = Column('avatar', String, default=stars_avatar_defult)
+    description = Column('description', Text, default="")
+    views = Column('views', Integer, default=0)
+    likes = Column('likes', Integer, default=0)
+    favourite = Column('favourite', Boolean, default=False)
+    weight = Column('weight ', Integer, default=0)
     height = Column('height', Integer, default=0)
     ethnicity = Column('ethnicity', String, default='')
-    hair_color =  Column('hair_color', String, default='')
-    dir  =  Column('dir', String, default='')
+    hair_color = Column('hair_color', String, default='')
+    birth_place = Column('birth_place', String, default='')
+    nationality = Column('nationality', String, default='')
+    dir = Column('dir', String, default='')
     none = Column('none', String, default=none_movies_defult)
     singles = Column('singles', String, default=singles_movies_defult)
     config = Column('config', String, default='')
-    date_of_birth = Column(DateTime)
+    date_of_birth = Column(Date)
+    rating = Column('rating', Integer, default=0)
 
     tags = relationship(
         "Tags",
@@ -261,20 +268,22 @@ class Stars(Base):
 
 class Movies(Base):
     __tablename__ ='movies'
-    id=    Column('id',Integer,primary_key=True)
-    name = Column('name',String)
-    src=   Column('src',String)
-    sezon = Column('sezon',Integer)
-    search_name =Column('search_name',String)
-    avatar = Column('avatar', String,default=movie_cover_defulut)
-    year  = Column('year', String)
-    dir   = Column('dir',String,default='')
-    likes = Column('likes', Integer,default=0)
+    id = Column('id', Integer, primary_key=True)
+    name = Column('name', String)
+    src = Column('src', String)
+    sezon = Column('sezon', Integer)
+    search_name = Column('search_name', String)
+    avatar = Column('avatar', String, default=movie_cover_defulut)
+    date_relesed = Column(Date)
+    dir = Column('dir', String, default='')
+    likes = Column('likes', Integer, default=0)
     views = Column('views', Integer, default=0)
-    favourite = Column('favourite', Boolean,default=False)
+    favourite = Column('favourite', Boolean, default=False)
     country = Column('country', String, default='')
-    show_name = Column('show_name',String,default='')
+    show_name = Column('show_name', String, default='')
     description = Column('description', String, default='')
+    rating = Column('rating', Integer, default=0)
+    poster = Column('poster', String, default='')
 
     tags = relationship(
         "Tags",

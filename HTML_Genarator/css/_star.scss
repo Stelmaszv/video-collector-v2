@@ -1,0 +1,21 @@
+.ditels-section{
+    .star_avatar{
+        width: 20rem; 
+        height: 25rem;
+    }
+    .movie_description{
+        text-align: justify;
+        
+ 
+    }
+    .star-string,.producent_item,.series_item{
+        a {
+            color: black;
+            text-decoration: none;
+            font-weight: bolder;
+        }
+        a:hover{
+            color: rgb(49, 49, 228);
+        }
+    }
+}

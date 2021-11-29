@@ -1,9 +1,173 @@
 import json
 import os
 import sys
+from abc import ABC, abstractmethod
 from core.custum_errors import Error
 from pathlib import Path
 from PyQt5 import QtWidgets
+
+
+class AbstractMode(ABC):
+    def __init__(self, setings):
+        self.setings = setings
+
+    @abstractmethod
+    def return_setings(self):
+        pass
+
+
+class ResetMode(AbstractMode):
+
+    def return_setings(self):
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+
+        return {
+            "run_start_view": False,
+            "scan_photos": False,
+            "scan_dir": True,
+            "config": True,
+            "create_xml": True,
+            "create_movie_list": True,
+            "generate_json": True,
+            "generate_html": True
+        }
+
+
+class OffAll(AbstractMode):
+
+    def return_setings(self):
+        return {
+            "run_start_view": False,
+            "scan_photos": False,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": False,
+            "generate_html": False
+        }
+
+
+class HTML(AbstractMode):
+
+    def return_setings(self):
+        return {
+            "run_start_view": False,
+            "scan_photos": False,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": False,
+            "generate_html": True
+        }
+
+
+class Add(AbstractMode):
+
+    def return_setings(self):
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+        return {
+            "run_start_view": False,
+            "scan_photos": True,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": True,
+            "generate_html": True
+        }
+
+
+class All(AbstractMode):
+
+    def return_setings(self):
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+        return {
+            "run_start_view": True,
+            "scan_photos": True,
+            "scan_dir": True,
+            "config": True,
+            "create_xml": True,
+            "create_movie_list": True,
+            "generate_json": True,
+            "generate_html": True
+        }
+
+
+class Screenshot(AbstractMode):
+
+    def return_setings(self):
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+        return {
+            "run_start_view": False,
+            "scan_photos": True,
+            "scan_dir": True,
+            "config": True,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": False,
+            "generate_html": False
+        }
+
+
+class HTMLJSOM(AbstractMode):
+    def return_setings(self):
+        return {
+            "run_start_view": False,
+            "scan_photos": False,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": True,
+            "generate_html": True
+        }
+
+
+class Run(AbstractMode):
+    def return_setings(self):
+        return {
+            "run_start_view": True,
+            "scan_photos": False,
+            "scan_dir": False,
+            "config": False,
+            "create_xml": False,
+            "create_movie_list": False,
+            "generate_json": False,
+            "generate_html": False
+        }
+
+
+class SetMode:
+
+    def __init__(self, setings_array, mode):
+        self.setings = setings_array
+        self.set_mode(mode)
+
+    def set_mode(self, mode):
+        modes = ["reset", "Off all", "HTML", "add", 'all', "screenshot", "HTML&JSOM", "Run"]
+        error = mode in modes
+        mes = 'Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML&JSOM", "add" ,"all","screenshot",Run'
+        Error.throw_error_bool(mes, error)
+        setings_array = {
+            "reset": ResetMode(self.setings),
+            "Off all": OffAll(self.setings),
+            "HTML": HTML(self.setings),
+            "add": Add(self.setings),
+            "all": All(self.setings),
+            "screenshot": Screenshot(self.setings),
+            "HTML&JSOM": HTMLJSOM(self.setings),
+            "Run": Run(self.setings)
+        }
+        self.Mode = setings_array[mode]
+
+    def return_setings(self):
+        return self.Mode.return_setings()
 
 class GetRezolution:
 
@@ -19,6 +183,7 @@ class GetRezolution:
   @property
   def set_height(self):
     return self.size.height()
+
 
 class ConfiGData:
 
@@ -74,7 +239,6 @@ with_size_defult = 25
 height_size_defult = 25
 #menu
 menu_per_page = 20
-
 series_avatar_defult ='D:/project/video-collector-v2/icon/series.jpg'
 stars_avatar_defult  ='D:/project/video-collector-v2/icon/star_no_photo.png'
 none_movies_defult   ='D:/project/video-collector-v2/icon/star_no_photo.png'
@@ -82,17 +246,30 @@ singles_movies_defult   ='D:/project/video-collector-v2/icon/singles.jpg'
 movie_cover_defulut = 'D:/project/video-collector-v2/icon/movie.jpg'
 search_in_defult= 'movies';
 start_page=0
-photo_ext= ('.png', '.jpg', '.jpeg','.jfif')
+photo_ext = ('.png', '.jpg', '.jpeg', '.jfif', ".JPG")
 movie_ext= ('.avi','.mkv','.mp4','.wmv')
 search_faze_defult = ''
 #player
 muted=False
 auto_play=True
 full_screen=True
-#run_setings
-scan_photos=False
-run_start_view = False
-clean_db = False
+# MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run"
+MODE = 'reset'
+# run_setings only when mode set to "normal"
+setings_array = {
+    "run_start_view": False,
+    "scan_photos": False,
+    "scan_dir": True,
+    "config": True,
+    "create_xml": False,
+    "create_movie_list": False,
+    "generate_json": False,
+    "generate_html": False
+}
+if MODE != "normal":
+    SetMode = SetMode(setings_array, MODE)
+    setings_array = SetMode.return_setings()
+
 #AdvanceSearchCriteria
 tags_defult                       = ('')
 stars_defult                      = ('')
@@ -104,4 +281,4 @@ max_defult                        = ['views',0]
 min_defult                        = ['views',0]
 series_defult                     = ('')
 #list
-show_list_defult                  = 'full'
+show_list_defult = 'normal'

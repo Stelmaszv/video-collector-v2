@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="[#HTMLOUTPUT#]/HTML Generator/css/bootstrap.min.css" rel="stylesheet">
+    <link href="[#HTMLOUTPUT#]/HTML Generator/css/main.css" rel="stylesheet">
+    <link rel="stylesheet" href="[#HTMLOUTPUT#]/HTML Generator/css/baguetteBox.css">
+    <script src="[#HTMLOUTPUT#]/HTML Generator/js/baguetteBox.js" async></script>
+    <title></title>
+</head>
+<body>
+<a href="db.json"></a>
+<nav>
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link active" href="[#HTMLOUTPUT#]/HTML Generator/index.html">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="[#HTMLOUTPUT#]/HTML Generator/sites/movies.html">Movies</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="[#HTMLOUTPUT#]/HTML Generator/sites/series.html">Series</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="[#HTMLOUTPUT#]/HTML Generator/sites/stars.html">Stars</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page"
+               href="[#HTMLOUTPUT#]/HTML Generator/sites/producent.html">Producent</a>
+        </li>
+    </ul>
+</nav>
+<div class="content">
+    <h1 class="d-flex justify-content-center name_js">[#StarName#]</h1>
+    <div class="container ditels-section">
+        <div class="d-flex justify-content-center">
+            <img class="star_avatar avatar_js only-photo-js">
+        </div>
+        <div class="row tabel-info-js">
+            <div class="col">
+                <img class="star_avatar avatar_js">
+            </div>
+
+            <div class="col">
+                <h1 class="d-flex justify-content-center">Description</h1>
+                <p class="description_js movie_description"></p>
+                <h1 class="d-flex justify-content-center">More Informaton</h1>
+                <table class="table table-borderless table_information">
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="tabs_nav">
+        <ul class="nav nav-pills mb-3 tab_nav d-flex justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item galery_tab nav_tab" name="galery" role="presentation">
+                <button class="nav-link" id="pills-galery-tab" data-bs-toggle="pill"
+                        data-bs-target="#galery-tab" type="button" role="tab" aria-controls="pills-contact"
+                        aria-selected="false">Galery
+                </button>
+            </li>
+            <li class="nav-item movies_tab nav_tab" name="movies" role="presentation">
+                <button class="nav-link name_js star_name" id="pills-stars-movies" data-bs-toggle="pill"
+                        data-bs-target="#movis-stars" type="button" role="tab" aria-controls="pills-contact"
+                        aria-selected="false">[#STARNAME#]
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade galery_tab tab_content" id="galery-tab" type="Galery" role="tabpanel"
+                 aria-labelledby="pills-galery-tab">
+                <div class="container">
+                    <div class="row galery galery-run">[#Galery#]</div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade movies_tab tab_content" id="movis-stars" role="tabpanel" type="stars_movies"
+                 aria-labelledby="pills-stars-movies">
+                <div class="filter movies-filter">
+                    <div class="row g-3">
+                        <div class="col">
+                            Search
+                        </div>
+                        <div class="col">
+                            <input type="text" class="search_by_name" placeholder="Search name"
+                                   aria-label="Last name">
+                        </div>
+                        <div class="col">
+                            Series
+                        </div>
+                        <div class="col">
+                            <select class="series-search" aria-label="Default select example">
+                            </select>
+                        </div>
+                        <div class="col">
+                            Producent
+                        </div>
+                        <div class="col">
+                            <select class="producent-search" aria-label="Default select example">
+                                <option selected>Select Producent</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            Raiting
+                        </div>
+                        <div class="col">
+                            <input type="number" class="raiting-search2" max="10" min="0"
+                                   aria-label="Last name">
+                        </div>
+                        <div class="col">
+                            Tag
+                        </div>
+                        <div class="col">
+                            <select class="tag-search" aria-label="Default select example">
+                                <option selected>Select Tag</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row stars-movies-output all_stars_output">[#MoviesOutPut#]</div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+<script src="[#HTMLOUTPUT#]/HTML Generator/js/lists.js"></script>
+<script src="[#HTMLOUTPUT#]/HTML Generator/js/paginator.js"></script>
+<script src="[#HTMLOUTPUT#]/HTML Generator/js/bootstrap.bundle.min.js"></script>
+<script src="db.js"></script>
+<script src="[#HTMLOUTPUT#]/HTML Generator/js/LoadByid.js"></script>
+<script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
+<script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
+<script>
+const StarObj=new Star()
+baguetteBox.run('.galery-run');
+let type=''
+window.addEventListener("scroll", (event) => {
+    var limit = document.body.offsetHeight - window.innerHeight;
+    let scrol_pos=90/100*limit
+    let all=document.querySelectorAll('.tab-pane')
+          
+    for (let tab of all){
+        if (tab.classList.contains('active')){
+            type = tab.getAttribute('type')
+        }
+    }
+          
+    if (window.scrollY>scrol_pos){
+          
+         if (type == "Galery"){
+            StarObj.load_galery(StarObj.photos,stars_galery_page++)
+            baguetteBox.run('.galery-run');
+        }
+         
+        if (type == "stars_movies"){
+            StarObj.load_movies(stars_movies++)
+        }
+                            
+    }
+});
+let all=document.querySelectorAll('.nav_tab')
+for (let tab of all){
+    tab.addEventListener("click", function(){
+        let name = tab.getAttribute('name')
+        if (name == "movies"){ 
+            movies_results=StarObj.data['movies']
+            filter=[]
+            let LoadMoviesObjInit=new LoadMoviesSeriesWithStarsID()
+            const form  =new FilterWithStarsID(filter)
+            form.set_form(movies_results)
+            LM=LoadMoviesSeriesWithStarsID
+            keyup(form,['set_tag','set_producent','set_series'],LM,'.search_by_name')
+            change('.raiting-search2','raiting',form,[],LM)
+            change('.series-search','series',form,['set_producent','set_tag'],LM)
+            change('.producent-search','producent',form,['set_tag','set_series'],LM)
+        }
+    });
+}
+
+</script>
+</body>
+</html>
