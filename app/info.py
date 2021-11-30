@@ -205,7 +205,6 @@ class MovieScanInfoSection(BaseInfo):
             for el in dir:
                 new_dir = item['dir'] + '' + str('\\' + el)
                 list = os.listdir(new_dir)
-                print(list)
                 for dir_element in list:
                     new_dir = new_dir + '' + str('\\' + dir_element)
                     count = count_movies(new_dir)
