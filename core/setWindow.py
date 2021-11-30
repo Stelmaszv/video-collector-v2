@@ -1,6 +1,7 @@
 from core.media_player import Player
 from core.custum_errors import Error
 
+
 open_wnidows=[]
 
 class setWindow():
@@ -25,8 +26,10 @@ class setWindow():
         from view.producent.producent_view import ProducentView
         from view.movie.config_movie import ConfigMoviesView
         from view.VCSCAN.movie_scan import MovieScanInfo
+        from view.VCSCAN.config_scan import ConfigScan
 
         switcher = {
+            'ConfigScan':ConfigScan(),
             'MovieScanInfo':MovieScanInfo(),
             'movies-config': ConfigMoviesView(),
             'JSONCONFIG': JSONConfigView(),

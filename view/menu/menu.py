@@ -37,15 +37,25 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
         scanformovies.setStatusTip('Scan for Movies')
         scanformovies.triggered.connect(self.load_movie_scan)
 
+        scanforconfig = QAction(QIcon('exit.png'), '&Scan for config', self)
+        scanforconfig.setStatusTip('Scan for config')
+        scanforconfig.triggered.connect(self.load_config)
+
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&Actions')
         fileMenu.addAction(jsonConfig)
         fileMenu.addAction(raportConfig)
         VCSCAN = menubar.addMenu('&VCSCAN')
         VCSCAN.addAction(scanformovies)
+        VCSCAN.addAction(scanforconfig)
+        VCSCAN.addAction(scanforconfig)
+
 
     def json_config(self):
         self.BaseView.load_view('JSONCONFIG')
+
+    def load_config(self):
+        self.BaseView.load_view('ConfigScan')
 
     def raport(self):
         self.BaseView.load_view('raport')
