@@ -155,6 +155,11 @@ class RaportInfo(BaseInfo):
         return session.query(Model).count()
 
 class MovieScanInfoSection(BaseInfo):
+    counter_object=0
+
+    def return_counter(self):
+        return self.counter_object
+
     def return_data(self):
         return [
             {"itemNmae": "Movies", "itemName2": str(self.counter_movies(Movies))},
@@ -175,7 +180,9 @@ class MovieScanInfoSection(BaseInfo):
             list = os.listdir(new_dir)
             count = count + len(list)
         movies_in_db = session.query(Model).count()
-        return count - movies_in_db
+        return_count=count - movies_in_db
+        self.counter_object=self.counter_object+return_count
+        return return_count
 
     def set_dir(self,index):
         item = []
@@ -207,13 +214,13 @@ class MovieScanInfoSection(BaseInfo):
                 list = os.listdir(new_dir)
                 for dir_element in list:
                     new_dir = new_dir + '' + str('\\' + dir_element)
-                    count = count_movies(new_dir)
-                    count = count + count
-                    count=count - len(os.listdir(new_dir))
+                    count=count + count_movies(new_dir)
             return count
         movies_in_db = session.query(Model).count()
         movies_series = movies_series_by_series()
-        return movies_series - movies_in_db
+        return_count=movies_series - movies_in_db
+        self.counter_object = self.counter_object + return_count
+        return return_count
 
     def counter_stars(self,Model):
         return self.count_item_in_dir(Model,'stars')
