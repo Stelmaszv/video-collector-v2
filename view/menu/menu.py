@@ -33,16 +33,25 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
         raportConfig.setStatusTip('Raport')
         raportConfig.triggered.connect(self.raport)
 
+        scanformovies = QAction(QIcon('exit.png'), '&Scan for Movies', self)
+        scanformovies.setStatusTip('Scan for Movies')
+        scanformovies.triggered.connect(self.load_movie_scan)
+
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&Actions')
         fileMenu.addAction(jsonConfig)
         fileMenu.addAction(raportConfig)
+        VCSCAN = menubar.addMenu('&VCSCAN')
+        VCSCAN.addAction(scanformovies)
 
     def json_config(self):
         self.BaseView.load_view('JSONCONFIG')
 
     def raport(self):
         self.BaseView.load_view('raport')
+
+    def load_movie_scan(self):
+        self.BaseView.load_view('MovieScanInfo')
 
 
     def resizeEvent(self, event):

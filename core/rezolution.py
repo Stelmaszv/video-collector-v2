@@ -505,6 +505,23 @@ class GetResolutionData:
                     ],
                 }
             },
+            "VCSCAN": {
+                "position": self.base_window(),
+                "window": {
+                    "title_size": [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "info_size": [
+                        self.set_rezulution(7, 'with'),
+                        self.set_rezulution(7, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                }
+            },
             "Stars": {
                 "position": self.base_window(),
                 "window":{

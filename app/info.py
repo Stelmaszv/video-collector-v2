@@ -149,6 +149,18 @@ class RaportInfo(BaseInfo):
     def counter(self, Model):
         return session.query(Model).count()
 
+class MovieScanInfoSection(BaseInfo):
+    def return_data(self):
+        return [
+            {"itemNmae": "Movies", "itemName2": str(self.counter(Movies))},
+            {"itemNmae": "Stars", "itemName2": str(self.counter(Stars))},
+            {"itemNmae": "Series", "itemName2": str(self.counter(Series))},
+            {"itemNmae": "Producents", "itemName2": str(self.counter(Producent))},
+        ]
+
+    def counter(self, Model):
+        return session.query(Model).count()
+
 class InfoForMovie(BaseInfo):
 
     tag_limit=1000
