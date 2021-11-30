@@ -1,7 +1,5 @@
 from core.media_player import Player
 from core.custum_errors import Error
-
-
 open_wnidows=[]
 
 class setWindow():
@@ -24,8 +22,10 @@ class setWindow():
         from view.config.config_data_json import JSONConfigView
         from view.config.RaportView import RaportView
         from view.producent.producent_view import ProducentView
+        from view.movie.config_movie import ConfigMoviesView
 
         switcher = {
+            'movies-config': ConfigMoviesView(),
             'JSONCONFIG': JSONConfigView(),
             'raport': RaportView(),
             'stars_add_tag_view' : StarsAddTagView(),

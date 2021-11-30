@@ -494,6 +494,17 @@ class GetResolutionData:
                     "galery_item_show": 5,
                 }
             },
+            "ConfigMoviesView": {
+                "position": self.base_window(),
+                "window": {
+                    "title_size": [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                }
+            },
             "Stars": {
                 "position": self.base_window(),
                 "window":{
