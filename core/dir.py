@@ -34,7 +34,6 @@ def set_dir_for_star(name: object) -> object:
         dir = data_JSON['dirs'][0]['dir'] + '\\W-Z\\' + name
     return dir
 
-
 def if_star_exist(self,name):
     return self.if_exist(name, self.model, self.model(
         name=name,

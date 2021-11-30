@@ -1,7 +1,12 @@
+import os
+
 from core.datamanipulation import Data as Data
 from core.strings import stringManipupations
 from app.db.models import Movies, Stars, Series, Producent
 from app.db.models import session
+from core.setings import data_JSON, movie_ext
+
+
 class BaseInfo:
     data_info=[]
     def __init__(self, Obj=None, methods=[]):
@@ -152,14 +157,73 @@ class RaportInfo(BaseInfo):
 class MovieScanInfoSection(BaseInfo):
     def return_data(self):
         return [
-            {"itemNmae": "Movies", "itemName2": str(self.counter(Movies))},
-            {"itemNmae": "Stars", "itemName2": str(self.counter(Stars))},
-            {"itemNmae": "Series", "itemName2": str(self.counter(Series))},
-            {"itemNmae": "Producents", "itemName2": str(self.counter(Producent))},
+            {"itemNmae": "Movies", "itemName2": str(self.counter_movies(Movies))},
+            {"itemNmae": "Stars", "itemName2": str(self.counter_stars(Stars))},
+            {"itemNmae": "Series", "itemName2": str(self.counter_series(Series))},
+            {"itemNmae": "Producents", "itemName2": str(self.counter_producent(Producent))},
         ]
 
     def counter(self, Model):
         return session.query(Model).count()
+
+    def count_item_in_dir(self, Model,index):
+        item = self.set_dir(index)
+        dir = os.listdir(item['dir'])
+        count = 0
+        for el in dir:
+            new_dir = item['dir'] + '' + str('\\' + el)
+            list = os.listdir(new_dir)
+            count = count + len(list)
+        movies_in_db = session.query(Model).count()
+        return count - movies_in_db
+
+    def set_dir(self,index):
+        item = []
+        for type in data_JSON['dirs']:
+            if type['type'] == index:
+                item = type
+        return item
+
+    def counter_movies(self, Model):
+        def count_movies(dir):
+            movie_dir = dir+ '' + '\movies'
+            listSeries=os.listdir(movie_dir)
+            count=0
+            for dir_element in listSeries:
+                nev_dir = movie_dir + '' + '\\' + str(dir_element) + '\\DATA'
+                nev_dir_loop = []
+                if os.path.isdir(nev_dir):
+                    nev_dir_loop = os.listdir(nev_dir)
+                for movie in nev_dir_loop:
+                    if movie.endswith(movie_ext):
+                        count=count+1
+            return count
+        def movies_series_by_series():
+            item = self.set_dir('series')
+            count = 0
+            dir= os.listdir(item['dir'])
+            for el in dir:
+                new_dir = item['dir'] + '' + str('\\' + el)
+                list = os.listdir(new_dir)
+                print(list)
+                for dir_element in list:
+                    new_dir = new_dir + '' + str('\\' + dir_element)
+                    count = count_movies(new_dir)
+                    count = count + count
+                    count=count - len(os.listdir(new_dir))
+            return count
+        movies_in_db = session.query(Model).count()
+        movies_series = movies_series_by_series()
+        return movies_series - movies_in_db
+
+    def counter_stars(self,Model):
+        return self.count_item_in_dir(Model,'stars')
+
+    def counter_series(self,Model):
+        return self.count_item_in_dir(Model,'series')
+
+    def counter_producent(self,Model):
+        return self.count_item_in_dir(Model,'producents')
 
 class InfoForMovie(BaseInfo):
 
