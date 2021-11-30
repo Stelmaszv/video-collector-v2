@@ -155,12 +155,7 @@ class HTMLGenaratorMain:
 
         self.create_file(
             self.js,
-            'font.all.min.js',
-            data_JSON['project_url'] + '\HTML_Genarator\js')
-
-        self.create_file(
-            self.js,
-            'font.all.min.js',
+            'font.all.mim.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
         self.create_file(

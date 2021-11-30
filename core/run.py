@@ -22,8 +22,13 @@ class LoopRun:
         for objet in self.objets:
             self.run_object(objet['obj'], objet['method'], objet['stan'], objet['start_mes'], objet['end_mees'])
 class JSONRun:
-    def start(self):
-        print("json")
+
+    def __init__(self, StartView, JSONConfigView):
+        self.StartView = StartView
+        self.JSONConfigView = JSONConfigView
+
+    def show_start_view(self):
+        self.StartView.run_window()
 
 class Run:
     scan_photos = setings_array["scan_photos"]
