@@ -12,7 +12,8 @@ error_array = {
     7:  'Index click_btm_info not found array data',
     8:  'Index res not found array data',
     9:  'Index method not found array data',
-    10: 'Invalid index "font" check instruction!'
+    10: 'Invalid index "font" check instruction!',
+    11: 'Index "objets" not found array data'
 }
 
 class Error:

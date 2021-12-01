@@ -1,4 +1,8 @@
 import os
+import time
+
+from PyQt5.QtWidgets import QListWidget, QScrollBar, QListWidgetItem
+
 from app.db.models import session
 from PyQt5 import QtGui,QtCore, QtWidgets
 from PyQt5.QtCore import QRegExp
@@ -282,6 +286,17 @@ class Form:
             button.setFont(QFont(data['font'][0], data['font'][1]))
         button.clicked.connect(data['click_method'])
 
+    def custum_scroll_bar(self,data):
+        list = QListWidget(self.BaseView)
+        scroll_bar = QScrollBar(self.BaseView)
+        list.setVerticalScrollBar(scroll_bar)
+        Error.throw_error_bool(Error.get_error(9), 'res' in data)
+        Error.throw_error_bool(Error.get_error(11), 'objects' in data)
+        list.setGeometry(data['res'][0], data['res'][1], data['res'][2], data['res'][3])
+        for el in data['objects']:
+            item = QListWidgetItem(el)
+            list.addItem(item)
+
     def button (self,info,grid=None,list=[]):
         button = QtWidgets.QPushButton(self.BaseView)
         button.setObjectName(info['obj_name'])
@@ -328,7 +343,6 @@ class Form:
         return label
 
     def edit_line(self,placeholder,data,grid,validator):
-        from PyQt5.QtGui import QIntValidator
         line = QtWidgets.QLineEdit(self.BaseView)
         line.setPlaceholderText(placeholder)
         if validator:

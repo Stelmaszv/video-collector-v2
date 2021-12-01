@@ -214,8 +214,7 @@ class MovieScanInfoSection(BaseInfo):
                 new_dir = item['dir'] + '' + str('\\' + el)
                 list = os.listdir(new_dir)
                 for dir_element in list:
-                    new_dir = new_dir + '' + str('\\' + dir_element)
-                    count=count + count_movies(new_dir)
+                    count=count + count_movies(new_dir + '' + str('\\' + dir_element))
             return count
         movies_in_db = session.query(Model).count()
         movies_series = movies_series_by_series()

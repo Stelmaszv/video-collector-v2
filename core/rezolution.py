@@ -516,10 +516,23 @@ class GetResolutionData:
                     ],
                     "custum_button":[
                         self.set_rezulution(8, 'with'),
-                        self.set_rezulution(30, 'height'),
+                        self.set_rezulution(80, 'height'),
                         self.set_rezulution(60, 'with'),
                         self.set_rezulution(10, 'height')
                     ],
+                    "go_to_config":[
+                        self.set_rezulution(8, 'with'),
+                        self.set_rezulution(70, 'height'),
+                        self.set_rezulution(60, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "scroler": [
+                        self.set_rezulution(8, 'with'),
+                        self.set_rezulution(20, 'height'),
+                        self.set_rezulution(60, 'with'),
+                        self.set_rezulution(50, 'height')
+                    ],
+
                     "info_size": [
                         self.set_rezulution(31, 'with'),
                         self.set_rezulution(7, 'height'),

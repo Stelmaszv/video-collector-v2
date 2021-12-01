@@ -170,7 +170,7 @@ class AbstractAddViaDir(ABC):
     name=''
     series=None
 
-    def __init__(self, dir):
+    def __init__(self, dir,Viev=None):
         self.dir = dir
         self.config = self.dir + '\\config.JSON'
         self.skip_galery = self.dir + '\\skip_galery.JSON'
@@ -179,6 +179,7 @@ class AbstractAddViaDir(ABC):
         self.IfStar = IfStar()
         self.set_movie_dir()
         self.set_photo_dir()
+        self.Viev = Viev
 
     def set_dir(self,seazon=''):
         dir= self.movie_dir
@@ -246,6 +247,11 @@ class AbstractAddViaDir(ABC):
                 add
             ])
             self.session.commit()
+            print(name+' Has been added')
+            if self.Viev is not None:
+                self.Viev.data_array.append(name+' Has been added')
+                self.Viev.setWindowTitle(name+' Has been added')
+                self.Viev.update()
             Obj = self.session.query(Model).filter(Model.name == name).first()
         return Obj
 
@@ -299,8 +305,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
     model=Series
     name =''
 
-    def __init__(self,dir):
-        super().__init__(dir)
+    def __init__(self,dir,View=None):
+        super().__init__(dir,View)
         self.config = self.dir + '\\config.JSON'
         self.skip_galery = self.dir + '\\skip_galery.JSON'
         self.name=set_name(dir)
@@ -386,6 +392,10 @@ class AddSeriesViaDir(AbstractAddViaDir):
             stars.append(star_obj)
         series = [self.series]
         print('Movie '+str(name)+' has been added')
+        if self.Viev is not None:
+            self.Viev.data_array.append('Movie '+str(name)+' has been added')
+            self.Viev.setWindowTitle('Movie '+str(name)+' has been added')
+            self.Viev.update()
         show_name=self.set_sort_name(name,series[0].name)
         model=self.movie_model(
             name=name,
@@ -403,10 +413,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
         if Obj:
             stan=True
             for item in Obj.series:
-
                 if item.id == self.series.id:
                     stan=False
-
             return stan
         return True
 
@@ -423,9 +431,7 @@ class AddSeriesViaDir(AbstractAddViaDir):
             nev_dir_loop = []
             if os.path.isdir(nev_dir):
                 nev_dir_loop = os.listdir(nev_dir)
-
             for movie in nev_dir_loop:
-
                 if movie.endswith(movie_ext):
                     if_star = self.if_movie_is_star_name(dir_element)
                     if self.if_movie_exist(self.series.name+' '+self.clear_name(movie),dir_element):
@@ -436,8 +442,8 @@ class AddStarViaDir(AbstractAddViaDir):
     model=Stars
     movie_dir = '\\none'
 
-    def __init__(self,dir):
-        super().__init__(dir)
+    def __init__(self,dir,View):
+        super().__init__(dir,View)
         self.star=self.if_star_exist(set_name(dir))
 
     def if_movie_exist(self,name,seazon):
@@ -492,8 +498,8 @@ class AddProducentViaDir(AbstractAddViaDir):
     model=Producent
     movie_dir = '\\movies'
 
-    def __init__(self,dir):
-        super().__init__(dir)
+    def __init__(self,dir,View):
+        super().__init__(dir,View)
         self.star=self.if_producent_exist(set_name(dir))
 
     def if_producent_exist(self,name):
@@ -549,13 +555,15 @@ class AbstractLoopDir(ABC):
 
     LoopClass=None
 
-    def __init__(self,dir):
+    def __init__(self,dir,Viev=None):
         self.dir=dir
+        self.Viev = Viev
+
     def add_files(self):
         loop_dir = os.listdir(self.dir+'\\')
         for item in loop_dir:
             dir = self.dir + '' + str('\\' + item)
-            LC = self.LoopClass(dir)
+            LC = self.LoopClass(dir,self.Viev)
             LC.add_files()
 
 class AddStarViaDirLoop(AbstractLoopDir):
@@ -574,15 +582,16 @@ class LoadData(ABC):
 
     DirLoopClass=None
 
-    def __init__(self,dir):
+    def __init__(self,dir,Viev=None):
         self.dir=dir
+        self.Viev = Viev
 
     def load(self):
         dir = os.listdir(self.dir)
         for item in dir:
             new_dir = self.dir + '' + str('\\' + item)
             if os.path.isdir(new_dir):
-                LC = self.DirLoopClass(new_dir)
+                LC = self.DirLoopClass(new_dir,self.Viev)
                 LC.add_files()
 
 class LoadSeriesFromJSON(LoadData):
@@ -601,8 +610,9 @@ class LoadFilesFromJson:
 
     objects={}
 
-    def __init__(self,json_data):
+    def __init__(self,json_data,Viev=None):
         self.json_data=json_data
+        self.Viev=Viev
         self.object={
             "series"     :  LoadSeriesFromJSON,
             "producents": LoadProducentsFromJSON,
@@ -612,7 +622,7 @@ class LoadFilesFromJson:
     def add_files(self):
         for item in self.json_data:
             LD=self.object[item['type']]
-            LD=LD(item['dir'])
+            LD=LD(item['dir'],self.Viev)
             LD.load()
 
 #old Versions#
