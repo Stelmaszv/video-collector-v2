@@ -2,10 +2,11 @@ import json
 import os
 import sys
 from abc import ABC, abstractmethod
+from json import JSONDecodeError
+
 from core.custum_errors import Error
 from pathlib import Path
 from PyQt5 import QtWidgets
-
 
 class AbstractMode(ABC):
     def __init__(self, setings):
@@ -14,7 +15,6 @@ class AbstractMode(ABC):
     @abstractmethod
     def return_setings(self):
         pass
-
 
 class ResetMode(AbstractMode):
 
@@ -32,7 +32,6 @@ class ResetMode(AbstractMode):
             "generate_json": True,
             "generate_html": True
         }
-
 
 class OffAll(AbstractMode):
 
@@ -63,7 +62,6 @@ class HTML(AbstractMode):
             "generate_html": True
         }
 
-
 class Add(AbstractMode):
 
     def return_setings(self):
@@ -79,7 +77,6 @@ class Add(AbstractMode):
             "generate_json": True,
             "generate_html": True
         }
-
 
 class All(AbstractMode):
 
@@ -97,7 +94,6 @@ class All(AbstractMode):
             "generate_html": True
         }
 
-
 class Screenshot(AbstractMode):
 
     def return_setings(self):
@@ -114,7 +110,6 @@ class Screenshot(AbstractMode):
             "generate_html": False
         }
 
-
 class HTMLJSOM(AbstractMode):
     def return_setings(self):
         return {
@@ -128,7 +123,6 @@ class HTMLJSOM(AbstractMode):
             "generate_html": True
         }
 
-
 class Run(AbstractMode):
     def return_setings(self):
         return {
@@ -141,7 +135,6 @@ class Run(AbstractMode):
             "generate_json": False,
             "generate_html": False
         }
-
 
 class SetMode:
 
@@ -183,7 +176,6 @@ class GetRezolution:
   @property
   def set_height(self):
     return self.size.height()
-
 
 class ConfiGData:
 
@@ -229,10 +221,14 @@ screen_width=GR.set_width
 screen_height=GR.set_height
 data_JSON={}
 if Path('data.json').is_file():
-  with open('data.json') as f:
-    data = json.load(f)
-  data_JSON = data
-  ConfiGData(data_JSON)
+  try:
+      with open('data.json') as f:
+        data = json.load(f)
+        data_JSON = data
+        ConfiGData(data_JSON)
+  except JSONDecodeError:
+      print("Invalid JSONDATA File check instruction!")
+      exit()
 
 #form button
 with_size_defult = 25
@@ -254,7 +250,7 @@ muted=False
 auto_play=True
 full_screen=True
 # MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run"
-MODE = 'Run'
+MODE = 'reset'
 #run MODERUN "console","config"
 MODERUN ="console"
 # run_setings only when mode set to "normal"
