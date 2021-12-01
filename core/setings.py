@@ -3,7 +3,6 @@ import os
 import sys
 from abc import ABC, abstractmethod
 from json import JSONDecodeError
-
 from core.custum_errors import Error
 from pathlib import Path
 from PyQt5 import QtWidgets
@@ -184,7 +183,9 @@ class ConfiGData:
       self.valid_drive(dir['dir'])
       self.make_dirs(dir['dir'])
     Error.throw_error_bool(Error.get_error(1), "html_output" in json)
-
+    Error.throw_error_bool(Error.get_error(1), "movies_photos" in json)
+    if os.path.isdir(json["movies_photos"]) is False:
+        os.mkdir(json["movies_photos"])
   def valid_drive(self,dir):
     name = dir.split('\\')
     dir_error = os.path.isdir(name[0])
@@ -198,7 +199,7 @@ class ConfiGData:
           dir = dir + '\\' + name[el]
           if os.path.isdir(dir) is False:
             os.mkdir(dir)
-                
+
     if os.path.isdir(dir+'\\A-D') is False:
       os.mkdir(dir+'\\A-D')
 
