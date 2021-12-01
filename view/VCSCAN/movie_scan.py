@@ -17,6 +17,8 @@ class MovieScanInfo(QWidget, AbstractBaseView):
     adding=False
     reset_view = 'MovieScanInfo'
     data_array=[]
+    info_data_index=0
+    info_data_array=0
 
     def after_init(self):
         if self.info_data_array:

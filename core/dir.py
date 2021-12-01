@@ -249,8 +249,9 @@ class AbstractAddViaDir(ABC):
             self.session.commit()
             print(name+' Has been added')
             if self.Viev is not None:
-                self.Viev.data_array.append(name+' Has been added')
-                self.Viev.setWindowTitle(name+' Has been added')
+                self.Viev.data_array.append(str(self.Viev.info_data_index)+'/'+str(self.Viev.info_data_array)+' '+name+' Has been added')
+                self.Viev.setWindowTitle(str(self.Viev.info_data_index)+'/'+str(self.Viev.info_data_array)+' '+name+' Has been added')
+                self.Viev.info_data_index=self.Viev.info_data_index+1
                 self.Viev.update()
             Obj = self.session.query(Model).filter(Model.name == name).first()
         return Obj
@@ -393,8 +394,9 @@ class AddSeriesViaDir(AbstractAddViaDir):
         series = [self.series]
         print('Movie '+str(name)+' has been added')
         if self.Viev is not None:
-            self.Viev.data_array.append('Movie '+str(name)+' has been added')
-            self.Viev.setWindowTitle('Movie '+str(name)+' has been added')
+            self.Viev.data_array.append(str(self.Viev.info_data_index)+'/'+str(self.Viev.info_data_array)+' '+name+' Has been added')
+            self.Viev.setWindowTitle(str(self.Viev.info_data_index)+'/'+str(self.Viev.info_data_array)+' '+name+' Has been added')
+            self.Viev.info_data_index = self.Viev.info_data_index + 1
             self.Viev.update()
         show_name=self.set_sort_name(name,series[0].name)
         model=self.movie_model(
