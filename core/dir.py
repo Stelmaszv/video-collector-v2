@@ -232,6 +232,7 @@ class AbstractAddViaDir(ABC):
         self.photo_dir = self.dir + '' + str(self.photo_dir)
         if os.path.isdir(self.photo_dir) is False:
             os.mkdir(self.photo_dir)
+            os.mkdir(self.photo_dir+'//DATA')
 
     def set_avatar(self):
         return  self.set_photo_from_json(series_avatar_defult,'avatar')
