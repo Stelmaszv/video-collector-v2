@@ -183,11 +183,12 @@ class ConfiGData:
     for dir in json['dirs']:
       self.valid_drive(dir['dir'])
       self.make_dirs(dir['dir'])
+    Error.throw_error_bool(Error.get_error(1), "html_output" in json)
 
   def valid_drive(self,dir):
     name = dir.split('\\')
     dir_error = os.path.isdir(name[0])
-    Error.throw_error_bool('Drive ' + name[0] + ' not exist please check if is crypt ! ', dir_error)
+    Error.throw_error_bool(Error.add_data_to_error(Error.get_error(2),'{{data}}',name[0]), dir_error)
 
   def make_dirs(self,dir):
     if os.path.isdir(dir) is False:
@@ -215,6 +216,7 @@ class ConfiGData:
 
     if os.path.isdir(dir+'\\W-Z') is False:
       os.mkdir(dir+'\\W-Z')
+
 GR=GetRezolution()
 #Screen
 screen_width=GR.set_width
@@ -227,7 +229,7 @@ if Path('data.json').is_file():
         data_JSON = data
         ConfiGData(data_JSON)
   except JSONDecodeError:
-      print("Invalid JSONDATA File check instruction!")
+      print(Error.get_error(1))
       exit()
 
 #form button
