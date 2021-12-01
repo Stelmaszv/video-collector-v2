@@ -514,8 +514,14 @@ class GetResolutionData:
                         self.set_rezulution(90, 'with'),
                         self.set_rezulution(10, 'height')
                     ],
+                    "custum_button":[
+                        self.set_rezulution(8, 'with'),
+                        self.set_rezulution(30, 'height'),
+                        self.set_rezulution(60, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
                     "info_size": [
-                        self.set_rezulution(7, 'with'),
+                        self.set_rezulution(31, 'with'),
                         self.set_rezulution(7, 'height'),
                         self.set_rezulution(20, 'with'),
                         self.set_rezulution(10, 'height')

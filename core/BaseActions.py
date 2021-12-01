@@ -2,7 +2,7 @@ import os
 from app.db.models import session
 from PyQt5 import QtGui,QtCore, QtWidgets
 from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtGui import QRegExpValidator, QFont
 from datetime import datetime
 from core.datamanipulation import DataValidator
 from core.dir import AddStarViaDir, set_dir_for_star
@@ -269,6 +269,18 @@ class Form:
         grid.addWidget(button, data[0], data[1], data[2], data[3])
         self.buttons_loop[index]['obejct'].addButton(button)
         self.buttons_loop[index]['obejct'].buttonClicked[int].connect(self.buttons_loop[index]['button'])
+
+    def custum_button(self,data):
+        Error.throw_error_bool(Error.get_error(7),'click_btm_info' in data)
+        Error.throw_error_bool(Error.get_error(8), 'res' in data)
+        Error.throw_error_bool(Error.get_error(9), 'click_method' in data)
+        button = QtWidgets.QPushButton(self.BaseView)
+        button.setGeometry(data['res'][0], data['res'][1], data['res'][2], data['res'][3])
+        button.setText(data['click_btm_info'])
+        if 'font' in data:
+            Error.throw_error_bool(Error.get_error(10), len(data)!=2)
+            button.setFont(QFont(data['font'][0], data['font'][1]))
+        button.clicked.connect(data['click_method'])
 
     def button (self,info,grid=None,list=[]):
         button = QtWidgets.QPushButton(self.BaseView)

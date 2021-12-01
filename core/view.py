@@ -226,7 +226,6 @@ class BaseView:
                     row = 0
                     col = col + 1
 
-
 class AbstractBaseView:
 
     session            = session
@@ -251,21 +250,21 @@ class AbstractBaseView:
 
     def __init__(self):
         if self.model is not None:
-            Error.throw_error_bool('class self.model is not subclass of BaseModel', issubclass(self.model, BaseModel))
+            Error.throw_error_bool(Error.get_error(3), issubclass(self.model, BaseModel))
         self.BaseView = BaseView([], self)
         self.BaseView.list_view_type=self.show_list
         self.FormSection = FormSection(self)
         self.BaseActions = ViewBaseAction(self)
         self.SetResolution = SetResolution(self)
-        self.set_resolution()
+        self._set_resolution()
 
         if self.Info is not None:
-            Error.throw_error_bool('class self.Info is not subclass of BaseInfo', issubclass(self.Info, BaseInfo))
+            Error.throw_error_bool(Error.get_error(4), issubclass(self.Info, BaseInfo))
             self.InfoObj=self.Info(self)
 
         if self.Nav is not None:
-            Error.throw_error_bool('class self.Nav is not subclass of BaseNav', issubclass(self.Nav, BaseNav))
-            self.NavObj = self.Nav(self)
+            Error.throw_error_bool(Error.get_error(5), issubclass(self.Nav, BaseNav))
+            self._NavObj = self.Nav(self)
 
     def set_data_on_init(self):
         pass
@@ -284,7 +283,7 @@ class AbstractBaseView:
         return self.BaseView.Massage
 
     def custum_form(self,FormSchema,index,ModelView=None):
-        Error.throw_error_bool('class self.FormSchema is not subclass of BaseFormSection',
+        Error.throw_error_bool(Error.get_error(6),
                                issubclass(FormSchema, BaseFormShema))
         FormSchemaObj = FormSchema(self)
         buttons = FormSchemaObj.return_from_section()
@@ -308,7 +307,7 @@ class AbstractBaseView:
             self.Submit = Submit(self.ModelView, self.data, self)
         self.FormSection.form_section(data_line,buttons)
 
-    def set_resolution(self):
+    def _set_resolution(self):
 
         if self.resolution_index in self.SetResolution.menu_set:
             if 'position' in self.SetResolution.menu_set[self.resolution_index]:
@@ -361,12 +360,12 @@ class AbstractBaseView:
             Error.throw_error('galery_size not found in resolution index (' + self.resolution_index + ')')
 
     def get_nav(self):
-        self.NavObj.set_data(self.data)
+        self._NavObj.set_data(self.data)
         if 'navbar' in self.WindowSize:
             data = self.WindowSize['navbar']
             self.BaseView.set_nav(
                 data,
-                self.NavObj.set_nav()
+                self._NavObj.set_nav()
             )
         else:
             Error.throw_error('navbar not found in resolution index (' + self.resolution_index + ')')
@@ -410,7 +409,7 @@ class AbstractBaseView:
         else:
             Error.throw_error('avatar_size not found in resolution index (' + self.resolution_index + ')')
 
-    def init(self):
+    def _init(self):
         self.up_date_views()
         if ArrayManipulation.faind_index_in_array(self.show_elemnts, 'Tags'):
             if self.data is not None:
@@ -482,6 +481,7 @@ class AbstractBaseView:
             data   = self.WindowSize['info_size']
             rows = ['itemNmae','itemName2']
             inf_data=self.InfoObj.return_data()
+            self.info_data_array=self.InfoObj.return_counter()
             self.BaseView.info(inf_data, data, rows)
         else:
             Error.throw_error('info_size not found in resolution index (' + self.resolution_index + ')')
@@ -492,9 +492,9 @@ class AbstractBaseView:
             "dialog" in self.SetResolution.menu_set[self.resolution_index]
         )
         return self.SetResolution.menu_set[self.resolution_index]['dialog']
+
     def title(self):
         title =''
-
         if self.data is not None:
             title = self.data.show_name
         if len(self.window_title)>0:
@@ -511,10 +511,14 @@ class AbstractBaseView:
         else:
             Error.throw_error('title_size not found in resolution index (' + self.resolution_index + ')')
 
+    def after_init(self):
+        pass
+
     def run_window(self):
         self.set_data_on_init()
         self.___set_data()
         self.set_up()
-        self.init()
+        self._init()
+        self.after_init()
         self.show()
         self.setGeometry(self.left, self.top, self.width, self.height)

@@ -161,12 +161,13 @@ class MovieScanInfoSection(BaseInfo):
         return self.counter_object
 
     def return_data(self):
-        return [
+        data= [
             {"itemNmae": "Movies", "itemName2": str(self.counter_movies(Movies))},
             {"itemNmae": "Stars", "itemName2": str(self.counter_stars(Stars))},
             {"itemNmae": "Series", "itemName2": str(self.counter_series(Series))},
             {"itemNmae": "Producents", "itemName2": str(self.counter_producent(Producent))},
         ]
+        return data
 
     def counter(self, Model):
         return session.query(Model).count()
