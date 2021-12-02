@@ -247,7 +247,7 @@ class ConfigInfoSection(MovieScanInfoSection):
         count = 0
         Model = session.query(Model).filter(Model.name == dir).first()
         if Model is not None:
-            with open(Model.config) as json_file:
+            with open(Model.dir+'\\\\\\\\config.JSON') as json_file:
                 data = json.load(json_file)
                 if 'fields' in data:
                     for item in data['fields']:
@@ -267,7 +267,6 @@ class ConfigInfoSection(MovieScanInfoSection):
                     if Model is not None:
                         with open(Model.config) as json_file:
                             data = json.load(json_file)
-                            print(data)
                             if 'fields' in data:
                                 for item in data['fields']:
                                     if hasattr(Model, item['db']):
