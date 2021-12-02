@@ -253,9 +253,9 @@ muted=False
 auto_play=True
 full_screen=True
 # MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run"
-MODE = 'Run'
+MODE = 'reset'
 #run MODERUN "console","config"
-MODERUN ="config"
+MODERUN ="console"
 # run_setings only when mode set to "normal"
 setings_array = {
     "run_start_view": True,

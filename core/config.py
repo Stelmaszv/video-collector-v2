@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from core.dir import set_name, if_star_exist, AddStarViaDir, set_dir_for_star, AddSeriesViaDir
+from core.dir import set_name, if_star_exist, AddStarViaDir, set_dir_for_star, AddSeriesViaDir, set_dir_for_producent, \
+    if_producent_exist, AddProducentViaDir
 from app.db.models import session
 from app.db.models import Tags, Series, Stars, Movies, Producent
 from datetime import datetime
@@ -234,8 +235,10 @@ class SeriesConfigData(AbstractConfigItem):
                         self.set_data_form_json(sezon_item['fields'], sezon)
 
     def add_producent(self, producent, Series):
-        ProducentObj = self.session.query(Producent).filter(Producent.name == producent[0]).first()
-        Series.producent.append(ProducentObj)
+        if os.path.isdir(set_dir_for_producent(producent[0])) is False:
+            os.mkdir(set_dir_for_producent(producent[0]))
+            ProducentObj = if_producent_exist(AddProducentViaDir(set_dir_for_producent(producent[0])), producent[0])
+            Series.producent.append(ProducentObj)
 
     def movies_list(self):
         def convert_to_src(movies):

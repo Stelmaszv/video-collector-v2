@@ -14,6 +14,24 @@ from core.strings import stringManipupations
 
 add: bool = False
 
+def set_dir_for_producent(name: object) -> object:
+    letter_of_movie = name[0]
+    Error.throw_error_bool("First letter of star can not be 'space' (" + str(name) + ") !!", letter_of_movie != " ")
+    letter = letter_of_movie.upper()
+    dir = ''
+    if letter == 'A' or letter == 'B' or letter == 'C' or letter == 'D':
+        dir = data_JSON['dirs'][2]['dir'] + '\\A-D\\' + name
+    if letter == 'E' or letter == 'F' or letter == 'G' or letter == 'H':
+        dir = data_JSON['dirs'][2]['dir'] + '\\E-H\\' + name
+    if letter == 'I' or letter == 'J' or letter == 'K' or letter == 'L':
+        dir = data_JSON['dirs'][2]['dir'] + '\\I-L\\' + name
+    if letter == 'M' or letter == 'N' or letter == 'O' or letter == 'P' or letter =='Q':
+        dir = data_JSON['dirs'][2]['dir'] + '\\M-P\\' + name
+    if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
+        dir = data_JSON['dirs'][2]['dir'] + '\\R-U\\' + name
+    if letter == 'W' or letter == 'V' or letter == 'X' or letter == 'Y' or letter == 'Z':
+        dir = data_JSON['dirs'][2]['dir'] + '\\W-Z\\' + name
+    return dir
 
 def set_dir_for_star(name: object) -> object:
     letter_of_movie = name[0]
@@ -500,7 +518,7 @@ class AddProducentViaDir(AbstractAddViaDir):
     model=Producent
     movie_dir = '\\movies'
 
-    def __init__(self,dir,View):
+    def __init__(self,dir,View=None):
         super().__init__(dir,View)
         self.star=self.if_producent_exist(set_name(dir))
 
