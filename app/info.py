@@ -1,11 +1,10 @@
-import os
-
 from core.datamanipulation import Data as Data
 from core.strings import stringManipupations
 from app.db.models import Movies, Stars, Series, Producent
 from app.db.models import session
 from core.setings import data_JSON, movie_ext
-
+import os
+import json
 
 class BaseInfo:
     data_info=[]
@@ -230,6 +229,70 @@ class MovieScanInfoSection(BaseInfo):
 
     def counter_producent(self,Model):
         return self.count_item_in_dir(Model,'producents')
+
+class ConfigInfoSection(MovieScanInfoSection):
+
+    def count_config_items(self,index,Model):
+        item = self.set_dir(index)
+        count = 0
+        dir = os.listdir(item['dir'])
+        for el in dir:
+            new_dir = item['dir'] + '' + str('\\' + el)
+            list = os.listdir(new_dir)
+            for dir_element in list:
+                count = count + self.count_series(dir_element, Model)
+        return count
+
+    def count_series(self,dir,Model):
+        count = 0
+        Model = session.query(Model).filter(Model.name == dir).first()
+        if Model is not None:
+            with open(Model.config) as json_file:
+                data = json.load(json_file)
+                if 'fields' in data:
+                    for item in data['fields']:
+                        if hasattr(Model, item['db']):
+                            if getattr(Model, item['db']) != item['value']:
+                                count = count + 1
+        return count
+
+    def counter_movies(self,Model):
+        def config_movie(dir):
+            sezons=os.listdir(dir)
+            count = 0
+            for movies_dir in sezons:
+                movies_sezons=os.listdir(dir+'\\\\\\\\'+movies_dir)
+                for movie_sezons in movies_sezons:
+                    Model = session.query(Movies).filter(Movies.name == dir).first()
+                    if Model is not None:
+                        with open(Model.config) as json_file:
+                            data = json.load(json_file)
+                            print(data)
+                            if 'fields' in data:
+                                for item in data['fields']:
+                                    if hasattr(Model, item['db']):
+                                        if getattr(Model, item['db']) != item['value']:
+                                            count = count + 1
+            return count
+        count = 0
+        movies_dir=data_JSON['movies_photos']
+        series_dir=movies_dir+'\\\\\\\\series'
+        list = os.listdir(series_dir)
+        for main_dir in list:
+            for sorted_dir in os.listdir(series_dir+'\\\\\\\\'+main_dir):
+                count=config_movie(series_dir+'\\\\\\\\'+main_dir+'\\\\\\\\'+sorted_dir)
+                count = count + 1
+
+        return count
+
+    def counter_series(self, Model):
+        return self.count_config_items('series',Model)
+
+    def counter_stars(self,Model):
+        return self.count_config_items('stars', Model)
+
+    def counter_producent(self,Model):
+        return self.count_config_items('producents', Model)
 
 class InfoForMovie(BaseInfo):
 
