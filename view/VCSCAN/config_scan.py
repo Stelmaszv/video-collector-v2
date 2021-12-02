@@ -1,4 +1,6 @@
 from app.info import ConfigInfoSection
+from core.config import ConfigLoop, ConfigMovies, SetTags
+from core.setings import data_JSON
 from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
 from app.model_view import ConfigAddDataModel
@@ -18,15 +20,15 @@ class ConfigScan(QWidget, AbstractBaseView):
         if self.info_data_array:
             self.window_title = "Found " + str(self.info_data_array) + " items to config!";
             data = {
-                "click_btm_info": "Star Scan!",
+                "click_btm_info": "Star Config!",
                 "res":self.WindowSize['custum_button'],
-                "click_method":self.start_scan,
+                "click_method":self.start_config,
                 "font": ['Times',50]
             }
         else:
             self.window_title = "No found items to config !"
             data = {
-                "click_btm_info": "Go to config!",
+                "click_btm_info": "Next",
                 "res":self.WindowSize['go_to_config'],
                 "click_method":self.load_config_view,
                 "font": ['Times',50]
@@ -51,7 +53,14 @@ class ConfigScan(QWidget, AbstractBaseView):
 
     def load_config_view(self):
         self.close()
-        self.BaseView.load_view('ConfigScan')
 
-    def start_scan(self):
+    def start_config(self):
         self.close()
+        CF=ConfigLoop(data_JSON['dirs'])
+        CF.load()
+
+        CM=ConfigMovies(data_JSON['movies_photos'])
+        CM.load()
+
+        ST=SetTags(data_JSON['dirs'])
+        ST.load()

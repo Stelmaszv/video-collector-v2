@@ -241,6 +241,7 @@ class ConfigInfoSection(MovieScanInfoSection):
             list = os.listdir(new_dir)
             for dir_element in list:
                 count = count + self.count_series(dir_element, Model)
+        self.counter_object = self.counter_object + count
         return count
 
     def count_series(self,dir,Model):
@@ -263,9 +264,9 @@ class ConfigInfoSection(MovieScanInfoSection):
             for movies_dir in sezons:
                 movies_sezons=os.listdir(dir+'\\\\\\\\'+movies_dir)
                 for movie_sezons in movies_sezons:
-                    Model = session.query(Movies).filter(Movies.name == dir).first()
+                    Model = session.query(Movies).filter(Movies.name == movie_sezons).first()
                     if Model is not None:
-                        with open(Model.config) as json_file:
+                        with open(dir+'\\\\\\\\'+movies_dir+'\\\\\\\\'+movie_sezons+'\\\\\\\\config.JSON') as json_file:
                             data = json.load(json_file)
                             if 'fields' in data:
                                 for item in data['fields']:
@@ -280,8 +281,8 @@ class ConfigInfoSection(MovieScanInfoSection):
         for main_dir in list:
             for sorted_dir in os.listdir(series_dir+'\\\\\\\\'+main_dir):
                 count=config_movie(series_dir+'\\\\\\\\'+main_dir+'\\\\\\\\'+sorted_dir)
-                count = count + 1
-
+                count = count + count
+        self.counter_object = self.counter_object + count
         return count
 
     def counter_series(self, Model):
