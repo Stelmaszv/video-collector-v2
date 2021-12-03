@@ -412,8 +412,9 @@ class AddSeriesViaDir(AbstractAddViaDir):
         series = [self.series]
         print('Movie '+str(name)+' has been added')
         if self.Viev is not None:
-            self.Viev.data_array.append(str(self.Viev.info_data_index)+'/'+str(self.Viev.info_data_array)+' '+name+' Has been added')
-            self.Viev.setWindowTitle(str(self.Viev.info_data_index)+'/'+str(self.Viev.info_data_array)+' '+name+' Has been added')
+            self.Viev.setWindowTitle(str(self.Viev.info_data_index)+' '+name+' Has been added')
+            self.Viev.scrol.addItem(str(self.Viev.info_data_index)+' '+name+' Has been added')
+            self.Viev.scrol.update()
             self.Viev.info_data_index = self.Viev.info_data_index + 1
             self.Viev.update()
         show_name=self.set_sort_name(name,series[0].name)

@@ -296,6 +296,7 @@ class Form:
         for el in data['objects']:
             item = QListWidgetItem(el)
             list.addItem(item)
+        return list
 
     def button (self,info,grid=None,list=[]):
         button = QtWidgets.QPushButton(self.BaseView)
