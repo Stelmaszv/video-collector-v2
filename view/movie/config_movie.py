@@ -1,4 +1,5 @@
 from app.db.models import Movies
+from app.forms import ConfigMoviesViewForm
 from app.model_view import MoviesModelView
 from app.nav import MovieConfigNav
 from core.view import AbstractBaseView
@@ -11,6 +12,7 @@ class ConfigMoviesView(QWidget, AbstractBaseView):
     resolution_index = 'ConfigMoviesView'
     ModelView = MoviesModelView
     Nav = MovieConfigNav
+    FormSchema = ConfigMoviesViewForm
     reset_view = 'movies-config'
     edit_view = 'edit_movie'
     show_elemnts = ['Galery', 'Avatar', 'List', 'Form','Tags','Description','Info']
@@ -28,3 +30,6 @@ class ConfigMoviesView(QWidget, AbstractBaseView):
 
     def add_star(self,values):
         self.BaseView.load_view('movie_add_star_to_model_view', self.data)
+
+    def base_edit(self, values):
+        self.BaseView.load_view('edit_movie', self.data)

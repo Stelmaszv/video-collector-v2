@@ -327,6 +327,43 @@ class AbstractBaseFormShema(BaseFormShema):
             'new_row': True
         })
 
+class ConfigMoviesViewForm(BaseFormShema):
+
+    def form(self):
+        self.from_section = []
+        self.add_iten('button', {
+            'place_holder': 'Base Edit',
+            'name': 'base_edit',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Add tag',
+            'name': 'add_tag',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Edit Galery',
+            'name': 'edit_galery',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Add Star',
+            'name': 'add_star',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+
 class MovieEditForm(AbstractBaseFormShema):
 
     def add_forms(self):
@@ -343,22 +380,6 @@ class MovieEditForm(AbstractBaseFormShema):
             'place_holder': 'Cuntry',
             'db'  :'country',
             'name': 'country',
-            "row": False,
-            "coll": True
-        })
-
-        self.add_iten('label', {
-            'place_holder': 'Year',
-            'name': 'country',
-            "row": True,
-            "coll": False,
-            'new_row': True
-        })
-
-        self.add_iten('edit_line', {
-            'place_holder': 'Year',
-            'name': 'year',
-            'db': 'year',
             "row": False,
             "coll": True
         })
