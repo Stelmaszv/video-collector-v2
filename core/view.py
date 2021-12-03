@@ -88,6 +88,14 @@ class BaseView:
         self.avatar_photo.setObjectName("avatar")
         return self.avatar_photo
 
+    def custum_avatar(self,data):
+        Error.throw_error_bool('Index src not found in data', 'src' in data)
+        Error.throw_error_bool('Index res not found in data', 'src' in data)
+        avatar_photo = QtWidgets.QLabel(self.obj)
+        avatar_photo.setPixmap(QtGui.QPixmap(data['src']))
+        avatar_photo.setGeometry(QtCore.QRect(data['res'][0], data['res'][1], data['res'][2], data['res'][3]))
+        return avatar_photo
+
     def info(self,infoData,data,rows,obj=None):
         if obj==None:
             obj=self.obj

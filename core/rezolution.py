@@ -510,6 +510,36 @@ class GetResolutionData:
                         self.set_rezulution(40, 'with'),
                         self.set_rezulution(40, 'height')
                     ]
+
+                }
+            },
+            "set_photos_for_movies":{
+                "position": self.base_window(),
+                "window": {
+                    "avatar_custum":[
+                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(50, 'height')
+                    ],
+                    "poster":[
+                        self.set_rezulution(45, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(50, 'height')
+                    ],
+                    "title_size": [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "form_section": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(50, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(40, 'height')
+                    ]
                 }
             },
             "VCSCAN": {

@@ -327,13 +327,70 @@ class AbstractBaseFormShema(BaseFormShema):
             'new_row': True
         })
 
+class SetPhotosForMoviesForm(BaseFormShema):
+
+    def form(self):
+        self.from_section = []
+
+        self.add_iten('label', {
+            'place_holder': 'Avatar',
+            'name': 'avatar',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('photo', {
+            'place_holder': 'Avatar',
+            'dir_set': '',
+            'name': 'avatar',
+            'db': 'avatar',
+            "row": False,
+            "coll": True,
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Poster',
+            'name': 'avatar',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('photo', {
+            'place_holder': 'Poster',
+            'dir_set': '',
+            'name': 'poster',
+            'db': 'poster',
+            "row": False,
+            "coll": True,
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Submit',
+            'name': 'submit_click',
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+            'new_row': True
+        })
+
 class ConfigMoviesViewForm(BaseFormShema):
 
     def form(self):
         self.from_section = []
+
         self.add_iten('button', {
             'place_holder': 'Base Edit',
             'name': 'base_edit',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Set Photos',
+            'name': 'set_photos',
             "row": True,
             "coll": True,
             'new_row': True

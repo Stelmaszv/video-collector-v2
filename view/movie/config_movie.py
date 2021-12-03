@@ -16,7 +16,7 @@ class ConfigMoviesView(QWidget, AbstractBaseView):
     reset_view = 'movies-config'
     edit_view = 'edit_movie'
     show_elemnts = ['Galery', 'Avatar', 'List', 'Form','Tags','Description','Info']
-    methods = ['add_star', 'add_tag', 'submit_click']
+    methods = ['add_star', 'add_tag', 'submit_click','set_photos']
 
     def add_tag(self,values):
         self.BaseView.load_view('movies_add_tag_view', self.data)
@@ -30,6 +30,9 @@ class ConfigMoviesView(QWidget, AbstractBaseView):
 
     def add_star(self,values):
         self.BaseView.load_view('movie_add_star_to_model_view', self.data)
+
+    def set_photos(self,values):
+        self.BaseView.load_view('set_photos_for_movies', self.data)
 
     def base_edit(self, values):
         self.BaseView.load_view('edit_movie', self.data)
