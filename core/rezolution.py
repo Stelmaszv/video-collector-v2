@@ -497,12 +497,19 @@ class GetResolutionData:
             "ConfigMoviesView": {
                 "position": self.base_window(),
                 "window": {
+                    "navbar": self.base_navbar(),
                     "title_size": [
                         self.set_rezulution(-10, 'with'),
                         self.set_rezulution(0, 'height'),
                         self.set_rezulution(90, 'with'),
                         self.set_rezulution(10, 'height')
                     ],
+                    "form_section": [
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(7, 'height'),
+                        self.set_rezulution(40, 'with'),
+                        self.set_rezulution(40, 'height')
+                    ]
                 }
             },
             "VCSCAN": {
