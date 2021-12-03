@@ -417,13 +417,13 @@ class GetResolutionData:
                 "window": {
                     "title_size": [
                         self.set_rezulution(-10, 'with'),
-                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(-2, 'height'),
                         self.set_rezulution(90, 'with'),
                         self.set_rezulution(10, 'height')
                     ],
                     "form_section": [
                         self.set_rezulution(25, 'with'),
-                        self.set_rezulution(-15, 'height'),
+                        self.set_rezulution(-12, 'height'),
                         self.set_rezulution(25, 'with'),
                         self.set_rezulution(40, 'height')
                     ],
@@ -431,7 +431,7 @@ class GetResolutionData:
                         self.set_rezulution(15, 'with'),
                         self.set_rezulution(10, 'height'),
                         self.set_rezulution(50, 'with'),
-                        self.set_rezulution(85, 'height')
+                        self.set_rezulution(70, 'height')
                     ],
                 }
             },
