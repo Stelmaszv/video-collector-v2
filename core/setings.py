@@ -236,6 +236,11 @@ if Path('data.json').is_file():
 #form button
 with_size_defult = 25
 height_size_defult = 25
+#custum_json_galery
+movies    = ["cover.jpg", "poster.jpg"]
+series    = ["banner.jpg","avatar.jpg"]
+producent = ["banner.jpg","avatar.jpg"]
+star      = ["avatar.jpg"]
 #menu
 menu_per_page = 20
 series_avatar_defult ='D:/project/video-collector-v2/icon/series.jpg'
@@ -253,7 +258,7 @@ muted=False
 auto_play=True
 full_screen=True
 # MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run"
-MODE = 'Run'
+MODE = 'reset'
 #run MODERUN "console","config"
 MODERUN ="console"
 # run_setings only when mode set to "normal"

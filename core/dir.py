@@ -11,6 +11,7 @@ from pathlib import Path
 from core.setings import data_JSON,photo_ext,movie_ext
 from moviepy.editor import VideoFileClip
 from core.strings import stringManipupations
+from core.setings import series,producent,star
 
 add: bool = False
 
@@ -187,6 +188,8 @@ class AbstractAddViaDir(ABC):
     star=None
     name=''
     series=None
+    shema_url=''
+    defult_skip_galery=''
 
     def __init__(self, dir,Viev=None):
         self.dir = dir
@@ -209,12 +212,12 @@ class AbstractAddViaDir(ABC):
 
         if Path(self.config).is_file() is False:
             f = open(self.config, "x")
-            f.write("{}\n")
+            f.write(Path(self.shema_url).read_text())
             f.close()
 
         if Path(self.skip_galery).is_file() is False:
             f = open(self.skip_galery, "x")
-            f.write("[]\n")
+            f.write(json.dumps(self.defult_skip_galery))
             f.close()
 
     def clear_name(self, dir):
@@ -303,7 +306,7 @@ class AbstractAddViaDir(ABC):
             os.mkdir(dir+'\\none')
             os.mkdir(dir+'\\photo')
             f = open(dir+'\\config.JSON', "x")
-            f.write('{}')
+            f.write("{}")
             f.close()
         if os.path.isdir(dir + '\\photo\DATA') is False:
             os.mkdir(dir + '\\photo\DATA')
@@ -323,6 +326,8 @@ class AddSeriesViaDir(AbstractAddViaDir):
 
     model=Series
     name =''
+    shema_url ="custum_json/series.JSON"
+    defult_skip_galery = series
 
     def __init__(self,dir,View=None):
         super().__init__(dir,View)
@@ -462,6 +467,8 @@ class AddStarViaDir(AbstractAddViaDir):
 
     model=Stars
     movie_dir = '\\none'
+    shema_url = "custum_json/stars.json"
+    defult_skip_galery = star
 
     def __init__(self,dir,View):
         super().__init__(dir,View)
@@ -518,6 +525,8 @@ class AddProducentViaDir(AbstractAddViaDir):
 
     model=Producent
     movie_dir = '\\movies'
+    shema_url = "custum_json\\producent.json"
+    defult_skip_galery = producent
 
     def __init__(self,dir,View=None):
         super().__init__(dir,View)

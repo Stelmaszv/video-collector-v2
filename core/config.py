@@ -5,10 +5,12 @@ from app.db.models import session
 from app.db.models import Tags, Series, Stars, Movies, Producent
 from datetime import datetime
 from core.setings import singles_movies_defult, none_movies_defult
+from core.setings import movies
 from pathlib import Path
 import os
 import json
 import xlsxwriter
+
 
 
 class MovieListForStars:
@@ -248,10 +250,11 @@ class SeriesConfigData(AbstractConfigItem):
                         self.set_data_form_json(sezon_item['fields'], sezon)
 
     def add_producent(self, producent, Series):
-        if os.path.isdir(set_dir_for_producent(producent[0])) is False:
-            os.mkdir(set_dir_for_producent(producent[0]))
-            ProducentObj = if_producent_exist(AddProducentViaDir(set_dir_for_producent(producent[0])), producent[0])
-            Series.producent.append(ProducentObj)
+        if len(producent)>0:
+            if os.path.isdir(set_dir_for_producent(producent[0])) is False:
+                os.mkdir(set_dir_for_producent(producent[0]))
+                ProducentObj = if_producent_exist(AddProducentViaDir(set_dir_for_producent(producent[0])), producent[0])
+                Series.producent.append(ProducentObj)
 
     def movies_list(self):
         def convert_to_src(movies):
@@ -463,6 +466,7 @@ class ProducentConfigData(AbstractConfigItem):
 
 class ConfigMovies(AbstractConfigItem):
     Movies = Movies
+    shema_url ="custum_json/movies.json"
     dir_DB = ''
 
     def __init__(self, json_data,View=None):
@@ -553,12 +557,13 @@ class ConfigMovies(AbstractConfigItem):
 
         if os.path.isfile(config) is False:
             f = open(config, "x")
-            f.write('{}')
+            print(Path(self.shema_url).read_text())
+            f.write(Path(self.shema_url).read_text())
             f.close()
 
         if os.path.isfile(galery) is False:
             f = open(galery, "x")
-            f.write('[]')
+            f.write(json.dumps(movies))
             f.close()
 
     def load(self):
