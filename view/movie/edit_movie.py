@@ -7,7 +7,7 @@ from app.model_view import MoviesModelView
 class EditMovieView(QWidget,AbstractBaseView):
     model = Movies
     resolution_index = 'EditSeries'
-    submit_view = 'movies'
+    submit_view = 'movies-config'
     FormSchema = MovieEditForm
     ModelView = MoviesModelView
     show_elemnts = ['Info', 'Galery', 'Nav', 'Avatar','List','Description','Tags']

@@ -238,6 +238,7 @@ class Submit:
     def add_data_to_model(self):
         self.Model.add_data(self.data)
         self.Obj.close()
+        print('ok')
         if self.Obj.data is not None:
             if hasattr(self.Obj, 'submit_view'):
                 self.Obj.BaseView.load_view(self.Obj.submit_view, self.Obj.data)

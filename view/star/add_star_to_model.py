@@ -12,7 +12,7 @@ class BaseAddStarToModelView(QWidget,AbstractBaseView):
     FormSchema   = AddStarToModelForm
     list_view = 'Tags'
     methods = ['submit_click']
-    reset_view = 'movies'
+    reset_view = 'movie_add_star_to_model_view'
 
     def  set_up(self):
         self.model=self.obj.model
@@ -25,6 +25,7 @@ class BaseAddStarToModelView(QWidget,AbstractBaseView):
     def submit_click(self,values):
         AT = AddStar(values, self)
         AT.add()
+        self.BaseActions.reset()
 
     def delete(self,Star):
         AT = AddStar([], self)
@@ -34,7 +35,7 @@ class BaseAddStarToModelView(QWidget,AbstractBaseView):
 
 class MovieAddStarToModelView(BaseAddStarToModelView):
     model = Movies
-    reset_view = 'movies'
+    reset_view = 'movie_add_star_to_model_view'
 
 class SeriesAddStarToModelView(BaseAddStarToModelView):
     model = Series
