@@ -1,4 +1,9 @@
+from core.config import ConfigLoop, ConfigMovies, SetTags, CreateXML, CreateMovieList
+from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsSeries, GenerateJSONOtputsStars, \
+    GenerateJSONOtputsProducent
 from core.dir import LoadFilesFromJson
+from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTMLProducents, GenerateHTMLSeries, \
+    GenerateHTMLStars
 from core.setings import data_JSON
 from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
@@ -57,8 +62,51 @@ class MovieScanInfo(QWidget, AbstractBaseView):
 
     def start_scan(self):
         self.data_array = []
-        LFFJ = LoadFilesFromJson(data_JSON['dirs'], self)
+        LFFJ = LoadFilesFromJson(data_JSON['dirs'])
         LFFJ.add_files()
+
+        CL=ConfigLoop(data_JSON['dirs'])
+        CL.load()
+
+        CM=ConfigMovies(data_JSON['movies_photos'])
+        CM.load()
+
+        ST=SetTags(data_JSON['dirs'])
+        ST.set()
+
+        CX=CreateXML(data_JSON['dirs'])
+        CX.load()
+
+        CML=CreateMovieList(data_JSON['dirs'])
+        CML.load()
+
+        CJB=CreateJSONDBLIST()
+        CJB.create()
+
+        OBJ=GenerateJSONOtputsSeries()
+        OBJ.create()
+
+        OBJ = GenerateJSONOtputsStars()
+        OBJ.create()
+
+        OBJ = GenerateJSONOtputsProducent()
+        OBJ.create()
+
+        OBJ = HTMLGenaratorMain()
+        OBJ.generate()
+
+        OBJ = GenerateHTMLMovies()
+        OBJ.generate()
+
+        OBJ = GenerateHTMLProducents()
+        OBJ.generate()
+
+        OBJ = GenerateHTMLSeries()
+        OBJ.generate()
+
+        OBJ = GenerateHTMLStars()
+        OBJ.generate()
+
         self.close()
         MSI=MovieScanInfo()
         MSI.data_array=self.data_array

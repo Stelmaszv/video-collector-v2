@@ -81,8 +81,9 @@ class StarList:
 class AbstractConfigItem(ABC):
     Model = None
 
-    def __init__(self, dir):
+    def __init__(self, dir,View=None):
         self.dir = dir
+        self.Viev = View
         self.session = session
         self.name = set_name(dir)
         print("Config " + str(self.name))
@@ -123,6 +124,16 @@ class AbstractConfigItem(ABC):
             self.data.tags.append(query)
             session.commit()
 
+    def view_mess(self):
+        if self.Viev is not None:
+            self.Viev.data_array.append(
+                str(self.Viev.info_data_index) +'  Config ' + str(
+                    self.name) + '')
+            self.Viev.setWindowTitle(
+                str(self.Viev.info_data_index)+'  Config ' + str(self.name) + '')
+            self.Viev.info_data_index = self.Viev.info_data_index + 1
+            self.Viev.update()
+
     def set_data_form_json(self, el, Obj):
         def add_item(item):
             if 'data' in item:
@@ -140,8 +151,10 @@ class AbstractConfigItem(ABC):
                     if 'available' in item:
                         if item['value'] in item['available']:
                             add_item(item)
+                            self.view_mess()
                     else:
                         add_item(item)
+                        self.view_mess()
 
     def add_list(self, Obj, atter_for_list, atter_for_literator):
         if Path(Obj.dir + '\\list.JSON').is_file() is True:
@@ -431,6 +444,7 @@ class ProducentConfigData(AbstractConfigItem):
         self.create_series_list()
         self.dir_for_stars()
         self.movies_list()
+
         with open(self.config) as json_file:
             data = json.load(json_file)
 
@@ -451,8 +465,10 @@ class ConfigMovies(AbstractConfigItem):
     Movies = Movies
     dir_DB = ''
 
-    def __init__(self, json_data):
+    def __init__(self, json_data,View=None):
         self.dir = json_data
+        self.Viev=View
+
 
     def set_cover(self, Movie):
         for logo in os.listdir(Movie.dir):
@@ -547,14 +563,16 @@ class ConfigMovies(AbstractConfigItem):
 
     def load(self):
         for Movie in session.query(Movies).all():
-            print('Config for ' + str(Movie))
+            self.name=Movie
+            print('Config for ' + str(self.name))
             self.make_dir(Movie)
 
 
 class SetTags(AbstractConfigItem):
 
-    def __init__(self, json_data):
+    def __init__(self, json_data,View=None):
         self.dir = json_data
+        self.View = View
 
     def set_tags(self, Movie):
         def set_tag_from_series(Movie):
@@ -573,7 +591,8 @@ class SetTags(AbstractConfigItem):
 
     def set(self):
         for Movie in session.query(Movies).all():
-            print('Adding tag for ' + str(Movie))
+            self.name = Movie
+            print('Adding tag for ' + str(self.name))
             self.set_tags(Movie)
 
     def load(self):
@@ -583,28 +602,30 @@ class SetTags(AbstractConfigItem):
 class AbstractConfig(ABC):
     LoadSetingsClass = None
 
-    def __init__(self, dir):
+    def __init__(self, dir,View=None):
         self.dir = dir
+        self.View = View
 
     def set(self):
         loop_dir = os.listdir(self.dir)
         for item in loop_dir:
             dir = self.dir + '' + str('\\' + item)
-            OBJ = self.LoadSetingsClass(dir)
+            OBJ = self.LoadSetingsClass(dir,self.View)
             OBJ.load_dir()
 
 
 class AbstractLoadSetings(ABC):
     ItemClass = None
 
-    def __init__(self, dir):
+    def __init__(self, dir,View=None):
         self.dir = dir
+        self.View = View
 
     def load_dir(self):
         loop_dir = os.listdir(self.dir)
         for item in loop_dir:
             dir = self.dir + '' + str('\\' + item)
-            self.ItemClass(dir).load()
+            self.ItemClass(dir,self.View).load()
 
 
 class LoadSetingsProducent(AbstractLoadSetings):
@@ -633,8 +654,9 @@ class ConfigProducent(AbstractConfig):
 
 class ConfigLoop:
 
-    def __init__(self, json_data):
+    def __init__(self, json_data,View=None):
         self.json_data = json_data
+        self.View=View
         self.object = {
             "series": ConfigSeries,
             "producents": ConfigProducent,
@@ -645,5 +667,5 @@ class ConfigLoop:
         for item in self.json_data:
             if item['type'] != 'photos':
                 LD = self.object[item['type']]
-                LD = LD(item['dir'])
+                LD = LD(item['dir'],self.View)
                 LD.set()

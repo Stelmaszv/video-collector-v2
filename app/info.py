@@ -271,8 +271,9 @@ class ConfigInfoSection(MovieScanInfoSection):
                             if 'fields' in data:
                                 for item in data['fields']:
                                     if hasattr(Model, item['db']):
-                                        if getattr(Model, item['db']) != item['value']:
-                                            count = count + 1
+                                        if item['db'] != 'date_relesed':
+                                            if getattr(Model, item['db']) != item['value']:
+                                                count = count + 1
             return count
         count = 0
         movies_dir=data_JSON['movies_photos']
