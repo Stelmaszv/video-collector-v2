@@ -231,12 +231,6 @@ class AbstratJSONOtpus(ABC):
         with open(self.input) as json_file:
             data = json.load(json_file)
             for movie in data:
-                if Path(movie["dir"] + '\db.JSON').is_file() is True:
-                    os.remove(movie["dir"] + '\db.JSON')
-                f = open(movie["dir"] + '\db.JSON', "x")
-                f.write(json.dumps(self.defult_add(movie)))
-                f.close()
-
                 if Path(movie["dir"] + '\db.js').is_file() is True:
                     os.remove(movie["dir"] + '\db.js')
                 f = open(movie["dir"] + '\db.js', "x")
@@ -260,9 +254,8 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['photos'] = self.return_galery(data_JSON)
-        data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, series_fields_defults)
-        data_JSON['movies_with_stars'] = self.CreateJSONDBLISTObj.base_get(self.set_movies_with_star(data.stars),
-                                                                           movies_fields_defults)
+        #data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, series_fields_defults)
+        #data_JSON['movies_with_stars'] = self.CreateJSONDBLISTObj.base_get(self.set_movies_with_star(data.stars),movies_fields_defults)
         return data_JSON
 
     def set_movies_with_star(self, stars):

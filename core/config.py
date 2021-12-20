@@ -557,7 +557,6 @@ class ConfigMovies(AbstractConfigItem):
 
         if os.path.isfile(config) is False:
             f = open(config, "x")
-            print(Path(self.shema_url).read_text())
             f.write(Path(self.shema_url).read_text())
             f.close()
 
