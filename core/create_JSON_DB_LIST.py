@@ -1,3 +1,4 @@
+import math
 from abc import ABC
 from app.db.models import session
 from app.db.models import Producent, Stars, Movies, Series
@@ -169,24 +170,58 @@ class CreateJSONDBLIST:
     def get_stars(self):
         return self.base_get(Stars, self.stars_fields)
 
+    def create_pagination(self, data, per_page):
+        count = len(data)
+        pages = math.ceil(count / per_page)
+        new_array = []
+        index = 0
+        for el in range(1, pages + 1):
+            movies = []
+            elments = 0
+            for item in data:
+                if elments < per_page and index < count:
+                    movies.append(data[index])
+                    index = index + 1
+                elments = elments + 1
+
+            new_array.append({"page": el, "Objets": movies})
+        return new_array
+
+    def generate_movies_output(self,limit):
+        def create_movie_list(pages):
+            for page in pages:
+                name = 'OUTPUT/movies/' + str(page['page']) + '.js'
+                if Path(name).is_file() is True:
+                    os.remove(name)
+                f = open(name, "x")
+                string = 'movies = '+str(json.dumps(page['Objets']))+''
+                f.write(string)
+                f.close()
+
+
+        pages=self.create_pagination(self.get_movies(),limit)
+        if os.path.isdir('OUTPUT/movies') is False:
+            os.mkdir('OUTPUT/movies')
+        create_movie_list(pages)
+
     def create(self):
         list = [
             {"OBJ": self.get_producnets(),
              'name': 'OUTPUT/json/producents.JSON', 'js': 'OUTPUT/js/producents.js', 'var_name': 'producents'},
-            {"OBJ": self.get_movies(), 'name': 'OUTPUT/json/movies.JSON',
-             'js': 'OUTPUT/js/movies.js', 'var_name': 'movies'},
             {"OBJ": self.get_series(),
              'name': 'OUTPUT/json/series.JSON',
              'js': 'OUTPUT/js/series.js', 'var_name': 'series'},
             {"OBJ": self.get_stars(), 'name': 'OUTPUT/json/stars.JSON',
              'js': 'OUTPUT/js/stars.js', 'var_name': 'stars'},
         ]
+
         if os.path.isdir('OUTPUT') is False:
             os.mkdir('OUTPUT')
             if os.path.isdir('OUTPUT/json') is False:
                 os.mkdir('OUTPUT/json')
             if os.path.isdir('OUTPUT/js') is False:
                 os.mkdir('OUTPUT/js')
+        self.generate_movies_output(2)
 
         for el in list:
             if Path(el['name']).is_file() is True:
@@ -200,6 +235,7 @@ class CreateJSONDBLIST:
             string = 'var ' + el['var_name'] + ' = ' + str(el['OBJ'])
             f.write(string)
             f.close()
+
 
 
 class AbstratJSONOtpus(ABC):

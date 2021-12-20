@@ -80,7 +80,7 @@
         </div>
     </div>
 </div>
-<div class="js_data_content"  style="display:none;"></div>
+<div class="js_data_content" style="display: none;"></div>
 <main class='content container js_data_content'>
     <div class="row movies-output">[#MoviesOputs#]</div>
 </main>
@@ -92,14 +92,25 @@
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\movies_list.js"></script>
 <script>
     let movies_data=[]
-    console.log(movies_data)
     const CL = new ContentLoader()
     CL.set_list()
     var content = document.querySelector('.js_data_content');
     const counter_stan_Interval = setInterval(function () {
         if (counter_stan){
             clearInterval(counter_stan_Interval)
-            console.log(counter_stan)
+            movies_results=movies_data
+            filter=[]
+            let LoadMoviesObjInit=new LoadMovies()
+            const form=new FilterMovies(filter)
+            form.set_form(movies_results)
+            //scroller()
+            LM=LoadMovies
+            keyup(form,['set_tag','set_series','set_producent'],LM)
+            change('.raiting-search','raiting',form,[],LM)
+            change('.series-search','series',form,['set_producent','set_stars','set_tag'],LM)
+            change('.producent-search','producent',form,['set_producent','set_stars','set_tag','set_series'],LM)
+            change('.stars-search','star',form,['set_tag','set_series'],LM)
+            change('.tag-search','tag',form,['set_producent','set_series','set_tag','set_series'],LM)
         }
     }, 1);
 
