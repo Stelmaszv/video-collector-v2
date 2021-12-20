@@ -1,4 +1,50 @@
 let page=0
+let counter_stan=false
+function json_valider(){
+    if (content.innerHTML!=""){
+        const json_parse = JSON.parse(content.innerHTML);
+        //console.log(json_parse)
+        for (let el of json_parse['data']){
+            movies_data.push(el)
+        }
+    }
+}
+class ContentLoader{
+    set_list(){
+        var content = document.querySelector('.js_data_content');
+        const counter = setInterval(function () {
+            for (let item of data){
+                var script = document.createElement('script');
+                script.onload = function () {
+                    content.innerHTML=movies
+                    json_valider()
+                }
+                script.src = item;
+                document.head.appendChild(script);
+            }
+
+            if (movies_data.length==data_count){
+                clearInterval(counter)
+                counter_stan=true
+            }
+        }, 1000);
+        /*
+        var script = document.createElement('script');
+        let movies_data =[]
+        var content = document.querySelector('.js_data_content');
+        console.log(data)
+        script.onload = function () {
+            if (content.innerHTML==""){
+                content.innerHTML=movies
+            }
+        };
+        setInterval(function () {json_valider()}, 1000);
+        script.src = data[0]['src'];
+        document.head.appendChild(script);
+        */
+    }
+
+}
 class LoadContet{
 
     constructor(filter=[]){
