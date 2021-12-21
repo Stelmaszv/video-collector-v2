@@ -4,7 +4,7 @@ from app.db.models import session
 from app.db.models import Producent, Stars, Movies, Series
 from core.custum_errors import Error
 from pathlib import Path
-from core.setings import photo_ext
+from core.setings import photo_ext, data_JSON
 import os.path
 import json
 import os
@@ -188,21 +188,52 @@ class CreateJSONDBLIST:
         return new_array
 
     def generate_movies_output(self,limit):
+
+        def clear_pages():
+            dir_list = os.listdir('OUTPUT/movies')
+            for dir in dir_list:
+                os.remove('OUTPUT/movies/'+dir)
+
         def create_movie_list(pages):
+
+            def valid_page(page):
+                if page<10:
+                    return '0'+str(page)
+                return str(page)
+
             for page in pages:
-                name = 'OUTPUT/movies/' + str(page['page']) + '.js'
+                name = 'OUTPUT/movies/' + valid_page(page['page']) + '.js'
                 if Path(name).is_file() is True:
                     os.remove(name)
                 f = open(name, "x")
                 string = 'movies = '+str(json.dumps(page['Objets']))+''
                 f.write(string)
                 f.close()
-
-
+        clear_pages()
         pages=self.create_pagination(self.get_movies(),limit)
         if os.path.isdir('OUTPUT/movies') is False:
             os.mkdir('OUTPUT/movies')
         create_movie_list(pages)
+
+    def generate_movies_list(self):
+        def generete_dir_list():
+            file_list=[]
+            dir_name='OUTPUT/movies'
+            dir_list = os.listdir(dir_name)
+            for dir in dir_list:
+                file=data_JSON['html_output']+'/HTML Generator/js/movies/'+dir
+                file_list.append(file)
+            return file_list
+
+        file_name='HTML_Genarator/js/movies_list.js'
+        if Path(file_name).is_file() is True:
+            os.remove(file_name)
+        f = open(file_name, "x")
+        string =  'var data = ' + str(generete_dir_list())+' '
+        data_count = 'var data_count = ' + str(len(self.get_movies()))
+        string=string+str(data_count)
+        f.write(string)
+        f.close()
 
     def create(self):
         list = [
@@ -221,7 +252,8 @@ class CreateJSONDBLIST:
                 os.mkdir('OUTPUT/json')
             if os.path.isdir('OUTPUT/js') is False:
                 os.mkdir('OUTPUT/js')
-        self.generate_movies_output(2)
+        self.generate_movies_output(10)
+        self.generate_movies_list()
 
         for el in list:
             if Path(el['name']).is_file() is True:
