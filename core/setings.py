@@ -258,7 +258,7 @@ muted=False
 auto_play=True
 full_screen=True
 # MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run"
-MODE = 'reset'
+MODE = 'HTML'
 #run MODERUN "console","config"
 MODERUN ="console"
 # run_setings only when mode set to "normal"

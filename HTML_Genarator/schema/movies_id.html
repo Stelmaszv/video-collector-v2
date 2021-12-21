@@ -226,9 +226,19 @@
   <script src="db.js"></script>
   <script src="[#HTMLOUTPUT#]/HTML Generator/js/LoadByid.js"></script>
   <script src="[#HTMLOUTPUT#]\HTML Generator\js\load.js"></script>
+  <script src="[#HTMLOUTPUT#]\HTML Generator\js\movies.js"></script>
   <script src="[#HTMLOUTPUT#]\HTML Generator\js\filters.js"></script>
     <script>
         //player
+        function get_movies_series(){
+            let return_movies=[]
+            for (let movie of movies){
+                if(movie.short_series.id==this.data.short_series.id){
+                    return_movies.push(movie)
+                }
+            }
+            return return_movies
+        }
         const MovieObj=new Movie()
         baguetteBox.run('.galery-run');
         let type=''
@@ -264,7 +274,7 @@
             tab.addEventListener("click", function(){
                 let name = tab.getAttribute('name')
                 if (name == "movies_series"){ 
-                    movies_results=MovieObj.data.series[0]["movies"]
+                    movies_results=get_movies_series()
                     filter=[]
                     let LoadMoviesObjInit=new LoadMoviesSeriesID()
                     const form  =new FilterMoviesSeriesID(filter)
