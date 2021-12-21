@@ -159,9 +159,38 @@ class HTMLGenaratorMain:
             data_JSON['project_url'] + '\HTML_Genarator\js')
 
         self.create_file(
+            self.js,
+            'movies_list.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
             self.css,
             'awsome.all.min.css',
             data_JSON['project_url'] + '\HTML_Genarator\css')
+
+        self.create_movies_list()
+
+    def create_movies_list(self):
+
+        def clear_movies_dir():
+            movies_lists = os.listdir(self.js+'\\movies')
+            for el_dir in movies_lists:
+                os.remove(self.js+'\\movies\\'+el_dir)
+
+        def create_file(el_dir):
+            dir=self.js+'\movies'
+            if Path(dir + '\\' + el_dir).is_file() is True:
+                os.remove(dir + '\\' + el_dir)
+
+            f = open(dir + '\\' + el_dir, "w")
+            file=data_JSON['project_url'] + '\OUTPUT\movies\\'+el_dir
+            f.write(HtmlGenaratorBase().return_html_as_string(file))
+            f.close()
+
+        clear_movies_dir()
+        movies_lists=os.listdir('OUTPUT/movies')
+        for el_dir in movies_lists:
+            create_file(el_dir)
 
     def create_file(self, dir, file_name, shema_url):
         return HtmlGenaratorBase().create_file(dir, file_name, shema_url)
@@ -172,7 +201,7 @@ class AbstractGenarta:
 
     def generate(self):
         Error.throw_error_bool("input not exist", self.input != "")
-        Error.throw_error_bool("shema_file not exist", self.shema_file != "")
+        Error.throw_error_bool("sheama_file not exist", self.shema_file != "")
         with open(self.input) as json_file:
             data = json.load(json_file)
             for item in data:

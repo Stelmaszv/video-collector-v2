@@ -229,7 +229,7 @@ class CreateJSONDBLIST:
         if Path(file_name).is_file() is True:
             os.remove(file_name)
         f = open(file_name, "x")
-        string =  'var data = ' + str(generete_dir_list())+' '
+        string =     'var data = ' + str(generete_dir_list())+' \n'
         data_count = 'var data_count = ' + str(len(self.get_movies()))
         string=string+str(data_count)
         f.write(string)
@@ -267,8 +267,6 @@ class CreateJSONDBLIST:
             string = 'var ' + el['var_name'] + ' = ' + str(el['OBJ'])
             f.write(string)
             f.close()
-
-
 
 class AbstratJSONOtpus(ABC):
     input = ""
