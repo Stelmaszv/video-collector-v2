@@ -86,7 +86,7 @@
     let LoadMoviesObjInit=new LoadSeries()
     const form=new FilterSeries(series_result)
     form.set_form(series_result)
-    scroller()
+    scroller(LoadMoviesObjInit)
     let LS = LoadSeries
     keyup(form,['set_tag','set_stars'],LS)
     change('.raiting-search','raiting',form,[],LS)

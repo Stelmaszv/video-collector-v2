@@ -70,7 +70,7 @@
     let LoadMoviesObjInit=new LoadProducents()
     const form=new FilterProducent(producent_result)
     form.set_form(producent_result)
-    scroller()
+    scroller(LoadMoviesObjInit)
     let LP = LoadProducents
     keyup(form,['set_tag'],LP)
     change('.raiting-search','raiting',form,[],LP)

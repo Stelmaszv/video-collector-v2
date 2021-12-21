@@ -101,9 +101,10 @@
             movies_results=movies_data
             filter=[]
             let LoadMoviesObjInit=new LoadMovies()
+            console.log(LoadMoviesObjInit)
             const form=new FilterMovies(filter)
             form.set_form(movies_results)
-            //scroller()
+            scroller(LoadMoviesObjInit)
             LM=LoadMovies
             keyup(form,['set_tag','set_series','set_producent'],LM)
             change('.raiting-search','raiting',form,[],LM)
