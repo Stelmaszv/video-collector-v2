@@ -103,7 +103,18 @@ class CreateJSONDBLIST:
                 "tag": self.return_tags(item_db.tags),
                 "short_stars": self.return_short_stars(item_db.series[0])
             }
-        return {}
+        return {} 
+    
+    def return_short_producent(self, item_db):
+        if len(item_db.series):
+            producent = item_db.series[0].producent[0]
+            return {
+                "id": producent.id,
+                "show_name": producent.show_name,
+                "dir": producent.dir,
+                "avatar": producent.avatar
+            }
+        return {}   
 
     def return_top_stars(self, item):
         top_stars = []
@@ -242,6 +253,8 @@ class CreateJSONDBLIST:
             {"OBJ": self.get_series(),
              'name': 'OUTPUT/json/series.JSON',
              'js': 'OUTPUT/js/series.js', 'var_name': 'series'},
+            {"OBJ": self.get_movies(), 'name': 'OUTPUT/json/movies.JSON',
+             'js': 'OUTPUT/js/movies.js', 'var_name': 'movies'},
             {"OBJ": self.get_stars(), 'name': 'OUTPUT/json/stars.JSON',
              'js': 'OUTPUT/js/stars.js', 'var_name': 'stars'},
         ]
@@ -320,8 +333,7 @@ class GenerateJSONOtputsMovies(AbstratJSONOtpus):
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['photos'] = self.return_galery(data_JSON)
-        #data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, series_fields_defults)
-        #data_JSON['movies_with_stars'] = self.CreateJSONDBLISTObj.base_get(self.set_movies_with_star(data.stars),movies_fields_defults)
+        data_JSON['producent'] = self.CreateJSONDBLISTObj.return_short_producent(data)
         return data_JSON
 
     def set_movies_with_star(self, stars):

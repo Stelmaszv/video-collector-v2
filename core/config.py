@@ -253,8 +253,8 @@ class SeriesConfigData(AbstractConfigItem):
         if len(producent)>0:
             if os.path.isdir(set_dir_for_producent(producent[0])) is False:
                 os.mkdir(set_dir_for_producent(producent[0]))
-                ProducentObj = if_producent_exist(AddProducentViaDir(set_dir_for_producent(producent[0])), producent[0])
-                Series.producent.append(ProducentObj)
+            ProducentObj = if_producent_exist(AddProducentViaDir(set_dir_for_producent(producent[0])), producent[0])
+            Series.producent.append(ProducentObj)
 
     def movies_list(self):
         def convert_to_src(movies):

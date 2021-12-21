@@ -43,12 +43,14 @@ class LoadID{
     }
 
     set_tabs(arry,div){
+        /*
         if (arry.length>0){
             let movis_tab =document.querySelectorAll(div)
             for (let tab of movis_tab){
                 tab.style.visibility='visible'
             }
         }
+        */
     }
 
     set_active_tabs(){
@@ -437,6 +439,7 @@ class Movie extends LoadID{
 
     set_buttons(){
         let next_star_div = document.querySelector('#next_star')
+        /*
         if (this.data.movies_with_stars.length>1){
             let star_name = this.found_star(this.data.short_stars,this.data.movies_with_stars)
             let get_star_div = document.querySelector('.get_star')
@@ -451,6 +454,7 @@ class Movie extends LoadID{
         }else{
             next_star_div.style.display='none'
         }
+        */
         
         let get_series_div = document.querySelector('.get_series')
         get_series_div.innerHTML=this.data.short_series.name
@@ -614,31 +618,30 @@ class Movie extends LoadID{
         const PaginatorPhoto  = new Paginator(this.data.photos,20)
         this.photos=PaginatorPhoto.genrate_pages()
 
-        const PaginatorMovies = new Paginator(this.data.movies_with_stars,20)
-        this.movies=PaginatorMovies.genrate_pages()
+        //const PaginatorMovies = new Paginator(this.data.movies_with_stars,20)
+        //this.movies=PaginatorMovies.genrate_pages()
 
-        const PaginatorMoviesSeries = new Paginator(this.data.series[0].movies,20)
-        this.series_movies=PaginatorMoviesSeries.genrate_pages()
+        //const PaginatorMoviesSeries = new Paginator(this.data.series[0].movies,20)
+        //this.series_movies=PaginatorMoviesSeries.genrate_pages()
     }
 
     all_movies_with_star(page){
-        let ObjMovieList = new MovieList('.all_stars_output',this.movies)
-        ObjMovieList.return_data(page)
+        //let ObjMovieList = new MovieList('.all_stars_output',this.movies)
+        //ObjMovieList.return_data(page)
     }
     add_series_movies(page){
-        let ObjMovieList = new MovieList('.all-in-series',this.series_movies)
-        ObjMovieList.return_data(page)
+        //let ObjMovieList = new MovieList('.all-in-series',this.series_movies)
+        //ObjMovieList.return_data(page)
     }
 
     create_table_information(){
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
-        if (this.data.series[0].producent.hasOwnProperty('dir')){
-            table.innerHTML+='<td>Producent</td><td class="producent_item"><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
-        }
+        console.log(this.data)
+        table.innerHTML+='<td>Producent</td><td class="producent_item"><a href="'+this.data.producent.dir+'/producent_id.html">'+this.data.producent.show_name+'</a></td>'
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Serie</td><td class="series_item"><a href="'+this.data.series[0].dir+'/series_id.html">'+this.data.series[0].name+'</a></td>'
+        table.innerHTML+='<td>Serie</td><td class="series_item"><a href="'+this.data.short_series.dir+'/series_id.html">'+this.data.short_series.name+'</a></td>'
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
         if (this.data.short_stars.length>0){
