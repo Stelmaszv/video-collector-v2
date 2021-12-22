@@ -417,12 +417,14 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
         print("creating JSON OUTPUT for Series " + data_JSON['name'])
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
+        data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
         data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
-        data_JSON['photos'] = self.return_galery(data_JSON, Movie)
+        data_JSON['photos'] = self.return_galery(data_JSON, data)
         data_JSON['producent'] = self.CreateJSONDBLISTObj.return_producent(data_JSON)
         return data_JSON
 
-    def return_galery(self, JSON, Movie):
+    def return_galery(self, JSON, data):
+        movies=data.movies
         photos = []
         dir = os.listdir(JSON['dir'] + '\\photo\DATA')
         for item in dir:
@@ -434,15 +436,15 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
                 new_item = JSON['dir'] + '\\photo\DATA\\' + item
                 photos.append({"photo": new_item, "name": JSON['name']})
 
-        for movie in JSON['movies']:
-            for item in os.listdir(movie['dir']):
+        for movie in movies:
+            for item in os.listdir(movie.dir):
 
-                with open(movie['dir'] + '\\skip_galery.JSON') as json_file:
+                with open(movie.dir + '\\skip_galery.JSON') as json_file:
                     data = json.load(json_file)
 
                 if item.endswith(photo_ext) and item not in data:
-                    new_item = movie['dir'] + '\\' + item
-                    name = JSON['name'] + ' - ' + movie['name']
+                    new_item = movie.dir + '\\' + item
+                    name = JSON['name'] + ' - ' + movie.name
                     photos.append({"photo": new_item, "name": name})
         return photos
 
@@ -452,7 +454,7 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
     fields = producent_fields_defult
     Model = Producent
 
-    def return_galery(self, JSON, Movie):
+    def return_galery(self, JSON, data):
         photos = []
 
         dir = os.listdir(JSON['dir'] + '\\photo\DATA')
@@ -477,6 +479,16 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
                     photos.append({"photo": new_item, "name": name})
 
         return photos
+
+    def return_banners(self,data):
+        dir=data.dir+'\\banners'
+        ndir=[]
+        if os.path.exists(dir):
+            for dir_of_benners_item in os.listdir(dir):
+                el=dir+'\\'+dir_of_benners_item
+                ndir.append(el)
+        return ndir
+
     def add_movies(self, data):
         movies = [];
         for series in data:
@@ -494,5 +506,6 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
         data_JSON['series'] = self.CreateJSONDBLISTObj.base_get(data.series, series_fields_defults)
         data_JSON['movies'] = self.add_movies(data.series)
         data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
-        data_JSON['photos'] = self.return_galery(data_JSON, Movie)
+        data_JSON['photos'] = self.return_galery(data_JSON, data)
+        data_JSON['banner'] = self.return_banners(data)
         return data_JSON
