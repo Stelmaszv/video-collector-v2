@@ -88,20 +88,27 @@ class LoadID{
             if(ext == filename) return "";
             return ext;
         }
-        const baners_count=this.data.banner.length
-        if (baners_count==0){
-            let ext=getExt(this.data.baner)
+        function load_banner(data){
+            let ext=getExt(data.baner)
             if (ext==="png" || ext==="jpg"){
                 let baner=document.querySelector('.baner_js')
-                baner.setAttribute('src',this.data.baner)
+                baner.setAttribute('src',data.baner)
             }else{
                 let baner=document.querySelector('.baner')
                 baner.style.display="none"
             }
+        }
+        if (this.data.hasOwnProperty('banner')){
+            const baners_count=this.data.banner.length
+            if (baners_count==0){
+                load_banner(this.data)
+            }else{
+                var item = this.data.banner[Math.floor(Math.random()*baners_count)];
+                let baner=document.querySelector('.baner_js')
+                baner.setAttribute('src',item)
+            }
         }else{
-            var item = this.data.banner[Math.floor(Math.random()*baners_count)];
-            let baner=document.querySelector('.baner_js')
-            baner.setAttribute('src',item)
+            load_banner(this.data)
         }
     }
 
