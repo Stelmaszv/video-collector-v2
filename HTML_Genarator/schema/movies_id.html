@@ -239,6 +239,22 @@
             }
             return return_movies
         }
+
+        function get_movies_with_stars(){
+            let stars_in_movie=this.data.short_stars
+            let return_movies=[]
+            for (let movie of movies){
+                for (let star of movie.short_stars){
+                    for (let star_in_movie of stars_in_movie){
+                        if (star.id == star_in_movie.id){
+                            return_movies.push(movie)
+                        }
+                    }
+                }
+            }
+            return return_movies
+        }
+
         const MovieObj=new Movie()
         baguetteBox.run('.galery-run');
         let type=''
@@ -286,7 +302,7 @@
                     change('.tag-search','tag',form,['set_stars','set_tag'],LM)
                 }
                 if (name == "movies_with_stars"){ 
-                    movies_results=MovieObj.data['movies_with_stars']
+                    movies_results=get_movies_with_stars()
                     filter=[]
                     let LoadMoviesObjInit=new LoadMoviesSeriesWithStarsID()
                     const form  =new FilterWithStarsID(filter)

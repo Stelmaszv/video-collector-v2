@@ -11,7 +11,7 @@ import os
 
 producent_fields_defult = ['country', "baner", "year"]
 producent_fields_defult2 = ['country', 'series', "baner", "year", "top_stars", "short_series"]
-series_fields_defults = ["years", "country", "number_of_sezons", "movies", "producent", "baner", "short_stars"]
+series_fields_defults = ["years", "country", "number_of_sezons", "producent", "baner", "short_stars"]
 movies_fields_defults = ["src", "short_stars", "sezon", "date_relesed", "country", "short_series", "producent",
                          "poster"]
 stars_fields_defults = ['weight', 'height', 'ethnicity', 'hair_color', 'short_series', 'nationality', 'birth_place',
@@ -20,7 +20,6 @@ defult_producents_pages = 1
 defult_movis = 10
 defult_stars = 10
 defult_series = 10
-
 
 class CreateJSONDBLIST:
     Sesion = session
@@ -246,6 +245,19 @@ class CreateJSONDBLIST:
         f.write(string)
         f.close()
 
+    def create_js_counter(self):
+        file_name = 'HTML_Genarator/js/counter_data.js'
+        if Path(file_name).is_file() is True:
+            os.remove(file_name)
+        f = open(file_name, "x")
+        movies_count  = 'const movies_count = ' + str(len(self.get_movies()))+' \n'
+        series_count = 'const series_count = ' + str(len(self.get_series()))+' \n'
+        stars_count = 'const stars_count = ' + str(len(self.get_stars())) + ' \n'
+        producents_count = 'const producents_count = ' + str(len(self.get_producnets())) + ' \n'
+        string = movies_count + series_count+ stars_count + producents_count
+        f.write(string)
+        f.close()
+
     def create(self):
         list = [
             {"OBJ": self.get_producnets(),
@@ -267,6 +279,7 @@ class CreateJSONDBLIST:
                 os.mkdir('OUTPUT/js')
         self.generate_movies_output(10)
         self.generate_movies_list()
+        self.create_js_counter()
 
         for el in list:
             if Path(el['name']).is_file() is True:
@@ -404,7 +417,6 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
         print("creating JSON OUTPUT for Series " + data_JSON['name'])
         self.add_index(self.fields, data_JSON, Movie)
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
-        data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
         data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
         data_JSON['photos'] = self.return_galery(data_JSON, Movie)
         data_JSON['producent'] = self.CreateJSONDBLISTObj.return_producent(data_JSON)
@@ -465,7 +477,6 @@ class GenerateJSONOtputsProducent(AbstratJSONOtpus):
                     photos.append({"photo": new_item, "name": name})
 
         return photos
-
     def add_movies(self, data):
         movies = [];
         for series in data:

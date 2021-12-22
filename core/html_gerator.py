@@ -95,6 +95,11 @@ class HTMLGenaratorMain:
 
         self.create_file(
             self.js,
+            'counter_data.js',
+            data_JSON['project_url'] + '\HTML_Genarator\js')
+
+        self.create_file(
+            self.js,
             'search.js',
             data_JSON['project_url'] + '\HTML_Genarator\js')
 

@@ -82,7 +82,9 @@
 </div>
 <div class="js_data_content" style="display: none;"></div>
 <main class='content container js_data_content'>
-    <div class="row movies-output">[#MoviesOputs#]</div>
+    <div class="row movies-output">
+        <img width="300" height="800" src="[#HTMLOUTPUT#]/HTML Generator/sites/loading.gif">
+    </div>
 </main>
 </body>
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\lists.js"></script>
@@ -114,22 +116,6 @@
             change('.tag-search','tag',form,['set_producent','set_series','set_tag','set_series'],LM)
         }
     }, 1);
-
-    /*
-    movies_results=movies
-    filter=[]
-    let LoadMoviesObjInit=new LoadMovies()
-    const form=new FilterMovies(filter)
-    form.set_form(movies_results)
-    scroller()
-    LM=LoadMovies
-    keyup(form,['set_tag','set_series','set_producent'],LM)
-    change('.raiting-search','raiting',form,[],LM)
-    change('.series-search','series',form,['set_producent','set_stars','set_tag'],LM)
-    change('.producent-search','producent',form,['set_producent','set_stars','set_tag','set_series'],LM)
-    change('.stars-search','star',form,['set_tag','set_series'],LM)
-    change('.tag-search','tag',form,['set_producent','set_series','set_tag','set_series'],LM)
-    */
 </script>
 </html>
 

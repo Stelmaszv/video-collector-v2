@@ -25,7 +25,6 @@ class ContentLoader{
                 script.src = item;
                 document.head.appendChild(script);
             }
-            console.log(counter_manual,data_count)
             if (counter_manual>=data_count){
                 clearInterval(counter)
                 counter_stan=true
