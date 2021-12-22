@@ -106,13 +106,15 @@ class CreateJSONDBLIST:
     
     def return_short_producent(self, item_db):
         if len(item_db.series):
-            producent = item_db.series[0].producent[0]
-            return {
-                "id": producent.id,
-                "show_name": producent.show_name,
-                "dir": producent.dir,
-                "avatar": producent.avatar
-            }
+            if len(item_db.series[0].producent):
+                producent = item_db.series[0].producent[0]
+                return {
+                    "id": producent.id,
+                    "show_name": producent.show_name,
+                    "dir": producent.dir,
+                    "avatar": producent.avatar
+                }
+            return {}
         return {}   
 
     def return_top_stars(self, item):
@@ -413,6 +415,15 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
     fields = series_fields_defults
     Model = Series
 
+    def return_banners(self,data):
+        dir=data.dir+'\\banners'
+        ndir=[]
+        if os.path.exists(dir):
+            for dir_of_benners_item in os.listdir(dir):
+                el=dir+'\\'+dir_of_benners_item
+                ndir.append(el)
+        return ndir
+
     def add_fields(self, data_JSON, Movie):
         print("creating JSON OUTPUT for Series " + data_JSON['name'])
         self.add_index(self.fields, data_JSON, Movie)
@@ -421,6 +432,7 @@ class GenerateJSONOtputsSeries(AbstratJSONOtpus):
         data_JSON['stars'] = self.CreateJSONDBLISTObj.return_top_stars(data)
         data_JSON['photos'] = self.return_galery(data_JSON, data)
         data_JSON['producent'] = self.CreateJSONDBLISTObj.return_producent(data_JSON)
+        data_JSON['banner'] = self.return_banners(data)
         return data_JSON
 
     def return_galery(self, JSON, data):
