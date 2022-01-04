@@ -24,11 +24,12 @@ class WebAdminProducents(AbstractWebAdmin):
         for item in query:
             jason_row = {
                 "name":item.name,
-                "baner":item.baner,
+                "banner":item.baner,
                 "year" :item.year,
                 "show_name":item.show_name,
                 "avatar":item.avatar,
                 "dir"   :item.dir,
+                "country":item.country,
                 "description": item.description
             }
             self.objects.append(jason_row)
