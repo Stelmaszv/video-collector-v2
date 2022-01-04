@@ -380,7 +380,6 @@ class GenerateJSONOtputsStars((AbstratJSONOtpus)):
         data = session.query(self.Model).filter(self.Model.name == data_JSON['name']).first()
         data_JSON['movies'] = self.CreateJSONDBLISTObj.base_get(data.movies, movies_fields_defults)
         data_JSON['photos'] = self.return_galery(data_JSON, Movie)
-
         return data_JSON
 
     def return_galery(self, JSON, Movie):
