@@ -7,6 +7,8 @@ from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTM
 from core.setings import data_JSON, setings_array
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
     GenerateJSONOtputsSeries, GenerateJSONOtputsProducent
+from core.webadmin import WebAdminProducents
+
 
 class LoopRun:
     objets = []
@@ -122,6 +124,11 @@ class Run:
                 "stan": setings_array["generate_html"], "start_mes": 'Genereting HTML Stars',
                 "end_mees": 'End of Genereting HTML Stars'
             },
+            {
+                "obj": WebAdminProducents(), "method": 'generate',
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Producents',
+                "end_mees": 'End Web admin Producents'
+            }
         ]
 
         if Path('data.json').is_file():

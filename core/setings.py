@@ -29,7 +29,8 @@ class ResetMode(AbstractMode):
             "create_xml": True,
             "create_movie_list": True,
             "generate_json": True,
-            "generate_html": True
+            "generate_html": True,
+            "web_admin":False
         }
 
 class OffAll(AbstractMode):
@@ -43,6 +44,7 @@ class OffAll(AbstractMode):
             "create_xml": False,
             "create_movie_list": False,
             "generate_json": False,
+            "web_admin": False,
             "generate_html": False
         }
 
@@ -58,6 +60,7 @@ class HTML(AbstractMode):
             "create_xml": False,
             "create_movie_list": False,
             "generate_json": False,
+            "web_admin": False,
             "generate_html": True
         }
 
@@ -74,6 +77,7 @@ class Add(AbstractMode):
             "create_xml": False,
             "create_movie_list": False,
             "generate_json": True,
+            "web_admin": False,
             "generate_html": True
         }
 
@@ -90,6 +94,24 @@ class All(AbstractMode):
             "create_xml": True,
             "create_movie_list": True,
             "generate_json": True,
+            "web_admin": False,
+            "generate_html": True
+        }
+
+class AllNoPhoto(AbstractMode):
+
+    def return_setings(self):
+        if os.path.isfile("DB.db"):
+            os.remove("DB.db")
+        return {
+            "run_start_view": False,
+            "scan_photos": True,
+            "scan_dir": True,
+            "config": True,
+            "create_xml": True,
+            "create_movie_list": True,
+            "generate_json": True,
+            "web_admin": True,
             "generate_html": True
         }
 
@@ -106,6 +128,7 @@ class Screenshot(AbstractMode):
             "create_xml": False,
             "create_movie_list": False,
             "generate_json": False,
+            "web_admin": False,
             "generate_html": False
         }
 
@@ -119,6 +142,7 @@ class HTMLJSOM(AbstractMode):
             "create_xml": False,
             "create_movie_list": False,
             "generate_json": True,
+            "web_admin": False,
             "generate_html": True
         }
 
@@ -132,6 +156,7 @@ class Run(AbstractMode):
             "create_xml": False,
             "create_movie_list": False,
             "generate_json": False,
+            "web_admin": False,
             "generate_html": False
         }
 
@@ -142,9 +167,9 @@ class SetMode:
         self.set_mode(mode)
 
     def set_mode(self, mode):
-        modes = ["reset", "Off all", "HTML", "add", 'all', "screenshot", "HTML&JSOM", "Run"]
+        modes = ["reset", "Off all", "HTML", "add", 'all', "screenshot", "HTML&JSOM", "Run","AllNoPhoto"]
         error = mode in modes
-        mes = 'Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML&JSOM", "add" ,"all","screenshot",Run'
+        mes = 'Invalid ' + mode + ' Mode available "normal","reset","Off all","HTML&JSOM", "add" ,"all","screenshot",Run''AllNoPhoto'
         Error.throw_error_bool(mes, error)
         setings_array = {
             "reset": ResetMode(self.setings),
@@ -154,7 +179,8 @@ class SetMode:
             "all": All(self.setings),
             "screenshot": Screenshot(self.setings),
             "HTML&JSOM": HTMLJSOM(self.setings),
-            "Run": Run(self.setings)
+            "Run": Run(self.setings),
+            "AllNoPhoto":AllNoPhoto(self.setings)
         }
         self.Mode = setings_array[mode]
 
@@ -257,8 +283,8 @@ search_faze_defult = ''
 muted=False
 auto_play=True
 full_screen=True
-# MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run"
-MODE = 'reset'
+# MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run" ,"AllNoPhoto"
+MODE = 'AllNoPhoto'
 #run MODERUN "console","config"
 MODERUN ="console"
 # run_setings only when mode set to "normal"
@@ -270,6 +296,7 @@ setings_array = {
     "create_xml": False,
     "create_movie_list": False,
     "generate_json": False,
+    "web_admin": False,
     "generate_html": False
 }
 if MODE != "normal":

@@ -31,3 +31,8 @@ movies.xlsx
 /OUTPUT/
 /player_setings.JSON
 !/DB.db-journal
+*.pyc
+*.pyc
+*.pyc
+*.pyc
+*.pyc
