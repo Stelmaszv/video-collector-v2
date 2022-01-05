@@ -2,7 +2,7 @@ import os
 import json
 from abc import ABC, abstractmethod
 from pathlib import Path
-from app.db.models import Producent, session, Series,Tags
+from app.db.models import Producent, session, Series,Tags,Stars
 
 class AbstractWebAdmin(ABC):
 
@@ -21,11 +21,11 @@ class AbstractWebAdmin(ABC):
     def generate(self):
         pass
 
-    def add_tags(self,Item):
-        tags=[]
-        for Tag in Item.tags:
-            tags.append(Tag.name)
-        return tags
+    def add_many_to_many_as_array(self,Item,atter):
+        objects=[]
+        for Obj in getattr(Item,atter):
+            objects.append(Obj.name)
+        return objects
 
 class WebAdminProducents(AbstractWebAdmin):
 
@@ -45,7 +45,7 @@ class WebAdminProducents(AbstractWebAdmin):
                 "dir"   :item.dir,
                 "country":item.country,
                 "description": item.description,
-                "tags": self.add_tags(item)
+                "tags": self.add_many_to_many_as_array(item,'tags')
             }
             self.objects.append(jason_row)
         self.generate_file()
@@ -70,7 +70,8 @@ class WebAdminSeries(AbstractWebAdmin):
                 "years":item.years,
                 "description": item.description,
                 "producent":   item.producent[0].name,
-                "tags": self.add_tags(item)
+                "tags": self.add_many_to_many_as_array(item,'tags'),
+                "stars": self.add_many_to_many_as_array(item, 'stars')
             }
             self.objects.append(jason_row)
         self.generate_file()
@@ -86,6 +87,31 @@ class WebAdminTags(AbstractWebAdmin):
         for item in query:
             jason_row = {
                 "name":item.name
+            }
+            self.objects.append(jason_row)
+        self.generate_file()
+
+class WebAdminStars(AbstractWebAdmin):
+
+    Model=Stars
+    file_name='Stars.json'
+
+    def generate(self):
+        query=session.query(self.Model).all()
+        self.objects=[]
+        for item in query:
+            jason_row = {
+                "name":item.name,
+                "show_name": item.show_name,
+                "description": item.description,
+                "weight": item.weight,
+                "height": item.height,
+                "ethnicity": item.height,
+                "hair_color": item.height,
+                "birth_place": item.height,
+                "nationality": item.nationality,
+                "dir": item.dir,
+                "date_of_birth": item.date_of_birth,
             }
             self.objects.append(jason_row)
         self.generate_file()

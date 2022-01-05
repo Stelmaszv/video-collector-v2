@@ -7,7 +7,7 @@ from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTM
 from core.setings import data_JSON, setings_array
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
     GenerateJSONOtputsSeries, GenerateJSONOtputsProducent
-from core.webadmin import WebAdminProducents, WebAdminSeries, WebAdminTags
+from core.webadmin import WebAdminProducents, WebAdminSeries, WebAdminTags, WebAdminStars
 
 
 class LoopRun:
@@ -136,9 +136,16 @@ class Run:
             },
             {
                 "obj": WebAdminTags(), "method": 'generate',
-                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Series',
-                "end_mees": 'End Web admin Series'
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Tags',
+                "end_mees": 'End Web admin Tags'
+            },
+            {
+                "obj": WebAdminStars(), "method": 'generate',
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Stars',
+                "end_mees": 'End Web admin Stars'
             }
+
+
 
         ]
 
