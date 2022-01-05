@@ -36,7 +36,11 @@ movies.xlsx
 *.pyc
 *.pyc
 *.pyc
-Producent.json
-/Series.json
-/Tags.json
-/Stars.json
+../videocolectorwebadmin/jsondb/Producent.json
+/jsondb/Series.json
+/jsondb/Tags.json
+/jsondb/Stars.json
+/jsondb/Producent.json
+/jsondb/Stars.json
+/jsondb/Tags.json
+/jsondb/Series.json

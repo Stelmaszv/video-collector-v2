@@ -2,7 +2,6 @@ import os
 from core.dir import MoviesIsStarNameDir,AddMovieToStarDir,AddMovieToSeriesDir,MovieNormalLoopDir
 from abc import ABC,abstractmethod
 
-
 class AbstracAddLoop(ABC):
 
     @abstractmethod
