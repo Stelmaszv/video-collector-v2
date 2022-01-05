@@ -2,7 +2,7 @@ import os
 import json
 from abc import ABC, abstractmethod
 from pathlib import Path
-from app.db.models import Producent, session, Series,Tags,Stars
+from app.db.models import Producent, session, Series,Tags,Stars,Movies
 
 class AbstractWebAdmin(ABC):
 
@@ -75,6 +75,7 @@ class WebAdminSeries(AbstractWebAdmin):
                 "years":item.years,
                 "description": item.description,
                 "producent":   item.producent[0].name,
+                "movies": self.add_many_to_many_as_array(item, 'movies'),
                 "tags": self.add_many_to_many_as_array(item,'tags'),
                 "stars": self.add_many_to_many_as_array(item, 'stars')
             }
@@ -118,8 +119,35 @@ class WebAdminStars(AbstractWebAdmin):
                 "nationality": item.nationality,
                 "dir": item.dir,
                 "date_of_birth": self.add_date(item.date_of_birth),
+                "movies": self.add_many_to_many_as_array(item, 'movies'),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
                 "series": self.add_many_to_many_as_array(item, 'series'),
+            }
+            self.objects.append(jason_row)
+        self.generate_file()
+
+class WebAdminMovies(AbstractWebAdmin):
+
+    Model=Movies
+    file_name='Movies.json'
+
+    def generate(self):
+        query=session.query(self.Model).all()
+        self.objects=[]
+        for item in query:
+            jason_row = {
+                "name": item.name,
+                "show_name": item.show_name,
+                "description": item.description,
+                "src": item.src,
+                "avatar": item.avatar,
+                "date_relesed": self.add_date(item.date_relesed),
+                "dir": item.dir,
+                "country": item.country,
+                "poster": item.poster,
+                "tags": self.add_many_to_many_as_array(item, 'tags'),
+                "series": self.add_many_to_many_as_array(item, 'series'),
+                "stars": self.add_many_to_many_as_array(item, 'stars')
             }
             self.objects.append(jason_row)
         self.generate_file()
