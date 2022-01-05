@@ -113,6 +113,8 @@ class WebAdminStars(AbstractWebAdmin):
                 "nationality": item.nationality,
                 "dir": item.dir,
                 "date_of_birth": item.date_of_birth,
+                "tags": self.add_many_to_many_as_array(item, 'tags'),
+                "series": self.add_many_to_many_as_array(item, 'series'),
             }
             self.objects.append(jason_row)
         self.generate_file()
