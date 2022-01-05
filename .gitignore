@@ -37,3 +37,4 @@ movies.xlsx
 *.pyc
 *.pyc
 Producent.json
+/Series.json

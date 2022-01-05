@@ -105,7 +105,7 @@ class AllNoPhoto(AbstractMode):
             os.remove("DB.db")
         return {
             "run_start_view": False,
-            "scan_photos": True,
+            "scan_photos": False,
             "scan_dir": True,
             "config": True,
             "create_xml": True,
