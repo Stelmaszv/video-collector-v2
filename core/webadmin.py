@@ -61,7 +61,8 @@ class WebAdminSeries(AbstractWebAdmin):
                 "country":item.country,
                 "number_of_sezons":item.number_of_sezons,
                 "years":item.years,
-                "description": item.description
+                "description": item.description,
+                "producent":   item.producent[0].name
             }
             self.objects.append(jason_row)
         self.generate_file()
