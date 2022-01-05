@@ -105,6 +105,7 @@ class WebAdminStars(AbstractWebAdmin):
                 "show_name": item.show_name,
                 "description": item.description,
                 "weight": item.weight,
+                "avatar": item.avatar,
                 "height": item.height,
                 "ethnicity": item.height,
                 "hair_color": item.height,
