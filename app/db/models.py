@@ -217,6 +217,9 @@ class Tags(Base):
         back_populates="tags"
     )
 
+    def __str__(self):
+        return self.name
+
 class Stars(Base):
     __tablename__ ='stars'
     id = Column('id', Integer, primary_key=True)

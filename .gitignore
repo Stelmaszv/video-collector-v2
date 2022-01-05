@@ -38,3 +38,4 @@ movies.xlsx
 *.pyc
 Producent.json
 /Series.json
+/Tags.json

@@ -2,7 +2,7 @@ import os
 import json
 from abc import ABC, abstractmethod
 from pathlib import Path
-from app.db.models import Producent, session, Series
+from app.db.models import Producent, session, Series,Tags
 
 class AbstractWebAdmin(ABC):
 
@@ -21,6 +21,12 @@ class AbstractWebAdmin(ABC):
     def generate(self):
         pass
 
+    def add_tags(self,Item):
+        tags=[]
+        for Tag in Item.tags:
+            tags.append(Tag.name)
+        return tags
+
 class WebAdminProducents(AbstractWebAdmin):
 
     Model=Producent
@@ -38,7 +44,8 @@ class WebAdminProducents(AbstractWebAdmin):
                 "avatar":item.avatar,
                 "dir"   :item.dir,
                 "country":item.country,
-                "description": item.description
+                "description": item.description,
+                "tags": self.add_tags(item)
             }
             self.objects.append(jason_row)
         self.generate_file()
@@ -62,7 +69,23 @@ class WebAdminSeries(AbstractWebAdmin):
                 "number_of_sezons":item.number_of_sezons,
                 "years":item.years,
                 "description": item.description,
-                "producent":   item.producent[0].name
+                "producent":   item.producent[0].name,
+                "tags": self.add_tags(item)
+            }
+            self.objects.append(jason_row)
+        self.generate_file()
+
+class WebAdminTags(AbstractWebAdmin):
+
+    Model=Tags
+    file_name='Tags.json'
+
+    def generate(self):
+        query=session.query(self.Model).all()
+        self.objects=[]
+        for item in query:
+            jason_row = {
+                "name":item.name
             }
             self.objects.append(jason_row)
         self.generate_file()
