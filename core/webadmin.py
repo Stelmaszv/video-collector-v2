@@ -21,6 +21,11 @@ class AbstractWebAdmin(ABC):
     def generate(self):
         pass
 
+    def add_date(self,data):
+        if data is not None:
+            return str(data.year)+'-'+str(data.month)+'-'+str(data.day)
+        return ''
+
     def add_many_to_many_as_array(self,Item,atter):
         objects=[]
         for Obj in getattr(Item,atter):
@@ -112,7 +117,7 @@ class WebAdminStars(AbstractWebAdmin):
                 "birth_place": item.height,
                 "nationality": item.nationality,
                 "dir": item.dir,
-                "date_of_birth": item.date_of_birth,
+                "date_of_birth": self.add_date(item.date_of_birth),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
                 "series": self.add_many_to_many_as_array(item, 'series'),
             }
