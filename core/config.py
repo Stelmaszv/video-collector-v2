@@ -11,8 +11,6 @@ import os
 import json
 import xlsxwriter
 
-
-
 class MovieListForStars:
 
     def __init__(self, star_list, dirs_list, AbstractConfigItem_data):
@@ -32,7 +30,6 @@ class MovieListForStars:
             if star_name == Star['Star']:
                 movies_list.append(Star['dir'])
         return movies_list
-
 
 class StarList:
 
@@ -204,7 +201,6 @@ class AbstractConfigItem(ABC):
     @abstractmethod
     def load(self):
         pass
-
 
 class SeriesConfigData(AbstractConfigItem):
     Model = Series
