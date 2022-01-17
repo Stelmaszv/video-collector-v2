@@ -38,6 +38,12 @@ class AbstractWebAdmin(ABC):
             objects.append(Obj.name)
         return objects
 
+    def ger_producent(self,item):
+        if len(item.producent)>0:
+            return item.producent[0].name
+        return []
+
+
 class WebAdminProducents(AbstractWebAdmin):
 
     Model=Producent
@@ -80,7 +86,7 @@ class WebAdminSeries(AbstractWebAdmin):
                 "number_of_sezons":item.number_of_sezons,
                 "years":item.years,
                 "description": item.description,
-                "producent":   item.producent[0].name,
+                "producent":   self.ger_producent(item),
                 "movies": self.add_many_to_many_as_array(item, 'movies'),
                 "tags": self.add_many_to_many_as_array(item,'tags'),
                 "stars": self.add_many_to_many_as_array(item, 'stars')
