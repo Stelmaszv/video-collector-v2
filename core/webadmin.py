@@ -3,6 +3,12 @@ import json
 from abc import ABC, abstractmethod
 from pathlib import Path
 from app.db.models import Producent, session, Series,Tags,Stars,Movies
+from core.setings import data_JSON
+
+class CleanWebAdmin:
+    def clean(self):
+        for file in os.listdir(data_JSON['web_admin_url']+'/jsondb'):
+            os.remove(data_JSON['web_admin_url']+'/jsondb/'+file)
 
 class AbstractWebAdmin(ABC):
 
@@ -11,9 +17,9 @@ class AbstractWebAdmin(ABC):
     objects = []
 
     def generate_file(self):
-        if Path(self.file_name).is_file() is True:
+        if Path(data_JSON['web_admin_url']+'/jsondb/'+self.file_name).is_file() is True:
             os.remove(self.file_name)
-        f = open(self.file_name, "x")
+        f = open(data_JSON['web_admin_url']+'/jsondb/'+self.file_name, "x")
         f.write(json.dumps(self.objects))
         f.close()
 

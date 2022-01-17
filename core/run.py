@@ -7,7 +7,7 @@ from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTM
 from core.setings import data_JSON, setings_array
 from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
     GenerateJSONOtputsSeries, GenerateJSONOtputsProducent
-from core.webadmin import WebAdminProducents, WebAdminSeries, WebAdminTags, WebAdminStars, WebAdminMovies
+from core.webadmin import WebAdminProducents, WebAdminSeries, WebAdminTags, WebAdminStars, WebAdminMovies, CleanWebAdmin
 
 
 class LoopRun:
@@ -123,6 +123,11 @@ class Run:
                 "obj": GenerateHTMLStars(), "method": 'generate',
                 "stan": setings_array["generate_html"], "start_mes": 'Genereting HTML Stars',
                 "end_mees": 'End of Genereting HTML Stars'
+            },
+            {
+                "obj": CleanWebAdmin(), "method": 'clean',
+                "stan": setings_array["web_admin"], "start_mes": 'Start Cleaning web Amidn !',
+                "end_mees": 'End of Cleaning web Amidn'
             },
             {
                 "obj": WebAdminProducents(), "method": 'generate',

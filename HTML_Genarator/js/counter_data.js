@@ -1,4 +1,4 @@
-const movies_count = 20 
-const series_count = 1 
-const stars_count = 99 
+const movies_count = 0 
+const series_count = 0 
+const stars_count = 0 
 const producents_count = 3 

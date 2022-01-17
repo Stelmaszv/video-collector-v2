@@ -284,7 +284,7 @@ muted=False
 auto_play=True
 full_screen=True
 # MODE available "normal","reset","Off all","HTML&JSOM", "add","all","screenshot","HTML","Run" ,"AllNoPhoto"
-MODE = 'reset'
+MODE = 'AllNoPhoto'
 #run MODERUN "console","config"
 MODERUN ="console"
 # run_setings only when mode set to "normal"
