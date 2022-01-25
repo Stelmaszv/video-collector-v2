@@ -43,6 +43,24 @@ class AbstractWebAdmin(ABC):
             return item.producent[0].name
         return []
 
+    def set_dir(self,dir):
+        string = dir.split('\\')
+        count=0
+        assert_index=0
+        for astet in string:
+            if astet=='assets':
+                assert_index=count
+            count = count + 1
+        count=0
+        str=''
+        for dir_strin in string:
+            if count>=assert_index:
+                str=str+string[count]
+                if count!=len(string)-1:
+                    str=str+'\\'
+            count = count + 1
+        return str
+
 
 class WebAdminProducents(AbstractWebAdmin):
 
@@ -154,7 +172,7 @@ class WebAdminMovies(AbstractWebAdmin):
                 "src": item.src,
                 "avatar": item.avatar,
                 "date_relesed": self.add_date(item.date_relesed),
-                "dir": item.dir,
+                "dir": self.set_dir(item.dir),
                 "country": item.country,
                 "poster": item.poster,
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
