@@ -14,6 +14,7 @@ class AbstractWebAdmin(ABC):
 
     Model=None
     file_name=''
+    no_photo_url=''
     objects = []
 
     def generate_file(self):
@@ -51,6 +52,14 @@ class AbstractWebAdmin(ABC):
             count = count + 1
         return 0
 
+    def set_icon(self,string):
+        count = 0
+        for astet in string:
+            if astet=='icon':
+                return count
+            count = count + 1
+        return 0
+
 
     def set_dir(self,dir):
         string = dir.split('\\')
@@ -65,11 +74,23 @@ class AbstractWebAdmin(ABC):
             count = count + 1
         return str
 
+    def set_img(self,dir):
+        string = dir.split('\\')
+        icon=self.set_icon(string)
+        if icon>0:
+            src=data_JSON['web_admin_url']+self.no_photo_url
+            src = self.set_dir(src)
+        else:
+            src=self.set_dir(dir)
+        print(src)
+        return src
+
 
 class WebAdminProducents(AbstractWebAdmin):
 
     Model=Producent
     file_name='Producent.json'
+    no_photo_url = '\\front-end-src\\src\\assets\\icon\\series.jpg'
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -93,6 +114,7 @@ class WebAdminSeries(AbstractWebAdmin):
 
     Model=Series
     file_name='Series.json'
+    no_photo_url = '\\front-end-src\\src\\assets\\icon\\series.jpg'
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -135,6 +157,7 @@ class WebAdminStars(AbstractWebAdmin):
 
     Model=Stars
     file_name='Stars.json'
+    no_photo_url = '\\front-end-src\\src\\assets\\icon\\star_no_photo.png'
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -164,6 +187,7 @@ class WebAdminMovies(AbstractWebAdmin):
 
     Model=Movies
     file_name='Movies.json'
+    no_photo_url='\\front-end-src\\src\\assets\\icon\\movie.jpg'
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -174,7 +198,7 @@ class WebAdminMovies(AbstractWebAdmin):
                 "show_name": item.show_name,
                 "description": item.description,
                 "src": self.set_dir(item.src),
-                "avatar": self.set_dir(item.avatar),
+                "avatar": self.set_img(item.avatar),
                 "date_relesed": self.add_date(item.date_relesed),
                 "dir": self.set_dir(item.dir),
                 "country": item.country,

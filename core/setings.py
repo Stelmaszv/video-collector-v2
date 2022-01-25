@@ -269,11 +269,11 @@ producent = ["banner.jpg","avatar.jpg"]
 star      = ["avatar.jpg"]
 #menu
 menu_per_page = 20
-series_avatar_defult ='D:/project/video-collector-v2/icon/series.jpg'
-stars_avatar_defult  ='D:/project/video-collector-v2/icon/star_no_photo.png'
-none_movies_defult   ='D:/project/video-collector-v2/icon/star_no_photo.png'
-singles_movies_defult   ='D:/project/video-collector-v2/icon/singles.jpg'
-movie_cover_defulut = 'D:/project/video-collector-v2/icon/movie.jpg'
+series_avatar_defult ='D:\\project\\video-collector-v2\\icon\\series.jpg'
+stars_avatar_defult  ='D:\\project\\video-collector-v2\\icon\\star_no_photo.png'
+none_movies_defult   ='D:\\project\\video-collector-v2\\icon\\star_no_photo.png'
+singles_movies_defult   ='D:\\project/video-collector-v2\\icon\\singles.jpg'
+movie_cover_defulut = 'D:\\project\\video-collector-v2\\icon\\movie.jpg'
 search_in_defult= 'movies';
 start_page=0
 photo_ext = ('.png', '.jpg', '.jpeg', '.jfif', ".JPG")
