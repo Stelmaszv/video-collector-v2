@@ -62,27 +62,29 @@ class AbstractWebAdmin(ABC):
 
 
     def set_dir(self,dir):
-        string = dir.split('\\')
-        assert_index=self.set_assset(string)
-        count=0
-        str=''
-        for dir_strin in string:
-            if count>=assert_index:
-                str=str+string[count]
-                if count!=len(string)-1:
-                    str=str+'\\'
-            count = count + 1
-        return str
+        if dir is not None:
+            string = dir.split('\\')
+            assert_index=self.set_assset(string)
+            count=0
+            str=''
+            for dir_strin in string:
+                if count>=assert_index:
+                    str=str+string[count]
+                    if count!=len(string)-1:
+                        str=str+'\\'
+                count = count + 1
+            return str
+        return ''
 
     def set_img(self,dir):
         string = dir.split('\\')
         icon=self.set_icon(string)
+        src=''
         if icon>0:
             src=data_JSON['web_admin_url']+self.no_photo_url
             src = self.set_dir(src)
         else:
             src=self.set_dir(dir)
-        print(src)
         return src
 
 
