@@ -98,7 +98,7 @@ class WebAdminProducents(AbstractWebAdmin):
         for item in query:
             jason_row = {
                 "name":item.name,
-                "banner":item.baner,
+                "banner":self.set_dir(item.baner),
                 "year" :item.year,
                 "show_name":item.show_name,
                 "avatar":self.set_dir(item.avatar),
@@ -122,7 +122,7 @@ class WebAdminSeries(AbstractWebAdmin):
         for item in query:
             jason_row = {
                 "name":item.name,
-                "banner":item.baner,
+                "banner":self.set_dir(item.baner),
                 "show_name":item.show_name,
                 "avatar":self.set_dir(item.avatar),
                 "dir"   :self.set_dir(item.dir),
