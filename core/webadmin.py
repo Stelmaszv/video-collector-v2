@@ -43,14 +43,18 @@ class AbstractWebAdmin(ABC):
             return item.producent[0].name
         return []
 
-    def set_dir(self,dir):
-        string = dir.split('\\')
-        count=0
-        assert_index=0
+    def set_assset(self,string):
+        count = 0
         for astet in string:
             if astet=='assets':
-                assert_index=count
+                return count
             count = count + 1
+        return 0
+
+
+    def set_dir(self,dir):
+        string = dir.split('\\')
+        assert_index=self.set_assset(string)
         count=0
         str=''
         for dir_strin in string:
@@ -76,8 +80,8 @@ class WebAdminProducents(AbstractWebAdmin):
                 "banner":item.baner,
                 "year" :item.year,
                 "show_name":item.show_name,
-                "avatar":item.avatar,
-                "dir"   :item.dir,
+                "avatar":self.set_dir(item.avatar),
+                "dir"   :self.set_dir(item.dir),
                 "country":item.country,
                 "description": item.description,
                 "tags": self.add_many_to_many_as_array(item,'tags')
@@ -98,8 +102,8 @@ class WebAdminSeries(AbstractWebAdmin):
                 "name":item.name,
                 "banner":item.baner,
                 "show_name":item.show_name,
-                "avatar":item.avatar,
-                "dir"   :item.dir,
+                "avatar":self.set_dir(item.avatar),
+                "dir"   :self.set_dir(item.dir),
                 "country":item.country,
                 "number_of_sezons":item.number_of_sezons,
                 "years":item.years,
@@ -141,13 +145,13 @@ class WebAdminStars(AbstractWebAdmin):
                 "show_name": item.show_name,
                 "description": item.description,
                 "weight": item.weight,
-                "avatar": item.avatar,
+                "avatar": self.set_dir(item.avatar),
                 "height": item.height,
                 "ethnicity": item.height,
                 "hair_color": item.height,
                 "birth_place": item.height,
                 "nationality": item.nationality,
-                "dir": item.dir,
+                "dir": self.set_dir(item.dir),
                 "date_of_birth": self.add_date(item.date_of_birth),
                 "movies": self.add_many_to_many_as_array(item, 'movies'),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
@@ -169,12 +173,12 @@ class WebAdminMovies(AbstractWebAdmin):
                 "name": item.name,
                 "show_name": item.show_name,
                 "description": item.description,
-                "src": item.src,
-                "avatar": item.avatar,
+                "src": self.set_dir(item.src),
+                "avatar": self.set_dir(item.avatar),
                 "date_relesed": self.add_date(item.date_relesed),
                 "dir": self.set_dir(item.dir),
                 "country": item.country,
-                "poster": item.poster,
+                "poster": self.set_dir(item.poster),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
                 "series": self.add_many_to_many_as_array(item, 'series'),
                 "stars": self.add_many_to_many_as_array(item, 'stars')
