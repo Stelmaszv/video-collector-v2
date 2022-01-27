@@ -47,7 +47,7 @@ class AbstractWebAdmin(ABC):
     def set_assset(self,string):
         count = 0
         for astet in string:
-            if astet=='assets':
+            if astet=='web':
                 return count
             count = count + 1
         return 0
@@ -81,18 +81,21 @@ class AbstractWebAdmin(ABC):
         icon=self.set_icon(string)
         src=''
         if icon>0:
-            src=data_JSON['web_admin_url']+self.no_photo_url
+            src=self.no_photo_url
             src = self.set_dir(src)
         else:
             src=self.set_dir(dir)
-        return src
+        return self.add_server_url(src)
+
+    def add_server_url(self,src):
+        return 'http://127.0.0.1:8000/'+src
 
 
 class WebAdminProducents(AbstractWebAdmin):
 
     Model=Producent
     file_name='Producent.json'
-    no_photo_url = '\\front-end-src\\src\\assets\\icon\\series.jpg'
+    no_photo_url = 'web\\no_img\\series.jpg'
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -103,7 +106,7 @@ class WebAdminProducents(AbstractWebAdmin):
                 "banner":self.set_dir(item.baner),
                 "year" :item.year,
                 "show_name":item.show_name,
-                "avatar":self.set_dir(item.avatar),
+                "avatar":self.set_img(item.avatar),
                 "dir"   :self.set_dir(item.dir),
                 "country":item.country,
                 "description": item.description,
@@ -116,7 +119,7 @@ class WebAdminSeries(AbstractWebAdmin):
 
     Model=Series
     file_name='Series.json'
-    no_photo_url = '\\front-end-src\\src\\assets\\icon\\series.jpg'
+    no_photo_url = 'web\\no_img\\series.jpg'
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -124,9 +127,9 @@ class WebAdminSeries(AbstractWebAdmin):
         for item in query:
             jason_row = {
                 "name":item.name,
-                "banner":self.set_dir(item.baner),
+                "banner":self.set_img(item.baner),
                 "show_name":item.show_name,
-                "avatar":self.set_dir(item.avatar),
+                "avatar":self.set_img(item.avatar),
                 "dir"   :self.set_dir(item.dir),
                 "country":item.country,
                 "number_of_sezons":item.number_of_sezons,
@@ -159,7 +162,7 @@ class WebAdminStars(AbstractWebAdmin):
 
     Model=Stars
     file_name='Stars.json'
-    no_photo_url = '\\front-end-src\\src\\assets\\icon\\star_no_photo.png'
+    no_photo_url = 'web\\no_img\\star_no_photo.png'
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -170,7 +173,7 @@ class WebAdminStars(AbstractWebAdmin):
                 "show_name": item.show_name,
                 "description": item.description,
                 "weight": item.weight,
-                "avatar": self.set_dir(item.avatar),
+                "avatar": self.set_img(item.avatar),
                 "height": item.height,
                 "ethnicity": item.height,
                 "hair_color": item.height,
@@ -189,7 +192,7 @@ class WebAdminMovies(AbstractWebAdmin):
 
     Model=Movies
     file_name='Movies.json'
-    no_photo_url='\\front-end-src\\src\\assets\\icon\\movie.jpg'
+    no_photo_url='web\\no_img\\movie.jpg'
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -199,12 +202,12 @@ class WebAdminMovies(AbstractWebAdmin):
                 "name": item.name,
                 "show_name": item.show_name,
                 "description": item.description,
-                "src": self.set_dir(item.src),
+                "src": self.set_img(item.src),
                 "avatar": self.set_img(item.avatar),
                 "date_relesed": self.add_date(item.date_relesed),
                 "dir": self.set_dir(item.dir),
                 "country": item.country,
-                "poster": self.set_dir(item.poster),
+                "poster": self.set_img(item.poster),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
                 "series": self.add_many_to_many_as_array(item, 'series'),
                 "stars": self.add_many_to_many_as_array(item, 'stars')
