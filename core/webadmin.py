@@ -209,6 +209,7 @@ class WebAdminMovies(AbstractWebAdmin):
                 "avatar": self.set_img(item.avatar),
                 "date_relesed": self.add_date(item.date_relesed),
                 "dir": item.dir,
+                "web_src": item.src,
                 "country": item.country,
                 "poster": self.set_img(item.poster),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
