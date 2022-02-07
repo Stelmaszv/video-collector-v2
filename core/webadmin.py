@@ -77,15 +77,18 @@ class AbstractWebAdmin(ABC):
         return ''
 
     def set_img(self,dir):
-        string = dir.split('\\')
-        icon=self.set_icon(string)
-        src=''
-        if icon>0:
-            src=self.no_photo_url
-            src = self.set_dir(src)
+        if dir is not None:
+            string = dir.split('\\')
+            icon=self.set_icon(string)
+            src=''
+            if icon>0:
+                src=self.no_photo_url
+                src = self.set_dir(src)
+            else:
+                src=self.set_dir(dir)
+            return self.add_server_url(src)
         else:
-            src=self.set_dir(dir)
-        return self.add_server_url(src)
+            return ''
 
     def add_server_url(self,src):
         return 'http://127.0.0.1:8000/'+src
