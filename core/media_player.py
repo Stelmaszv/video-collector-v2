@@ -1,15 +1,18 @@
-from PyQt5.QtWidgets import QWidget, QPushButton, QHBoxLayout, QVBoxLayout, QLabel, \
-    QSlider, QStyle, QSizePolicy,QButtonGroup
-from PyQt5.QtMultimedia import QMediaPlayer, QMediaContent
-from PyQt5.QtMultimediaWidgets import QVideoWidget
-from PyQt5.QtGui import QPalette
-from PyQt5.QtCore import Qt, QUrl
-from app.db.models import Movies
-from app.db.models import session
-from pathlib import Path
-from core.setings import auto_play,muted,full_screen
 import json
 import os
+from pathlib import Path
+
+from PyQt5.QtCore import Qt, QUrl
+from PyQt5.QtGui import QPalette
+from PyQt5.QtMultimedia import QMediaContent, QMediaPlayer
+from PyQt5.QtMultimediaWidgets import QVideoWidget
+from PyQt5.QtWidgets import (QButtonGroup, QHBoxLayout, QLabel, QPushButton,
+                             QSizePolicy, QSlider, QStyle, QVBoxLayout,
+                             QWidget)
+
+from app.db.models import Movies, session
+from core.setings import auto_play, full_screen, muted
+
 
 class Player(QWidget):
     muted        = muted

@@ -1,9 +1,12 @@
 from __future__ import annotations
+
 from abc import ABC
-from app.db.models import Movies,Series,Stars,Tags,Producent
-from app.db.models import session
-from sqlalchemy import desc,func
 from datetime import date
+
+from sqlalchemy import desc, func
+
+from app.db.models import Movies, Producent, Series, Stars, Tags, session
+
 
 class AbstractFactory(ABC):
 

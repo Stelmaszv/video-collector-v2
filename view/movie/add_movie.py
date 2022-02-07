@@ -1,10 +1,14 @@
-from PyQt5.QtWidgets import QWidget,QApplication,QMessageBox
-from PyQt5 import QtWidgets
-from core.view import BaseView
-from app.db.models import Movies
 import sys
+
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMessageBox, QWidget
+
+from app.db.models import Movies
 from core.additems import AddItems
+from core.view import BaseView
 from view.menu.menu import Menu
+
+
 class AddMovieView(QWidget):
 
     model=Movies

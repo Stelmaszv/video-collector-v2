@@ -1,10 +1,11 @@
-from core.datamanipulation import Data as Data
-from core.strings import stringManipupations
-from app.db.models import Movies, Stars, Series, Producent
-from app.db.models import session
-from core.setings import data_JSON, movie_ext
-import os
 import json
+import os
+
+from app.db.models import Movies, Producent, Series, Stars, session
+from core.datamanipulation import Data as Data
+from core.setings import data_JSON, movie_ext
+from core.strings import stringManipupations
+
 
 class BaseInfo:
     data_info=[]

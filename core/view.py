@@ -1,20 +1,22 @@
-import os
 import json
-from PyQt5 import QtGui,QtCore, QtWidgets
-from core.BaseActions import ViewBaseAction
+import os
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
 from app.db.models import session
-from core.setWindow import Router
-from core.rezolution import SetResolution
+from app.forms import BaseFormShema
+from app.info import BaseInfo
+from app.model_view import BaseModelViewSet
+from app.nav import BaseNav
 from core.arraymanipulation import ArrayManipulation
+from core.BaseActions import Form, FormSection, Submit, ViewBaseAction
 from core.custum_errors import Error
 from core.db.config import Base as BaseModel
-from app.nav import BaseNav
-from app.info import BaseInfo
-from core.BaseActions import FormSection,Submit,Form
-from app.model_view import BaseModelViewSet
+from core.rezolution import SetResolution
+from core.setings import photo_ext, show_list_defult
+from core.setWindow import Router
 from core.strings import stringManipupations
-from app.forms import BaseFormShema
-from core.setings import photo_ext,show_list_defult
+
 
 class BaseView:
 
@@ -46,9 +48,10 @@ class BaseView:
         self.avatar_photo.show()
 
     def listView(self, data, data_list,obj_name,QWidget=None):
-        from .section import SeriesSection, StarsSection, MenuSection,MovieListSection,\
-            TagsListSection,CustomListSection,EditGalerySection,EditGaleryMoviesSection,\
-            ProducentSection
+        from .section import (CustomListSection, EditGaleryMoviesSection,
+                              EditGalerySection, MenuSection, MovieListSection,
+                              ProducentSection, SeriesSection, StarsSection,
+                              TagsListSection)
         page=False
         if QWidget:
             if hasattr(QWidget,'page'):

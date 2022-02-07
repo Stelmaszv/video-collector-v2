@@ -1,11 +1,15 @@
-from core.view import AbstractBaseView
-from PyQt5.QtWidgets import QWidget,QMainWindow,qApp,QAction
 from PyQt5.QtGui import QIcon
-from app.forms import MenuFormSchena,MenuPaginationForm
-from core.search import SetFactory
-from core.setings import search_in_defult,search_faze_defult,menu_per_page
+from PyQt5.QtWidgets import QAction, QMainWindow, QWidget, qApp
+
+from app.forms import MenuFormSchena, MenuPaginationForm
 from core.helper import QueryCounter
+from core.search import SetFactory
+from core.setings import menu_per_page, search_faze_defult, search_in_defult
+from core.view import AbstractBaseView
+
 from .AdvanceSearchCriteria import AdvanceSearchCriteria
+
+
 class Menu(QMainWindow,QWidget,AbstractBaseView):
 
     FormSchema                 =  MenuFormSchena
@@ -101,6 +105,7 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
 
     def advance(self,advance):
         from .advande_search import AdvanceSearch
+
         #self.BaseView.load_view('advance_search')
         self.run_window()
         AS=AdvanceSearch()

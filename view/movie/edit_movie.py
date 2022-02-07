@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QWidget
+
 from app.db.models import Movies
-from core.view import AbstractBaseView
 from app.forms import MovieEditForm
 from app.model_view import MoviesModelView
+from core.view import AbstractBaseView
+
 
 class EditMovieView(QWidget,AbstractBaseView):
     model = Movies

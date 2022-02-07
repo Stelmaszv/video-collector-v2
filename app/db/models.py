@@ -1,8 +1,10 @@
-from core.db.config import Base,engine
-from sqlalchemy import Column, Integer, String, Table, ForeignKey, DateTime, Boolean, Date, Text
-from sqlalchemy.orm import sessionmaker,relationship
-from core.setings import movie_cover_defulut
-from core.setings import singles_movies_defult,stars_avatar_defult,none_movies_defult
+from sqlalchemy import (Boolean, Column, Date, DateTime, ForeignKey, Integer,
+                        String, Table, Text)
+from sqlalchemy.orm import relationship, sessionmaker
+
+from core.db.config import Base, engine
+from core.setings import (movie_cover_defulut, none_movies_defult,
+                          singles_movies_defult, stars_avatar_defult)
 
 association_table = Table('association', Base.metadata,
     Column('stars_id', Integer, ForeignKey('stars.id')),

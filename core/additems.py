@@ -1,6 +1,9 @@
 import os
-from core.dir import MoviesIsStarNameDir,AddMovieToStarDir,AddMovieToSeriesDir,MovieNormalLoopDir
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+
+from core.dir import (AddMovieToSeriesDir, AddMovieToStarDir,
+                      MovieNormalLoopDir, MoviesIsStarNameDir)
+
 
 class AbstracAddLoop(ABC):
 

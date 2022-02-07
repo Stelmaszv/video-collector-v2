@@ -1,5 +1,6 @@
 from core.custum_errors import Error
 
+
 class BaseNav:
     base_nav=[]
     row=0

@@ -1,11 +1,13 @@
 import os
+
 from PyQt5.QtWidgets import QWidget
-from app.db.models import Movies
-from core.view import AbstractBaseView
+
+from app.db.models import Movies, session
 from app.nav import MovieGaleryNav
-from core.setings import photo_ext,data_JSON
-from app.db.models import session
 from core.dir import PhotoMeaker
+from core.setings import data_JSON, photo_ext
+from core.view import AbstractBaseView
+
 
 class EditGaleryMovieView(QWidget,AbstractBaseView):
     show_elemnts = ['Info', 'Galery', 'Avatar', 'Description', 'Tags']

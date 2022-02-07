@@ -1,13 +1,20 @@
 from pathlib import Path
-from app.db.models import session, Movies
-from core.config import ConfigLoop, ConfigMovies,SetTags,CreateXML,CreateMovieList
+
+from app.db.models import Movies, session
+from core.config import (ConfigLoop, ConfigMovies, CreateMovieList, CreateXML,
+                         SetTags)
+from core.create_JSON_DB_LIST import (CreateJSONDBLIST,
+                                      GenerateJSONOtputsMovies,
+                                      GenerateJSONOtputsProducent,
+                                      GenerateJSONOtputsSeries,
+                                      GenerateJSONOtputsStars)
 from core.dir import LoadFilesFromJson, PhotoMeaker
-from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTMLProducents, GenerateHTMLSeries, \
-    GenerateHTMLStars
+from core.html_gerator import (GenerateHTMLMovies, GenerateHTMLProducents,
+                               GenerateHTMLSeries, GenerateHTMLStars,
+                               HTMLGenaratorMain)
 from core.setings import data_JSON, setings_array
-from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
-    GenerateJSONOtputsSeries, GenerateJSONOtputsProducent
-from core.webadmin import WebAdminProducents, WebAdminSeries, WebAdminTags, WebAdminStars, WebAdminMovies, CleanWebAdmin
+from core.webadmin import (CleanWebAdmin, WebAdminMovies, WebAdminProducents,
+                           WebAdminSeries, WebAdminStars, WebAdminTags)
 
 
 class LoopRun:

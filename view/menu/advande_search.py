@@ -1,10 +1,15 @@
-from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
-from app.forms import AdvanceSearchForm
-from view.menu.menu import Menu
+
 from app.db.models import Series
-from  .add_tag_advance_search import AddTagAdvnaceSearchView,AddStarsAdvnaceSearchView
-from core.setings import stars_defult,tags_defult,show_limit,series_defult
+from app.forms import AdvanceSearchForm
+from core.setings import series_defult, show_limit, stars_defult, tags_defult
+from core.view import AbstractBaseView
+from view.menu.menu import Menu
+
+from .add_tag_advance_search import (AddStarsAdvnaceSearchView,
+                                     AddTagAdvnaceSearchView)
+
+
 class AdvanceSearch(QWidget,AbstractBaseView):
     FormSchema = AdvanceSearchForm
     model_view_off = True

@@ -1,4 +1,6 @@
-from core.setings import screen_width,screen_height
+from core.setings import screen_height, screen_width
+
+
 class SetResolution:
 
     def __init__(self,AbstractBaseView):

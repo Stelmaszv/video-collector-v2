@@ -1,4 +1,6 @@
 import json
+
+
 class SeriesCreator:
     singles_limt=2
     movies_series_limit=3

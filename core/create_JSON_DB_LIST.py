@@ -1,13 +1,13 @@
-import math
-from abc import ABC
-from app.db.models import session
-from app.db.models import Producent, Stars, Movies, Series
-from core.custum_errors import Error
-from pathlib import Path
-from core.setings import photo_ext, data_JSON
-import os.path
 import json
+import math
 import os
+import os.path
+from abc import ABC
+from pathlib import Path
+
+from app.db.models import Movies, Producent, Series, Stars, session
+from core.custum_errors import Error
+from core.setings import data_JSON, photo_ext
 
 producent_fields_defult = ['country', "baner", "year"]
 producent_fields_defult2 = ['country', 'series', "baner", "year", "top_stars", "short_series"]

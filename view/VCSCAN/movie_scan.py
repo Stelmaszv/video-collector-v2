@@ -1,13 +1,19 @@
-from core.config import ConfigLoop, ConfigMovies, SetTags, CreateXML, CreateMovieList
-from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsSeries, GenerateJSONOtputsStars, \
-    GenerateJSONOtputsProducent
+from PyQt5.QtWidgets import QWidget
+
+from app.model_view import ConfigAddDataModel
+from core.config import (ConfigLoop, ConfigMovies, CreateMovieList, CreateXML,
+                         SetTags)
+from core.create_JSON_DB_LIST import (CreateJSONDBLIST,
+                                      GenerateJSONOtputsProducent,
+                                      GenerateJSONOtputsSeries,
+                                      GenerateJSONOtputsStars)
 from core.dir import LoadFilesFromJson
-from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTMLProducents, GenerateHTMLSeries, \
-    GenerateHTMLStars
+from core.html_gerator import (GenerateHTMLMovies, GenerateHTMLProducents,
+                               GenerateHTMLSeries, GenerateHTMLStars,
+                               HTMLGenaratorMain)
 from core.setings import data_JSON
 from core.view import AbstractBaseView
-from PyQt5.QtWidgets import QWidget
-from app.model_view import ConfigAddDataModel
+
 
 class MovieScanInfo(QWidget, AbstractBaseView):
     ModelView = ConfigAddDataModel

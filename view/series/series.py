@@ -1,9 +1,10 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import AbstractBaseView
-from app.db.models import Series,Movies
-from app.nav import SeriesNav
+
+from app.db.models import Movies, Series, session
 from app.info import InfoSection
-from app.db.models import session
+from app.nav import SeriesNav
+from core.view import AbstractBaseView
+
 
 class SerieView(QWidget,AbstractBaseView):
 

@@ -1,8 +1,10 @@
-from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
+
 from app.db.models import Producent
-from app.nav import NavPoducent
 from app.info import PrducentInfo
+from app.nav import NavPoducent
+from core.view import AbstractBaseView
+
 
 class ProducentView(QWidget,AbstractBaseView):
     model            = Producent

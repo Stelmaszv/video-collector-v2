@@ -1,17 +1,19 @@
-import re
 import json
 import os
 import random
-from app.db.models import Stars,Movies,Series,Photos,Sezons,Tags,Producent
-from app.db.models import session
-from abc import ABC,abstractmethod
-from core.custum_errors import Error
-from core.setings import series_avatar_defult,stars_avatar_defult,none_movies_defult,singles_movies_defult
+import re
+from abc import ABC, abstractmethod
 from pathlib import Path
-from core.setings import data_JSON,photo_ext,movie_ext
+
 from moviepy.editor import VideoFileClip
+
+from app.db.models import (Movies, Photos, Producent, Series, Sezons, Stars,
+                           Tags, session)
+from core.custum_errors import Error
+from core.setings import (data_JSON, movie_ext, none_movies_defult, photo_ext,
+                          producent, series, series_avatar_defult,
+                          singles_movies_defult, star, stars_avatar_defult)
 from core.strings import stringManipupations
-from core.setings import series,producent,star
 
 add: bool = False
 
@@ -30,6 +32,8 @@ def set_dir_for_producent(name: object) -> object:
         dir = data_JSON['dirs'][2]['dir'] + '\\M-P\\' + name
     if letter == 'R' or letter == 'S' or letter == 'T' or letter == 'U':
         dir = data_JSON['dirs'][2]['dir'] + '\\R-U\\' + name
+
+
     if letter == 'W' or letter == 'V' or letter == 'X' or letter == 'Y' or letter == 'Z':
         dir = data_JSON['dirs'][2]['dir'] + '\\W-Z\\' + name
     return dir

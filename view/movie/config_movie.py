@@ -1,10 +1,12 @@
+from PyQt5.QtWidgets import QWidget
+
 from app.db.models import Movies
 from app.forms import ConfigMoviesViewForm
+from app.info import RaportInfo
 from app.model_view import MoviesModelView
 from app.nav import MovieConfigNav
 from core.view import AbstractBaseView
-from PyQt5.QtWidgets import QWidget
-from app.info import RaportInfo
+
 
 class ConfigMoviesView(QWidget, AbstractBaseView):
     model = Movies

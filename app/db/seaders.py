@@ -1,7 +1,10 @@
-from core.seader import abstractSeader
-from app.db.models import Movies,Stars,Photos,Series,Tags as TagsModel
-from core.strings import stringManipupations
 from datetime import datetime
+
+from app.db.models import Movies, Photos, Series, Stars
+from app.db.models import Tags as TagsModel
+from core.seader import abstractSeader
+from core.strings import stringManipupations
+
 
 class Tags(abstractSeader):
     model = TagsModel

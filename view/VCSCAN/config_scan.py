@@ -1,9 +1,11 @@
+from PyQt5.QtWidgets import QWidget
+
 from app.info import ConfigInfoSection
+from app.model_view import ConfigAddDataModel
 from core.config import ConfigLoop, ConfigMovies, SetTags
 from core.setings import data_JSON
 from core.view import AbstractBaseView
-from PyQt5.QtWidgets import QWidget
-from app.model_view import ConfigAddDataModel
+
 
 class ConfigScan(QWidget, AbstractBaseView):
     ModelView = ConfigAddDataModel

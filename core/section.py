@@ -1,17 +1,20 @@
-from abc import ABC,abstractmethod
-from PyQt5 import QtGui,QtCore, QtWidgets
+import json
+import os
+from abc import ABC, abstractmethod
+
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QListWidget, QScrollBar
 
-from .list import List
-from core.strings import stringManipupations
-from .helper import Pagination, Scroller
-from core.setings import series_avatar_defult
-from core.BaseActions import Form
 from app.info import SingleSectionInfo
-from core.setings import photo_ext,data_JSON,menu_per_page
+from core.BaseActions import Form
 from core.dir import PhotoMeaker
-import os
-import json
+from core.setings import (data_JSON, menu_per_page, photo_ext,
+                          series_avatar_defult)
+from core.strings import stringManipupations
+
+from .helper import Pagination, Scroller
+from .list import List
+
 
 class AbstractSection(ABC):
 

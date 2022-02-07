@@ -1,7 +1,9 @@
-from PyQt5.QtWidgets import QWidget,QApplication,QMainWindow,QHBoxLayout
-from PyQt5 import QtWidgets
-from time import sleep
 import sys
+from time import sleep
+
+from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QHBoxLayout, QMainWindow, QWidget
+
 
 def test(window):
     button1 = QtWidgets.QPushButton("One")

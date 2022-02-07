@@ -1,9 +1,11 @@
-from app.db.models import Stars
-from core.view import AbstractBaseView
-from core.creator import SeriesCreator
 from PyQt5.QtWidgets import QWidget
-from app.nav import StarNav
+
+from app.db.models import Stars
 from app.info import StarInfoSection
+from app.nav import StarNav
+from core.creator import SeriesCreator
+from core.view import AbstractBaseView
+
 
 class StarView(QWidget,AbstractBaseView):
     model              =  Stars

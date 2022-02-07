@@ -1,15 +1,17 @@
-from abc import ABC, abstractmethod
-from core.dir import set_name, if_star_exist, AddStarViaDir, set_dir_for_star, AddSeriesViaDir, set_dir_for_producent, \
-    if_producent_exist, AddProducentViaDir
-from app.db.models import session
-from app.db.models import Tags, Series, Stars, Movies, Producent
-from datetime import datetime
-from core.setings import singles_movies_defult, none_movies_defult
-from core.setings import movies
-from pathlib import Path
-import os
 import json
+import os
+from abc import ABC, abstractmethod
+from datetime import datetime
+from pathlib import Path
+
 import xlsxwriter
+
+from app.db.models import Movies, Producent, Series, Stars, Tags, session
+from core.dir import (AddProducentViaDir, AddSeriesViaDir, AddStarViaDir,
+                      if_producent_exist, if_star_exist, set_dir_for_producent,
+                      set_dir_for_star, set_name)
+from core.setings import movies, none_movies_defult, singles_movies_defult
+
 
 class MovieListForStars:
 

@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QWidget
+
 from app.db.models import Movies
 from app.forms import SetPhotosForMoviesForm
 from app.model_view import MoviesModelView
 from core.view import AbstractBaseView
+
 
 class SetPhotosForMovies(QWidget, AbstractBaseView):
     model = Movies

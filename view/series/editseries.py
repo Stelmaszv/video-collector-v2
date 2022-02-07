@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import AbstractBaseView
+
 from app.db.models import Series
 from app.forms import SeriesForm
 from app.model_view import SeriesModelView
+from core.view import AbstractBaseView
+
 
 class EditSeries(QWidget,AbstractBaseView):
 

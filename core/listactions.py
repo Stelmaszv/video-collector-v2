@@ -1,4 +1,6 @@
-from core.view import BaseView,AbstractBaseView
+from core.view import AbstractBaseView, BaseView
+
+
 class StarListAsctions(AbstractBaseView):
     resolution_index = 'Menu'
     show_elemnts = ['Title', 'Info', 'Galery', 'Nav', 'Avatar','List','Description','Tags']

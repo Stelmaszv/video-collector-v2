@@ -1,6 +1,10 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+
 from PyQt5 import QtWidgets
+
 from .view import Form
+
+
 class AbstractList(ABC):
 
     def __init__(self,BaseView,per_page):

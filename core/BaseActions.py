@@ -1,20 +1,20 @@
 import os
 import time
-
-from PyQt5.QtWidgets import QListWidget, QScrollBar, QListWidgetItem
-
-from app.db.models import session
-from PyQt5 import QtGui,QtCore, QtWidgets
-from PyQt5.QtCore import QRegExp
-from PyQt5.QtGui import QRegExpValidator, QFont
+from abc import ABC, abstractmethod
 from datetime import datetime
+from pathlib import Path
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import QRegExp
+from PyQt5.QtGui import QFont, QRegExpValidator
+from PyQt5.QtWidgets import QListWidget, QListWidgetItem, QScrollBar
+
+from app.db.models import Stars, Tags, session
+from core.custum_errors import Error
 from core.datamanipulation import DataValidator
 from core.dir import AddStarViaDir, set_dir_for_star
-from app.db.models import Tags,Stars
-from core.custum_errors import Error
-from pathlib import Path
-from abc import ABC,abstractmethod
-from core.setings import photo_ext,with_size_defult,height_size_defult
+from core.setings import height_size_defult, photo_ext, with_size_defult
+
 
 class ViewBaseAction:
 

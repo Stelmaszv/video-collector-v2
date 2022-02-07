@@ -1,8 +1,10 @@
-from core.custum_errors import Error
-from pathlib import Path
-from core.setings import data_JSON
 import json
 import os
+from pathlib import Path
+
+from core.custum_errors import Error
+from core.setings import data_JSON
+
 
 class HtmlGenaratorBase:
     def return_html_as_string(self, shema_url):

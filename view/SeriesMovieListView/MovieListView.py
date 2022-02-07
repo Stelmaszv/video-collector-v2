@@ -1,7 +1,9 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import AbstractBaseView
-from app.info import MovisWithStar
+
 from app.db.models import Stars
+from app.info import MovisWithStar
+from core.view import AbstractBaseView
+
 
 class MovieListView(QWidget, AbstractBaseView):
     resolution_index   = 'MovieListView'

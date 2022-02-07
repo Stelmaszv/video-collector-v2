@@ -3,9 +3,12 @@ import os
 import sys
 from abc import ABC, abstractmethod
 from json import JSONDecodeError
-from core.custum_errors import Error
 from pathlib import Path
+
 from PyQt5 import QtWidgets
+
+from core.custum_errors import Error
+
 
 class AbstractMode(ABC):
     def __init__(self, setings):

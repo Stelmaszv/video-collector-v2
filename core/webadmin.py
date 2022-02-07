@@ -1,9 +1,11 @@
-import os
 import json
+import os
 from abc import ABC, abstractmethod
 from pathlib import Path
-from app.db.models import Producent, session, Series,Tags,Stars,Movies
+
+from app.db.models import Movies, Producent, Series, Stars, Tags, session
 from core.setings import data_JSON
+
 
 class CleanWebAdmin:
     def clean(self):
