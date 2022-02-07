@@ -470,7 +470,7 @@ class AddStarViaDir(AbstractAddViaDir):
     shema_url = "custum_json/stars.json"
     defult_skip_galery = star
 
-    def __init__(self,dir,View):
+    def __init__(self,dir,View=False):
         super().__init__(dir,View)
         self.star=self.if_star_exist(set_name(dir))
 

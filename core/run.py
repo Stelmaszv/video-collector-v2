@@ -43,7 +43,6 @@ class Run:
         self.LoopRun = LoopRun()
 
     def start(self):
-
         self.LoopRun.objets = [
             {
                 "obj": LoadFilesFromJson(data_JSON['dirs']), "method": 'add_files',
