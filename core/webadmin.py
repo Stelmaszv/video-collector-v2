@@ -95,6 +95,10 @@ class AbstractWebAdmin(ABC):
     def add_server_url(self,src):
         return 'http://127.0.0.1:8000/'+src
 
+    def convert_int(self,value):
+        if value=="":
+            return 0
+
 
 class WebAdminProducents(AbstractWebAdmin):
 
@@ -112,7 +116,8 @@ class WebAdminProducents(AbstractWebAdmin):
                 "year" :item.year,
                 "show_name":item.show_name,
                 "avatar":self.set_img(item.avatar),
-                "dir"   :item.dir,
+                "dir": self.set_dir(item.dir),
+                "web_dir": item.dir,
                 "country":item.country,
                 "description": item.description,
                 "tags": self.add_many_to_many_as_array(item,'tags')
@@ -135,7 +140,8 @@ class WebAdminSeries(AbstractWebAdmin):
                 "banner":self.set_img(item.baner),
                 "show_name":item.show_name,
                 "avatar":self.set_img(item.avatar),
-                "dir"   :item.dir,
+                "dir": self.set_dir(item.dir),
+                "web_dir": item.dir,
                 "country":item.country,
                 "number_of_sezons":item.number_of_sezons,
                 "years":item.years,
@@ -177,14 +183,15 @@ class WebAdminStars(AbstractWebAdmin):
                 "name":item.name,
                 "show_name": item.show_name,
                 "description": item.description,
-                "weight": item.weight,
+                "weight": self.convert_int(item.weight),
                 "avatar": self.set_img(item.avatar),
-                "height": item.height,
+                "height": self.convert_int(item.height),
                 "ethnicity": item.height,
                 "hair_color": item.height,
                 "birth_place": item.height,
                 "nationality": item.nationality,
-                "dir": item.dir,
+                "dir": self.set_dir(item.dir),
+                "web_dir": item.dir,
                 "date_of_birth": self.add_date(item.date_of_birth),
                 "movies": self.add_many_to_many_as_array(item, 'movies'),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
@@ -210,7 +217,8 @@ class WebAdminMovies(AbstractWebAdmin):
                 "src": self.set_img(item.src),
                 "avatar": self.set_img(item.avatar),
                 "date_relesed": self.add_date(item.date_relesed),
-                "dir": item.dir,
+                "dir": self.set_dir(item.dir),
+                "web_dir": item.dir,
                 "web_src": item.src,
                 "country": item.country,
                 "poster": self.set_img(item.poster),
