@@ -78,19 +78,10 @@ class AbstractWebAdmin(ABC):
             return str
         return ''
 
-    def set_img(self,dir):
-        if dir is not None:
-            string = dir.split('\\')
-            icon=self.set_icon(string)
-            src=''
-            if icon>0:
-                src=self.no_photo_url
-                src = self.set_dir(src)
-            else:
-                src=self.set_dir(dir)
-            return self.add_server_url(src)
-        else:
-            return ''
+    def set_img(self,img):
+        if img !='':
+            return self.add_server_url(self.set_dir(img))
+        return img
 
     def add_server_url(self,src):
         return 'http://127.0.0.1:8000/'+src
@@ -99,12 +90,11 @@ class AbstractWebAdmin(ABC):
         if value=="":
             return 0
 
-
 class WebAdminProducents(AbstractWebAdmin):
 
     Model=Producent
     file_name='Producent.json'
-    no_photo_url = 'web\\no_img\\series.jpg'
+    no_photo_url = ''
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -129,7 +119,7 @@ class WebAdminSeries(AbstractWebAdmin):
 
     Model=Series
     file_name='Series.json'
-    no_photo_url = 'web\\no_img\\series.jpg'
+    no_photo_url = ''
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -164,7 +154,7 @@ class WebAdminTags(AbstractWebAdmin):
         self.objects=[]
         for item in query:
             jason_row = {
-                "name":item.name
+                "name":item.name.replace(",", "").replace(" ", "").capitalize()
             }
             self.objects.append(jason_row)
         self.generate_file()
@@ -173,7 +163,7 @@ class WebAdminStars(AbstractWebAdmin):
 
     Model=Stars
     file_name='Stars.json'
-    no_photo_url = 'web\\no_img\\star_no_photo.png'
+    no_photo_url = ''
 
     def generate(self):
         query=session.query(self.Model).all()
@@ -204,7 +194,7 @@ class WebAdminMovies(AbstractWebAdmin):
 
     Model=Movies
     file_name='Movies.json'
-    no_photo_url='web\\no_img\\movie.jpg'
+    no_photo_url=''
 
     def generate(self):
         query=session.query(self.Model).all()

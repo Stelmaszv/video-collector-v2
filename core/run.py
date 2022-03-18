@@ -157,8 +157,8 @@ class Run:
             },
             {
                 "obj": WebAdminMovies(), "method": 'generate',
-                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Stars',
-                "end_mees": 'End Web admin Stars'
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Movies',
+                "end_mees": 'End Web admin Movies'
             }
         ]
 

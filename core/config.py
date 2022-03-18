@@ -500,6 +500,7 @@ class ConfigMovies(AbstractConfigItem):
             self.set_cover(Movie)
             self.set_poster(Movie)
 
+
     def make_dir(self, Movie):
         if len(Movie.series):
             series = self.dir + '\\series'
