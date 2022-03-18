@@ -154,7 +154,7 @@ class WebAdminTags(AbstractWebAdmin):
         self.objects=[]
         for item in query:
             jason_row = {
-                "name":item.name.replace(",", "").replace(" ", "").capitalize()
+                "name":item.name
             }
             self.objects.append(jason_row)
         self.generate_file()
