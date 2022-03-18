@@ -118,7 +118,7 @@ class AbstractConfigItem(ABC):
         for tag in tags:
             query = session.query(Tags).filter(Tags.name == tag).first()
             if query is None:
-                TagObj = Tags(name=tag)
+                TagObj = Tags(name=tag.replace(",", "").replace(" ", "").capitalize())
                 session.add_all([TagObj])
                 session.commit()
                 query = TagObj
