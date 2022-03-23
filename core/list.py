@@ -1,6 +1,10 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+
 from PyQt5 import QtWidgets
+
 from .view import Form
+
+
 class AbstractList(ABC):
 
     def __init__(self,BaseView,per_page):
@@ -27,7 +31,7 @@ class MoviesList (AbstractList):
         self.BaseView.load_view('play', item)
 
     def movie_info(self,item):
-        self.BaseView.load_view('movies', item)
+        self.BaseView.load_view('movies-config', item)
 
     def on_movies_play(self,id):
         self.BaseView.Form.buttom_genarator(self.button_group_movies_play, self.movie_play, id)

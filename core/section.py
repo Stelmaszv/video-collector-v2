@@ -1,15 +1,20 @@
-from abc import ABC,abstractmethod
-from PyQt5 import QtGui,QtCore, QtWidgets
-from .list import List
-from core.strings import stringManipupations
-from .helper import Pagination, Scroller
-from core.setings import series_avatar_defult
-from core.BaseActions import Form
-from app.info import SingleSectionInfo
-from core.setings import photo_ext,data_JSON,menu_per_page
-from core.dir import PhotoMeaker
-import os
 import json
+import os
+from abc import ABC, abstractmethod
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QListWidget, QScrollBar
+
+from app.info import SingleSectionInfo
+from core.BaseActions import Form
+from core.dir import PhotoMeaker
+from core.setings import (data_JSON, menu_per_page, photo_ext,
+                          series_avatar_defult)
+from core.strings import stringManipupations
+
+from .helper import Pagination, Scroller
+from .list import List
+
 
 class AbstractSection(ABC):
 
@@ -271,7 +276,9 @@ class TagsListSection(AbstractSection):
         self.obj.delete(item)
 
     def run(self, data, data_list, page):
-        self.widget_edit_section = QtWidgets.QWidget(self.obj)
+        self.widget_edit_section = QListWidget(self.obj)
+        scroll_bar = QScrollBar(self.obj)
+        self.widget_edit_section.setVerticalScrollBar(scroll_bar)
         self.widget_edit_section.setGeometry(QtCore.QRect(data[0], data[1], data[2], data[3]))
         self.widget_edit_section.setObjectName("widget_edit_section")
         self.edit_section_grid = QtWidgets.QGridLayout(self.widget_edit_section)

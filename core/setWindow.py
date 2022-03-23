@@ -1,31 +1,41 @@
-from core.media_player import Player
 from core.custum_errors import Error
-
+from core.media_player import Player
 
 open_wnidows=[]
 
 class setWindow():
 
     def returnObj(self, object):
-        from view.series.series import SerieView
-        from view.movie.movie import MovieView
-        from view.movie.add_movie import AddMovieView
-        from view.star.stars import StarView
-        from view.SeriesMovieListView.MovieListView import MovieListView
-        from view.star.edit_star import EditStarView
-        from view.tags.add_tags import MoviesAddTagView,SeriesAddTagView,StarsAddTagView
-        from view.series.editseries import EditSeries
-        from view.set_photo_to_series.set_photo_to_series import SetPhotoToSeries
-        from view.menu.menu import Menu
-        from view.menu.advande_search import AdvanceSearch
-        from view.movie.edit_movie import EditMovieView
-        from view.star.add_star_to_model import MovieAddStarToModelView,SeriesAddStarToModelView
-        from view.galery.edit_galery import EditGaleryMovieView
         from view.config.config_data_json import JSONConfigView
         from view.config.RaportView import RaportView
+        from view.galery.edit_galery import EditGaleryMovieView
+        from view.menu.advande_search import AdvanceSearch
+        from view.menu.menu import Menu
+        from view.movie.add_movie import AddMovieView
+        from view.movie.config_movie import ConfigMoviesView
+        from view.movie.edit_movie import EditMovieView
+        from view.movie.movie import MovieView
+        from view.movie.set_photos_for_movies import SetPhotosForMovies
         from view.producent.producent_view import ProducentView
+        from view.series.editseries import EditSeries
+        from view.series.series import SerieView
+        from view.SeriesMovieListView.MovieListView import MovieListView
+        from view.set_photo_to_series.set_photo_to_series import \
+            SetPhotoToSeries
+        from view.star.add_star_to_model import (MovieAddStarToModelView,
+                                                 SeriesAddStarToModelView)
+        from view.star.edit_star import EditStarView
+        from view.star.stars import StarView
+        from view.tags.add_tags import (MoviesAddTagView, SeriesAddTagView,
+                                        StarsAddTagView)
+        from view.VCSCAN.config_scan import ConfigScan
+        from view.VCSCAN.movie_scan import MovieScanInfo
 
         switcher = {
+            'set_photos_for_movies':SetPhotosForMovies(),
+            'ConfigScan':ConfigScan(),
+            'MovieScanInfo':MovieScanInfo(),
+            'movies-config': ConfigMoviesView(),
             'JSONCONFIG': JSONConfigView(),
             'raport': RaportView(),
             'stars_add_tag_view' : StarsAddTagView(),

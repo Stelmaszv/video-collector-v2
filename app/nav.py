@@ -1,5 +1,6 @@
 from core.custum_errors import Error
 
+
 class BaseNav:
     base_nav=[]
     row=0
@@ -77,6 +78,35 @@ class BaseNav:
     def reset(self,argumants):
         self.BaseActions.reset()
 
+class MovieConfigNav(BaseNav):
+
+    def set_base_nav(self):
+        self.base_nav = [
+            self.add_button({
+                "name": self.set_name_for_favorits(),
+                "obj_name": "add_to_favorits",
+                "click": {"obj": self, "function": 'add_favorits'}
+            }),
+            self.add_button({
+                "name": "Add like",
+                "obj_name": "add_like",
+                "click": {"obj": self, "function": 'add_like'}
+            }),
+            self.add_button({
+                "name": "Reset",
+                "obj_name": "reset",
+                "click": {"obj": self, "function": 'reset'}
+            })
+        ]
+        new=self.add_button({
+            "name": "Open",
+            "obj_name": "open",
+            "click": {"obj": self, "function": 'open'}
+        })
+        self.base_nav.append(new)
+
+    def open(self, argumants):
+        self.AbstractBaseView.BaseView.load_view('play', self.data)
 
 class MovieNav(BaseNav):
 

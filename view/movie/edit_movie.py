@@ -1,13 +1,15 @@
 from PyQt5.QtWidgets import QWidget
+
 from app.db.models import Movies
-from core.view import AbstractBaseView
 from app.forms import MovieEditForm
 from app.model_view import MoviesModelView
+from core.view import AbstractBaseView
+
 
 class EditMovieView(QWidget,AbstractBaseView):
     model = Movies
     resolution_index = 'EditSeries'
-    submit_view = 'movies'
+    submit_view = 'movies-config'
     FormSchema = MovieEditForm
     ModelView = MoviesModelView
     show_elemnts = ['Info', 'Galery', 'Nav', 'Avatar','List','Description','Tags']

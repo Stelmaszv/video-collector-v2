@@ -1,4 +1,38 @@
 let page=0
+let counter_stan=false
+let counter_manual=0
+function json_valider(){
+    if (content.innerHTML!=""){
+        const json_parse = JSON.parse(content.innerHTML);
+        for (let el of json_parse){
+            if (counter_manual<data_count){
+                movies_data.push(el)
+                counter_manual=counter_manual+1
+            }
+        }
+    }
+}
+class ContentLoader{
+    set_list(){
+        var content = document.querySelector('.js_data_content');
+        const counter = setInterval(function () {
+            for (let item of data){
+                var script = document.createElement('script');
+                script.onload = function () {
+                    content.innerHTML=JSON.stringify(movies)
+                    json_valider()
+                }
+                script.src = item;
+                document.head.appendChild(script);
+            }
+            if (counter_manual>=data_count){
+                clearInterval(counter)
+                counter_stan=true
+            }
+        }, 10);    
+    }
+
+}
 class LoadContet{
 
     constructor(filter=[]){

@@ -1,5 +1,5 @@
-from app.db.models import Stars,Series
-from app.db.models import session
+from app.db.models import Series, Stars, session
+
 
 class BaseModelViewSet:
     session = session

@@ -1,7 +1,8 @@
-from core.view import AbstractBaseView
 from PyQt5.QtWidgets import QWidget
-from app.model_view import ConfigAddDataModel
+
 from app.info import RaportInfo
+from app.model_view import ConfigAddDataModel
+from core.view import AbstractBaseView
 
 
 class RaportView(QWidget, AbstractBaseView):

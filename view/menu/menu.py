@@ -1,11 +1,15 @@
-from core.view import AbstractBaseView
-from PyQt5.QtWidgets import QWidget,QMainWindow,qApp,QAction
 from PyQt5.QtGui import QIcon
-from app.forms import MenuFormSchena,MenuPaginationForm
-from core.search import SetFactory
-from core.setings import search_in_defult,search_faze_defult,menu_per_page
+from PyQt5.QtWidgets import QAction, QMainWindow, QWidget, qApp
+
+from app.forms import MenuFormSchena, MenuPaginationForm
 from core.helper import QueryCounter
+from core.search import SetFactory
+from core.setings import menu_per_page, search_faze_defult, search_in_defult
+from core.view import AbstractBaseView
+
 from .AdvanceSearchCriteria import AdvanceSearchCriteria
+
+
 class Menu(QMainWindow,QWidget,AbstractBaseView):
 
     FormSchema                 =  MenuFormSchena
@@ -33,16 +37,35 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
         raportConfig.setStatusTip('Raport')
         raportConfig.triggered.connect(self.raport)
 
+        scanformovies = QAction(QIcon('exit.png'), '&Scan for Movies', self)
+        scanformovies.setStatusTip('Scan for Movies')
+        scanformovies.triggered.connect(self.load_movie_scan)
+
+        scanforconfig = QAction(QIcon('exit.png'), '&Scan for config', self)
+        scanforconfig.setStatusTip('Scan for config')
+        scanforconfig.triggered.connect(self.load_config)
+
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&Actions')
         fileMenu.addAction(jsonConfig)
         fileMenu.addAction(raportConfig)
+        VCSCAN = menubar.addMenu('&VCSCAN')
+        VCSCAN.addAction(scanformovies)
+        VCSCAN.addAction(scanforconfig)
+        VCSCAN.addAction(scanforconfig)
+
 
     def json_config(self):
         self.BaseView.load_view('JSONCONFIG')
 
+    def load_config(self):
+        self.BaseView.load_view('ConfigScan')
+
     def raport(self):
         self.BaseView.load_view('raport')
+
+    def load_movie_scan(self):
+        self.BaseView.load_view('MovieScanInfo')
 
 
     def resizeEvent(self, event):
@@ -82,6 +105,7 @@ class Menu(QMainWindow,QWidget,AbstractBaseView):
 
     def advance(self,advance):
         from .advande_search import AdvanceSearch
+
         #self.BaseView.load_view('advance_search')
         self.run_window()
         AS=AdvanceSearch()

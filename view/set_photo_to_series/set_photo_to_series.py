@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QWidget
+
 from app.db.models import Series
 from app.forms import SetPhotoToSeriesForm
 from app.model_view import SetPhotoToSetiesView
 from core.view import AbstractBaseView
+
 
 class SetPhotoToSeries(QWidget, AbstractBaseView):
 

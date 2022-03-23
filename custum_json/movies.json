@@ -1,0 +1,35 @@
+{
+	"fields"      :[
+        {
+        	"db"    : "show_name",
+			"value" : ""
+        },
+        {
+			"db"    : "description",
+			"value" : ""
+		},
+        {
+            "db"     :  "date_relesed",
+            "value"  :  [1999,1,1],
+            "data"   :  "True"
+		},
+        {
+			"db"    : "country",
+			"value" : ""
+		},
+        {
+        	"db"    : "likes",
+			"value" : 0
+        },
+        {
+        	"db"    : "views",
+			"value" : 0
+        },
+        {
+        	"db"    : "rating",
+			"value" : 0
+        }
+	],
+	"tags"       : [],
+    "stars"      : []
+}

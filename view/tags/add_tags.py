@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import AbstractBaseView
-from core.BaseActions import AddTag,AddStar
+
+from app.db.models import Movies, Series, Stars
 from app.forms import TagsForm
-from app.db.models import Series,Movies,Stars
+from core.BaseActions import AddStar, AddTag
+from core.view import AbstractBaseView
+
 
 class AddTagView(QWidget,AbstractBaseView):
     resolution_index = 'add_tag'

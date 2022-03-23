@@ -88,13 +88,27 @@ class LoadID{
             if(ext == filename) return "";
             return ext;
         }
-        let ext=getExt(this.data.baner)
-        if (ext==="png" || ext==="jpg"){
-            let baner=document.querySelector('.baner_js')
-            baner.setAttribute('src',this.data.baner)
+        function load_banner(data){
+            let ext=getExt(data.baner)
+            if (ext==="png" || ext==="jpg"){
+                let baner=document.querySelector('.baner_js')
+                baner.setAttribute('src',data.baner)
+            }else{
+                let baner=document.querySelector('.baner')
+                baner.style.display="none"
+            }
+        }
+        if (this.data.hasOwnProperty('banner')){
+            const baners_count=this.data.banner.length
+            if (baners_count==0){
+                load_banner(this.data)
+            }else{
+                var item = this.data.banner[Math.floor(Math.random()*baners_count)];
+                let baner=document.querySelector('.baner_js')
+                baner.setAttribute('src',item)
+            }
         }else{
-            let baner=document.querySelector('.baner')
-            baner.style.display="none"
+            load_banner(this.data)
         }
     }
 
@@ -437,13 +451,13 @@ class Movie extends LoadID{
 
     set_buttons(){
         let next_star_div = document.querySelector('#next_star')
-        if (this.data.movies_with_stars.length>1){
-            let star_name = this.found_star(this.data.short_stars,this.data.movies_with_stars)
+        if (this.movies_with_stars_no_paginate.length>1){
+            let star_name = this.found_star(this.data.short_stars,this.movies_with_stars_no_paginate)
             let get_star_div = document.querySelector('.get_star')
             get_star_div.innerHTML=star_name
 
             next_star_div.addEventListener("click", function(){
-                let index=get_index(obj,obj.data.movies_with_stars)
+                let index=get_index(obj,obj.movies_with_stars)
                 let movie=obj.data.movies_with_stars[next_video(obj,index,obj.data.movies_with_stars)]
                 window.location.href=movie.dir+'/movies_id.html'
             });
@@ -473,8 +487,8 @@ class Movie extends LoadID{
             return index
         }
         next_series_div.addEventListener("click", function(){
-            let index=get_index(obj,obj.data['series'][0]['movies'])
-            let movie=obj.data['series'][0]['movies'][next_video(obj,index,obj.data['series'][0]['movies'])]
+            let index=get_index(obj,obj.movies_no_paginate)
+            let movie=obj.movies_no_paginate[next_video(obj,index,obj.movies_no_paginate)]
             window.location.href=movie.dir+'/movies_id.html'
         });
     }
@@ -575,11 +589,11 @@ class Movie extends LoadID{
         });
     }
     set_elements(){
+        this.paginators()
         this.set_poster()
         this.create_table_information()
         this.set_stars()
         this.set_tags()
-        this.paginators()
         this.set_div()
 
         this.load_galery(this.photos,movie_galery_page)
@@ -595,7 +609,7 @@ class Movie extends LoadID{
     set_div(){
         this.set_tabs(this.photos,'.galery_tab_js')
         this.set_tabs(this.series_movies,'.movies_series_tab')
-        this.set_tabs(this.movies,'.movies_with_stars_tab')
+        this.set_tabs(this.movies_with_stars,'.movies_with_stars_tab')
         this.set_active_tabs()
     }
 
@@ -610,19 +624,46 @@ class Movie extends LoadID{
         top_stars.innerHTML=''
     }
 
+    get_movies_series(){
+        let return_movies=[]
+        for (let movie of movies){
+            if(movie.short_series.id==this.data.short_series.id){
+                return_movies.push(movie)
+            }
+        }
+        return return_movies
+    }
+
+    get_movies_with_stars(){
+        let stars_in_movie=this.data.short_stars
+        let return_movies=[]
+        for (let movie of movies){
+            for (let star of movie.short_stars){
+                for (let star_in_movie of stars_in_movie){
+                    if (star.id == star_in_movie.id){
+                        return_movies.push(movie)
+                    }
+                }
+            }
+        }
+        return return_movies
+    }
+
     paginators(){
         const PaginatorPhoto  = new Paginator(this.data.photos,20)
         this.photos=PaginatorPhoto.genrate_pages()
 
-        const PaginatorMovies = new Paginator(this.data.movies_with_stars,20)
-        this.movies=PaginatorMovies.genrate_pages()
+        this.movies_with_stars_no_paginate = this.get_movies_with_stars()
+        const PaginatorMovies = new Paginator(this.movies_with_stars_no_paginate,20)
+        this.movies_with_stars=PaginatorMovies.genrate_pages()
 
-        const PaginatorMoviesSeries = new Paginator(this.data.series[0].movies,20)
+        this.movies_no_paginate = this.get_movies_series()
+        const PaginatorMoviesSeries = new Paginator(this.movies_no_paginate,20)
         this.series_movies=PaginatorMoviesSeries.genrate_pages()
     }
 
     all_movies_with_star(page){
-        let ObjMovieList = new MovieList('.all_stars_output',this.movies)
+        let ObjMovieList = new MovieList('.all_stars_output',this.movies_with_stars)
         ObjMovieList.return_data(page)
     }
     add_series_movies(page){
@@ -633,12 +674,10 @@ class Movie extends LoadID{
     create_table_information(){
         let table=document.querySelector('.table_information')
         table.innerHTML+='<tr>'
-        if (this.data.series[0].producent.hasOwnProperty('dir')){
-            table.innerHTML+='<td>Producent</td><td class="producent_item"><a href="'+this.data.series[0].producent.dir+'/producent_id.html">'+this.data.series[0].producent.name+'</a></td>'
-        }
+        table.innerHTML+='<td>Producent</td><td class="producent_item"><a href="'+this.data.producent.dir+'/producent_id.html">'+this.data.producent.show_name+'</a></td>'
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
-        table.innerHTML+='<td>Serie</td><td class="series_item"><a href="'+this.data.series[0].dir+'/series_id.html">'+this.data.series[0].name+'</a></td>'
+        table.innerHTML+='<td>Serie</td><td class="series_item"><a href="'+this.data.short_series.dir+'/series_id.html">'+this.data.short_series.name+'</a></td>'
         table.innerHTML+='</tr>'
         table.innerHTML+='<tr>'
         if (this.data.short_stars.length>0){

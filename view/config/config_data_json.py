@@ -1,10 +1,14 @@
 import json
 import os
-from core.view import AbstractBaseView
-from PyQt5.QtWidgets import QWidget, QFileDialog
+
+from PyQt5.QtWidgets import QFileDialog, QWidget
+
 from app.forms import JSONDataConfigForm
 from app.model_view import ConfigAddDataModel
+from core.view import AbstractBaseView
 from view.menu.menu import Menu
+
+
 class JSONConfigView(QWidget,AbstractBaseView):
     FormSchema = JSONDataConfigForm
     ModelView  = ConfigAddDataModel

@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QWidget
+
 from app.db.models import Movies
-from core.view import AbstractBaseView
 from app.info import InfoForMovie
 from app.nav import MovieNav
+from core.view import AbstractBaseView
+
 
 class MovieView(QWidget,AbstractBaseView):
     model = Movies

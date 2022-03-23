@@ -1,7 +1,10 @@
 from PyQt5.QtWidgets import QWidget
-from core.view import AbstractBaseView
+
+from app.db.models import Stars, Tags
 from app.forms import TagsFormAddToSearch
-from app.db.models import Tags,Stars
+from core.view import AbstractBaseView
+
+
 class AbstractAdd(AbstractBaseView):
 
     resolution_index = 'add_tag'

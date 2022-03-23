@@ -1,7 +1,12 @@
+import json
+import os
+
+from app.db.models import Movies, Producent, Series, Stars, session
 from core.datamanipulation import Data as Data
+from core.setings import data_JSON, movie_ext
 from core.strings import stringManipupations
-from app.db.models import Movies, Stars, Series, Producent
-from app.db.models import session
+
+
 class BaseInfo:
     data_info=[]
     def __init__(self, Obj=None, methods=[]):
@@ -148,6 +153,148 @@ class RaportInfo(BaseInfo):
 
     def counter(self, Model):
         return session.query(Model).count()
+
+class MovieScanInfoSection(BaseInfo):
+    counter_object=0
+
+    def return_counter(self):
+        return self.counter_object
+
+    def return_data(self):
+        data= [
+            {"itemNmae": "Movies", "itemName2": str(self.counter_movies(Movies))},
+            {"itemNmae": "Stars", "itemName2": str(self.counter_stars(Stars))},
+            {"itemNmae": "Series", "itemName2": str(self.counter_series(Series))},
+            {"itemNmae": "Producents", "itemName2": str(self.counter_producent(Producent))},
+        ]
+        return data
+
+    def counter(self, Model):
+        return session.query(Model).count()
+
+    def count_item_in_dir(self, Model,index):
+        item = self.set_dir(index)
+        dir = os.listdir(item['dir'])
+        count = 0
+        for el in dir:
+            new_dir = item['dir'] + '' + str('\\' + el)
+            list = os.listdir(new_dir)
+            count = count + len(list)
+        movies_in_db = session.query(Model).count()
+        return_count=count - movies_in_db
+        self.counter_object=self.counter_object+return_count
+        return return_count
+
+    def set_dir(self,index):
+        item = []
+        for type in data_JSON['dirs']:
+            if type['type'] == index:
+                item = type
+        return item
+
+    def counter_movies(self, Model):
+        def count_movies(dir):
+            movie_dir = dir+ '' + '\movies'
+            listSeries=os.listdir(movie_dir)
+            count=0
+            for dir_element in listSeries:
+                nev_dir = movie_dir + '' + '\\' + str(dir_element) + '\\DATA'
+                nev_dir_loop = []
+                if os.path.isdir(nev_dir):
+                    nev_dir_loop = os.listdir(nev_dir)
+                for movie in nev_dir_loop:
+                    if movie.endswith(movie_ext):
+                        count=count+1
+            return count
+        def movies_series_by_series():
+            item = self.set_dir('series')
+            count = 0
+            dir= os.listdir(item['dir'])
+            for el in dir:
+                new_dir = item['dir'] + '' + str('\\' + el)
+                list = os.listdir(new_dir)
+                for dir_element in list:
+                    count=count + count_movies(new_dir + '' + str('\\' + dir_element))
+            return count
+        movies_in_db = session.query(Model).count()
+        movies_series = movies_series_by_series()
+        return_count=movies_series - movies_in_db
+        self.counter_object = self.counter_object + return_count
+        return return_count
+
+    def counter_stars(self,Model):
+        return self.count_item_in_dir(Model,'stars')
+
+    def counter_series(self,Model):
+        return self.count_item_in_dir(Model,'series')
+
+    def counter_producent(self,Model):
+        return self.count_item_in_dir(Model,'producents')
+
+class ConfigInfoSection(MovieScanInfoSection):
+
+    def count_config_items(self,index,Model):
+        item = self.set_dir(index)
+        count = 0
+        dir = os.listdir(item['dir'])
+        for el in dir:
+            new_dir = item['dir'] + '' + str('\\' + el)
+            list = os.listdir(new_dir)
+            for dir_element in list:
+                count = count + self.count_series(dir_element, Model)
+        self.counter_object = self.counter_object + count
+        return count
+
+    def count_series(self,dir,Model):
+        count = 0
+        Model = session.query(Model).filter(Model.name == dir).first()
+        if Model is not None:
+            with open(Model.dir+'\\\\\\\\config.JSON') as json_file:
+                data = json.load(json_file)
+                if 'fields' in data:
+                    for item in data['fields']:
+                        if hasattr(Model, item['db']):
+                            if getattr(Model, item['db']) != item['value']:
+                                count = count + 1
+        return count
+
+    def counter_movies(self,Model):
+        def config_movie(dir):
+            sezons=os.listdir(dir)
+            count = 0
+            for movies_dir in sezons:
+                movies_sezons=os.listdir(dir+'\\\\\\\\'+movies_dir)
+                for movie_sezons in movies_sezons:
+                    Model = session.query(Movies).filter(Movies.name == movie_sezons).first()
+                    if Model is not None:
+                        with open(dir+'\\\\\\\\'+movies_dir+'\\\\\\\\'+movie_sezons+'\\\\\\\\config.JSON') as json_file:
+                            data = json.load(json_file)
+                            if 'fields' in data:
+                                for item in data['fields']:
+                                    if hasattr(Model, item['db']):
+                                        if item['db'] != 'date_relesed':
+                                            if getattr(Model, item['db']) != item['value']:
+                                                count = count + 1
+            return count
+        count = 0
+        movies_dir=data_JSON['movies_photos']
+        series_dir=movies_dir+'\\\\\\\\series'
+        list = os.listdir(series_dir)
+        for main_dir in list:
+            for sorted_dir in os.listdir(series_dir+'\\\\\\\\'+main_dir):
+                count=config_movie(series_dir+'\\\\\\\\'+main_dir+'\\\\\\\\'+sorted_dir)
+                count = count + count
+        self.counter_object = self.counter_object + count
+        return count
+
+    def counter_series(self, Model):
+        return self.count_config_items('series',Model)
+
+    def counter_stars(self,Model):
+        return self.count_config_items('stars', Model)
+
+    def counter_producent(self,Model):
+        return self.count_config_items('producents', Model)
 
 class InfoForMovie(BaseInfo):
 

@@ -1,16 +1,21 @@
-import sys
-from PyQt5.QtWidgets import QApplication
 from pathlib import Path
-from app.db.models import session, Movies
-from core.config import ConfigLoop, ConfigMovies,SetTags,CreateXML,CreateMovieList
+
+from app.db.models import Movies, session
+from core.config import (ConfigLoop, ConfigMovies, CreateMovieList, CreateXML,
+                         SetTags)
+from core.create_JSON_DB_LIST import (CreateJSONDBLIST,
+                                      GenerateJSONOtputsMovies,
+                                      GenerateJSONOtputsProducent,
+                                      GenerateJSONOtputsSeries,
+                                      GenerateJSONOtputsStars)
 from core.dir import LoadFilesFromJson, PhotoMeaker
-from core.html_gerator import HTMLGenaratorMain, GenerateHTMLMovies, GenerateHTMLProducents, GenerateHTMLSeries, \
-    GenerateHTMLStars
-from core.setings import data_JSON, setings_array, start_page
-from view.menu.menu import Menu
-from view.config.config_data_json import JSONConfigView
-from core.create_JSON_DB_LIST import CreateJSONDBLIST, GenerateJSONOtputsMovies, GenerateJSONOtputsStars, \
-    GenerateJSONOtputsSeries, GenerateJSONOtputsProducent
+from core.html_gerator import (GenerateHTMLMovies, GenerateHTMLProducents,
+                               GenerateHTMLSeries, GenerateHTMLStars,
+                               HTMLGenaratorMain)
+from core.setings import data_JSON, setings_array
+from core.webadmin import (CleanWebAdmin, WebAdminMovies, WebAdminProducents,
+                           WebAdminSeries, WebAdminStars, WebAdminTags)
+
 
 class LoopRun:
     objets = []
@@ -25,6 +30,14 @@ class LoopRun:
     def loop(self):
         for objet in self.objets:
             self.run_object(objet['obj'], objet['method'], objet['stan'], objet['start_mes'], objet['end_mees'])
+class JSONRun:
+
+    def __init__(self, StartView, JSONConfigView):
+        self.StartView = StartView
+        self.JSONConfigView = JSONConfigView
+
+    def show_start_view(self):
+        self.StartView.run_window()
 
 class Run:
     scan_photos = setings_array["scan_photos"]
@@ -37,7 +50,6 @@ class Run:
         self.LoopRun = LoopRun()
 
     def start(self):
-
         self.LoopRun.objets = [
             {
                 "obj": LoadFilesFromJson(data_JSON['dirs']), "method": 'add_files',
@@ -118,6 +130,36 @@ class Run:
                 "stan": setings_array["generate_html"], "start_mes": 'Genereting HTML Stars',
                 "end_mees": 'End of Genereting HTML Stars'
             },
+            {
+                "obj": CleanWebAdmin(), "method": 'clean',
+                "stan": setings_array["web_admin"], "start_mes": 'Start Cleaning web Amidn !',
+                "end_mees": 'End of Cleaning web Amidn'
+            },
+            {
+                "obj": WebAdminProducents(), "method": 'generate',
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Producents',
+                "end_mees": 'End Web admin Producents'
+            },
+            {
+                "obj": WebAdminSeries(), "method": 'generate',
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Series',
+                "end_mees": 'End Web admin Series'
+            },
+            {
+                "obj": WebAdminTags(), "method": 'generate',
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Tags',
+                "end_mees": 'End Web admin Tags'
+            },
+            {
+                "obj": WebAdminStars(), "method": 'generate',
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Stars',
+                "end_mees": 'End Web admin Stars'
+            },
+            {
+                "obj": WebAdminMovies(), "method": 'generate',
+                "stan": setings_array["web_admin"], "start_mes": 'Star Web admin Movies',
+                "end_mees": 'End Web admin Movies'
+            }
         ]
 
         if Path('data.json').is_file():
@@ -138,11 +180,3 @@ class Run:
             self.StartView.run_window()
         else:
             exit()
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    Run = Run(Menu(start_page), JSONConfigView())
-    Run.start()
-    if Run.config:
-        Run.show_start_view()
-    sys.exit(app.exec_())

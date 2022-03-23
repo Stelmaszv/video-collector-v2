@@ -72,7 +72,9 @@
     </div>
 </div>
 <main class='content container'>
-    <div class="row series-output">[#SeriesOputs#]</div>
+    <div class="row series-output">
+        <img width="300" height="800" src="[#HTMLOUTPUT#]/HTML Generator/sites/loading.gif">
+    </div>
 </main>
 </body>
 <script src="[#HTMLOUTPUT#]\HTML Generator\js\lists.js"></script>
@@ -86,7 +88,7 @@
     let LoadMoviesObjInit=new LoadSeries()
     const form=new FilterSeries(series_result)
     form.set_form(series_result)
-    scroller()
+    scroller(LoadMoviesObjInit)
     let LS = LoadSeries
     keyup(form,['set_tag','set_stars'],LS)
     change('.raiting-search','raiting',form,[],LS)

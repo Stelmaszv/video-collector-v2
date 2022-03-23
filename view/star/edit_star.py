@@ -1,8 +1,10 @@
 from PyQt5.QtWidgets import QWidget
+
 from app.db.models import Stars
-from core.view import AbstractBaseView
 from app.forms import StarsForm
 from app.model_view import StarModelView
+from core.view import AbstractBaseView
+
 
 class EditStarView(QWidget,AbstractBaseView):
     model = Stars

@@ -1,4 +1,6 @@
-from core.setings import screen_width,screen_height
+from core.setings import screen_height, screen_width
+
+
 class SetResolution:
 
     def __init__(self,AbstractBaseView):
@@ -417,13 +419,13 @@ class GetResolutionData:
                 "window": {
                     "title_size": [
                         self.set_rezulution(-10, 'with'),
-                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(-2, 'height'),
                         self.set_rezulution(90, 'with'),
                         self.set_rezulution(10, 'height')
                     ],
                     "form_section": [
                         self.set_rezulution(25, 'with'),
-                        self.set_rezulution(-15, 'height'),
+                        self.set_rezulution(-12, 'height'),
                         self.set_rezulution(25, 'with'),
                         self.set_rezulution(40, 'height')
                     ],
@@ -431,7 +433,7 @@ class GetResolutionData:
                         self.set_rezulution(15, 'with'),
                         self.set_rezulution(10, 'height'),
                         self.set_rezulution(50, 'with'),
-                        self.set_rezulution(85, 'height')
+                        self.set_rezulution(70, 'height')
                     ],
                 }
             },
@@ -492,6 +494,90 @@ class GetResolutionData:
                         self.set_rezulution(25, 'height'),
                     ],
                     "galery_item_show": 5,
+                }
+            },
+            "ConfigMoviesView": {
+                "position": self.base_window(),
+                "window": {
+                    "navbar": self.base_navbar(),
+                    "title_size": [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "form_section": [
+                        self.set_rezulution(15, 'with'),
+                        self.set_rezulution(7, 'height'),
+                        self.set_rezulution(40, 'with'),
+                        self.set_rezulution(40, 'height')
+                    ]
+
+                }
+            },
+            "set_photos_for_movies":{
+                "position": self.base_window(),
+                "window": {
+                    "avatar_custum":[
+                        self.set_rezulution(5, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(50, 'height')
+                    ],
+                    "poster":[
+                        self.set_rezulution(45, 'with'),
+                        self.set_rezulution(5, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(50, 'height')
+                    ],
+                    "title_size": [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "form_section": [
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(50, 'height'),
+                        self.set_rezulution(25, 'with'),
+                        self.set_rezulution(40, 'height')
+                    ]
+                }
+            },
+            "VCSCAN": {
+                "position": self.base_window(),
+                "window": {
+                    "title_size": [
+                        self.set_rezulution(-10, 'with'),
+                        self.set_rezulution(0, 'height'),
+                        self.set_rezulution(90, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "custum_button":[
+                        self.set_rezulution(8, 'with'),
+                        self.set_rezulution(80, 'height'),
+                        self.set_rezulution(60, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "go_to_config":[
+                        self.set_rezulution(8, 'with'),
+                        self.set_rezulution(70, 'height'),
+                        self.set_rezulution(60, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
+                    "scroler": [
+                        self.set_rezulution(8, 'with'),
+                        self.set_rezulution(20, 'height'),
+                        self.set_rezulution(60, 'with'),
+                        self.set_rezulution(50, 'height')
+                    ],
+
+                    "info_size": [
+                        self.set_rezulution(31, 'with'),
+                        self.set_rezulution(7, 'height'),
+                        self.set_rezulution(20, 'with'),
+                        self.set_rezulution(10, 'height')
+                    ],
                 }
             },
             "Stars": {

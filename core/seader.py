@@ -1,6 +1,9 @@
-from abc import ABC,abstractmethod
+from abc import ABC, abstractmethod
+
 from app.db.models import session
 from core.strings import stringManipupations
+
+
 class abstractSeader(ABC):
     objects=[]
 

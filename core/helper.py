@@ -1,6 +1,8 @@
-from PyQt5.QtWidgets import  QMessageBox,QDialog
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QDialog, QMessageBox
+
 from core.custum_errors import Error
+
 
 class QueryCounter:
 

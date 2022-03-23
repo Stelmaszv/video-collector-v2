@@ -1,4 +1,4 @@
-let scroller = function(){
+let scroller = function(LoadMoviesObjInit){
     window.addEventListener("scroll", (event) => {
         var limit = document.body.offsetHeight - window.innerHeight;
         let scrol_pos=90/100*limit

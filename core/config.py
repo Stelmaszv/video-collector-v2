@@ -1,13 +1,16 @@
-from abc import ABC, abstractmethod
-from core.dir import set_name, if_star_exist, AddStarViaDir, set_dir_for_star, AddSeriesViaDir
-from app.db.models import session
-from app.db.models import Tags, Series, Stars, Movies, Producent
-from datetime import datetime
-from core.setings import singles_movies_defult, none_movies_defult
-from pathlib import Path
-import os
 import json
+import os
+from abc import ABC, abstractmethod
+from datetime import datetime
+from pathlib import Path
+
 import xlsxwriter
+
+from app.db.models import Movies, Producent, Series, Stars, Tags, session
+from core.dir import (AddProducentViaDir, AddSeriesViaDir, AddStarViaDir,
+                      if_producent_exist, if_star_exist, set_dir_for_producent,
+                      set_dir_for_star, set_name)
+from core.setings import movies, none_movies_defult, singles_movies_defult
 
 
 class MovieListForStars:
@@ -29,7 +32,6 @@ class MovieListForStars:
             if star_name == Star['Star']:
                 movies_list.append(Star['dir'])
         return movies_list
-
 
 class StarList:
 
@@ -80,8 +82,9 @@ class StarList:
 class AbstractConfigItem(ABC):
     Model = None
 
-    def __init__(self, dir):
+    def __init__(self, dir,View=None):
         self.dir = dir
+        self.Viev = View
         self.session = session
         self.name = set_name(dir)
         print("Config " + str(self.name))
@@ -115,12 +118,22 @@ class AbstractConfigItem(ABC):
         for tag in tags:
             query = session.query(Tags).filter(Tags.name == tag).first()
             if query is None:
-                TagObj = Tags(name=tag)
+                TagObj = Tags(name=tag.replace(",", "").replace(" ", "").capitalize())
                 session.add_all([TagObj])
                 session.commit()
                 query = TagObj
             self.data.tags.append(query)
             session.commit()
+
+    def view_mess(self):
+        if self.Viev is not None:
+            self.Viev.data_array.append(
+                str(self.Viev.info_data_index) +'  Config ' + str(
+                    self.name) + '')
+            self.Viev.setWindowTitle(
+                str(self.Viev.info_data_index)+'  Config ' + str(self.name) + '')
+            self.Viev.info_data_index = self.Viev.info_data_index + 1
+            self.Viev.update()
 
     def set_data_form_json(self, el, Obj):
         def add_item(item):
@@ -139,8 +152,10 @@ class AbstractConfigItem(ABC):
                     if 'available' in item:
                         if item['value'] in item['available']:
                             add_item(item)
+                            self.view_mess()
                     else:
                         add_item(item)
+                        self.view_mess()
 
     def add_list(self, Obj, atter_for_list, atter_for_literator):
         if Path(Obj.dir + '\\list.JSON').is_file() is True:
@@ -189,7 +204,6 @@ class AbstractConfigItem(ABC):
     def load(self):
         pass
 
-
 class SeriesConfigData(AbstractConfigItem):
     Model = Series
 
@@ -234,8 +248,11 @@ class SeriesConfigData(AbstractConfigItem):
                         self.set_data_form_json(sezon_item['fields'], sezon)
 
     def add_producent(self, producent, Series):
-        ProducentObj = self.session.query(Producent).filter(Producent.name == producent[0]).first()
-        Series.producent.append(ProducentObj)
+        if len(producent)>0:
+            if os.path.isdir(set_dir_for_producent(producent[0])) is False:
+                os.mkdir(set_dir_for_producent(producent[0]))
+            ProducentObj = if_producent_exist(AddProducentViaDir(set_dir_for_producent(producent[0])), producent[0])
+            Series.producent.append(ProducentObj)
 
     def movies_list(self):
         def convert_to_src(movies):
@@ -428,6 +445,7 @@ class ProducentConfigData(AbstractConfigItem):
         self.create_series_list()
         self.dir_for_stars()
         self.movies_list()
+
         with open(self.config) as json_file:
             data = json.load(json_file)
 
@@ -446,10 +464,13 @@ class ProducentConfigData(AbstractConfigItem):
 
 class ConfigMovies(AbstractConfigItem):
     Movies = Movies
+    shema_url ="custum_json/movies.json"
     dir_DB = ''
 
-    def __init__(self, json_data):
+    def __init__(self, json_data,View=None):
         self.dir = json_data
+        self.Viev=View
+
 
     def set_cover(self, Movie):
         for logo in os.listdir(Movie.dir):
@@ -478,6 +499,7 @@ class ConfigMovies(AbstractConfigItem):
 
             self.set_cover(Movie)
             self.set_poster(Movie)
+
 
     def make_dir(self, Movie):
         if len(Movie.series):
@@ -534,24 +556,26 @@ class ConfigMovies(AbstractConfigItem):
 
         if os.path.isfile(config) is False:
             f = open(config, "x")
-            f.write('{}')
+            f.write(Path(self.shema_url).read_text())
             f.close()
 
         if os.path.isfile(galery) is False:
             f = open(galery, "x")
-            f.write('[]')
+            f.write(json.dumps(movies))
             f.close()
 
     def load(self):
         for Movie in session.query(Movies).all():
-            print('Config for ' + str(Movie))
+            self.name=Movie
+            print('Config for ' + str(self.name))
             self.make_dir(Movie)
 
 
 class SetTags(AbstractConfigItem):
 
-    def __init__(self, json_data):
+    def __init__(self, json_data,View=None):
         self.dir = json_data
+        self.View = View
 
     def set_tags(self, Movie):
         def set_tag_from_series(Movie):
@@ -570,7 +594,8 @@ class SetTags(AbstractConfigItem):
 
     def set(self):
         for Movie in session.query(Movies).all():
-            print('Adding tag for ' + str(Movie))
+            self.name = Movie
+            print('Adding tag for ' + str(self.name))
             self.set_tags(Movie)
 
     def load(self):
@@ -580,28 +605,30 @@ class SetTags(AbstractConfigItem):
 class AbstractConfig(ABC):
     LoadSetingsClass = None
 
-    def __init__(self, dir):
+    def __init__(self, dir,View=None):
         self.dir = dir
+        self.View = View
 
     def set(self):
         loop_dir = os.listdir(self.dir)
         for item in loop_dir:
             dir = self.dir + '' + str('\\' + item)
-            OBJ = self.LoadSetingsClass(dir)
+            OBJ = self.LoadSetingsClass(dir,self.View)
             OBJ.load_dir()
 
 
 class AbstractLoadSetings(ABC):
     ItemClass = None
 
-    def __init__(self, dir):
+    def __init__(self, dir,View=None):
         self.dir = dir
+        self.View = View
 
     def load_dir(self):
         loop_dir = os.listdir(self.dir)
         for item in loop_dir:
             dir = self.dir + '' + str('\\' + item)
-            self.ItemClass(dir).load()
+            self.ItemClass(dir,self.View).load()
 
 
 class LoadSetingsProducent(AbstractLoadSetings):
@@ -630,8 +657,9 @@ class ConfigProducent(AbstractConfig):
 
 class ConfigLoop:
 
-    def __init__(self, json_data):
+    def __init__(self, json_data,View=None):
         self.json_data = json_data
+        self.View=View
         self.object = {
             "series": ConfigSeries,
             "producents": ConfigProducent,
@@ -642,5 +670,5 @@ class ConfigLoop:
         for item in self.json_data:
             if item['type'] != 'photos':
                 LD = self.object[item['type']]
-                LD = LD(item['dir'])
+                LD = LD(item['dir'],self.View)
                 LD.set()

@@ -1,0 +1,35 @@
+{
+	"fields"      :[
+		{
+			"db"    : "description",
+			"value" : ""
+		},
+		{
+        	"db"    : "show_name",
+			"value" : ""
+        },
+		{
+			"db"    : "country",
+			"value" : ""
+		},
+        {
+        	"db"    : "likes",
+			"value" : 0
+        },
+        {
+        	"db"    : "views",
+			"value" : 0
+        },
+        {
+        	"db"    : "rating",
+			"value" : ""
+        },
+		{
+			"db"    : "years",
+			"value" : "2007"
+		}
+	],
+	"tags"       : [],
+	"producent"  : [],
+    "stars"      : []
+}

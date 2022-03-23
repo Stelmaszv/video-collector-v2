@@ -1,5 +1,5 @@
-from app.db.models import Movies,Series,Stars,Photos
-from app.db.models import session
+from app.db.models import Movies, Photos, Series, Stars, session
+
 """
 def runSeeader():
     objects = [

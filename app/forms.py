@@ -1,6 +1,8 @@
+import os
+
 from core.custum_errors import Error
 from core.setings import photo_ext
-import os
+
 
 class FormConstract:
     row=0
@@ -327,9 +329,224 @@ class AbstractBaseFormShema(BaseFormShema):
             'new_row': True
         })
 
+class SetPhotosForMoviesForm(BaseFormShema):
+
+    def form(self):
+        self.from_section = []
+
+        self.add_iten('label', {
+            'place_holder': 'Avatar',
+            'name': 'avatar',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('photo', {
+            'place_holder': 'Avatar',
+            'dir_set': '',
+            'name': 'avatar',
+            'db': 'avatar',
+            "row": False,
+            "coll": True,
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Poster',
+            'name': 'avatar',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('photo', {
+            'place_holder': 'Poster',
+            'dir_set': '',
+            'name': 'poster',
+            'db': 'poster',
+            "row": False,
+            "coll": True,
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Submit',
+            'name': 'submit_click',
+            "row": True,
+            "coll": True,
+            "is_submit": True,
+            'new_row': True
+        })
+
+class ConfigMoviesViewForm(BaseFormShema):
+
+    def form(self):
+        self.from_section = []
+
+        self.add_iten('button', {
+            'place_holder': 'Base Edit',
+            'name': 'base_edit',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Set Photos',
+            'name': 'set_photos',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Add tag',
+            'name': 'add_tag',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Edit Galery',
+            'name': 'edit_galery',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+        self.add_iten('button', {
+            'place_holder': 'Add Star',
+            'name': 'add_star',
+            "row": True,
+            "coll": True,
+            'new_row': True
+        })
+
+
 class MovieEditForm(AbstractBaseFormShema):
 
-    def add_forms(self):
+    def form(self):
+        self.from_section = []
+        self.add_iten('label', {
+            'place_holder': 'Name',
+            'name': 'name',
+            "row": False,
+            "coll": False
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Name',
+            'name': 'show_name',
+            'db': 'show_name',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Sezon',
+            'name': 'sezon',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Sezon',
+            'db'  :'sezon',
+            'data_type': 'int',
+            'name': 'sezon',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Likes',
+            'name': 'likes',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Likes',
+            'data_type': 'int',
+            'db'  :'likes',
+            'name': 'likes',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Views',
+            'name': 'views',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Views',
+            'db'  :'views',
+            'data_type': 'int',
+            'name': 'views',
+            "row": False,
+            "coll": True
+        })
+
+        self.add_iten('label', {
+            'place_holder': 'Rating',
+            'name': 'rating',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Rating',
+            'db'  :'rating',
+            'data_type': 'int',
+            'name': 'rating',
+            "row": False,
+            "coll": True
+        })
+
+
+        self.add_iten('label', {
+            'place_holder': 'Date relesed',
+            'name': 'date_relesed',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+
+        self.add_iten('edit_line', {
+            'place_holder': 'Date relesed',
+            'db'  :'date_relesed',
+            'data_type': 'date_relesed',
+            'name': 'date_relesed',
+            "row": False,
+            "coll": True,
+        })
+
+
+        self.add_iten('label', {
+            'place_holder': 'New Date relesed',
+            'name': 'date_relesed',
+            "row": True,
+            "coll": False,
+            'new_row': True
+        })
+
+        self.add_iten('calendar', {
+            'place_holder': 'Date relesed',
+            'name': 'date_relesed',
+            'validation': "[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]",
+            'db': 'date_relesed',
+            "row": False,
+            "coll": True,
+            'new_row': True,
+        })
 
         self.add_iten('label', {
             'place_holder': 'Country',
@@ -346,45 +563,12 @@ class MovieEditForm(AbstractBaseFormShema):
             "row": False,
             "coll": True
         })
-
-        self.add_iten('label', {
-            'place_holder': 'Year',
-            'name': 'country',
-            "row": True,
-            "coll": False,
-            'new_row': True
-        })
-
-        self.add_iten('edit_line', {
-            'place_holder': 'Year',
-            'name': 'year',
-            'db': 'year',
-            "row": False,
-            "coll": True
-        })
-
         self.add_iten('button', {
-            'place_holder': 'Add tag',
-            'name': 'add_tag',
+            'place_holder': 'Submit',
+            'name': 'submit_click',
             "row": True,
             "coll": True,
-            'new_row': True
-        })
-
-
-        self.add_iten('button', {
-            'place_holder': 'Edit Galery',
-            'name': 'edit_galery',
-            "row": True,
-            "coll": True,
-            'new_row': True
-        })
-
-        self.add_iten('button', {
-            'place_holder': 'Add Star',
-            'name': 'add_star',
-            "row": True,
-            "coll": True,
+            "is_submit": True,
             'new_row': True
         })
 
