@@ -219,7 +219,9 @@ class WebAdminMovies(AbstractWebAdmin):
                 "poster": self.set_img(item.poster),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
                 "series": self.add_many_to_many_as_array(item, 'series'),
+                'producent': self.add_many_to_many_as_array(item.series[0], 'producent'),  #self.get_producent_movies(item)
                 "stars": self.add_many_to_many_as_array(item, 'stars')
+
             }
             self.objects.append(jason_row)
         self.generate_file()
