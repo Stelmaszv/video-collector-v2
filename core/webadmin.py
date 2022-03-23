@@ -103,7 +103,7 @@ class WebAdminProducents(AbstractWebAdmin):
             jason_row = {
                 "name":item.name,
                 "banner":self.set_dir(item.baner),
-                "year" :item.year,
+                "year" :self.set_year(item.year),
                 "show_name":item.show_name,
                 "avatar":self.set_img(item.avatar),
                 "dir": self.set_dir(item.dir),
@@ -114,6 +114,11 @@ class WebAdminProducents(AbstractWebAdmin):
             }
             self.objects.append(jason_row)
         self.generate_file()
+
+    def set_year(self,data):
+        if data:
+            return data
+        return ''
 
 class WebAdminSeries(AbstractWebAdmin):
 
@@ -178,7 +183,7 @@ class WebAdminStars(AbstractWebAdmin):
                 "height": self.convert_int(item.height),
                 "ethnicity": item.height,
                 "hair_color": item.height,
-                "birth_place": item.height,
+                "birth_place": item.birth_place,
                 "nationality": item.nationality,
                 "dir": self.set_dir(item.dir),
                 "web_dir": item.dir,

@@ -7,43 +7,6 @@
         {
 			"db"    : "description",
 			"value" : ""
-		},
-        {
-            "db"     :  "date_of_birth",
-            "value"  :  [1999,1,1],
-            "data"   :  "True"
-		},
-        {
-        	"db"    : "likes",
-			"value" : 0
-        },
-        {
-        	"db"    : "views",
-			"value" : 0
-        },
-        {
-        	"db"    : "rating",
-			"value" : ""
-        },
-        {
-        	"db"    : "weight",
-			"value" : 0
-        },
-        {
-        	"db"    : "height",
-			"value" : ""
-        },
-        {
-        	"db"    : "ethnicity",
-			"value" : ""
-        },
-		{
-			"db"    : "description",
-			"value" : ""
-		},
-		{
-			"db"    : "nationality",
-			"value" : ""
 		}
 	],
 	"tags"       : []

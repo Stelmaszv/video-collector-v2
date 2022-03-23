@@ -16,19 +16,7 @@
         {
 			"db"    : "country",
 			"value" : ""
-		},
-        {
-        	"db"    : "likes",
-			"value" : 0
-        },
-        {
-        	"db"    : "views",
-			"value" : 0
-        },
-        {
-        	"db"    : "rating",
-			"value" : 0
-        }
+		}
 	],
 	"tags"       : [],
     "stars"      : []
