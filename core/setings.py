@@ -97,7 +97,7 @@ class All(AbstractMode):
             "create_xml": True,
             "create_movie_list": True,
             "generate_json": True,
-            "web_admin": False,
+            "web_admin": True,
             "generate_html": True
         }
 

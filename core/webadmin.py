@@ -41,10 +41,10 @@ class AbstractWebAdmin(ABC):
             objects.append(Obj.name)
         return objects
 
-    def ger_producent(self,item):
+    def get_producent(self,item):
         if len(item.producent)>0:
             return item.producent[0].name
-        return []
+        return ''
 
     def set_assset(self,string):
         count = 0
@@ -103,7 +103,7 @@ class WebAdminProducents(AbstractWebAdmin):
             jason_row = {
                 "name":item.name,
                 "banner":self.set_dir(item.baner),
-                "year" :item.year,
+                "year" :self.set_year(item.year),
                 "show_name":item.show_name,
                 "avatar":self.set_img(item.avatar),
                 "dir": self.set_dir(item.dir),
@@ -114,6 +114,11 @@ class WebAdminProducents(AbstractWebAdmin):
             }
             self.objects.append(jason_row)
         self.generate_file()
+
+    def set_year(self,data):
+        if data:
+            return data
+        return ''
 
 class WebAdminSeries(AbstractWebAdmin):
 
@@ -136,7 +141,7 @@ class WebAdminSeries(AbstractWebAdmin):
                 "number_of_sezons":item.number_of_sezons,
                 "years":item.years,
                 "description": item.description,
-                "producent":   self.ger_producent(item),
+                "producent":   self.get_producent(item),
                 "movies": self.add_many_to_many_as_array(item, 'movies'),
                 "tags": self.add_many_to_many_as_array(item,'tags'),
                 "stars": self.add_many_to_many_as_array(item, 'stars')
@@ -178,7 +183,7 @@ class WebAdminStars(AbstractWebAdmin):
                 "height": self.convert_int(item.height),
                 "ethnicity": item.height,
                 "hair_color": item.height,
-                "birth_place": item.height,
+                "birth_place": item.birth_place,
                 "nationality": item.nationality,
                 "dir": self.set_dir(item.dir),
                 "web_dir": item.dir,
@@ -214,7 +219,16 @@ class WebAdminMovies(AbstractWebAdmin):
                 "poster": self.set_img(item.poster),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
                 "series": self.add_many_to_many_as_array(item, 'series'),
+                'producent': self.get_producent_movies(item),  #self.get_producent_movies(item)
                 "stars": self.add_many_to_many_as_array(item, 'stars')
+
             }
             self.objects.append(jason_row)
         self.generate_file()
+
+    def get_producent_movies(self,item):
+        array=[]
+        if len(item.series) ==1:
+            if len(item.series[0].producent)==1:
+                array.append(item.series[0].producent[0].name)
+        return array
