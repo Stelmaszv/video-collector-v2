@@ -41,10 +41,10 @@ class AbstractWebAdmin(ABC):
             objects.append(Obj.name)
         return objects
 
-    def ger_producent(self,item):
+    def get_producent(self,item):
         if len(item.producent)>0:
             return item.producent[0].name
-        return []
+        return ''
 
     def set_assset(self,string):
         count = 0
@@ -141,7 +141,7 @@ class WebAdminSeries(AbstractWebAdmin):
                 "number_of_sezons":item.number_of_sezons,
                 "years":item.years,
                 "description": item.description,
-                "producent":   self.ger_producent(item),
+                "producent":   self.get_producent(item),
                 "movies": self.add_many_to_many_as_array(item, 'movies'),
                 "tags": self.add_many_to_many_as_array(item,'tags'),
                 "stars": self.add_many_to_many_as_array(item, 'stars')
@@ -219,9 +219,16 @@ class WebAdminMovies(AbstractWebAdmin):
                 "poster": self.set_img(item.poster),
                 "tags": self.add_many_to_many_as_array(item, 'tags'),
                 "series": self.add_many_to_many_as_array(item, 'series'),
-                'producent': self.add_many_to_many_as_array(item.series[0], 'producent'),  #self.get_producent_movies(item)
+                'producent': self.get_producent_movies(item),  #self.get_producent_movies(item)
                 "stars": self.add_many_to_many_as_array(item, 'stars')
 
             }
             self.objects.append(jason_row)
         self.generate_file()
+
+    def get_producent_movies(self,item):
+        array=[]
+        if len(item.series) ==1:
+            if len(item.series[0].producent)==1:
+                array.append(item.series[0].producent[0].name)
+        return array
